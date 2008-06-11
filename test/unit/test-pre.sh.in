@@ -1,0 +1,17 @@
+#!@KSH_PROG@
+# -*- shell-script -*-
+
+test_expand_filename()
+{
+    file1=$(_Dbg_expand_filename test-pre)
+    assertTrue 'Should not have an error expanding test-pre' "$?"
+    file2=$(_Dbg_expand_filename ./test-pre)
+    assertEquals "$file1" "$file2"
+}
+
+# load shunit2
+top_srcdir=@top_builddir@
+. ${top_srcdir}/dbg-pre.inc
+
+. ./shunit2
+

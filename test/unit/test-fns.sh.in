@@ -1,0 +1,101 @@
+#!@KSH_PROG@
+# -*- shell-script -*-
+
+test_copies()
+{
+    typeset result='bogus'
+
+#     _Dbg_copies 'a' 'b'
+#     assertFalse '_Dbg_copies "a" "b" should fail' "$?"
+
+    _Dbg_copies 'a' -1
+    assertFalse '_Dbg_copies "a" -1 should fail' "$?"
+
+    _Dbg_copies 'a' 3
+    assertTrue '_Dbg_copies "a" 3 should succeed' "$?"
+    assertEquals 'aaa' $result
+
+    _Dbg_copies ' ab' 4
+    assertTrue '_Dbg_copies " ab" 4 should succeed' "$?"
+    assertEquals ' ab ab ab ab' "$result"
+}
+
+test_defined()
+{
+    typeset p=5
+    _Dbg_defined p
+    assertTrue 'p should be defined' "$?"
+    unset p
+    _Dbg_defined p
+    assertFalse 'p should now not defined' "$?"
+}
+
+test_esc_dq()
+{
+    assertEquals 'abc' $(_Dbg_esc_dq abc)
+    assertEquals '\\\"abc\\\"' $(_Dbg_esc_dq '\"abc\"')
+    assertEquals '\\\"a\\bc\\\"' $(_Dbg_esc_dq '\"a\bc\"')
+}
+
+test_is_function()
+{
+    unset function_test
+    _Dbg_is_function function_test
+    assertFalse 'test_function should not be defined' "$?"
+    typeset -i function_test=1
+    _Dbg_is_function function_test
+    assertFalse 'test_function should still not be defined' "$?"
+    function_test() { :; }
+    _Dbg_is_function function_test
+    assertTrue 'test_function should now be defined' "$?"
+    function another_function_test { :; }
+    _Dbg_is_function another_function_test "$?"
+}
+
+test_onoff()
+{
+    assertEquals 'on.' $(_Dbg_onoff 1)
+    assertEquals 'off.' $(_Dbg_onoff 0)
+}
+
+no__test_parse_linespec()
+{
+    # Necessary set up for function call.
+    typeset _seteglob=''
+    typeset -r int_pat="[0-9]*([0-9])"
+    typeset  -i _Dbg_debug_debugger=0
+
+    typeset -a words=( $(_Dbg_parse_linespec 'test_defined') )
+    assertEquals '4' ${words[0]}
+    assertEquals '1' ${words[1]}
+#     typeset -a words=( $(_Dbg_parse_linespec '_Dbg_parse_linespec') )
+#     assertEquals '0' ${#words[@]}
+    unset foo
+    typeset -a words=( $(_Dbg_parse_linespec 'foo') )
+    assertEquals '0' ${#words[@]}
+}
+
+test_set_debugger_internal()
+{
+    typeset  _Dbg_space_IFS=' '
+    _Dbg_set_debugger_internal
+    assertEquals "$_Dbg_space_IFS" "$IFS"
+##    assertEquals '+ dbg (${.sh.file}:${LINENO}[$.sh.subshell]): ${.sh.fun}\n' $PS4
+}
+
+test_split()
+{
+    typeset -a words
+    words=($(_Dbg_split ':' 'foo:bar'))
+    assertEquals 'foo' ${words[0]}
+    assertEquals 'bar' ${words[1]}
+    words=($(_Dbg_split ':' 'foo'))
+    assertEquals 'foo' ${words[0]}
+}
+
+# load shunit2
+top_srcdir=@top_builddir@
+. ${top_srcdir}/dbg-fns.inc
+
+. ./shunit2
+

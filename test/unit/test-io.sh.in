@@ -1,0 +1,37 @@
+#!@KSH_PROG@
+# -*- shell-script -*-
+
+test_msg()
+{
+    typeset -i _Dbg_logging=0
+    typeset -i _Dbg_logging_redirect=0
+    typeset _Dbg_tty=''
+    typeset msg=$(_Dbg_msg hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_msg_nocr hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_printf '%03d' 5)
+    assertEquals '005' "$msg"
+    msg=$(_Dbg_printf_nocr '%-3s' 'fo')
+    assertEquals 'fo ' "$msg"
+}
+
+test_undefined()
+{
+    typeset msg=$(_Dbg_undefined_cmd foo bar)
+    assertEquals 'Undefined foo command "bar"' "$msg"
+}
+
+test_progress_show()
+{
+    typeset EMACS=t
+    typeset bar=$(_Dbg_progess_show foo 10 3)
+    assertEquals 'foo: [============> ' "${bar:3:20}"
+}
+
+# load shunit2
+top_srcdir=@top_builddir@
+. ${top_srcdir}/dbg-io.inc
+
+. ./shunit2
+
