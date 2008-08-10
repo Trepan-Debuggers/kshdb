@@ -76,6 +76,39 @@ function _Dbg_onoff {
   echo $onoff
 }
 
+# print message to output device
+function _Dbg_printf {
+  typeset format=$1
+  shift
+  if (( _Dbg_logging )) ; then
+    printf "$format" "$@" >>$_Dbg_logfid
+  fi
+  if (( ! _Dbg_logging_redirect )) ; then
+    if [[ -n $_Dbg_tty ]] ; then
+      printf "$format" "$@" >>$_Dbg_tty
+    else
+      printf "$format" "$@"
+    fi
+  fi
+  _Dbg_msg ''
+}
+
+# print message to output device without a carriage return at the end
+function _Dbg_printf_nocr {
+  typeset format=$1
+  shift 
+  if (( _Dbg_logging )) ; then
+    printf "$format" "$@" >>$_Dbg_logfid
+  fi
+  if (( ! $_Dbg_logging_redirect )) ; then
+    if [[ -n $_Dbg_tty ]] ; then 
+      printf "$format" "$@" >>$_Dbg_tty
+    else
+      printf "$format" "$@"
+    fi
+  fi
+}
+
 # Set $? to $1 if supplied or the saved entry value of $?. 
 function _Dbg_set_dol_q {
   [[ $# -eq 0 ]] && return $_Dbg_debugged_exit_code

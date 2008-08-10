@@ -26,39 +26,6 @@
 
 # ===================== FUNCTIONS =======================================
 
-# print message to output device
-function _Dbg_printf {
-  typeset format=$1
-  shift
-  if (( _Dbg_logging )) ; then
-    printf "$format" "$@" >>$_Dbg_logfid
-  fi
-  if (( ! _Dbg_logging_redirect )) ; then
-    if [[ -n $_Dbg_tty ]] ; then
-      printf "$format" "$@" >>$_Dbg_tty
-    else
-      printf "$format" "$@"
-    fi
-  fi
-  _Dbg_msg ''
-}
-
-# print message to output device without a carriage return at the end
-function _Dbg_printf_nocr {
-  typeset format=$1
-  shift 
-  if (( _Dbg_logging )) ; then
-    printf "$format" "$@" >>$_Dbg_logfid
-  fi
-  if (( ! $_Dbg_logging_redirect )) ; then
-    if [[ -n $_Dbg_tty ]] ; then 
-      printf "$format" "$@" >>$_Dbg_tty
-    else
-      printf "$format" "$@"
-    fi
-  fi
-}
-
 # Common funnel for "Undefined command" message
 _Dbg_undefined_cmd() {
   _Dbg_msg "Undefined $1 command \"$2\""

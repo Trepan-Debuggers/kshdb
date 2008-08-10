@@ -52,6 +52,21 @@ test_is_function()
     _Dbg_is_function another_function_test "$?"
 }
 
+test_msg()
+{
+    typeset -i _Dbg_logging=0
+    typeset -i _Dbg_logging_redirect=0
+    typeset _Dbg_tty=''
+    typeset msg=$(_Dbg_msg hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_msg_nocr hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_printf '%03d' 5)
+    assertEquals '005' "$msg"
+    msg=$(_Dbg_printf_nocr '%-3s' 'fo')
+    assertEquals 'fo ' "$msg"
+}
+
 test_onoff()
 {
     assertEquals 'on.' $(_Dbg_onoff 1)
@@ -94,8 +109,8 @@ test_split()
 }
 
 # load shunit2
-top_srcdir=@top_builddir@
-. ${top_srcdir}/dbg-fns.inc
+top_srcdir=@top_srcdir@
+. ${top_srcdir}/lib/fns.sh
 
 . ./shunit2
 
