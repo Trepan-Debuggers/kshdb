@@ -290,13 +290,13 @@ function _Dbg_set_to_return_from_debugger {
   _Dbg_currentbp=0
   _Dbg_stop_reason=''
   if (( $1 != 0 )) ; then
-    _Dbg_last_bash_command="$_Dbg_bash_command"
+    _Dbg_last_ksh_command="$_Dbg_ksh_command"
     _Dbg_last_curline="$_curline"
     _Dbg_last_source_file="${.sh.file}"
   else
-    _Dbg_last_curline==${BASH_LINENO[1]}
-    _Dbg_last_source_file=${BASH_SOURCE[2]:-$_Dbg_bogus_file}
-    _Dbg_last_bash_command="**unsaved _kshdb command**"
+    _Dbg_last_curline==${KSH_LINENO[1]}
+    _Dbg_last_source_file=${KSH_SOURCE[2]:-$_Dbg_bogus_file}
+    _Dbg_last_ksh_command="**unsaved _kshdb command**"
   fi
 
   _Dbg_restore_user_vars
