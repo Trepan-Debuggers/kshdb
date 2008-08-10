@@ -74,7 +74,25 @@ typeset -a _Dbg_arg=()
 
 function _Dbg_debug_trap_handler {
 
-  set -x
+  integer .level=.sh.level .max=.sh.level-1
+  print  -r "command ${.sh.command}"
+  while((--.level>=0))
+  do
+      typeset file=${.sh.file}
+      ((.sh.level = .level))
+      _Dbg_print_frame '##' "$((.max-.level))" "$0" "$file" "${.sh.lineno}" "$@"
+      file=${.sh.file}
+  done
+  print -- '++++'
+  _Dbg_set_to_return_from_debugger 1
+  return 0
+  
+
+
+  typeset -i _Dbg_rc=0
+
+  _Dbg_ksh_command="${0} $@"
+
   ### The below is also copied below in _Dbg_sig_handler...
   ### Should put common stuff into a function.
 
@@ -96,15 +114,7 @@ function _Dbg_debug_trap_handler {
   ##  return 0
   ## fi
 
-  _Dbg_set_debugger_entry
-
-  typeset -i _Dbg_rc=0
-
-  # Shift off "RETURN";  we do not need that any more.
-  shift 
-
-  _Dbg_ksh_command=$1
-  shift
+  _Dbg_set_debugger_entry 2
 
   # Save values of $1 $2 $3 when debugged program was stopped
   # We use the loop below rather than _Dbg_set_args="(@)" because
@@ -132,7 +142,7 @@ function _Dbg_debug_trap_handler {
 
   # Read in the journal to pick up variable settings that might have
   # been left from a subshell.
-  _Dbg_source_journal
+  ## _Dbg_source_journal
 
   if (( $KSHDB_QUIT_LEVELS > 0 )) ; then
     _Dbg_do_quit $_Dbg_debugged_exit_code
@@ -245,7 +255,7 @@ function _Dbg_debug_trap_handler {
     fi
   fi
   _Dbg_set_to_return_from_debugger 1
-  return $_Dbg_inside_skip
+  # return $_Dbg_inside_skip
 }
 
 # Cleanup routine: erase temp files before exiting.

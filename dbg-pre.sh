@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# dbg-pre.inc - Bourne Again Shell Debugger Global Variables
+# dbg-pre.sh - Korn Shell Debugger Global Variables
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
@@ -26,7 +26,16 @@
 # used in only one sub-part (e.g. variables for break/watch/actions) to 
 # the corresponding file.
 
-[[ -z $_Dbg_release ]] && typeset -r _Dbg_release='ksh-3.1-0.10cvs'
+[[ -z $_Dbg_release ]] || return
+typeset -r _Dbg_release='0.1git'
+
+# Name we refer to ourselves by
+typeset _Dbg_debugger_name='kshdb'
+
+# Will be set to 1 if called via kshdb rather than "ksh --debugger"
+typeset -i _Dbg_script=0
+
+typeset -i _Dbg_basename_only=0
 
 # Expand filename given as $1.
 # we echo the expanded name or return $1 unchanged if a bad filename.
@@ -40,7 +49,7 @@ function _Dbg_expand_filename {
   typeset -r filename="$1"
 
   # Break out basename and dirname
-  typeset -r basename=${filename##*/}
+  typeset basename=${filename##*/}
   typeset -x dirname=${filename%/*}
 
   # No slash given in filename? Then use . for dirname
@@ -50,11 +59,11 @@ function _Dbg_expand_filename {
   dirname=${dirname:-/}
 
   # Handle tilde expansion in dirname
-  typeset glob_cmd="dirname=$(expr $dirname)"
-  eval "$glob_cmd 2>/dev/null"
+  dirname=$(echo $dirname)
 
   typeset long_path;
-  
+
+  [[ $basename == '.' ]] && basename=''
   if long_path=$( (cd "$dirname" ; pwd) ) ; then
     if [[ $long_path == '/' ]] ; then
       echo "/$basename"
@@ -68,8 +77,27 @@ function _Dbg_expand_filename {
   fi
 }
 
-# This is put at the so we have something at the end to stop at 
-# when we debug this. By stopping at the end all of the above functions
-# and variables can be tested.
-[[ -z $_Dbg_pre_ver ]] && typeset -r _Dbg_pre_ver=\
-'$Id: dbg-pre.inc.in,v 1.1.1.1 2006/01/02 23:34:22 rockyb Exp $'
+# $_Dbg_tmpdir could have been set by kshdb script rather than
+# ksh --debugger
+typeset _Dbg_tmpdir=/tmp
+
+# Create temporary file based on $1
+# file $1
+_Dbg_tempname() {
+  echo "$_Dbg_tmpdir/${_Dbg_debugger_name}$1$$"
+}
+
+typeset -a _Dbg_script_args
+_Dbg_script_args=($@)
+
+typeset -i _Dbg_running=1      # True we are not finished running the program
+
+# Known normal IFS consisting of a space, tab and newline
+typeset _Dbg_space_IFS=' 	
+'
+
+# Number of statements to run before entering the debugger.
+# Is used intially to get out of sourced dbg-main.inc script
+# and in kshdb script to not stop in remaining kshdb statements
+# before the sourcing the script to be debugged.
+typeset -i _Dbg_step_ignore=1

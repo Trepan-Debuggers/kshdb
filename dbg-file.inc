@@ -155,11 +155,11 @@ function _Dbg_adjust_filename {
 #   echo "$_Dbg_tmpdir/kshdb$1$$"
 # }
 
-# # append a command into journal file and then run the command.
-# _Dbg_write_journal_eval() {
-#   _Dbg_write_journal "$*" 
-#   eval "$*"
-# }
+# append a command into journal file and then run the command.
+ _Dbg_write_journal_eval() {
+   _Dbg_write_journal "$@" 
+   eval "$*"
+}
 
 # # append a command into journal file and then run the command.
 # _Dbg_write_journal_var() {
@@ -179,14 +179,14 @@ function _Dbg_adjust_filename {
 #   _Dbg_write_journal ${decl_a2[@]}
 # }
 
-# # Append a command into journal file. But we only need to do
-# # if we are in a subshell.
-# _Dbg_write_journal() {
-#   if (( $BASH_SUBSHELL != 0 )) ; then
-#     echo "$@" >> ${_Dbg_journal} 2>/dev/null
-#   fi
-#   # return $?
-# }
+# Append a command into journal file. But we only need to do
+# if we are in a subshell.
+_Dbg_write_journal() {
+  if (( .sh.subshell != 0 )) ; then
+    echo "$@" >> ${_Dbg_journal} 2>/dev/null
+  fi
+  # return $?
+}
 
 # # Remove all journal files.
 # _Dbg_erase_journals() {

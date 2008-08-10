@@ -44,10 +44,28 @@ function _Dbg_defined {
   fi
 }
 
+function _Dbg_errmsg {
+    typeset -r prefix='**'
+    _Dbg_msg "$prefix $@"
+}
+
+function _Dbg_errmsg_no_cr {
+    typeset -r prefix='**'
+    _Dbg_msg_no_cr "$prefix $@"
+}
+
 # Add escapes to a string $1 so that when it is read back via "$1"
 # it is the same as $1.
 function _Dbg_esc_dq {
   echo $1 | sed -e 's/[`$\"]/\\\0/g' 
+}
+
+function _Dbg_msg {
+    print -- "$@" 
+}
+
+function _Dbg_msg_nocr {
+    echo -n $@
 }
 
 # Add escapes to a string $1 so that when it is read back via "$1"
@@ -60,7 +78,8 @@ function _Dbg_onoff {
 
 # Set $? to $1 if supplied or the saved entry value of $?. 
 function _Dbg_set_dol_q {
-  return ${1:-$_Dbg_debugged_exit_code}
+  [[ $# -eq 0 ]] && return $_Dbg_debugged_exit_code
+  return $1
 }
 
 # Split $2 using $1 as the split character.  We accomplish this by
@@ -181,7 +200,7 @@ function _Dbg_parse_linespec {
 
     # Function name or error
     * )
-      if _Dbg_is_function $linespec ${_Dbg.debug_debugger} ; then 
+      if _Dbg_is_function $linespec ${_Dbg_debug_debugger} ; then 
 	set -x
 	typeset -a word==( $(typeset -p +f $linespec) )
 	typeset -r fn=${word[1]%\(\)}
@@ -198,7 +217,10 @@ function _Dbg_parse_linespec {
 # internal settings  
 function _Dbg_set_debugger_internal {
   IFS="$_Dbg_space_IFS";
-  PS4='+ dbg (${.sh.file}:${LINENO}[$.sh.subshell]): ${.sh.fun}\n'
+  PS4='+ dbg (${.sh.file}:${LINENO}[${.sh.subshell}]): ${.sh.fun}
+'
+  PS4='${.sh.file}:${LINENO}:[${.sh.subshell}]): ${.sh.fun}
+'
 }
 
 function _Dbg_restore_user_vars {
@@ -216,11 +238,10 @@ function _Dbg_restore_user_vars {
 
 function _Dbg_set_debugger_entry {
 
-  # Nuke DEBUG trap
-  trap '' DEBUG
-
-  _cur_fn=${FUNCNAME[2]}
-  let _curline=${BASH_LINENO[1]}
+  typeset -i adjust_level=${1:-0}
+  ((.sh.level -= $adjust_level))
+  _cur_fn="${.sh.file}"
+  let _curline=${.sh.lineno}
   ((_curline < 1)) && let _curline=1
 
   _Dbg_old_IFS="$IFS"
@@ -245,8 +266,6 @@ function _Dbg_set_to_return_from_debugger {
     _Dbg_last_bash_command="**unsaved _kshdb command**"
   fi
 
-  trap '_Dbg_debug_trap_handler 0 "$BASH_COMMAND" "$@"' DEBUG
-
   _Dbg_restore_user_vars
 }
 
@@ -257,7 +276,3 @@ function _Dbg_onoff {
   (( $1 != 0 )) && onoff='on.'
   echo $onoff
 }
-
-# This is put at the end so we have something at the end when we debug this.
-[[ -z $_Dbg_fns_ver ]] && typeset -r _Dbg_fns_ver=\
-'$Id: dbg-fns.inc,v 1.13 2008/04/12 08:14:23 rockyb Exp $'

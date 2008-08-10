@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/usr/bin/ksh
 # -*- shell-script -*-
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
@@ -17,7 +17,7 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 #
 
-typeset _Dbg_ver=\
+[[ -z $_Dbg_ver ]] && typeset -r _Dbg_ver=\
 '$Id: ksh,v 0.0$'
 
 function _Dbg_usage_long {
@@ -38,7 +38,7 @@ function _Dbg_usage_short {
 # purpose is to capture the command string such as via "x $*" or 
 # in a traceback ("where").
 function kshdb_eval {
-  eval "$*"  # Type: "x $*" to see what's being run.
+  eval "$@"  # Type: "x $*" to see what's being run.
 }
 
 typeset -a _Dbg_script_args="$@"
@@ -139,7 +139,7 @@ fi
   exit 1
 }
 
-# Note that this is called via kshdb rather than "bash --debugger"
+# Note that this is called via kshdb
 _Dbg_script=1
 
 . ${_Dbg_libdir}/dbg-pre.inc
@@ -156,7 +156,7 @@ fi
 
 if (( show_version == 1 )) ; then 
 print '
-There is absolutely no warranty for KSHDB.  Type "show warranty" for details.
+There is absolutely no warranty for kshdb.  Type "show warranty" for details.
 '
   exit 1
 fi
@@ -175,7 +175,8 @@ if (( $_Dbg_opt_linetrace )) ; then
   KSHDB_QUIT_ON_QUIT=1
 else 
   # Set to skip over the next 4 statements
-  _Dbg_write_journal_eval "_Dbg_steps=5" 
+  ## _Dbg_write_journal_eval "_Dbg_steps=5" 
+  :
 fi
 
 if [[ -z $_Dbg_cmd ]] ; then 
@@ -183,6 +184,7 @@ if [[ -z $_Dbg_cmd ]] ; then
     (( _Dbg_opt_linetrace_expand )) && _Dbg_linetrace_expand=1
     _Dbg_linetrace=1
   fi
+  trap '_Dbg_debug_trap_handler' DEBUG
   . $_source_file
 else 
   kshdb_eval "$_Dbg_cmd"
