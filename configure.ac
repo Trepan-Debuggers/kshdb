@@ -4,10 +4,10 @@ AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([no-define])
 
-# AC_CONFIG_SRCDIR(kshdb.in)
-# if test x$srcdir = x ; then
-#   srcdir=$ac_pwd
-# fi
+AC_CONFIG_SRCDIR(kshdb.in)
+if test x$srcdir = x ; then
+  srcdir=$ac_pwd
+fi
 
 ## --with-ksh can be used to tell the kshdb script and the regression
 ## test which ksh to run. It can be omitted too in which case we'll
@@ -66,6 +66,7 @@ AC_CONFIG_FILES([Makefile
 	lib/Makefile \
 	test/Makefile test/unit/Makefile])
 
+AC_CONFIG_FILES([kshdb], [chmod +x kshdb])
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
 AC_CONFIG_FILES([test/unit/test-fns.sh],   [chmod +x test/unit/test-fns.sh])
 AC_CONFIG_FILES([test/unit/test-io.sh],    [chmod +x test/unit/test-io.sh])

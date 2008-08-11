@@ -1,4 +1,5 @@
-#!/usr/bin/ksh93t
+#!@KSH_PROG@
+# -*- shell-script -*-
 # Are we using a debugger-enabled ksh? If not let's stop right here.
 if [[ -z "$.sh.level}" ]] ; then 
   echo "Sorry, your ksh just isn't modern enough." 2>&1
@@ -15,8 +16,8 @@ _Dbg_script=1
 if (( ${#_Dbg_script_args[@]} > 0 )) ; then
     _Dbg_script_file="$_Dbg_script_args[1]"
 else
-    # _Dbg_script_file=./testing.sh
-    _Dbg_script_file=./file2.sh
+    _Dbg_script_file=./testing.sh
+    # _Dbg_script_file=./file2.sh
     _Dbg_script_args=($_Dbg_script_file)
 fi
 
