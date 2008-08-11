@@ -29,7 +29,7 @@ save_callstack() {
 	((.sh.level = .level))
 	.files+=("${.sh.file}")
 	.linenos+=(${.sh.lineno})
-	.fns+=$0
+	.fns+=($0)
     done
     ((.sh.level = .max))
     # Reorganize into an array of frame structures
