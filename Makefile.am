@@ -1,1 +1,1 @@
-SUBDIRS = test
+SUBDIRS = lib command test

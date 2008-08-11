@@ -1,0 +1,30 @@
+#!@KSH_PROG@
+# -*- shell-script -*-
+
+test_not_running()
+{
+    typeset -a errs=()
+    _Dbg_errmsg() { errs+=("$1"); }
+    typeset -i _Dbg_running=1
+    _Dbg_running=1
+    _Dbg_not_running
+    assertFalse 'Should report running.' "$?"
+    assertEquals  0 ${#errs[@]}
+    _Dbg_running=0
+    _Dbg_not_running
+    assertTrue 'Should report not running.' "$?"
+    assertEquals  1 ${#errs[@]}
+}
+
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}/lib/run.sh
+
+# load shunit2
+SHUNIT_PARENT=$0
+
+srcdir=@srcdir@
+srcdir=${srcdir}/
+. ${srcdir}/shunit2
+
+

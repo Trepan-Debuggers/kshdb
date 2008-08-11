@@ -50,7 +50,7 @@ function _Dbg_debug_trap_handler {
 	
 	save_callstack 1
 	_Dbg_print_location
-	# _Dbg_process_commands
+	_Dbg_process_commands
 	_Dbg_set_to_return_from_debugger 1
 	return $_Dbg_rc
     else
@@ -58,4 +58,18 @@ function _Dbg_debug_trap_handler {
     fi
 
    print_callstack
+}
+
+# Cleanup routine: erase temp files before exiting.
+_Dbg_cleanup() {
+##  rm $_Dbg_evalfile 2>/dev/null
+  _Dbg_erase_journals
+  _Dbg_restore_user_vars
+}
+
+# Somehow we can't put this in _Dbg_cleanup and have it work.
+# I am not sure why.
+_Dbg_cleanup2() {
+  _Dbg_erase_journals
+  trap - EXIT
 }

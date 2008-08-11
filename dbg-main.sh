@@ -25,9 +25,9 @@ for file in ${_Dbg_libdir}/lib/*.sh ; do
     source $file
 done
 
-# for file in ${_Dbg_libdir}/command/*.sh ; do 
-#     source $file
-# done
+for file in ${_Dbg_libdir}/command/*.sh ; do 
+    source $file
+done
 
 # Have we already specified  where to read debugger input from?
 # if [ -n "$o_cmdfile" ] ; then 
