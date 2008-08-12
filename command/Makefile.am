@@ -1,6 +1,7 @@
 pkgdatadir        = ${datadir}/@PACKAGE@/command
 pkgdata_DATA =       \
 	alias.sh     \
+	continue.sh  \
 	frame.sh     \
 	help.sh      \
 	quit.sh      \

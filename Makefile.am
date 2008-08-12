@@ -8,7 +8,7 @@ pkgdata_DATA =      \
 # Set up the install target 
 bin_SCRIPTS = kshdb
 
-EXTRA_DIST = $(pkgdata_DATA)
+EXTRA_DIST = $(pkgdata_DATA) THANKS
 
 # cvs2cl
 MAINTAINERCLEANFILES = ChangeLog

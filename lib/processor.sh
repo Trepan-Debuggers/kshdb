@@ -67,12 +67,15 @@ function _Dbg_process_commands {
     # _Dbg_preloop
     typeset _Dbg_cmd 
     typeset args
-    while read "_Dbg_cmd?$_Dbg_prompt" args # <&$_Dbg_input_desc
+    printf "$_Dbg_prompt" # Because below is broken? 
+    # while read "_Dbg_cmd?$_Dbg_prompt" args # <&$_Dbg_input_desc
+    while read "_Dbg_cmd?" args # <&$_Dbg_input_desc
     do
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
         # _Dbg_postcmd
         (( $rc != 0 )) && return $rc
+	printf "$_Dbg_prompt" 
     done # read "?$_Dbg_prompt" ...
 
 #     ((_Dbg_input_desc--))
@@ -116,17 +119,16 @@ _Dbg_onecmd() {
 	  _Dbg_do_backtrace $@
 	  ;;
 
-# 	# Continue
-# 	c | cont | conti |contin |continu | continue )
+	# Continue
+	c | cont | conti |contin |continu | continue )
 	  
-# 	  _Dbg_last_cmd='continue'
-# 	  if _Dbg_do_continue $@ ; then
-# 	    IFS="$_Dbg_old_IFS";
-# 	    # _Dbg_write_journal_eval \
-# 	    #  "_Dbg_old_set_opts=\"$_Dbg_old_set_opts -o functrace\""
-# 	    return 1
-# 	  fi
-# 	  ;;
+	  _Dbg_last_cmd='continue'
+	  if _Dbg_do_continue $@ ; then
+	    # _Dbg_write_journal_eval \
+	    #  "_Dbg_old_set_opts=\"$_Dbg_old_set_opts -o functrace\""
+	    return 1
+	  fi
+	  ;;
 
 	# Move call stack down
 	do | dow | down )
@@ -146,9 +148,9 @@ _Dbg_onecmd() {
 	  _Dbg_last_cmd='frame'
 	  ;;
 
-# 	# print help command menu
-# 	h | he | hel | help | '?'  )
-# 	  _Dbg_do_help $args ;;
+	# print help command menu
+	help )
+	  _Dbg_do_help $args ;;
 
 # 	# print globbed or substituted variables
 # 	p | pr | pri | prin | print )

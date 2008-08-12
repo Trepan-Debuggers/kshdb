@@ -21,8 +21,11 @@ else
     _Dbg_script_args=($_Dbg_script_file)
 fi
 
-  _Dbg_step_ignore=2
-trap '_Dbg_debug_trap_handler "$@"' DEBUG
-. ${_Dbg_script_args[@]}
-_Dbg_msg "Program terminated."
- # _Dbg_msg "Program terminated. Type 's' or 'R' to restart."
+while : ; do
+    _Dbg_step_ignore=2
+    trap '_Dbg_debug_trap_handler "$@"' DEBUG
+    . ${_Dbg_script_args[@]}
+    trap '' DEBUG
+    # _Dbg_msg "Program terminated. Type 's' or 'R' to restart."
+    _Dbg_msg "Program terminated. Type 's'to restart."
+done
