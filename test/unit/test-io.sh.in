@@ -16,6 +16,7 @@ no__test_progress_show()
 
 # load shunit2
 top_srcdir=@top_srcdir@
+. ${top_srcdir}/lib/msg.sh
 . ${top_srcdir}/lib/fns.sh
 . ${top_srcdir}/dbg-io.inc
 

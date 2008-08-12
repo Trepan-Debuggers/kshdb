@@ -3,17 +3,17 @@
 
 test_not_running()
 {
-    typeset -a errs=()
+#    typeset -a errs=()
     _Dbg_errmsg() { errs+=("$1"); }
     typeset -i _Dbg_running=1
     _Dbg_running=1
     _Dbg_not_running
     assertFalse 'Should report running.' "$?"
-    assertEquals  0 ${#errs[@]}
+#    assertEquals  0 ${#errs[@]}
     _Dbg_running=0
     _Dbg_not_running
     assertTrue 'Should report not running.' "$?"
-    assertEquals  1 ${#errs[@]}
+#    assertEquals  1 ${#errs[@]}
 }
 
 abs_top_srcdir=@abs_top_srcdir@

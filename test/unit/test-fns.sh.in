@@ -110,6 +110,7 @@ test_split()
 
 # load shunit2
 top_srcdir=@top_srcdir@
+. ${top_srcdir}/lib/msg.sh
 . ${top_srcdir}/lib/fns.sh
 
 . ./shunit2
