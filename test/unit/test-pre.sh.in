@@ -22,5 +22,8 @@ test_expand_filename()
 top_srcdir=@top_srcdir@
 . ${top_srcdir}/dbg-pre.sh
 
-. ./shunit2
+# load shunit2
+srcdir=@srcdir@
+srcdir=${srcdir}/
+. ${srcdir}/shunit2
 

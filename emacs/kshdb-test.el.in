@@ -1,10 +1,10 @@
 ; -*- emacs-lisp -*-
 (load-file "@srcdir@/elk-test.el")
-(load-file "@srcdir@/zshdb.el")
+(load-file "@srcdir@/kshdb.el")
 
-(deftest "zshdb-marker-filter-test"
-  (assert-equal "Testing 1 2 3" (gud-zshdb-marker-filter "Testing 1 2 3"))
-  (assert-equal "ABC" (gud-zshdb-marker-filter 
+(deftest "kshdb-marker-filter-test"
+  (assert-equal "Testing 1 2 3" (gud-kshdb-marker-filter "Testing 1 2 3"))
+  (assert-equal "ABC" (gud-kshdb-marker-filter 
 "breakpoints
 No breakpoints
 
@@ -12,7 +12,7 @@ ABC")))
 
 (defun regexp-stack-test (location-str pos-str file-str line-str)
   "Test to see that location-str matches gud-rdebug-marker-regexp"
-  (assert-equal 0 (string-match zshdb--stack-frame-regexp location-str))
+  (assert-equal 0 (string-match kshdb--stack-frame-regexp location-str))
   (assert-equal pos-str
 		(substring location-str (match-beginning 2)  (match-end 2)))
   (assert-equal file-str
@@ -20,45 +20,45 @@ ABC")))
   (assert-equal line-str
 		(substring location-str (match-beginning 5)  (match-end 5)))
 )
-(deftest "zshdb-regexp-stack-test"
+(deftest "kshdb-regexp-stack-test"
 
   (regexp-stack-test 
-   "->1 source(\"/usr/local/bin/zshdb\") called from file `./zshdb' at line 280"
-   "1" "./zshdb" "280"
+   "->1 source(\"/usr/local/bin/kshdb\") called from file `./kshdb' at line 280"
+   "1" "./kshdb" "280"
    )
   (regexp-stack-test 
-   "##0 in file `/usr/local/bin/zshdb' at line 27"
-   "0" "/usr/local/bin/zshdb" "27"
+   "##0 in file `/usr/local/bin/kshdb' at line 27"
+   "0" "/usr/local/bin/kshdb" "27"
    )
 )
 
 (defun regexp-breakpoint-test (location-str)
-  "Test to see that location-str matches zshdb--breakpoint-regexp"
-  (assert-equal 0 (string-match zshdb--breakpoint-regexp location-str))
+  "Test to see that location-str matches kshdb--breakpoint-regexp"
+  (assert-equal 0 (string-match kshdb--breakpoint-regexp location-str))
 )
 (defun regexp-file-test (location-str file-str)
-  "Test to see that location-str matches gud-zshdb-marker-regexp"
-  (assert-equal 0 (string-match gud-zshdb-marker-regexp location-str))
+  "Test to see that location-str matches gud-kshdb-marker-regexp"
+  (assert-equal 0 (string-match gud-kshdb-marker-regexp location-str))
   (assert-equal file-str
 		(substring location-str
-			   (match-beginning gud-zshdb-marker-regexp-file-group) 
-			   (match-end gud-zshdb-marker-regexp-file-group)))
+			   (match-beginning gud-kshdb-marker-regexp-file-group) 
+			   (match-end gud-kshdb-marker-regexp-file-group)))
 )
-(deftest "zshdb-marker-regexp-test"
+(deftest "kshdb-marker-regexp-test"
 
   (regexp-breakpoint-test
-   "1   breakpoint keep y   /usr/local/bin/zshdb:10")
+   "1   breakpoint keep y   /usr/local/bin/kshdb:10")
 
   (regexp-stack-test
    "->0 in file `/tmp/hanoi.sh' at line 31"
    "0" "/tmp/hanoi.sh" "31")
   (regexp-stack-test 
-   "##1 source(\"/test/hanoi.sh\") called from file `/usr/local/bin/zshdb' at line 280" 
-   "1" "/usr/local/bin/zshdb" "280"
+   "##1 source(\"/test/hanoi.sh\") called from file `/usr/local/bin/kshdb' at line 280" 
+   "1" "/usr/local/bin/kshdb" "280"
 )
   (regexp-stack-test 
-   "##2 main() called from file `/usr/local/bin/zshdb' at line 0"
-   "2" "/usr/local/bin/zshdb" "0")
+   "##2 main() called from file `/usr/local/bin/kshdb' at line 0"
+   "2" "/usr/local/bin/kshdb" "0")
 
   (regexp-file-test 
    "(e:\\sources\\capfilterscanner\\capanalyzer.sh:3):
@@ -80,13 +80,13 @@ ABC")))
 ;;; (defun position-regexp-test (location-str file-str line-str)
 ;;;   "Test to see that location-str matches position-regexp-test with the correct
 ;;; file and line submatches."
-;;;   (assert-equal 0 (string-match zshdb-position-re location-str))
-;;;   (assert-equal file-str (match-string zshdb-marker-regexp-file-group
+;;;   (assert-equal 0 (string-match kshdb-position-re location-str))
+;;;   (assert-equal file-str (match-string kshdb-marker-regexp-file-group
 ;;;                                        location-str))
-;;;   (assert-equal line-str (match-string zshdb-marker-regexp-line-group
+;;;   (assert-equal line-str (match-string kshdb-marker-regexp-line-group
 ;;;                                        location-str))
 ;;;   )
-;;; (deftest "zshdb-position-re-test"
+;;; (deftest "kshdb-position-re-test"
 
 ;;;   (position-regexp-test 
 ;;;    "(e:\\sources\\capfilterscanner\\capanalyzer.py:3):
@@ -105,20 +105,20 @@ ABC")))
 ;;;    )
 ;;; ) 
    
-(deftest "zshdb-get-script-name-test"
-  (assert-equal '("foo" nil) (zshdb-get-script-name '("foo")))
-  (assert-equal '("foo" t) (zshdb-get-script-name '("-A" "1" "foo")))
-  (assert-equal '("foo" nil) (zshdb-get-script-name '("zshdb" "-L" "." "foo")))
-  (assert-equal '("foo" t) (zshdb-get-script-name 
-		       '("--debugger zshdb" "--annotate" "1" "foo")))
-  (assert-equal '("bar" t) (zshdb-get-script-name 
-		       '("--debugger zshdb" "--annotate" "1" "bar" "foo")))
+(deftest "kshdb-get-script-name-test"
+  (assert-equal '("foo" nil) (kshdb-get-script-name '("foo")))
+  (assert-equal '("foo" t) (kshdb-get-script-name '("-A" "1" "foo")))
+  (assert-equal '("foo" nil) (kshdb-get-script-name '("kshdb" "-L" "." "foo")))
+  (assert-equal '("foo" t) (kshdb-get-script-name 
+		       '("--debugger kshdb" "--annotate" "1" "foo")))
+  (assert-equal '("bar" t) (kshdb-get-script-name 
+		       '("--debugger kshdb" "--annotate" "1" "bar" "foo")))
 )
 
-(build-suite "zshdb-suite" 
-	     "zshdb-regexp-stack-test"
-	     "zshdb-marker-regexp-test"
-	     "zshdb-get-script-name-test"
-	     "zshdb-marker-filter-test")
+(build-suite "kshdb-suite" 
+	     "kshdb-regexp-stack-test"
+	     "kshdb-marker-regexp-test"
+	     "kshdb-get-script-name-test"
+	     "kshdb-marker-filter-test")
 
-(run-elk-test "zshdb-suite" "Test Emacs routines to run the zsh debugger")
+(run-elk-test "kshdb-suite" "Test Emacs routines to run the ksh debugger")

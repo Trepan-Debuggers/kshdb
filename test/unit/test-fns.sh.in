@@ -108,10 +108,13 @@ test_split()
     assertEquals 'foo' ${words[0]}
 }
 
-# load shunit2
 top_srcdir=@top_srcdir@
+srcdir=@srcdir@
 . ${top_srcdir}/lib/msg.sh
 . ${top_srcdir}/lib/fns.sh
 
-. ./shunit2
+# load shunit2
+srcdir=@srcdir@
+srcdir=${srcdir}/
+. ${srcdir}/shunit2
 

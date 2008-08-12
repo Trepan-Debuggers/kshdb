@@ -27,4 +27,3 @@ srcdir=@srcdir@
 srcdir=${srcdir}/
 . ${srcdir}/shunit2
 
-

@@ -16,9 +16,11 @@ test_msg()
     assertEquals 'fo ' "$msg"
 }
 
-# load shunit2
 top_srcdir=@top_srcdir@
 . ${top_srcdir}/lib/msg.sh
 
-. ./shunit2
+# load shunit2
+srcdir=@srcdir@
+srcdir=${srcdir}/
+. ${srcdir}/shunit2
 
