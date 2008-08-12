@@ -1,0 +1,24 @@
+#!@KSH_PROG@
+# -*- shell-script -*-
+
+test_msg()
+{
+    typeset -i _Dbg_logging=0
+    typeset -i _Dbg_logging_redirect=0
+    typeset _Dbg_tty=''
+    typeset msg=$(_Dbg_msg hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_msg_nocr hi)
+    assertEquals 'hi' "$msg"
+    msg=$(_Dbg_printf '%03d' 5)
+    assertEquals '005' "$msg"
+    msg=$(_Dbg_printf_nocr '%-3s' 'fo')
+    assertEquals 'fo ' "$msg"
+}
+
+# load shunit2
+top_srcdir=@top_srcdir@
+. ${top_srcdir}/lib/msg.sh
+
+. ./shunit2
+
