@@ -1,11 +1,11 @@
 pkgdatadir        = ${datadir}/@PACKAGE@/lib
 pkgdata_DATA =      	\
-	fns.sh        \
+	fns.sh          \
 	frame.sh        \
 	gdb.sh  	\
 	help.sh  	\
 	journal.sh  	\
-	help.sh    	\
+	msg.sh    	\
 	run.sh    	\
 	sig.sh
 

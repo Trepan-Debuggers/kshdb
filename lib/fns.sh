@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# dbg-fns.inc - Debugger Utility Functions
+# fns.sh - Debugger Utility Functions
 #
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
@@ -16,10 +16,6 @@
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
-
-# Come here via DEBUG trap after each statement in script.
-# This determines if we need to stop and go into the debugger 
-# command loop or not.
 
 # Return $2 copies of $1. If successful, $? is 0 and the return value
 # is in result.  Otherwise $? is 1 and result ''
@@ -44,28 +40,10 @@ function _Dbg_defined {
   fi
 }
 
-function _Dbg_errmsg {
-    typeset -r prefix='**'
-    _Dbg_msg "$prefix $@"
-}
-
-function _Dbg_errmsg_no_cr {
-    typeset -r prefix='**'
-    _Dbg_msg_no_cr "$prefix $@"
-}
-
 # Add escapes to a string $1 so that when it is read back via "$1"
 # it is the same as $1.
 function _Dbg_esc_dq {
   echo $1 | sed -e 's/[`$\"]/\\\0/g' 
-}
-
-function _Dbg_msg {
-    print -- "$@" 
-}
-
-function _Dbg_msg_nocr {
-    echo -n $@
 }
 
 # Add escapes to a string $1 so that when it is read back via "$1"
@@ -74,39 +52,6 @@ function _Dbg_onoff {
   typeset onoff='off.'
   (( $1 != 0 )) && onoff='on.'
   echo $onoff
-}
-
-# print message to output device
-function _Dbg_printf {
-  typeset format=$1
-  shift
-  if (( _Dbg_logging )) ; then
-    printf "$format" "$@" >>$_Dbg_logfid
-  fi
-  if (( ! _Dbg_logging_redirect )) ; then
-    if [[ -n $_Dbg_tty ]] ; then
-      printf "$format" "$@" >>$_Dbg_tty
-    else
-      printf "$format" "$@"
-    fi
-  fi
-  _Dbg_msg ''
-}
-
-# print message to output device without a carriage return at the end
-function _Dbg_printf_nocr {
-  typeset format=$1
-  shift 
-  if (( _Dbg_logging )) ; then
-    printf "$format" "$@" >>$_Dbg_logfid
-  fi
-  if (( ! $_Dbg_logging_redirect )) ; then
-    if [[ -n $_Dbg_tty ]] ; then 
-      printf "$format" "$@" >>$_Dbg_tty
-    else
-      printf "$format" "$@"
-    fi
-  fi
 }
 
 # Set $? to $1 if supplied or the saved entry value of $?. 
