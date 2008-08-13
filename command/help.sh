@@ -25,10 +25,12 @@ _Dbg_do_help() {
   if ((0==$#)) ; then
       _Dbg_msg "Type 'help <command-name>' for help on a specific command.\n"
       _Dbg_msg 'Available commands:'
-#       typeset -a commands
-#       for 
-#       commands=(${(ki)_Dbg_command_help})
-#       print -C $_Dbg_help_cols $commands
+      typeset commands="${!_Dbg_command_help[@]}"
+      unset columnized; columnize "$commands" 45
+      typeset -i i
+      for ((i=0; i<${#columnized[@]}; i++)) ; do 
+	  _Dbg_msg "  ${columnized[i]}"
+      done
    else
       typeset cmd=$1
       if [[ -n ${_Dbg_command_help[$cmd]} ]] ; then
@@ -37,9 +39,9 @@ _Dbg_do_help() {
 	  _Dbg_expand_alias $cmd
 	  typeset cmd="$expanded_alias"
 	  if [[ -n ${_Dbg_command_help[$cmd]} ]] ; then
- 	      print ${_Dbg_command_help[$cmd]}
+ 	      _Dbg_msg ${_Dbg_command_help[$cmd]}
 	  else
-      	      print "Don't have help for '$1'."
+      	      _Dbg_msg "Don't have help for '$1'."
 	  fi
       fi
   fi

@@ -1,5 +1,6 @@
 pkgdatadir        = ${datadir}/@PACKAGE@/lib
 pkgdata_DATA =      	\
+	columnize.sh    \
 	fns.sh          \
 	frame.sh        \
 	gdb.sh  	\
