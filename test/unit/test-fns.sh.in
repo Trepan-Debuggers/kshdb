@@ -90,14 +90,6 @@ no__test_parse_linespec()
     assertEquals '0' ${#words[@]}
 }
 
-test_set_debugger_internal()
-{
-    typeset  _Dbg_space_IFS=' '
-    _Dbg_set_debugger_internal
-    assertEquals "$_Dbg_space_IFS" "$IFS"
-##    assertEquals '+ dbg (${.sh.file}:${LINENO}[$.sh.subshell]): ${.sh.fun}\n' $PS4
-}
-
 test_split()
 {
     typeset -a words

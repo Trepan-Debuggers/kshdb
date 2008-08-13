@@ -9,7 +9,7 @@ fi
 _Dbg_libdir='.'
 . ${_Dbg_libdir}/dbg-main.sh
 
-# Note that this is called via zshdb rather than "zsh --debugger" or zshdb-trace
+# Note that this is called via kshdb rather than "ksh --debugger" or kshdb-trace
 _Dbg_script=1
 
 # TEMPORARY: Save me typing in testing.
@@ -21,11 +21,21 @@ else
     _Dbg_script_args=($_Dbg_script_file)
 fi
 
+typeset -i o_no_quit=0 # FIXME: Set in dbg-opts.sh
+
+_Dbg_step_ignore=2
 while : ; do
-    _Dbg_step_ignore=2
     trap '_Dbg_debug_trap_handler "$@"' DEBUG
     . ${_Dbg_script_args[@]}
     trap '' DEBUG
-    # _Dbg_msg "Program terminated. Type 's' or 'R' to restart."
-    _Dbg_msg "Program terminated. Type 's'to restart."
+    _Dbg_msg_nocr 'Program terminated.'
+    if (( !o_no_quit )); then
+	_Dbg_msg "Type 's' to restart."
+	_Dbg_process_commands
+	_Dbg_step_ignore=2
+	# _Dbg_msg "Type 's' or 'R' to restart."
+    else
+	_Dbg_msg ''
+	break
+    fi
 done

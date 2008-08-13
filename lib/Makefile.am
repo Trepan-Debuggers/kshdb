@@ -7,6 +7,7 @@ pkgdata_DATA =      	\
 	journal.sh  	\
 	msg.sh    	\
 	run.sh    	\
+	save-restore.sh	\
 	sig.sh
 
 EXTRA_DIST = $(pkgdata_DATA)

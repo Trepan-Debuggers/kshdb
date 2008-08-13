@@ -53,11 +53,7 @@ function _Dbg_debug_trap_handler {
 	_Dbg_process_commands
 	_Dbg_set_to_return_from_debugger 1
 	return $_Dbg_rc
-    else
-	save_callstack 1
     fi
-
-   print_callstack
 }
 
 # Cleanup routine: erase temp files before exiting.

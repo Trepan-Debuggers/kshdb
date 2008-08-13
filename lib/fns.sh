@@ -191,62 +191,6 @@ function _Dbg_parse_linespec {
    esac
 }
 
-# Does things to after on entry of after an eval to set some debugger
-# internal settings  
-function _Dbg_set_debugger_internal {
-  IFS="$_Dbg_space_IFS";
-  PS4='+ dbg (${.sh.file}:${LINENO}[${.sh.subshell}]): ${.sh.fun}
-'
-  PS4='${.sh.file}:${LINENO}:[${.sh.subshell}]): ${.sh.fun}
-'
-}
-
-function _Dbg_restore_user_vars {
-  IFS="$_Dbg_space_IFS";
-  set -$_Dbg_old_set_opts
-  IFS="$_Dbg_old_IFS";
-  PS4="$_Dbg_old_PS4"
-}
-
-# Do things for debugger entry. Set some global debugger variables
-# Remove trapping ourselves. 
-# We assume that we are nested two calls deep from the point of debug
-# or signal fault. If this isn't the constant 2, then consider adding
-# a parameter to this routine.
-
-function _Dbg_set_debugger_entry {
-
-  typeset -i adjust_level=${1:-0}
-  ((.sh.level -= $adjust_level))
-  _cur_fn="${.sh.file}"
-  let _curline=${.sh.lineno}
-  ((_curline < 1)) && let _curline=1
-
-  _Dbg_old_IFS="$IFS"
-  _Dbg_old_PS4="$PS4"
-  _Dbg_stack_pos=$_Dbg_STACK_TOP
-  _Dbg_listline=_curline
-  _Dbg_set_debugger_internal
-}
-
-function _Dbg_set_to_return_from_debugger {
-  _Dbg_rc=$?
-
-  _Dbg_currentbp=0
-  _Dbg_stop_reason=''
-  if (( $1 != 0 )) ; then
-    _Dbg_last_ksh_command="$_Dbg_ksh_command"
-    _Dbg_last_curline="$_curline"
-    _Dbg_last_source_file="${.sh.file}"
-  else
-    _Dbg_last_curline==${KSH_LINENO[1]}
-    _Dbg_last_source_file=${KSH_SOURCE[2]:-$_Dbg_bogus_file}
-    _Dbg_last_ksh_command="**unsaved _kshdb command**"
-  fi
-
-  _Dbg_restore_user_vars
-}
-
 # Add escapes to a string $1 so that when it is read back via "$1"
 # it is the same as $1.
 function _Dbg_onoff {

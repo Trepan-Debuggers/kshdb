@@ -21,7 +21,7 @@
 # and absolute line positions, not function names and offset.
 
 _Dbg_add_help where \
-'where [n] 	Stack trace of calling functions or sourced files.'
+"where [n] 	- Stack trace of calling functions or source'd files."
 
 # Print a stack backtrace.  
 # $1 is the maximum number of entries to include.
@@ -30,31 +30,17 @@ _Dbg_do_backtrace() {
   _Dbg_not_running && return 1
 
   typeset prefix='##'
-  typeset -i n=${#_Dbg_frame_stack}
+  typeset -i n=${#_Dbg_frame_stack[@]}
   typeset -i count=${1:-$n}
   typeset -i i=1
-  typeset -i im1
 
   # Loop which dumps out stack trace.
-  for (( i=1 ; (( i <= n && count > 0 )) ; i++ )) ; do 
-    prefix='##'
-    (( i == _Dbg_stack_pos)) && prefix='->'
-
-    ((im1=i-1))
-    prefix+="$im1 "
-    if ((i!=1)) ; then 
-	prefix+="${_Dbg_func_stack[i-1]} called from"
-    else
-	prefix+='in'
-    fi
-
-    typeset file_line="${_Dbg_frame_stack[i]}"
-    _Dbg_split "$file_line" ':'
-    typeset filename=${split_result[1]}
-    typeset -i line=${split_result[2]}
-    (( _Dbg_basename_only )) && filename=${filename##*/}
-    _Dbg_msg "$prefix file \`$filename' at line ${line}"
-    ((count--))
+  for (( i=0 ; (( i < n && count > 0 )) ; i++ )) ; do 
+      typeset prefix='##'
+      (( i == _Dbg_stack_pos)) && prefix='->'
+      prefix+="$i in"
+      _Dbg_print_frame "$i" "$prefix"
+      ((count--))
   done
   return 0
 }
