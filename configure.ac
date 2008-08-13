@@ -68,6 +68,8 @@ AC_CONFIG_FILES([Makefile
 
 AC_CONFIG_FILES([kshdb], [chmod +x kshdb])
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
+AC_CONFIG_FILES([test/unit/test-columns.sh], 
+                [chmod +x test/unit/test-columns.sh])
 AC_CONFIG_FILES([test/unit/test-fns.sh],   [chmod +x test/unit/test-fns.sh])
 AC_CONFIG_FILES([test/unit/test-io.sh],    [chmod +x test/unit/test-io.sh])
 AC_CONFIG_FILES([test/unit/test-pre.sh],   [chmod +x test/unit/test-pre.sh])

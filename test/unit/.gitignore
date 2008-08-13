@@ -2,6 +2,7 @@
 /Makefile
 /Makefile.in
 /test-alias.sh
+/test-columns.sh
 /test-fns.sh
 /test-io.sh
 /test-pre.sh

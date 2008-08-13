@@ -18,16 +18,24 @@
 #  Code ported from my Ruby code which is in turn ported from a routine
 #  from Python.
 
-# +colsep+ contains the string to use to separate entries.
-# columnize(list, displaywidth=80, colsep = '  ')
+# columnize a blank-delmited string $1 with maximum column width $2,
+# separate columns with $3. The column width defaults to 80 and the
+# column separator is two spaces.  However if we are using ksh93t or
+# greater, then $1 is where the return value is to go and the other
+# parameters are shifted by 1: $2 contains the list to columnize and
+# $3 the maximum width, etc.
 columnize() {
     typeset -a list
+#     if [[ -n $KSH_VERSION ]] ; then
+# 	typeset -n columnized="$1"
+# 	shift
+#     fi
     list=($1)
     typeset -i displaywidth=${2:-80}
     typeset colsep=${3:-'  '}
     typeset -i list_size=${#list[@]}
     if ((list_size == 0)) ; then
-      columnized=("<empty>")
+      columnized=('<empty>')
       return
     fi
     if ((1 == list_size)); then
@@ -103,12 +111,19 @@ columnize() {
     done
 }
 
-if [[ $0 == *columnize ]] ; then 
+if [[ $0 == *columnize.sh ]] ; then 
     #
     [[ -n $ZSH_NAME ]] && [[ -n $ZSH_VERSION ]] && setopt ksharrays
     print_columns() {
 	unset columnized
-	columnize "$@"
+	typeset columns
+	typeset columnized
+	if [[ -n $KSH_VERSION ]] ; then
+	    columnize columns "$@"
+	    columized=columns
+	else
+	    columnize "$@"
+	fi
 	typeset -i i
 	echo '==============='
 	for ((i=0; i<${#columnized[@]}; i++)) ; do 
