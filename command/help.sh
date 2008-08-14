@@ -36,7 +36,7 @@ _Dbg_do_help() {
       if [[ -n ${_Dbg_command_help[$cmd]} ]] ; then
  	  print ${_Dbg_command_help[$cmd]}
       else
-	  _Dbg_expand_alias $cmd
+	  _Dbg_alias_expand $cmd
 	  typeset cmd="$expanded_alias"
 	  if [[ -n ${_Dbg_command_help[$cmd]} ]] ; then
  	      _Dbg_msg ${_Dbg_command_help[$cmd]}
@@ -47,5 +47,5 @@ _Dbg_do_help() {
   fi
 }
 
-_Dbg_add_alias '?' help
-_Dbg_add_alias 'h' help
+_Dbg_alias_add '?' help
+_Dbg_alias_add 'h' help
