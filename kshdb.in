@@ -6,7 +6,39 @@ if [[ -z "$.sh.level}" ]] ; then
   exit 2
 fi
 
-_Dbg_libdir='.'
+# This routine gets called via the -c or --command option and its sole
+# purpose is to capture the command string such as via "x $*" or 
+# in a traceback ("where").
+function bashdb_eval {
+  eval $*  # Type: "x $*" to see what's being run.
+}
+
+typeset -a _Dbg_script_args=("$@")
+
+# Equivalent to basename $0; the short program name
+typeset _Dbg_pname=${0##*/}  
+
+typeset prefix=@prefix@
+typeset _Dbg_libdir=@PKGDATADIR@
+
+# Parse just the libdir option
+typeset -i i
+for ((i=0; $i<${#_Dbg_script_args[@]}-1; i++)) ; do 
+    typeset arg=${_Dbg_script_args[$i]}
+    if [[ $arg == '-L' || $arg == '--libdir' ]] ; then
+	((i++))
+	_Dbg_libdir="${_Dbg_script_args[$i]}"
+	break
+    fi
+done
+if [[ ! -d $_Dbg_libdir ]] && [[ ! -d $_Dbg_libdir ]] ; then 
+  echo "${_Dbg_pname}: Can't read debugger library directory '${_Dbg_libdir}'."
+  echo "${_Dbg_pname}: Perhaps kshdb is installed wrong (if its installed)." >&2
+  echo "${_Dbg_pname}: Try running kshdb using -L (with a different directory)." >&2
+  echo "${_Dbg_pname}: Run kshdb --help for a list and explanation of options." >&2
+  exit 1
+fi
+
 . ${_Dbg_libdir}/dbg-main.sh
 
 # Note that this is called via kshdb rather than "ksh --debugger" or kshdb-trace

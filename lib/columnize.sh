@@ -118,12 +118,12 @@ if [[ $0 == *columnize.sh ]] ; then
 	unset columnized
 	typeset columns
 	typeset columnized
-	if [[ -n $KSH_VERSION ]] ; then
-	    columnize columns "$@"
-	    columized=columns
-	else
+# 	if [[ -n $KSH_VERSION ]] ; then
+# 	    columnize columns "$@"
+# 	    columized=columns
+# 	else
 	    columnize "$@"
-	fi
+#	fi
 	typeset -i i
 	echo '==============='
 	for ((i=0; i<${#columnized[@]}; i++)) ; do 

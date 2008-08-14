@@ -136,11 +136,11 @@ _Dbg_onecmd() {
 	  _Dbg_last_cmd='down'
 	  ;;
 
-# 	# evaluate as bash command
-# 	e | ev | eva | eval )
-# 	  _Dbg_do_eval $@
-# 	  _Dbg_last_cmd='eval'
-# 	  ;;
+	# evaluate as bash command
+	e | ev | eva | eval )
+	  _Dbg_do_eval $@
+	  _Dbg_last_cmd='eval'
+	  ;;
 
 	#  Set stack frame
 	fr | fra | fra | frame )
@@ -152,11 +152,11 @@ _Dbg_onecmd() {
 	help )
 	  _Dbg_do_help $args ;;
 
-# 	# print globbed or substituted variables
-# 	p | pr | pri | prin | print )
-# 	  _Dbg_do_print "$args"
-# 	  _Dbg_last_cmd='print'
-# 	  ;;
+	# print globbed or substituted variables
+	p | pr | pri | prin | print )
+	  _Dbg_do_print "$args"
+	  _Dbg_last_cmd='print'
+	  ;;
 
 	# quit
 	quit )
