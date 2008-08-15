@@ -1,4 +1,4 @@
-#!@KSH_PROG@
+#!@BASH_PROG@
 # -*- shell-script -*-
 
 test_alias()

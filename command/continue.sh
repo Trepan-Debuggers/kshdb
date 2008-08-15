@@ -17,7 +17,7 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-_Dbg_add_help continue \
+_Dbg_help_add continue \
 'continue	- Continue execution.'
 
 function _Dbg_do_continue {
