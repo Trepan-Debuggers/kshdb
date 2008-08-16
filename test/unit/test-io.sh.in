@@ -1,4 +1,4 @@
-#!@KSH_PROG@
+#!@SH_PROG@
 # -*- shell-script -*-
 
 test_undefined()

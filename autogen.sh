@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/ksh
 autoreconf -i && \
 autoconf && {
   print "Running configure with $@"

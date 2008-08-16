@@ -4,6 +4,26 @@ AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([no-define])
 
+AC_SUBST(TRY_GETOPT)
+
+AC_ARG_ENABLE([gnugetopt],
+	AC_HELP_STRING([--enable-getopt], 
+	[Allow GNU-style long options (default enabled)]))
+
+if test "${enable_getopt}" != "no" ; then
+  $SH_PROG ./getopt-test.sh
+  if test $? -eq 0 ; then
+    AC_MSG_RESULT([Good! Your long options seem to be working okay.])
+    TRY_GETOPT=1
+  else
+    AC_MSG_WARN([getopt doesn't seem to handle long options correctly.])
+    AC_MSG_WARN([Disabling long-options in bashdb.])
+    TRY_GETOPT=0
+  fi  
+else
+  TRY_GETOPT=0
+fi
+
 AC_CONFIG_SRCDIR(kshdb.in)
 if test x$srcdir = x ; then
   srcdir=$ac_pwd
@@ -13,14 +33,14 @@ fi
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
 AC_ARG_WITH(ksh, AC_HELP_STRING([--with-ksh], 
-		  [location of ksh OK_KSH_VERS program]), KSH_PROG=$withval)
+		  [location of ksh OK_KSH_VERS program]), SH_PROG=$withval)
 
-if test "$KSH_PROG" = "yes" || test "$KSH_PROG" = "no" || test -z "$KSH_PROG"
+if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
 then
-  AC_PATH_PROG(KSH_PROG, ksh93, no)
+  AC_PATH_PROG(SH_PROG, ksh93, no)
 fi
 
-if test "$KSH_PROG" = no; then
+if test "$SH_PROG" = no; then
   AC_MSG_ERROR([I didn't find the ksh executable.\
   You might want to use the --with-ksh option.])
 fi
@@ -45,7 +65,7 @@ fi
 # Get the fully expanded name of pkgdatadir. This is used in kshdb.in
 # and dbg-main.sh.in and for installing debugger files.
 
-pkgdatadir=$datadir/zshdb
+pkgdatadir=$datadir/kshdb
 AC_SUBST_DIR(PKGDATADIR, $pkgdatadir)
 
 AM_MISSING_PROG(GIT2CL, git2cl, $missing_dir)

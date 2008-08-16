@@ -179,11 +179,9 @@ function _Dbg_parse_linespec {
     # Function name or error
     * )
       if _Dbg_is_function $linespec ${_Dbg_debug_debugger} ; then 
-	set -x
 	typeset -a word==( $(typeset -p +f $linespec) )
 	typeset -r fn=${word[1]%\(\)}
 	echo "${word[3]} 1 ${word[4]}"
-	set +x
       else
 	echo ''
       fi

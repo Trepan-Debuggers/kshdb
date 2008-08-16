@@ -1,4 +1,4 @@
-#!@KSH_PROG@
+#!@SH_PROG@
 # -*- shell-script -*-
 
 PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 

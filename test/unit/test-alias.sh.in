@@ -1,14 +1,18 @@
-#!@BASH_PROG@
+#!@SH_PROG@
 # -*- shell-script -*-
+PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+'
 
 test_alias()
 {
     _Dbg_alias_add q quit
-    _Dbg_alias_expand q expanded_alias
-    assertEquals 'quit' $expanded_alias
+    unset expanded_alias
+    _Dbg_alias_expand q
+    assertEquals 'quit' "$expanded_alias"
     _Dbg_alias_remove q
-    _Dbg_alias_expand q expanded_alias
-    assertEquals 'q' $expanded_alias
+    unset expanded_alias
+    _Dbg_alias_expand q
+    assertEquals 'q' "$expanded_alias"
 }
 
 # Make sure @top_builddir@ has a trailing slash
