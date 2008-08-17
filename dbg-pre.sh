@@ -1,5 +1,6 @@
 # -*- shell-script -*-
-# dbg-pre.sh - Korn Shell Debugger Global Variables
+# dbg-pre.sh - Code common to zshdb and zshdb-trace that has to run first
+#
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
@@ -27,7 +28,7 @@
 # the corresponding file.
 
 [[ -z $_Dbg_release ]] || return
-typeset -r _Dbg_release='0.1git'
+typeset -r _Dbg_release='0.01git'
 
 # Name we refer to ourselves by
 typeset _Dbg_debugger_name='kshdb'
@@ -86,6 +87,18 @@ typeset _Dbg_tmpdir=/tmp
 _Dbg_tempname() {
   echo "$_Dbg_tmpdir/${_Dbg_debugger_name}$1$$"
 }
+
+# Process command-line options
+. ${_Dbg_libdir}/dbg-opts.sh
+
+if [[ ! -d $_Dbg_tmpdir ]] && [[ ! -w $_Dbg_tmpdir ]] ; then
+  echo "${_Dbg_pname}: cannot write to temp directory $_Dbg_tmpdir." >&2
+  echo "${_Dbg_pname}: Use -T try directory location." >&2
+  exit 1
+fi
+
+# Save the initial working directory so we can reset it on a restart.
+typeset _Dbg_init_cwd=$PWD
 
 typeset -a _Dbg_script_args
 _Dbg_script_args=($@)

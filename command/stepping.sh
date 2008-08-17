@@ -43,7 +43,7 @@ typeset -i _Dbg_skip_ignore=0
 # }
 
 _Dbg_help_add step \
-'step [ nnn]	step (into functions) once or nnn times.'
+'step [ nnn]	-- step (into functions) once or nnn times.'
 
 # Step command
 # $1 is an optional additional count.
@@ -63,3 +63,7 @@ _Dbg_do_step() {
   _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
   return 1
 }
+
+_Dbg_alias_add 's' step
+_Dbg_alias_add 'n' step  # FIXME: remove when we have a real next
+_Dbg_alias_add 'next' step  # FIXME: remove when we have a real next

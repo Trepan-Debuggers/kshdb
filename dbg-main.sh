@@ -37,6 +37,6 @@ done
 # fi
 
 # # Run the user's debugger startup file
-# if [[ -z $KSHDB_RESTART_FILE && -r ~/.kshdbrc ]] ; then
-#   _Dbg_do_source ~/.kshbrc
+# if [[ -z $DBG_RESTART_FILE && -r ~/.kshdbrc ]] ; then
+#   _Dbg_do_source ~/.kshdbrc
 # fi

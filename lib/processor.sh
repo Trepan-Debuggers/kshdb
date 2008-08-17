@@ -136,8 +136,8 @@ _Dbg_onecmd() {
 	  _Dbg_last_cmd='down'
 	  ;;
 
-	# evaluate as bash command
-	e | ev | eva | eval )
+	# evaluate as shell command
+	eval )
 	  _Dbg_do_eval $@
 	  _Dbg_last_cmd='eval'
 	  ;;
@@ -153,7 +153,7 @@ _Dbg_onecmd() {
 	  _Dbg_do_help $args ;;
 
 	# print globbed or substituted variables
-	p | pr | pri | prin | print )
+	print )
 	  _Dbg_do_print "$args"
 	  _Dbg_last_cmd='print'
 	  ;;
@@ -165,7 +165,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	# single-step N times (default 1)
-	s | st | ste | step | n | ne | nex | next )
+	step | next )
 	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
 	  _Dbg_last_next_step_args="$@"
 	  _Dbg_do_step $@
@@ -185,16 +185,16 @@ _Dbg_onecmd() {
 # 	  _Dbg_do_source $@
 # 	  ;;
 
-# 	# restart debug session.
-# 	ru | run )
-# 	  _Dbg_last_cmd='run'
-# 	  _Dbg_do_run $args
-# 	  ;;
+	# restart debug session.
+	run )
+	  _Dbg_last_cmd='run'
+	  _Dbg_do_run $args
+	  ;;
 
-# 	# Trace a function
-# 	tr | tra | tra | trac | trace )
-# 	  _Dbg_do_trace_fn $args 
-# 	  ;;
+	# Trace a function
+	tr | tra | tra | trac | trace )
+	  _Dbg_do_trace_fn $args 
+	  ;;
 
 	# Move call stack up
 	u | up )

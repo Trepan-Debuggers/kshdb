@@ -49,13 +49,13 @@ function _Dbg_do_trace_fn {
     fi
     eval "$cmd" || return 5
     cmd="${fn}() { 
-    $save_clear_trap_cmd
-    typeset -ri old_set_x=is_traced
-    set -x
-    old_$fn \"\$@\"
-    typeset -ri rc=\$?
-    (( old_set_x == 0 )) && set +x # still messes up of fn did: set -x
-    $restore_trap_cmd
+    $save_clear_trap_cmd;
+    typeset -ri old_set_x=is_traced;
+    set -x;
+    old_$fn \"\$@\";
+    typeset -ri rc=\$?;
+    (( old_set_x == 0 )) && set +x; # still messes up of fn did: set -x
+    $restore_trap_cmd;
     return \$rc
     }
 "

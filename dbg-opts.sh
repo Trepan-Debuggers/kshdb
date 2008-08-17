@@ -19,6 +19,7 @@
 
 typeset    _Dbg_tmpdir=/tmp
 typeset -i _Dbg_opt_linetrace=0
+typeset -i o_no_quit=0 
 
 # Use gdb-style annotate?
 typeset -i _Dbg_annotate=0

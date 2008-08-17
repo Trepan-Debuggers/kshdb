@@ -1,4 +1,6 @@
 # -*- shell-script -*-
+# Things related to file handling.
+#
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
@@ -14,17 +16,20 @@
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+# Directory search patch for unqualified file names
 
-get_sh_interpreter() {
-  typeset -a cmd
-  cmd=( $(ps h -o command -p $$) )
-  SH_INTERPRETER="${cmd[@]}"
+typeset -a _Dbg_dir
+_Dbg_dir=('\$cdir' '\$cwd' )
+
+# Directory in which the script is located
+## [[ -z _Dbg_cdir ]] && typeset -r _Dbg_cdir=${_Dbg_source_file%/*}
+
+# $1 contains the name you want to glob. return 1 if exists and is
+# readible or 0 if not. 
+# The result will be in variable $filename which is assumed to be 
+# local'd by the caller
+_Dbg_glob_filename() {
+  typeset cmd="filename=$(expr $1)"
+  eval $cmd
 }
 
-_Dbg_not_running ()  {
-  if (( ! _Dbg_running )) ; then 
-    _Dbg_errmsg 'The program is not being run.'
-    return 0
-  fi
-  return 1
-}
