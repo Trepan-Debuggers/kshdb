@@ -1,7 +1,9 @@
 #!@SH_PROG@
 # -*- shell-script -*-
 
-test_set_debugger_internal()
+# Test that we are saving and restoring POSIX variables IFS and PS4 that
+# the debugger changes.
+test_save_restore_IFS_PS4()
 {
     typeset  _Dbg_space_IFS=' '
     typeset old_IFS="$IFS"
