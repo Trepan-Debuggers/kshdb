@@ -64,7 +64,7 @@ _Dbg_do_run() {
 #   fi
 #   _Dbg_save_state
 
-  # cd $_Dbg_init_cwd
+  cd $_Dbg_init_cwd
   
   _Dbg_cleanup
   eval "exec $exec_cmd"
