@@ -138,10 +138,8 @@ _Dbg_onecmd() {
 
 	# edit file currently positioned at
 	edit )
-	  set -x
 	  _Dbg_do_edit $args
 	  _Dbg_last_cmd='edit'
-	  set +x
 	  ;;
 
 	# evaluate as shell command
@@ -199,13 +197,25 @@ _Dbg_onecmd() {
 	  _Dbg_do_run $args
 	  ;;
 
+	# Command to set debugger options
+	set )
+	  _Dbg_do_set $args
+	  _Dbg_last_cmd='set'
+	  ;;
+
+	# Command to show debugger settings
+	show )
+	  _Dbg_do_show $args
+	  _Dbg_last_cmd='show'
+	  ;;
+
 	# Trace a function
 	tr | tra | tra | trac | trace )
 	  _Dbg_do_trace_fn $args 
 	  ;;
 
 	# Move call stack up
-	u | up )
+	up )
 	  _Dbg_do_up $args
 	  _Dbg_last_cmd='up'
 	  ;;

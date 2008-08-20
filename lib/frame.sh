@@ -33,6 +33,10 @@ typeset -T Frame_t=(
 	}
 )
 
+# Note: this code is a bit more convoluted than it need be because of 
+# bugs as recent as ksh93t 2008-07-24. These will no doubt be fixed and
+# then this code should be redone.
+
 Frame_t -a _Dbg_frame_stack  #=() causes a problem
 _Dbg_frame_stack=()
 save_callstack() {
@@ -41,11 +45,11 @@ save_callstack() {
     typeset -a .files=()
     typeset -a .linenos=()
     typeset -a .fns=()
-    # Frame_t -a ._Dbg_frame_stack gives segv
+    # Frame_t -a ._Dbg_frame_stack gives SEGV
     while((--.level>=0)); do
 	((.sh.level = .level))
 	.files+=("${.sh.file}")
-	.linenos+=(${.sh.lineno})
+	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
 	.fns+=($0)
     done
     # Reorganize into an array of frame structures

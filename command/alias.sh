@@ -21,5 +21,18 @@ _Dbg_help_add alias \
 'alias name debugger-command	Make name be an alias for debugger-command.'
 
 _Dbg_do_alias() {
+  if (($# != 2)) ; then
+      _Dbg_errmsg "Got $# parameters, but need 2."
+  fi
   _Dbg_alias_add $1 $2
+}
+
+_Dbg_help_add unalias \
+'unalias NAME	-- Remove debugger command alias NAME.'
+
+_Dbg_do_unalias() {
+  if (($# != 1)) ; then
+      _Dbg_errmsg "Got $# parameters, but need 1."
+  fi
+  _Dbg_alias_remove $1
 }
