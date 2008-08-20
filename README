@@ -14,10 +14,10 @@ are fixes to a number of the .sh variables like .sh.level and .sh.file.
 Although debuggers are useful for novice, right now code setup is not
 really but novices. Some assembly is required. 
 
-To get the code, install git and run in a zsh shell:
+To get the code, install git and run in a ksh shell:
 
   git-clone git://github.com/rocky/kshdb.git
-  cd zshdb
+  cd kshdb
   ./autogen.sh  # Add configure options. See ./configure --help 
 
 If you've got a suitable ksh93t installed, then
@@ -29,7 +29,7 @@ when kshdb is run without any options. so to run this demo code:
   ./kshdb # in the kshdb project
 
 Or try on a real program such as perhaps:
-  ./kshdb /etc/profile # substitute /etc/profile with your favorite zsh script
+  ./kshdb /etc/profile # substitute /etc/profile with your favorite ksh script
 
 If you are happy (which I doubt), install via:
   sudo make install
@@ -78,12 +78,11 @@ the emacs interface and that shows me source code lines. To use this:
 The other reason listing is not around is that bash doesn't have
 assocative arrays in 3.x and this would simplify the code. Indpendent
 of that, the code needs to be modularized better. In ruby-debug and
-pydb, this is its own module. Also possible is that zsh could add more
+pydb, this is its own module. Also possible is that ksh could add more
 support for showing the command to be executed. Ruby has a neat
 mechanism that causes the source as an array of lines to be stored
 when a certain associative array is defined. Finally bashdb adds a
-builtin to speed up reading files into an array. (zsh has mapfile, but
-that is not enough.)
+builtin to speed up reading files into an array. 
 
 3.b) breakpoints
 
