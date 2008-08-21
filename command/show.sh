@@ -29,7 +29,7 @@ _Dbg_do_show() {
   typeset label=$2
 
   # Warranty, copying, directories, and aliases are omitted below.
-  typeset subcmds="args basename debugger prompt"
+  typeset -r subcmds="annotate args autoeval basename debugger listsize prompt trace-commands"
 
   if [[ -z $show_cmd ]] ; then 
       typeset thing
@@ -53,18 +53,18 @@ _Dbg_do_show() {
 "      \"${_Dbg_script_args[@]}\"."
       return 0
       ;;
-#     an | ann | anno | annot | annota | annotat | annotate )
-#       [[ -n $label ]] && label='annotate: '
-#      _Dbg_msg \
-# "${label}Annotation_level is $_Dbg_annotate."
-#       return 0
-#       ;;
-#     au | aut | auto | autoe | autoev | autoeva | autoeval )
-#       [[ -n $label ]] && label='basename: '
-#       _Dbg_msg \
-# "${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_autoeval)
-#       return 0
-#       ;;
+    an | ann | anno | annot | annota | annotat | annotate )
+      [[ -n $label ]] && label='annotate: '
+     _Dbg_msg \
+"${label}Annotation_level is $_Dbg_annotate."
+      return 0
+      ;;
+    au | aut | auto | autoe | autoev | autoeva | autoeval )
+      [[ -n $label ]] && label='autoeval: '
+      _Dbg_msg \
+"${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_autoeval)
+      return 0
+      ;;
     b | ba | bas | base | basen | basena | basenam | basename )
       [[ -n $label ]] && label='basename: '
       _Dbg_msg \
@@ -392,24 +392,24 @@ of promoting the sharing and reuse of software generally.
 "size: Debugger history size is $_Dbg_history_length"
       ;;
 
-#     lin | line | linet | linetr | linetra | linetrac | linetrace )
-#       [[ -n $label ]] && label='line tracing: '
-#       typeset onoff="off."
-#       (( $_Dbg_linetrace != 0 )) && onoff='on.'
-#       _Dbg_msg \
-# "${label}Show line tracing is" $onoff
-#       _Dbg_msg \
-# "${label}Show line trace delay is ${_Dbg_linetrace_delay}."
-#       return 0
-#       ;;
+    lin | line | linet | linetr | linetra | linetrac | linetrace )
+      [[ -n $label ]] && label='line tracing: '
+      typeset onoff="off."
+      (( $_Dbg_linetrace != 0 )) && onoff='on.'
+      _Dbg_msg \
+"${label}Show line tracing is" $onoff
+      _Dbg_msg \
+"${label}Show line trace delay is ${_Dbg_linetrace_delay}."
+      return 0
+      ;;
 
-#     lis | list | lists | listsi | listsiz | listsize )
-#       [[ -n $label ]] && label='listsize: '
-#      _Dbg_msg \
-# "${label}Number of source lines kshdb will list by default is" \
-#       "$_Dbg_listsize."
-#       return 0
-#       ;;
+    lis | list | lists | listsi | listsiz | listsize )
+      [[ -n $label ]] && label='listsize: '
+     _Dbg_msg \
+"${label}Number of source lines kshdb will list by default is" \
+      "$_Dbg_listsize."
+      return 0
+      ;;
 
     lo | log | logg | loggi | loggin | logging )
       shift
