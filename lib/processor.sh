@@ -104,6 +104,11 @@ _Dbg_onecmd() {
 	args=$_Dbg_last_next_step_args
     fi
     
+    # If "set trace-commands" is "on", echo the the command
+    if [[  $_Dbg_trace_commands == 'on' ]]  ; then
+      _Dbg_msg "+$_Dbg_cmd $args"
+    fi
+
     case $_Dbg_cmd in
 	# Comment line
 	[#]* ) 

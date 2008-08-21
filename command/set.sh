@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# set.sh - Bourne Again Shell Debugger Set Routines
+# set.sh - debugger settings
 #
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
@@ -25,6 +25,12 @@
 typeset -i _Dbg_linetrace=0 
 typeset -i _Dbg_linetrace_expand=0 # expand variables in linetrace output
 typeset -i _Dbg_linetrace_delay=0  # sleep after linetrace
+
+typeset -i _Dbg_autoeval=0     # Evaluate unrecognized commands?
+typeset -i _Dbg_listsize=10    # How many lines in a listing? 
+
+# Sets whether or not to display command before executing it.
+typeset _Dbg_trace_commands='off'
 
 _Dbg_help_add set ''  # Help routine is elsewhere
 
