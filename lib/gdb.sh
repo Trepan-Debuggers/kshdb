@@ -24,6 +24,10 @@
 # So happens this is how it's stored in global _Dbg_frame_stack which
 # is where we get the information from
 function _Dbg_print_location {
+    if (($# > 1)); then 
+      _Dbg_errmsg "got $# parameters, but need 0 or 1."
+      return 2
+    fi
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset -n frame=_Dbg_frame_stack[pos]
     typeset filename=${frame.filename}

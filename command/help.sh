@@ -20,7 +20,6 @@
 _Dbg_help_add help \
 'help	- Print list of commands.'
 
-typeset -i _Dbg_help_cols=6
 _Dbg_do_help() {
   if ((0==$#)) ; then
       _Dbg_msg "Type 'help <command-name>' for help on a specific command.\n"
@@ -44,7 +43,13 @@ _Dbg_do_help() {
 	  typeset dbg_cmd="$expanded_alias"
 	  if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
  	      _Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
-
+	      aliases_found=''
+	      _Dbg_alias_find_aliased "$dbg_cmd"
+	      if [[ -n $aliases_found ]] ; then
+		  _Dbg_msg ''
+		  _Dbg_msg "Aliases for $dbg_cmd: $aliases_found"
+	      fi
+	      return 0
 	  else
 	      case $dbg_cmd in 
 	      sh | sho | show )
