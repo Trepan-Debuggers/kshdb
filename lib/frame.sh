@@ -39,7 +39,7 @@ typeset -T Frame_t=(
 
 Frame_t -a _Dbg_frame_stack  #=() causes a problem
 _Dbg_frame_stack=()
-save_callstack() {
+_Dbg_frame_save_frames() {
     integer start=${1:-0}
     integer .level=.sh.level-$start .max=.sh.level-$start
     typeset -a .files=()
@@ -74,11 +74,13 @@ save_callstack() {
 # }
 
 _Dbg_frame_adjust() {
+  (($# != 2)) && return -1
+
   typeset -i count=$1
   typeset -i signum=$2
 
   typeset -i retval
-  _Dbg_frame_int_setup $count || return 
+  _Dbg_frame_int_setup $count || return 2
 
   typeset -i pos
   if (( signum==0 )) ; then
@@ -92,10 +94,10 @@ _Dbg_frame_adjust() {
   fi
 
   if (( $pos < 0 )) ; then 
-    _Dbg_msg 'Would be beyond bottom-most (most recent) entry.'
+    _Dbg_errmsg 'Would be beyond bottom-most (most recent) entry.'
     return 1
   elif (( $pos >= ${#_Dbg_frame_stack[@]} )) ; then 
-    _Dbg_msg 'Would be beyond top-most (least recent) entry.'
+    _Dbg_errmsg 'Would be beyond top-most (least recent) entry.'
     return 1
   fi
 

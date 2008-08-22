@@ -4,6 +4,7 @@
 /test-alias.sh
 /test-columns.sh
 /test-fns.sh
+/test-frame.sh
 /test-io.sh
 /test-pre.sh
 /test-run.sh

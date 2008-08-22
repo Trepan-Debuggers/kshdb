@@ -48,7 +48,7 @@ function _Dbg_debug_trap_handler {
 	# If we don't have to stop we might consider skipping 
 	_Dbg_set_debugger_entry
 	
-	save_callstack 1
+	_Dbg_frame_save_frames 1
 	_Dbg_print_location
 	_Dbg_process_commands
 	_Dbg_set_to_return_from_debugger 1
