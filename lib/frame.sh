@@ -39,39 +39,6 @@ typeset -T Frame_t=(
 
 Frame_t -a _Dbg_frame_stack  #=() causes a problem
 _Dbg_frame_stack=()
-_Dbg_frame_save_frames() {
-    integer start=${1:-0}
-    integer .level=.sh.level-$start .max=.sh.level-$start
-    typeset -a .files=()
-    typeset -a .linenos=()
-    typeset -a .fns=()
-    # Frame_t -a ._Dbg_frame_stack gives SEGV
-    while((--.level>=0)); do
-	((.sh.level = .level))
-	.files+=("${.sh.file}")
-	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
-	.fns+=($0)
-    done
-    # Reorganize into an array of frame structures
-    integer i
-    for ((i=0; i<.max-start; i++)) ; do 
-	_Dbg_frame_stack[i].filename=${.files[i]}
-	_Dbg_frame_stack[i].lineno=${.linenos[i]}
-	_Dbg_frame_stack[i].fn=${.fns[$i]}
-    done
-    for ((i=${#_Dbg_frame_stack[@]}-1; $i>=.max-start; i--)); do
-	unset _Dbg_frame_stack[$i]
-    done
- }
-
-# # For debugging
-# print_callstack() {
-#     integer i
-#     for ((i=0; i<${#_Dbg_frame_stack[@]}; i++)) ; do 
-# 	print -r -- ${_Dbg_frame_stack[$i].to_file_line}
-#     done
-#     print ======
-# }
 
 _Dbg_frame_adjust() {
   (($# != 2)) && return -1
@@ -110,6 +77,16 @@ _Dbg_frame_adjust() {
 #   return 0
 }
 
+_Dbg_frame_file() {
+    (($# > 1)) && return 2
+    # FIXME check to see that $1 doesn't run off the end.
+    typeset -i pos=${1:-$_Dbg_stack_pos}
+    typeset -n frame=_Dbg_frame_stack[pos]
+    _Dbg_frame_filename=${frame.filename}
+    (( _Dbg_basename_only )) && _Dbg_frame_filename=${_Dbg_frame_filename##*/}
+    return 0
+}
+
 # Tests for a signed integer parameter and set global retval
 # if everything is okay. Retval is set to 1 on error
 _Dbg_frame_int_setup() {
@@ -137,12 +114,27 @@ _Dbg_frame_lineno() {
     return ${frame.lineno}
 }
 
-_Dbg_frame_file() {
-    (($# > 1)) && return 2
-    # FIXME check to see that $1 doesn't run off the end.
-    typeset -i pos=${1:-$_Dbg_stack_pos}
-    typeset -n frame=_Dbg_frame_stack[pos]
-    _Dbg_frame_filename=${frame.filename}
-    (( _Dbg_basename_only )) && _Dbg_frame_filename=${_Dbg_frame_filename##*/}
-    return 0
+_Dbg_frame_save_frames() {
+    integer start=${1:-0}
+    integer .level=.sh.level-$start .max=.sh.level-$start
+    typeset -a .files=()
+    typeset -a .linenos=()
+    typeset -a .fns=()
+    # Frame_t -a ._Dbg_frame_stack gives SEGV
+    while((--.level>=0)); do
+	((.sh.level = .level))
+	.files+=("${.sh.file}")
+	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
+	.fns+=($0)
+    done
+    # Reorganize into an array of frame structures
+    integer i
+    for ((i=0; i<.max-start; i++)) ; do 
+	_Dbg_frame_stack[i].filename=${.files[i]}
+	_Dbg_frame_stack[i].lineno=${.linenos[i]}
+	_Dbg_frame_stack[i].fn=${.fns[$i]}
+    done
+    for ((i=${#_Dbg_frame_stack[@]}-1; $i>=.max-start; i--)); do
+	unset _Dbg_frame_stack[$i]
+    done
 }

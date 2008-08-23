@@ -10,4 +10,5 @@
 /install-sh
 /kshdb
 /kshdb-*.tar.gz
+/kshdb-trace
 /missing

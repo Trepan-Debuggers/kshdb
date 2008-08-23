@@ -5,6 +5,7 @@ pkgdata_DATA =      	\
 	file.sh         \
 	fns.sh          \
 	frame.sh        \
+	hook.sh		\
 	gdb.sh  	\
 	help.sh  	\
 	journal.sh  	\
@@ -12,7 +13,6 @@ pkgdata_DATA =      	\
 	processor.sh   	\
 	run.sh    	\
 	save-restore.sh	\
-	set-d-vars.sh	\
-	sig.sh
+	set-d-vars.sh
 
 EXTRA_DIST = $(pkgdata_DATA)

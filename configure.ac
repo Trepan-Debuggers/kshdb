@@ -85,13 +85,16 @@ fi
 
 AM_CONDITIONAL(INSTALL_EMACS_LISP, test "x$lispdir" != "x")
 
-AC_CONFIG_FILES([Makefile \
+AC_CONFIG_FILES([ \
+	Makefile \
 	command/Makefile \
 	emacs/Makefile \
 	emacs/kshdb-test.el \
 	lib/Makefile \
 	test/Makefile \
-	test/unit/Makefile])
+	test/unit/Makefile \
+	kshdb-trace \
+	])
 
 AC_CONFIG_FILES([kshdb], [chmod +x kshdb])
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])

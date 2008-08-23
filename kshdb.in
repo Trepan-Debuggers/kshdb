@@ -52,6 +52,7 @@ for ((i=0; $i<${#_Dbg_script_args[@]}-1; i++)) ; do
 	break
     fi
 done
+
 if [[ ! -d $_Dbg_libdir ]] && [[ ! -d $_Dbg_libdir ]] ; then 
   echo "${_Dbg_pname}: Can't read debugger library directory '${_Dbg_libdir}'."
   echo "${_Dbg_pname}: Perhaps kshdb is installed wrong (if its installed)." >&2
@@ -65,6 +66,7 @@ fi
 #   exit 1
 # }
 
+# Pull in the rest of the debugger code.
 typeset _Dbg_main="$_Dbg_libdir/dbg-main.sh"
 if [[ ! -r $_Dbg_main ]] ; then 
   print "${_Dbg_pname}: Can't read debugger library file '${_Dbg_main}'."
