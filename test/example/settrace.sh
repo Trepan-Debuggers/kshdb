@@ -40,7 +40,7 @@ else
   cmdfile=${top_srcdir}/test/data/settrace.cmd
 fi
 
-. ${top_builddir}/kshdb-trace -q -L $top_builddir -B  -x $cmdfile
+. ${top_builddir}/dbg-trace.sh -q -L $top_builddir -B  -x $cmdfile
 typeset -i max=1
 init
 hanoi $max 'a' 'b' 'c'

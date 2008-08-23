@@ -2,5 +2,5 @@
 /Makefile
 /Makefile.in
 /elc-stamp
-/kshdb-test.el
+/dbg-test.el
 /kshdb.elc

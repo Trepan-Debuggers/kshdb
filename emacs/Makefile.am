@@ -15,14 +15,14 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 #$Id: Makefile.am,v 1.7 2008/01/11 13:57:31 rockyb Exp $
 
-check_DATA = kshdb-test.el kshdb-test.el.in elk-test.el
-EXTRA_DIST = kshdb.el $(check_DATA)
-ELCFILES  =  kshdb.elc
+check_DATA = dbg-test.el dbg-test.el.in elk-test.el
+EXTRA_DIST = @PACKAGE@.el $(check_DATA)
+ELCFILES  =  @PACKAGE@.elc
 if INSTALL_EMACS_LISP
-lisp_LISP = kshdb.el
+lisp_LISP = @PACKAGE@.el
 
 
 check:
-	$(EMACS) -batch -q -l $(top_builddir)/emacs/kshdb-test.el $(srcdir)/elk-test.el
+	$(EMACS) -batch -q -l $(top_builddir)/emacs/dbg-test.el $(srcdir)/elk-test.el
 endif
 test: check

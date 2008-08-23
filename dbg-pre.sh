@@ -27,6 +27,13 @@
 # used in only one sub-part (e.g. variables for break/watch/actions) to 
 # the corresponding file.
 
+# Are we using a debugger-enabled ksh? If not let's stop right here.
+if ((.sh.version < 20080820 )) ; then 
+  print "Sorry, your ksh just isn't modern enough." 2>&1
+  print "We something newer than Aug 20, 2008." 2>&1
+  exit 2
+fi
+
 [[ -z $_Dbg_release ]] || return
 typeset -r _Dbg_release='0.01git'
 

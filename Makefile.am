@@ -1,10 +1,11 @@
 SUBDIRS = command emacs lib test
 
-pkgdata_DATA =      \
-	dbg-pre.sh  \
-	dbg-io.sh   \
-	dbg-main.sh \
-	dbg-opts.sh
+pkgdata_DATA =       \
+	dbg-pre.sh   \
+	dbg-io.sh    \
+	dbg-main.sh  \
+	dbg-opts.sh  \
+	dbg-trace.sh
 
 # Set up the install target 
 bin_SCRIPTS = kshdb

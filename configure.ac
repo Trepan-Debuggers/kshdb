@@ -1,4 +1,6 @@
-dnl Configure script for Korn Shell debugger
+dnl Configure script for Shell debugger
+define(DEBUGGER, kshdb)
+define(POSIXSHELL, ksh)
 AC_INIT([kshdb],[0.01git],[rocky@gnu.org])
 AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
@@ -24,16 +26,21 @@ else
   TRY_GETOPT=0
 fi
 
-AC_CONFIG_SRCDIR(kshdb.in)
+AC_CONFIG_SRCDIR(DEBUGGER.in)
 if test x$srcdir = x ; then
   srcdir=$ac_pwd
 fi
 
+# List of output variables produced by this configure script
+#
+AC_SUBST(DIFF)
+AC_SUBST(DIFF_OPTS)
+
 ## --with-ksh can be used to tell the kshdb script and the regression
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
-AC_ARG_WITH(ksh, AC_HELP_STRING([--with-ksh], 
-		  [location of ksh OK_KSH_VERS program]), SH_PROG=$withval)
+AC_ARG_WITH(DEBUGGER, AC_HELP_STRING([--with-POSIXSHELL], 
+		  [location of POSIXSHELL program]), SH_PROG=$withval)
 
 if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
 then
@@ -41,8 +48,16 @@ then
 fi
 
 if test "$SH_PROG" = no; then
-  AC_MSG_ERROR([I didn't find the ksh executable.\
-  You might want to use the --with-ksh option.])
+  AC_MSG_ERROR([I didn't find the DEBUGGER executable.\
+  You might want to use the --with-DEBUGGER option.])
+fi
+
+AC_MSG_CHECKING([Checking whether $SH_PROG is compatible with DEBUGGER])
+if ! $SH_PROG -e '((.sh.version >= 20080820))' ; then
+  AC_MSG_RESULT([no dice :-(])
+  AC_MSG_ERROR([You might want to retry with another POSIXSHELL using the --with-POSIXSHELL option.])
+else
+  AC_MSG_RESULT(yes!)
 fi
 
 dnl We use a diff in regression testing
@@ -65,7 +80,7 @@ fi
 # Get the fully expanded name of pkgdatadir. This is used in kshdb.in
 # and dbg-main.sh.in and for installing debugger files.
 
-pkgdatadir=$datadir/kshdb
+pkgdatadir=$datadir/DEBUGGER
 AC_SUBST_DIR(PKGDATADIR, $pkgdatadir)
 
 AM_MISSING_PROG(GIT2CL, git2cl, $missing_dir)
@@ -88,15 +103,15 @@ AM_CONDITIONAL(INSTALL_EMACS_LISP, test "x$lispdir" != "x")
 AC_CONFIG_FILES([ \
 	Makefile \
 	command/Makefile \
+	dbg-trace.sh \
 	emacs/Makefile \
-	emacs/kshdb-test.el \
+	emacs/dbg-test.el \
 	lib/Makefile \
 	test/Makefile \
 	test/unit/Makefile \
-	kshdb-trace \
 	])
 
-AC_CONFIG_FILES([kshdb], [chmod +x kshdb])
+AC_CONFIG_FILES([kshdb], [chmod +x DEBUGGER])
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
 AC_CONFIG_FILES([test/unit/test-columns.sh], 
                 [chmod +x test/unit/test-columns.sh])
