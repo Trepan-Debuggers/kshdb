@@ -34,7 +34,7 @@ function _Dbg_eval {
 typeset -a _Dbg_script_args=("$@")
 
 # Original $0. Note we can't set this in an include.
-typeset -r _Dbg_orig_0=$0
+typeset _Dbg_orig_0=$0
 
 # Equivalent to basename $0; the short program name
 typeset _Dbg_pname=${0##*/}  

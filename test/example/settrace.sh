@@ -1,6 +1,6 @@
-#!/bin/ksh -f
+#!/bin/ksh
 # Towers of Hanoi
-set -u
+# set -u
 
 init() {
   _Dbg_debugger; :
@@ -37,11 +37,10 @@ fi
 if (( $# > 1 )); then
   cmdfile=$2
 else
-  srcdir=${top_srcdir:-'.'}
   cmdfile=${top_srcdir}/test/data/settrace.cmd
 fi
 
-source ${top_builddir}/kshdb-trace -q -L $top_builddir -B  -x $cmdfile
+. ${top_builddir}/kshdb-trace -q -L $top_builddir -B  -x $cmdfile
 typeset -i max=1
 init
 hanoi $max 'a' 'b' 'c'

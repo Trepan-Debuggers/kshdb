@@ -21,6 +21,7 @@
 
 # All debugger lib code has to come before debugger command code.
 typeset file
+
 for file in ${_Dbg_libdir}/lib/*.sh ; do 
     source $file
 done
