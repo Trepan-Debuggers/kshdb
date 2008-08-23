@@ -39,7 +39,7 @@ AC_SUBST(DIFF_OPTS)
 ## --with-ksh can be used to tell the kshdb script and the regression
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
-AC_ARG_WITH(DEBUGGER, AC_HELP_STRING([--with-POSIXSHELL], 
+AC_ARG_WITH(POSIXSHELL, AC_HELP_STRING([--with-POSIXSHELL], 
 		  [location of POSIXSHELL program]), SH_PROG=$withval)
 
 if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
@@ -112,6 +112,8 @@ AC_CONFIG_FILES([ \
 	])
 
 AC_CONFIG_FILES([kshdb], [chmod +x DEBUGGER])
+AC_CONFIG_FILES([test/example/hanoi.sh], 
+                [chmod +x test/example/hanoi.sh])
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
 AC_CONFIG_FILES([test/unit/test-columns.sh], 
                 [chmod +x test/unit/test-columns.sh])

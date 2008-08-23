@@ -6,6 +6,7 @@
 /config.log
 /config.status
 /configure
+/dbg-trace.sh
 /elisp-comp
 /install-sh
 /kshdb

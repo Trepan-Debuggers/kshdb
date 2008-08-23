@@ -21,12 +21,22 @@
 typeset _Dbg_evalfile=$(_Dbg_tempname eval)
 
 _Dbg_help_add eval \
-'eval cmd	Evaluate a zsh command.'
+'eval cmd -- Evaluate a shell command.'
 
 _Dbg_do_eval() {
+    
+   typeset -i old_level=.sh.level
+   typeset -i new_level
+   ((new_level=${#_Dbg_frame_stack[@]} - 1 - $_Dbg_stack_pos))
 
+   # FIXME: is this needed. Is it effective? 
+   # Should it be moved after setting .sh? 
    print ". ${_Dbg_libdir}/lib/set-d-vars.sh" > $_Dbg_evalfile
+
+   print "(( .sh.level =  new_level ))" >> $_Dbg_evalfile
    print "$@" >> $_Dbg_evalfile
+   print "(( .sh.level = $old_level ))" >> $_Dbg_evalfile
+
    if [[ -n $_Dbg_tty  ]] ; then
      _Dbg_set_dol_q $_Dbg_debugged_exit_code
      . $_Dbg_evalfile >>$_Dbg_tty
@@ -34,6 +44,7 @@ _Dbg_do_eval() {
      _Dbg_set_dol_q $_Dbg_debugged_exit_code
      . $_Dbg_evalfile
    fi
+
   # We've reset some variables like IFS and PS4 to make eval look
   # like they were before debugger entry - so reset them now
   _Dbg_set_debugger_internal
@@ -45,7 +56,10 @@ _Dbg_alias_add 'e' 'eval'
 typeset _Dbg_last_print_args=''
 
 _Dbg_help_add print \
-'print *string*	Print value of a substituted string.'
+'print EXPRESSION -- Print EXPRESSION.
+
+EXPRESSION is a string like you would put in a print statement.
+See also eval.'
 
 _Dbg_do_print() {
   typeset _Dbg_expr=${@:-"$_Dbg_last_print_args"}

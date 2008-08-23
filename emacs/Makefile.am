@@ -1,4 +1,4 @@
-#   Copyright (C) 2002, 2003, 2006, 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
