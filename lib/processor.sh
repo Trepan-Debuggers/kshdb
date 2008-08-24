@@ -25,26 +25,18 @@ typeset _Dbg_prompt_str="$_Dbg_debugger_name<1> "
 typeset _Dbg_last_cmd=''
 
 # ==================== VARIABLES =======================================
-# _Dbg_INPUT_START_DESC is the lowest descriptor we use for reading.
-# _Dbg_MAX_INPUT_DESC   is the maximum input descriptor that can be 
-#                       safely used (as per the bash manual on redirection)
-# _Dbg-input_desc       is the current descriptor in use. "sourc"ing other
-#                       command files will increase this descriptor
 
-typeset -ir _Dbg_INPUT_START_DESC=4
-typeset -i  _Dbg_MAX_INPUT_DESC=9  # logfile can reduce this
-typeset -i  _Dbg_input_desc=_Dbg_INPUT_START_DESC # ++ before use
+typeset -i _Dbg_fd_last=0
 
-typeset _Dbg_redirect_cmd="exec $_Dbg_input_desc<&0"
-eval $_Dbg_redirect_cmd
-
-# keep a list of source'd command files. If the entry is '', then we are 
+# A list of source'd command files. If the entry is '', then we are 
 # interactive.
-typeset -a _Dbg_cmdfile
-_Dbg_cmdfile=('')
+typeset -a _Dbg_cmdfile=('')
 
-# List of command files to process
-typeset -a _Dbg_input
+# A list of debugger command input-file descriptors.
+typeset -a _Dbg_fd=()
+
+# Duplicate standard input
+{_Dbg_fd[0]}<&0
 
 # ===================== FUNCTIONS =======================================
 
@@ -58,13 +50,13 @@ function _Dbg_process_commands {
   ## _Dbg_eval_all_display
 
   # Loop over all pending open input file descriptors
-  while (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; do
+  while (( _Dbg_fd_last >= 0 )) ; do
 
     typeset _Dbg_prompt="$_Dbg_prompt_str"
     # _Dbg_preloop
     typeset _Dbg_cmd 
     typeset args
-    while read "_Dbg_cmd?$_Dbg_prompt" args <&$_Dbg_input_desc
+    while read "_Dbg_cmd?$_Dbg_prompt" args <&${_Dbg_fd[_Dbg_fd_last]}
     do
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
@@ -72,12 +64,7 @@ function _Dbg_process_commands {
         (( $rc != 0 )) && return $rc
     done # read "?$_Dbg_prompt" ...
 
-    ((_Dbg_input_desc--))
-    if (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; then
-	_Dbg_redirect_cmd="exec $_Dbg_input_desc<&0"
-	eval $_Dbg_redirect_cmd
-    fi
-
+    unset _Dbg_fd[_Dbg_fd_last--]
   done
   # EOF hit. Same as quit without arguments
   _Dbg_msg "That's all folks..." # Cause <cr> since EOF may not have put in.
@@ -119,7 +106,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	# Continue
-	c | cont | conti |contin |continu | continue )
+	continue )
 	  
 	  _Dbg_last_cmd='continue'
 	  if _Dbg_do_continue $@ ; then
@@ -130,7 +117,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	# Move call stack down
-	do | dow | down )
+	down )
 	  _Dbg_do_down $@
 	  _Dbg_last_cmd='down'
 	  ;;
@@ -148,7 +135,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	#  Set stack frame
-	fr | fra | fra | frame )
+	frame )
 	  _Dbg_do_frame $@
 	  _Dbg_last_cmd='frame'
 	  ;;
@@ -185,7 +172,7 @@ _Dbg_onecmd() {
 # 	  ;;
 
 	# Run a debugger comamnd file
-	so | sou | sour | sourc | source )
+	source )
 	  _Dbg_last_cmd='source'
 	  _Dbg_do_source $@
 	  ;;
@@ -209,7 +196,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	# Trace a function
-	tr | tra | tra | trac | trace )
+	trace )
 	  _Dbg_do_trace_fn $args 
 	  ;;
 

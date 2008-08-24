@@ -1,4 +1,3 @@
-
 (bugIFS.sh:2):
 IFS=.
 +# Debugger test of an old IFS bug
