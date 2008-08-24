@@ -17,6 +17,8 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
+typeset _Dbg_stop_reason=''    # The reason we are in the debugger.
+
 function _Dbg_debug_trap_handler {
     typeset -i _Dbg_debugged_exit_code=$?
     _Dbg_old_set_opts=$-

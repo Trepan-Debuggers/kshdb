@@ -20,9 +20,9 @@
 # Move default values down $1 or one in the stack. 
 
 _Dbg_help_add down \
-'down [COUNT]	-- Set the call stack position down by COUNT.
+'down [COUNT] -- Set the call stack position down by COUNT.
 
-If COUNT is omitted, use 1. Count can be any arithmetic expression.'
+If COUNT is omitted, use 1. COUNT can be any arithmetic expression.'
 
 _Dbg_do_down() {
   _Dbg_not_running && return 1
@@ -34,7 +34,10 @@ _Dbg_do_down() {
 _Dbg_alias_add 'd' down
 
 _Dbg_help_add frame \
-'frame FRAME-NUM	-- Move the current frame to the FRAME-NUM.'
+'frame FRAME-NUM -- Move the current frame to the FRAME-NUM.
+
+If FRAME-NUM is negative, count back from the least-recent frame; -1
+is the oldest frame. FRAME-NUM can be any arithmetic expression.'
 
 _Dbg_do_frame() {
   _Dbg_not_running && return 1
@@ -45,9 +48,9 @@ _Dbg_do_frame() {
 
 # Move default values up $1 or one in the stack. 
 _Dbg_help_add up \
-'up [COUNT]	-- Set the call stack position up by COUNT. 
+'up [COUNT] -- Set the call stack position up by COUNT. 
 
-If COUNT is omitted, use 1. Count can be any arithmetic expression.'
+If COUNT is omitted, use 1. COUNT can be any arithmetic expression.'
 
 _Dbg_do_up() {
   _Dbg_not_running && return 1

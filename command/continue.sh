@@ -18,7 +18,9 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 _Dbg_help_add continue \
-'continue	- Continue execution.'
+'continue -- Continue script execution.
+
+Continue until the next breakpoint or the end of program is reached.'
 
 function _Dbg_do_continue {
 

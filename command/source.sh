@@ -22,7 +22,7 @@
 # be picked up in next debugger command loop.
 
 _Dbg_help_add source \
-'source file     - Read in debugger command file.'
+'source FILE -- Run debugger commands in FILE.'
 
 _Dbg_do_source() {
   typeset filename
