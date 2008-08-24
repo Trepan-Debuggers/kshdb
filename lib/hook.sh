@@ -56,7 +56,7 @@ function _Dbg_debug_trap_handler {
 	
 	_Dbg_set_debugger_entry
 	_Dbg_frame_save_frames 1
-	_Dbg_print_location
+	_Dbg_print_location_and_command
 
 	_Dbg_process_commands
 	_Dbg_set_to_return_from_debugger 1
@@ -70,7 +70,7 @@ function _Dbg_debug_trap_handler {
 
 	_Dbg_set_debugger_entry
 	_Dbg_frame_save_frames 1
-	_Dbg_print_location
+	_Dbg_print_location_and_command
 
 	_Dbg_set_to_return_from_debugger 1
     fi

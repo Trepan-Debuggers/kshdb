@@ -36,6 +36,16 @@ function _Dbg_print_location {
     _Dbg_msg "(${filename}:${frame.lineno}):"
 }
 
+function _Dbg_print_location_and_command {
+    _Dbg_print_location $@
+    typeset -i .old_level=.sh.level
+    typeset -i new_level
+   ((new_level=${#_Dbg_frame_stack[@]} - 1 - $_Dbg_stack_pos))
+   (( .sh.level =  new_level ))
+   _Dbg_msg ${.sh.command}
+   (( .sh.level = ${.old_level} ))
+}
+
 # Print position $1 of stack frame (from global _Dbg_frame_stack)
 # Prefix the entry with $2 if that's set.
 function _Dbg_print_frame {
