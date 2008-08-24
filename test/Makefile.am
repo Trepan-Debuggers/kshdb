@@ -1,1 +1,1 @@
-SUBDIRS = unit integration
+SUBDIRS = data unit integration

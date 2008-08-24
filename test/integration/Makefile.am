@@ -1,4 +1,5 @@
 TESTS = \
+	test-bug-args \
 	test-bugIFS   
 
 check_DATA = check-common.sh
