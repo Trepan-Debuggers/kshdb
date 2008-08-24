@@ -119,7 +119,7 @@ if ((_Dbg_try_getopt && 0 == $? )) ; then
 	fi
 	shift
 	;;
-      -x|--command) KSHDB_INPUT="$KSHDB_INPUT $2"; shift ;;  
+      -x|--command) DBG_INPUT="$DBG_INPUT $2"; shift ;;  
       -X|--trace) _Dbg_opt_linetrace=1 ;;  
       # -Y|--vtrace) _Dbg_opt_linetrace=1 ; _Dbg_opt_linetrace_expand=1 ;;  
       -V|--version) show_version=1 ;;
@@ -152,7 +152,7 @@ else
 	fi
 	;;
       V) show_version=1 ;;
-      x) KSHDB_INPUT="$KSHDB_INPUT $OPTARG" ;;  
+      x) DBG_INPUT="$OPTARG" ;;
       X) _Dbg_opt_linetrace=1 ;;  
       # Y) _Dbg_opt_linetrace=1 ; _Dbg_opt_linetrace_expand=1 ;;  
       *) 

@@ -30,14 +30,17 @@ for file in ${_Dbg_libdir}/command/*.sh ; do
     source $file
 done
 
-# Have we already specified  where to read debugger input from?
-# if [ -n "$o_cmdfile" ] ; then 
-#   _Dbg_input=($o_cmdfile)
-#   _Dbg_do_source ${_Dbg_input[2]}
-#   _Dbg_no_init=1
-# fi
+# Have we already specified where to read debugger input from?  
+#
+# Note: index 0 is only set by the debugger. It is not used otherwise for
+# I/O like those indices >= _Dbg_INPUT_START_DESC are.
+if [ -n "$DBG_INPUT" ] ; then 
+  _Dbg_input=($DBG_INPUT)
+  _Dbg_do_source ${_Dbg_input[0]}
+  _Dbg_no_init=1
+fi
 
-# # Run the user's debugger startup file
-# if [[ -z $DBG_RESTART_FILE && -r ~/.kshdbrc ]] ; then
-#   _Dbg_do_source ~/.kshdbrc
-# fi
+# Run the user's debugger startup file
+if [[ -z $DBG_RESTART_FILE && -r ~/.kshdbrc ]] ; then
+  _Dbg_do_source ~/.kshdbrc
+fi

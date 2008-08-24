@@ -21,7 +21,10 @@
 # and absolute line positions, not function names and offset.
 
 _Dbg_help_add where \
-"where [n] 	- Stack trace of calling functions or source'd files."
+"where [N] -- Print a backtrace of calling functions and sourced files.
+
+The backtrace contains function names, arguments, line numbers, and
+files. If N is given, list only N calls."
 
 # Print a stack backtrace.  
 # $1 is the maximum number of entries to include.

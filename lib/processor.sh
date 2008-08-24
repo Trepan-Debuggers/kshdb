@@ -57,34 +57,28 @@ function _Dbg_process_commands {
   # Evaluate all the display expressions
   ## _Dbg_eval_all_display
 
-  # Evaluate all the display expressions
-  # _Dbg_eval_all_display
-
-#   # Loop over all pending open input file descriptors
-#   while (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; do
+  # Loop over all pending open input file descriptors
+  while (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; do
 
     typeset _Dbg_prompt="$_Dbg_prompt_str"
     # _Dbg_preloop
     typeset _Dbg_cmd 
     typeset args
-    printf "$_Dbg_prompt" # Because below is broken? 
-    # while read "_Dbg_cmd?$_Dbg_prompt" args # <&$_Dbg_input_desc
-    while read "_Dbg_cmd?" args # <&$_Dbg_input_desc
+    while read "_Dbg_cmd?$_Dbg_prompt" args <&$_Dbg_input_desc
     do
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
         # _Dbg_postcmd
         (( $rc != 0 )) && return $rc
-	printf "$_Dbg_prompt" 
     done # read "?$_Dbg_prompt" ...
 
-#     ((_Dbg_input_desc--))
-#     if (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; then
-#       _Dbg_redirect_cmd="exec $_Dbg_input_desc<&0"
-#       eval $_Dbg_redirect_cmd
-#     fi
+    ((_Dbg_input_desc--))
+    if (( $_Dbg_input_desc >= $_Dbg_INPUT_START_DESC )) ; then
+	_Dbg_redirect_cmd="exec $_Dbg_input_desc<&0"
+	eval $_Dbg_redirect_cmd
+    fi
 
-#   done
+  done
   # EOF hit. Same as quit without arguments
   _Dbg_msg "That's all folks..." # Cause <cr> since EOF may not have put in.
   _Dbg_do_quit
@@ -190,11 +184,11 @@ _Dbg_onecmd() {
 # 	  return $?
 # 	  ;;
 
-# 	# Run a debugger comamnd file
-# 	so | sou | sour | sourc | source )
-# 	  _Dbg_last_cmd='source'
-# 	  _Dbg_do_source $@
-# 	  ;;
+	# Run a debugger comamnd file
+	so | sou | sour | sourc | source )
+	  _Dbg_last_cmd='source'
+	  _Dbg_do_source $@
+	  ;;
 
 	# restart debug session.
 	run )

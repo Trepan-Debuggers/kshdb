@@ -21,7 +21,13 @@
 typeset _Dbg_evalfile=$(_Dbg_tempname eval)
 
 _Dbg_help_add eval \
-'eval cmd -- Evaluate a shell command.'
+'eval CMD -- Run eval on CMD.
+
+CMD is a string sent to special shell builtin eval.  .sh.level is set
+beforehand based on the current stack position to get the scope set
+properly.
+
+See also print.'
 
 _Dbg_do_eval() {
     
@@ -46,7 +52,7 @@ _Dbg_do_eval() {
    fi
 
   # We've reset some variables like IFS and PS4 to make eval look
-  # like they were before debugger entry - so reset them now
+  # like they were before debugger entry - so reset them now.
   _Dbg_set_debugger_internal
 }
 

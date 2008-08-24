@@ -108,6 +108,8 @@ AC_CONFIG_FILES([ \
 	emacs/dbg-test.el \
 	lib/Makefile \
 	test/Makefile \
+	test/integration/Makefile \
+	test/integration/check-common.sh \
 	test/unit/Makefile \
 	])
 

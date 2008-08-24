@@ -1,0 +1,36 @@
+#@SH_PROG@
+# -*- shell-script -*-
+PS4='(%N:%i): [%?] zsh+ 
+'
+
+if [ -z "$SH" ] ; then 
+  SH=@SH_PROG@
+fi
+
+export top_builddir=@abs_top_builddir@
+export top_srcdir=@abs_top_srcdir@
+
+check_output() {
+  typeset testfile="$1"
+  typeset rightfile="$2"
+  # Bourne sh
+  # set -o noglob
+
+  @DIFF@ @DIFF_OPTS@ $testfile $rightfile && rm -f $testfile
+  return $?
+}
+
+# Run the debugger on test program $1 with (optional) debugger options $2
+# using commandfile $3. We assume $TOP_BUILDDIR, $TOP_SRCDIR and
+# $TEST_NAME have been set previously
+run_debugger() {
+  typeset debugged_script=$1
+  typeset dbg_opts=${2:-"-L ${top_srcdir} -B -q"}
+  typeset cmdfile=${3:-"${top_srcdir}/test/data/${TEST_NAME}.cmd"}
+  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x $cmdfile $debugged_script
+}
+
+TEST_FILE="${top_builddir}/test/integration/${TEST_NAME}.check"
+RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}.right"
+TEST_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.check"
+RIGHT_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.right"
