@@ -32,7 +32,7 @@ done
 
 # Have we already specified where to read debugger input from?  
 if [ -n "$DBG_INPUT" ] ; then 
-  _Dbg_do_source $DBG_INPUT
+  _Dbg_do_source "$DBG_INPUT"
   _Dbg_no_init=1
 fi
 

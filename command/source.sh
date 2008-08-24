@@ -27,12 +27,14 @@ _Dbg_help_add source \
 _Dbg_do_source() {
   typeset filename
   if (( $# == 0 )) ; then
-    _Dbg_errmsg 'Need to give a filename for the "source" command'
+    _Dbg_errmsg 'Need to give a filename for the "source" command.'
     return 1
   fi
-  _Dbg_glob_filename $1
+  _Dbg_glob_filename "$1"
   if [[ -r $filename ]] || [[ "$filename" == '/dev/stdin' ]] ; then
+      # Open new input file descriptor and save number in _Dbg_fd.
       exec {_Dbg_fd[++_Dbg_fd_last]}<"$filename"
+      # We'll store the filename for good measure too.
       _Dbg_cmdfile+=("$filename")
   else
     _Dbg_errmsg "Source file $filename is not readable."
