@@ -3,6 +3,8 @@ check_DATA = \
 	bug-args.right  \
 	bugIFS.cmd      \
 	bugIFS.right    \
+	frame.cmd       \
+	frame.right     \
 	setshow.cmd     \
 	setshow.right
 

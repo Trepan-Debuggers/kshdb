@@ -137,4 +137,6 @@ _Dbg_frame_save_frames() {
     for ((i=${#_Dbg_frame_stack[@]}-1; $i>=.max-start; i--)); do
 	unset _Dbg_frame_stack[$i]
     done
+    # Set stack position to the most recent entry.
+    _Dbg_stack_pos=0
 }

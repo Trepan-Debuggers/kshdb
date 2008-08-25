@@ -1,6 +1,7 @@
 TESTS = \
 	test-bug-args \
-	test-bugIFS   
+	test-bugIFS   \
+	test-frame   
 
 check_DATA = check-common.sh
 

@@ -52,6 +52,10 @@ function _Dbg_print_frame {
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset prefix=${2:-''}
 
-    [[ -z ${_Dbg_frame_stack[pos].filename} ]] && return
-    _Dbg_msg "$prefix ${_Dbg_frame_stack[pos].to_file_line}"
+    [[ -z ${_Dbg_frame_stack[pos].filename} ]] && return 1
+
+    _Dbg_frame_lineno $pos
+    typeset -i ln=$?
+    typeset _Dbg_frame_filename=''; _Dbg_frame_file $pos
+    _Dbg_msg "$prefix file \`${_Dbg_frame_filename}' at line ${ln}"
 }
