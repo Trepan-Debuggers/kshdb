@@ -45,10 +45,9 @@ a=a
 +# should be the same as up
 +down -1
 (hanoi.sh:37):
-+where 
++where 2
 ##0 in file `hanoi.sh' at line 16
 ->1 in file `hanoi.sh' at line 37
-##2 in file `kshdb' at line 94
 +# Should go to next-to-least-recent frame
 +frame -2
 (hanoi.sh:37):

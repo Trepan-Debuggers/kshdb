@@ -22,7 +22,7 @@ bt 2
 # Try some negative numbers
 # should be the same as up
 down -1
-T
+T 2
 # Should go to next-to-least-recent frame
 frame -2
 where 2
