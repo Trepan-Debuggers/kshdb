@@ -114,9 +114,9 @@ function _Dbg_get_functions {
 	fn=${line% #*}
 	[[ $fn == _* ]] && (( ! $include_system )) && continue
 	if [[ $fn == $pat ]] ; then 
-	     [[ $invert == 0 ]] && ret_fns[${#ret_fns[@]}]=$fn
+	     [[ $invert == 0 ]] && ret_fns[-1]=$fn
 	else
-	     [[ $invert != 0 ]] && ret_fns[${#ret_fns[@]}]=$fn
+	     [[ $invert != 0 ]] && ret_fns[-1]=$fn
 	fi
     done
     echo ${ret_fns[@]}

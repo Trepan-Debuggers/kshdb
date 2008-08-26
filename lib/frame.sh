@@ -33,6 +33,11 @@ typeset -T Frame_t=(
 	}
 )
 
+# Save the last-entered frame for to determine stopping when
+# "set force" or step+ is in effect.
+typeset _Dbg_frame_last_filename=''
+typeset -i _Dbg_frame_last_lineno=0
+
 # Note: this code is a bit more convoluted than it need be because of 
 # bugs as recent as ksh93t 2008-07-24. These will no doubt be fixed and
 # then this code should be redone.
@@ -127,16 +132,19 @@ _Dbg_frame_save_frames() {
 	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
 	.fns+=($0)
     done
+    ((.sh.level=.level))
     # Reorganize into an array of frame structures
-    integer i
-    for ((i=0; i<.max-start; i++)) ; do 
-	_Dbg_frame_stack[i].filename=${.files[i]}
-	_Dbg_frame_stack[i].lineno=${.linenos[i]}
-	_Dbg_frame_stack[i].fn=${.fns[$i]}
+    integer _Dbg_i
+    for ((_Dbg_i=0; _Dbg_i<.max-start; _Dbg_i++)) ; do 
+	_Dbg_frame_stack[_Dbg_i].filename=${.files[_Dbg_i]}
+	_Dbg_frame_stack[_Dbg_i].lineno=${.linenos[_Dbg_i]}
+	_Dbg_frame_stack[_Dbg_i].fn=${.fns[_Dbg_i]}
     done
-    for ((i=${#_Dbg_frame_stack[@]}-1; $i>=.max-start; i--)); do
-	unset _Dbg_frame_stack[$i]
+    for ((_Dbg_i=${#_Dbg_frame_stack[@]}-1; _Dbg_i>=.max-start; _Dbg_i--)); do
+	unset _Dbg_frame_stack[$_Dbg_i]
     done
     # Set stack position to the most recent entry.
     _Dbg_stack_pos=0
+    _Dbg_frame_last_file="${_Dbg_frame_stack[0].filename}"
+    _Dbg_frame_last_lineno="${_Dbg_frame_stack[0].lineno}"
 }

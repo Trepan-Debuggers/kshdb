@@ -53,7 +53,7 @@ if test "$SH_PROG" = no; then
 fi
 
 AC_MSG_CHECKING([Checking whether $SH_PROG is compatible with DEBUGGER])
-if ! $SH_PROG -e '((.sh.version >= 20080820))' ; then
+if ! $SH_PROG -e '((.sh.version >= 20080825))' ; then
   AC_MSG_RESULT([no dice :-(])
   AC_MSG_ERROR([You might want to retry with another POSIXSHELL using the --with-POSIXSHELL option.])
 else

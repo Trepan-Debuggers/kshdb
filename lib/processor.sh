@@ -164,6 +164,22 @@ _Dbg_onecmd() {
 	  return $?
 	  ;;
 
+	# single-step force 
+	'step+' )
+	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
+	  _Dbg_last_next_step_args="$@"
+	  _Dbg_do_step_force $@
+	  return $?
+	  ;;
+
+	# single-step no force
+	'step-' )
+	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
+	  _Dbg_last_next_step_args="$@"
+	  _Dbg_do_step_no_force $@
+	  return $?
+	  ;;
+
 # 	# skip N times (default 1)
 # 	sk | ski | skip )
 # 	  _Dbg_last_cmd='skip'
@@ -171,7 +187,7 @@ _Dbg_onecmd() {
 # 	  return $?
 # 	  ;;
 
-	# Run a debugger comamnd file
+	# Run a debugger command file
 	source )
 	  _Dbg_last_cmd='source'
 	  _Dbg_do_source $@

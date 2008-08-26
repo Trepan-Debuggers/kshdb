@@ -28,9 +28,9 @@
 # the corresponding file.
 
 # Are we using a debugger-enabled ksh? If not let's stop right here.
-if ((.sh.version < 20080820 )) ; then 
+if ((.sh.version < 20080825 )) ; then 
   print "Sorry, your ksh just isn't modern enough." 2>&1
-  print "We something newer than Aug 20, 2008." 2>&1
+  print "We something newer than Aug 25, 2008." 2>&1
   exit 2
 fi
 
