@@ -115,7 +115,6 @@ typeset -i _Dbg_running=1      # True we are not finished running the program
 typeset -i _Dbg_currentbp=0    # If nonzero, the breakpoint number that we 
                                # are currently stopped at.
 typeset last_next_step_cmd='s' # Default is step.
-typeset _Dbg_stop_reason=''    # The reason we are in the debugger.
 typeset _Dbg_last_print=''     # expression on last print command
 typeset _Dbg_last_printe=''    # expression on last print expression command
 
