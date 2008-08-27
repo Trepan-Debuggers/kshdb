@@ -34,3 +34,12 @@ TEST_FILE="${top_builddir}/test/integration/${TEST_NAME}.check"
 RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}.right"
 TEST_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.check"
 RIGHT_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.right"
+
+run_test_check() {
+    short_script_name=${1:-$TEST_NAME}
+    debugged_script="${top_srcdir}/test/example/${short_script_name}.sh"
+    (cd $srcdir && run_debugger $debugged_script 2>&1 >$TEST_FILE </dev/null)
+    check_output $TEST_FILE $RIGHT_FILE
+    # Return code tells testing mechanism whether passed or not.
+    exit $?
+}
