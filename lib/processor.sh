@@ -75,6 +75,7 @@ function _Dbg_process_commands {
 # Parameters: _Dbg_cmd and args
 # 
 _Dbg_onecmd() {
+    typeset expanded_alias=''
     _Dbg_alias_expand $1
     typeset _Dbg_cmd="$expanded_alias"
     eval "set -- \"$2\""
@@ -156,30 +157,6 @@ _Dbg_onecmd() {
 	  _Dbg_do_quit $@
 	  ;;
 
-	# single-step N times (default 1)
-	step | next )
-	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
-	  _Dbg_last_next_step_args="$@"
-	  _Dbg_do_step $@
-	  return $?
-	  ;;
-
-	# single-step force 
-	'step+' )
-	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
-	  _Dbg_last_next_step_args="$@"
-	  _Dbg_do_step_force $@
-	  return $?
-	  ;;
-
-	# single-step no force
-	'step-' )
-	  _Dbg_last_next_step_cmd="$_Dbg_cmd"
-	  _Dbg_last_next_step_args="$@"
-	  _Dbg_do_step_no_force $@
-	  return $?
-	  ;;
-
 # 	# skip N times (default 1)
 # 	sk | ski | skip )
 # 	  _Dbg_last_cmd='skip'
@@ -209,6 +186,12 @@ _Dbg_onecmd() {
 	show )
 	  _Dbg_do_show $args
 	  _Dbg_last_cmd='show'
+	  ;;
+
+	# single-step 
+	'step+' | 'step-' | 'step' | 'next' )
+	  _Dbg_do_step "$_Dbg_cmd" $@
+	  return $?
 	  ;;
 
 	# Trace a function

@@ -29,7 +29,7 @@ _Dbg_do_show() {
   typeset label=$2
 
   # Warranty, copying, directories, and aliases are omitted below.
-  typeset -r subcmds="annotate args autoeval basename debugger force listsize prompt trace-commands"
+  typeset subcmds="annotate args autoeval basename debugger force listsize prompt trace-commands"
 
   if [[ -z $show_cmd ]] ; then 
       typeset thing

@@ -27,13 +27,14 @@ run_debugger() {
   typeset debugged_script=$1
   typeset dbg_opts=${2:-"-L ${top_srcdir} -B -q"}
   typeset cmdfile=${3:-"${top_srcdir}/test/data/${TEST_NAME}.cmd"}
-  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x $cmdfile $debugged_script
+  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x $cmdfile $debugged_script $ARGS
 }
 
 TEST_FILE="${top_builddir}/test/integration/${TEST_NAME}.check"
 RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}.right"
 TEST_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.check"
 RIGHT_FILTERED_FILE="/tmp/${TEST_NAME}-filtered.right"
+ARGS=''
 
 run_test_check() {
     short_script_name=${1:-$TEST_NAME}

@@ -27,8 +27,8 @@ _Dbg_help_add trace \
 'trace *function*	- Wrap *function* in set -x'
 
 function _Dbg_do_trace_fn {
-    typeset -r fn=$1
-    typeset -ri clear_debug_trap=${2:-1}
+    typeset fn=$1
+    typeset -i clear_debug_trap=${2:-1}
     if [[ -z $fn ]] ; then
 	_Dbg_errmsg "trace_fn: missing or invalid function name"
 	return 2
@@ -40,7 +40,7 @@ function _Dbg_do_trace_fn {
     cmd=old_$(typeset -f -- "$fn") || {
 	return 4
     }
-    ((_Dbg_debug_debugger)) && print $cmd 
+    ((_Dbg_debug_debugger)) && print "$cmd"
     typeset save_clear_debug_trap_cmd=''
     typeset restore_trap_cmd=''
     if (( clear_debug_trap )) ; then
@@ -50,16 +50,16 @@ function _Dbg_do_trace_fn {
     eval "$cmd" || return 5
     cmd="${fn}() { 
     $save_clear_trap_cmd;
-    typeset -ri old_set_x=is_traced;
+    typeset -i old_set_x=is_traced;
     set -x;
     old_$fn \"\$@\";
-    typeset -ri rc=\$?;
+    typeset -i rc=\$?;
     (( old_set_x == 0 )) && set +x; # still messes up of fn did: set -x
     $restore_trap_cmd;
     return \$rc
     }
 "
-    ((_Dbg_debug_debugger)) && echo $cmd 
+    ((_Dbg_debug_debugger)) && echo "$cmd"
     eval "$cmd" || return 6
     return 0
 }
@@ -70,7 +70,7 @@ _Dbg_help_add untrace \
 # Undo wrapping fn
 # $? is 0 if successful.
 function _Dbg_do_untrace_fn {
-    typeset -r fn=$1
+    typeset fn=$1
     if [[ -z $fn ]] ; then
 	_Dbg_errmsg "untrace_fn: missing or invalid function name."
 	return 2
