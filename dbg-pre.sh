@@ -37,9 +37,6 @@ fi
 [[ -z $_Dbg_release ]] || return
 typeset -r _Dbg_release='0.01git'
 
-# Name we refer to ourselves by
-typeset _Dbg_debugger_name='kshdb'
-
 # Will be set to 1 if called via kshdb rather than "ksh --debugger"
 typeset -i _Dbg_script=0
 
