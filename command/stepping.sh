@@ -110,7 +110,7 @@ _Dbg_do_step() {
     _Dbg_step_ignore=${count:-1}
   else
     _Dbg_errmsg "Argument ($count) should be a number or nothing."
-    _Dbg_step_ignore=1
+    _Dbg_step_ignore=-1
     return 0
   fi
 
