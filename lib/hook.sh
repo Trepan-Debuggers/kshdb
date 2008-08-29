@@ -29,7 +29,7 @@ function _Dbg_debug_trap_handler {
 
     # Turn off line and variable trace listing if were not in our own debug
     # mode, and set our own PS4 for debugging inside the debugger
-    (( !_Dbg_debug_debugger )) && set +x +v +u
+    (( !_Dbg_debug_debugger )) && set +x +v +u +e
 
     # if in step mode, decrement counter
     if ((_Dbg_step_ignore > 0)) ; then 
