@@ -121,7 +121,7 @@ _Dbg_frame_lineno() {
 
 _Dbg_frame_save_frames() {
     integer start=${1:-0}
-    integer .level=.sh.level-$start .max=.sh.level-$start
+    integer .level=.sh.level-$start .max=.sh.level
     typeset -a .files=()
     typeset -a .linenos=()
     typeset -a .fns=()
@@ -132,7 +132,7 @@ _Dbg_frame_save_frames() {
 	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
 	.fns+=($0)
     done
-    ((.sh.level=.level))
+    ((.sh.level=.max))
     # Reorganize into an array of frame structures
     integer _Dbg_i
     for ((_Dbg_i=0; _Dbg_i<.max-start; _Dbg_i++)) ; do 

@@ -109,6 +109,7 @@ AC_CONFIG_FILES([ \
 	lib/Makefile \
 	test/Makefile \
 	test/data/Makefile \
+	test/example/Makefile \
 	test/integration/Makefile \
 	test/integration/check-common.sh \
 	test/unit/Makefile \

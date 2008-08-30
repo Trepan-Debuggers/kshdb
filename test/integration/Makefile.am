@@ -1,7 +1,9 @@
 TESTS = \
-	test-bug-args \
-	test-bugIFS   \
-	test-frame    \
+	test-bug-args      \
+	test-bugIFS        \
+	test-bug-errexit   \
+	test-frame         \
+	test-next          \
 	test-step
 
 check_DATA = check-common.sh

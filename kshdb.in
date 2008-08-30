@@ -93,7 +93,7 @@ fi
 
 _Dbg_step_ignore=2
 while : ; do
-    trap '_Dbg_debug_trap_handler "$@"' DEBUG
+    trap '_Dbg_debug_trap_handler $? "$@"' DEBUG
     . ${_Dbg_script_args[@]}
     trap '' DEBUG
     _Dbg_msg_nocr 'Program terminated.'

@@ -21,7 +21,7 @@ typeset -A _Dbg_aliases
 # Add an new alias in the alias table
 _Dbg_alias_add() {
     (( $# != 2 )) && return 1
-    _Dbg_aliases[$1]=$2
+    _Dbg_aliases[$1]="$2"
     return 0
 }
 
@@ -36,7 +36,7 @@ _Dbg_alias_remove() {
 # could be declared local in the caller.
 _Dbg_alias_expand() {
     (( $# != 1 )) && return 1
-    expanded_alias=$1
+    expanded_alias="$1"
     [[ -n ${_Dbg_aliases[$1]} ]] && expanded_alias=${_Dbg_aliases[$1]}
     return 0
 }

@@ -17,44 +17,54 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-typeset _Dbg_stop_reason=''    # The reason we are in the debugger.
+typeset  -i _Dbg_debug_debugger=0  # 1 if we are debugging the debugger
+typeset     _Dbg_stop_reason=''    # The reason we are in the debugger.
 
 function _Dbg_debug_trap_handler {
-    typeset -i _Dbg_debugged_exit_code=$?
     _Dbg_old_set_opts=$-
+    # Turn off line and variable trace listing.
+    set +x +v +u +e
+
+    typeset -i _Dbg_debugged_exit_code=$1
+    shift
 
     # Place to save values of $1, $2, etc.
     typeset -a _Dbg_arg
     _Dbg_arg=($@)
 
-    # Turn off line and variable trace listing if were not in our own debug
-    # mode, and set our own PS4 for debugging inside the debugger
-    (( !_Dbg_debug_debugger )) && set +x +v +u +e
+    typeset -i _Dbg_skipping_fn
+    ((_Dbg_skipping_fn =
+	    (_Dbg_return_level >= 0 && 
+	     ${.sh.level} > _Dbg_return_level) ))
+    # echo "${#funcfiletrace[@]} vs $_Dbg_return_level ; $_Dbg_skipping_fn"
 
     # if in step mode, decrement counter
     if ((_Dbg_step_ignore > 0)) ; then 
-	((_Dbg_step_ignore--))
-	_Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
-	# Can't return here because we may want to stop for another
-	# reason.
+	if ((! _Dbg_skipping_fn )) ; then
+	    ((_Dbg_step_ignore--))
+	    _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
+	    # Can't return here because we may want to stop for another
+	    # reason.
+	fi
     fi
 
     if ((_Dbg_skip_ignore > 0)) ; then
-	_Dbg_set_debugger_entry
-	((_Dbg_skip_ignore--))
-	_Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
-	# FIXME: do the right corresponding thing.
-	# setopt errexit  # Set to skip statement
-
-	_Dbg_set_to_return_from_debugger 1
-	return $_Dbg_rc
+	if ((! _Dbg_skipping_fn )) ; then
+	    _Dbg_set_debugger_entry
+	    ((_Dbg_skip_ignore--))
+	    _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
+	    setopt errexit  # Set to skip statement
+	    
+	    _Dbg_set_to_return_from_debugger 1
+	    return $_Dbg_rc
+	fi
     fi
 
     # Determine if we stop or not. 
 
     # Check if step mode and number steps to ignore.
-    if ((_Dbg_step_ignore == 0)); then
-	
+    if ((_Dbg_step_ignore == 0 && ! _Dbg_skipping_fn )); then
+
 	_Dbg_set_debugger_entry
 	if ((_Dbg_step_force)) ; then
 	    typeset _Dbg_frame_previous_file="$_Dbg_frame_last_file"

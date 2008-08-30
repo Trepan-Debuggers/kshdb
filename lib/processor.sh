@@ -24,7 +24,9 @@ typeset _Dbg_prompt_str="$_Dbg_debugger_name<1> "
 # The canonical name of last command run.
 typeset _Dbg_last_cmd=''
 
-# ==================== VARIABLES =======================================
+# A list of debugger command input-file descriptors.
+# Duplicate standard input
+typeset -i _Dbg_fdi ; exec {_Dbg_fdi}<&0
 
 typeset -i _Dbg_fd_last=0
 
@@ -46,7 +48,8 @@ typeset -a _Dbg_fd=()
 # in the debugger, we prefer to preface these with _Dbg_.
 function _Dbg_process_commands {
 
-  _Dbg_step_ignore=-1  # Nuke any prior step ignore counts
+  # Nuke any prior step-ignore counts
+  _Dbg_write_journal_eval "_Dbg_step_ignore=-1"
 
   # Evaluate all the display expressions
   ## _Dbg_eval_all_display
@@ -68,6 +71,7 @@ function _Dbg_process_commands {
 
     unset _Dbg_fd[_Dbg_fd_last--]
   done
+
   # EOF hit. Same as quit without arguments
   _Dbg_msg "That's all folks..." # Cause <cr> since EOF may not have put in.
   _Dbg_do_quit
@@ -146,6 +150,12 @@ _Dbg_onecmd() {
 	help )
 	  _Dbg_do_help $args ;;
 
+	# single-step ignoring functions
+	'next+' | 'next-' | 'next' )
+	  _Dbg_do_next "$_Dbg_cmd" $@
+	  return $?
+	  ;;
+
 	# print globbed or substituted variables
 	print )
 	  _Dbg_do_print "$args"
@@ -190,7 +200,7 @@ _Dbg_onecmd() {
 	  ;;
 
 	# single-step 
-	'step+' | 'step-' | 'step' | 'next' )
+	'step+' | 'step-' | 'step' )
 	  _Dbg_do_step "$_Dbg_cmd" $@
 	  return $?
 	  ;;

@@ -28,7 +28,7 @@ function _Dbg_errmsg_no_cr {
 }
 
 function _Dbg_msg {
-    print -- "$@" 
+    print -r -- "$@" 
 }
 
 function _Dbg_msg_nocr {
