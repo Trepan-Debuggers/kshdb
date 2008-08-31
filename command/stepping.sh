@@ -68,7 +68,7 @@ If COUNT is given, stepping occurs that many times before
 stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
-In contrast to \"next\", functions and source\'d files are stepped
+In contrast to \"next\", functions and source'd files are stepped
 into. 
 
 See also \"next\", \"skip\", \"step-\" \"step+\", and \"set force\"."
@@ -130,7 +130,7 @@ If COUNT is given, stepping occurs that many times before
 stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
-In contrast to \"step\", functions and source\'d files are not stepped
+In contrast to \"step\", functions and source'd files are not stepped
 into. 
 
 See also \"step\" \"skip\", \"next-\" \"next+\", and \"set force\"."

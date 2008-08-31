@@ -22,7 +22,6 @@ _Dbg_help_add help \
 
 _Dbg_do_help() {
   if ((0==$#)) ; then
-      _Dbg_msg "Type 'help <command-name>' for help on a specific command.\n"
       _Dbg_msg 'Available commands:'
       typeset commands="${!_Dbg_command_help[@]}"
       unset columnized; columnize "$commands" 45
