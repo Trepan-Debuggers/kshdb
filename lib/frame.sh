@@ -14,7 +14,6 @@
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
-# -*- shell-script -*-
 
 #================ VARIABLE INITIALIZATIONS ====================#
 
@@ -68,20 +67,19 @@ _Dbg_frame_adjust() {
   if (( $pos < 0 )) ; then 
     _Dbg_errmsg 'Would be beyond bottom-most (most recent) entry.'
     return 1
-  elif (( $pos >= ${#_Dbg_frame_stack[@]} )) ; then 
+  elif (( pos >= ${#_Dbg_frame_stack[@]} )) ; then 
     _Dbg_errmsg 'Would be beyond top-most (least recent) entry.'
     return 1
   fi
 
   ((_Dbg_stack_pos = pos))
-# #   typeset -i j=_Dbg_stack_pos+2
-# #   _Dbg_listline=${BASH_LINENO[$j]}
-# #   ((j++))
-# #   _cur_source_file=${BASH_SOURCE[$j]}
-# #   _Dbg_print_source_line $_Dbg_listline
-#   return 0
+
 }
 
+# Return the frame file for stack $1 or _Dbg_stack_pos if $1 
+# is omitted. If $2 is given, it indicates if we want the basename
+# only. Otherwise the $_Dbg_basename_only setting is used.
+# 0 is returned if no error, nonzero means some sort of error.
 _Dbg_frame_file() {
     (($# > 1)) && return 2
     # FIXME check to see that $1 doesn't run off the end.
@@ -119,6 +117,8 @@ _Dbg_frame_lineno() {
     return ${frame.lineno}
 }
 
+# Save stack frames in array _Dbg_frame_stack ignoring the 
+# first (most recent) $1 of these.
 _Dbg_frame_save_frames() {
     integer start=${1:-0}
     integer .level=.sh.level-$start .max=.sh.level
