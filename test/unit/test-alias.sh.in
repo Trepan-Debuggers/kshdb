@@ -47,5 +47,5 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 
 # load shunit2
 srcdir=@srcdir@
-srcdir=${srcdir}/
+srcdir=${srcdir%%/}/
 . ${srcdir}/shunit2

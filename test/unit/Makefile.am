@@ -3,6 +3,7 @@
 
 TESTS = test-alias.sh \
 	test-columns.sh \
+	test-filecache.sh  \
 	test-fns.sh \
 	test-frame.sh \
 	test-io.sh  \
@@ -17,6 +18,7 @@ abs_builddir=@abs_builddir@
 EXTRA_DIST = $(TESTS) $(check_DATA) \
 	test-alias.sh.in \
 	test-columns.sh.in   \
+	test-filecache.sh.in   \
 	test-fns.sh.in   \
 	test-frame.sh.in   \
 	test-io.sh.in    \

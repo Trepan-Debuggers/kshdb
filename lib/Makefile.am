@@ -3,6 +3,7 @@ pkgdata_DATA =      	\
 	alias.sh        \
 	columnize.sh    \
 	file.sh         \
+	filecache.sh    \
 	fns.sh          \
 	frame.sh        \
 	hook.sh		\
