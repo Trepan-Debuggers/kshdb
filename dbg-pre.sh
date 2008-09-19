@@ -26,9 +26,9 @@
 # file: either in lib or (less good) command.
 
 # Are we using a debugger-enabled shell? If not let's stop right here.
-if ((.sh.version < 20080825 )) ; then 
+if ((.sh.version < 20080917 )) ; then 
   print "Sorry, your $_Dbg_shell_name just isn't modern enough." 2>&1
-  print "We something newer than Aug 25, 2008." 2>&1
+  print "We something newer than Sept 17, 2008." 2>&1
   exit 30
 fi
 

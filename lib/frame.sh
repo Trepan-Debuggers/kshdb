@@ -72,6 +72,8 @@ _Dbg_frame_adjust() {
     return 1
   fi
 
+  _Dbg_frame_last_filename="${_Dbg_frame_stack[$pos].filename}"
+  _Dbg_frame_last_lineno=${_Dbg_frame_stack[$pos].lineno}
   ((_Dbg_stack_pos = pos))
 
 }

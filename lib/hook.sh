@@ -53,10 +53,9 @@ function _Dbg_debug_trap_handler {
 	    _Dbg_set_debugger_entry
 	    ((_Dbg_skip_ignore--))
 	    _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
-	    setopt errexit  # Set to skip statement
 	    
 	    _Dbg_set_to_return_from_debugger 1
-	    return $_Dbg_rc
+	    return 2
 	fi
     fi
 

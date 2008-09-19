@@ -13,6 +13,8 @@ check_DATA = \
 	setshow.right      \
 	settrace.cmd       \
 	settrace.right     \
+	skip.cmd           \
+	skip.right         \
 	step.cmd           \
 	step.right
 

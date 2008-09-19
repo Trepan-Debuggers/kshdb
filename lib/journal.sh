@@ -52,15 +52,16 @@ _Dbg_write_journal_avar() {
 # Append a command into journal file. But we only need to do
 # if we are in a subshell.
 _Dbg_write_journal() {
-#   if (( $BASH_SUBSHELL != 0 )) ; then
-#     echo "$@" >> ${_Dbg_journal} 2>/dev/null
-#   fi
+   if (( .sh.subshell != 0 )) ; then
+     echo "$@" >> ${_Dbg_journal} 2>/dev/null
+   fi
   return $?
 }
 
 # Remove all journal files.
 _Dbg_erase_journals() {
-  rm ${_Dbg_journal} 2>/dev/null
+  [[ -f $_Dbg_journal ]] && rm ${_Dbg_journal} 2>/dev/null
+  return $?
 }
 
 # read in or "source" in journal file which will set variables.
@@ -68,11 +69,11 @@ _Dbg_source_journal() {
 
   if [ -r $_Dbg_journal ] ; then 
     . $_Dbg_journal
-    ## (( BASH_SUBSHELL == 0 )) && _Dbg_erase_journals
+    (( .sh.subshell == 0 )) && _Dbg_erase_journals
   fi
 }
 
-# if [ ! -f _Dbg_journal ] ; then 
+# if [[ ! -f $_Dbg_journal ]] ; then 
 #   typeset -i BASHDB_QUIT_LEVELS=0
 #   _Dbg_write_journal "BASHDB_QUIT_LEVELS=0"
 # fi

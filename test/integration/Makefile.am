@@ -4,6 +4,7 @@ TESTS = \
 	test-bug-errexit   \
 	test-frame         \
 	test-next          \
+	test-skip	   \
 	test-step
 
 check_DATA = check-common.sh
@@ -18,5 +19,5 @@ TESTS_ENVIRONMENT = \
 EXTRA_DIST = $(TESTS) $(check_DATA) \
 	check-common.sh.in
 
-
-
+test: check
+test-integration: check

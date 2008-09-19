@@ -53,7 +53,7 @@ if test "$SH_PROG" = no; then
 fi
 
 AC_MSG_CHECKING([Checking whether $SH_PROG is compatible with DEBUGGER])
-if ! $SH_PROG -e '((.sh.version >= 20080825))' ; then
+if ! $SH_PROG -e '((.sh.version >= 20080917))' ; then
   AC_MSG_RESULT([no dice :-(])
   AC_MSG_ERROR([You might want to retry with another POSIXSHELL using the --with-POSIXSHELL option.])
 else
@@ -125,10 +125,14 @@ AC_CONFIG_FILES([test/unit/test-filecache.sh],
 	        [chmod +x test/unit/test-filecache.sh])
 AC_CONFIG_FILES([test/unit/test-fns.sh],   [chmod +x test/unit/test-fns.sh])
 AC_CONFIG_FILES([test/unit/test-frame.sh], [chmod +x test/unit/test-frame.sh])
+AC_CONFIG_FILES([test/unit/test-journal.sh],
+	        [chmod +x test/unit/test-journal.sh])
 AC_CONFIG_FILES([test/unit/test-io.sh],    [chmod +x test/unit/test-io.sh])
 AC_CONFIG_FILES([test/unit/test-pre.sh],   [chmod +x test/unit/test-pre.sh])
 AC_CONFIG_FILES([test/unit/test-run.sh],   [chmod +x test/unit/test-run.sh])
 AC_CONFIG_FILES([test/unit/test-save-restore.sh],
 		[chmod +x test/unit/test-save-restore.sh])
+AC_CONFIG_FILES([test/unit/test-sort.sh],
+		[chmod +x test/unit/test-sort.sh])
 
 AC_OUTPUT

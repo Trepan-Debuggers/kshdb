@@ -29,37 +29,37 @@ typeset -i _Dbg_return_level=-1
 # The default behavior of step_force. 
 typeset -i _Dbg_step_auto_force=0  
 
-# _Dbg_help_add skip \
-# "skip [COUNT]	-- Skip (don't run) the next COUNT command(s).
+_Dbg_help_add skip \
+"skip [COUNT]	-- Skip (don't run) the next COUNT command(s).
 
-# If COUNT is given, stepping occurs that many times before
-# stopping. Otherwise COUNT is one. COUNT an be an arithmetic
-# expression. See also \"next\" and \"step\"."
+If COUNT is given, stepping occurs that many times before
+stopping. Otherwise COUNT is one. COUNT an be an arithmetic
+expression. See also \"next\" and \"step\"."
 
 # Return 0 if we should skip. Nonzero if there was an error.
 # $1 is an optional additional count.
-# _Dbg_do_skip() {
+_Dbg_do_skip() {
 
-#   _Dbg_not_running && return 1
+  _Dbg_not_running && return 1
 
-#   typeset count=${1:-1}
+  typeset count=${1:-1}
 
-#   if [[ $count == [0-9]* ]] ; then
-#     _Dbg_skip_ignore=${count:-1}
-#     ((_Dbg_skip_ignore--)) # Remove one from the skip caused by this return
-#   else
-#     _Dbg_errmsg "Argument ($count) should be a number or nothing."
-#     _Dbg_skip_ignore=0
-#     return 3
-#   fi
-#   # We're cool. Do the skip.
-#   _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
+  if [[ $count == [0-9]* ]] ; then
+    _Dbg_skip_ignore=${count:-1}
+    ((_Dbg_skip_ignore--)) # Remove one from the skip caused by this return
+  else
+    _Dbg_errmsg "Argument ($count) should be a number or nothing."
+    _Dbg_skip_ignore=0
+    return 3
+  fi
+  # We're cool. Do the skip.
+  _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
 
-#   # Set to do a stepping stop after skipping
-#   _Dbg_step_ignore=0
-#   _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
-#   return 0
-# }
+  # Set to do a stepping stop after skipping
+  _Dbg_step_ignore=0
+  _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
+  return 0
+}
 
 _Dbg_help_add 'step' \
 "step [COUNT] -- Single step a statement COUNT times.
@@ -68,7 +68,7 @@ If COUNT is given, stepping occurs that many times before
 stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
-In contrast to \"next\", functions and source'd files are stepped
+In contrast to \"next\", functions and source\'d files are stepped
 into. 
 
 See also \"next\", \"skip\", \"step-\" \"step+\", and \"set force\"."
@@ -130,7 +130,7 @@ If COUNT is given, stepping occurs that many times before
 stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
-In contrast to \"step\", functions and source'd files are not stepped
+In contrast to \"step\", functions and source\'d files are not stepped
 into. 
 
 See also \"step\" \"skip\", \"next-\" \"next+\", and \"set force\"."

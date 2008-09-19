@@ -71,7 +71,7 @@ function _Dbg_process_commands {
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
         # _Dbg_postcmd
-        (( $rc != 0 )) && return 0 # return $rc
+        (( $rc != 0 )) && return $rc
     done
 
     unset _Dbg_fd[_Dbg_fd_last--]
@@ -173,12 +173,11 @@ _Dbg_onecmd() {
 	  _Dbg_do_quit $@
 	  ;;
 
-# 	# skip N times (default 1)
-# 	sk | ski | skip )
-# 	  _Dbg_last_cmd='skip'
-# 	  _Dbg_do_skip $@
-# 	  return $?
-# 	  ;;
+	# skip N times (default 1)
+	sk | ski | skip )
+	  _Dbg_last_cmd='skip'
+	  _Dbg_do_skip $@ && return 2
+	  ;;
 
 	# Run a debugger command file
 	source )

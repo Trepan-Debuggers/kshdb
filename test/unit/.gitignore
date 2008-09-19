@@ -3,9 +3,12 @@
 /Makefile.in
 /test-alias.sh
 /test-columns.sh
+/test-filecache.sh
 /test-fns.sh
 /test-frame.sh
 /test-io.sh
+/test-journal.sh
 /test-pre.sh
 /test-run.sh
 /test-save-restore.sh
+/test-sort.sh

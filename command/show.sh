@@ -42,7 +42,7 @@ _Dbg_do_show() {
   case $show_cmd in 
     al | ali | alia | alias | aliase | aliases )
       for alias in ${!_Dbg_aliases[@]} ; do
-	  _Dbg_msg "\t${alias}\t${_Dbg_aliases[$alias]}"
+	  _Dbg_msg "	${alias}	${_Dbg_aliases[$alias]}"
       done
       return 0
       ;;
