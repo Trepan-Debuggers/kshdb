@@ -46,6 +46,31 @@ function _Dbg_esc_dq {
   echo $1 | sed -e 's/[`$\"]/\\\0/g' 
 }
 
+# _Dbg_get_typeset_attr echoes a list of all of the functions matching
+# optional pattern if $1 is nonzero, include debugger functions,
+# i.e. those whose name starts with an underscore (_Dbg), are included in
+# the search.  
+# A grep pattern can be specified to filter function names. If the 
+# pattern starts with ! we report patterns that don't match.
+_Dbg_get_typeset_attr() {
+    (( $# == 0 )) && return 1
+    typeset attr="$1"; shift
+    typeset pat=''
+    (( $# > 0 )) && { pat=$1 ; shift; }
+    (( $# != 0 )) && return 1
+
+    typeset cmd="typeset $attr"
+    if [[ -n $pat ]] ; then
+	if [[ ${pat[0]} == '!' ]] ; then
+	    cmd+=" | grep -v ${pat[1,-1]}"
+	else
+	    cmd+=" | grep $pat"
+	fi
+    fi
+    ((!_Dbg_debug_debugger)) && cmd+=' | grep -v ^_Dbg_'
+    eval $cmd
+}
+
 # Add escapes to a string $1 so that when it is read back via "$1"
 # it is the same as $1.
 function _Dbg_onoff {
@@ -56,7 +81,7 @@ function _Dbg_onoff {
 
 # Set $? to $1 if supplied or the saved entry value of $?. 
 function _Dbg_set_dol_q {
-  [[ $# -eq 0 ]] && return $_Dbg_debugged_exit_code
+  (( $# == 0 )) && return $_Dbg_debugged_exit_code
   return $1
 }
 
@@ -139,14 +164,14 @@ function _Dbg_linespec_setup {
   fi
   
   filename=${word[2]}
-  typeset -ir is_function=${word[1]}
+  typeset -i is_function=${word[1]}
   line_number=${word[0]}
-  full_filename=`_Dbg_is_file $filename`
+  full_filename=$(_Dbg_is_file $filename)
 
   if (( is_function )) ; then
       if [[ -z $full_filename ]] ; then 
 	  _Dbg_readin "$filename"
-	  full_filename=`_Dbg_is_file $filename`
+	  full_filename=$(_Dbg_is_file $filename)
       fi
   fi
 }

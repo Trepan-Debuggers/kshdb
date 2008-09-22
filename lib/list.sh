@@ -17,11 +17,10 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 _Dbg_list_typeset_attr() {
-    typeset -a list
-    list=( $(_Dbg_get_typeset_attr $*) )
+    typeset -a columize_list=( $(_Dbg_get_typeset_attr $*) )
     typeset -i rc=$?
     (( $rc != 0 )) && return $rc
-    _Dbg_list_columns
+    _Dbg_list_columns columnize_list
 }
 
 _Dbg_list_columns() {

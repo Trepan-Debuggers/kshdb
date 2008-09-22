@@ -7,9 +7,10 @@ pkgdata_DATA =      	\
 	filecache.sh    \
 	fns.sh          \
 	frame.sh        \
-	hook.sh		\
-	gdb.sh  	\
 	help.sh  	\
+	hook.sh		\
+	info.sh		\
+	gdb.sh  	\
 	journal.sh  	\
 	list.sh  	\
 	msg.sh    	\

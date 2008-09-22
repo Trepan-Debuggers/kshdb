@@ -71,7 +71,7 @@ function _Dbg_process_commands {
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
         # _Dbg_postcmd
-        (( $rc != 0 )) && return $rc
+        (( $rc > 0 )) && return $rc
     done
 
     unset _Dbg_fd[_Dbg_fd_last--]
@@ -112,9 +112,11 @@ _Dbg_onecmd() {
 	  _Dbg_do_alias $@
 	  ;;
 
-	where )
-	  _Dbg_do_backtrace $@
-	  ;;
+# 	# Delete all breakpoints by line number.
+# 	clear )
+# 	  _Dbg_do_clear_brkpt $args
+# 	  _Dbg_last_cmd='clear'
+# 	  ;;
 
 	# Continue
 	continue )
@@ -154,6 +156,10 @@ _Dbg_onecmd() {
 	# print help command menu
 	help )
 	  _Dbg_do_help $args ;;
+
+	#  Info subcommands
+	info )
+	  _Dbg_do_info $args ;;
 
 	# single-step ignoring functions
 	'next+' | 'next-' | 'next' )
@@ -225,6 +231,10 @@ _Dbg_onecmd() {
 # 	  _Dbg_do_untrace_fn $args 
 # 	  ;;
 
+	where )
+	  _Dbg_do_backtrace $@
+	  ;;
+
 	'' )
 	  # Redo last_cmd
 	  if [[ -n $_Dbg_last_cmd ]] ; then 
@@ -235,12 +245,13 @@ _Dbg_onecmd() {
 
 	* ) 
 	   if (( _Dbg_autoeval )) ; then
-	     _Dbg_do_eval $_Dbg_cmd $args
+	     ! _Dbg_do_eval $_Dbg_cmd $args && return -1
 	   else
              _Dbg_msg "Undefined command: \"$_Dbg_cmd\". Try \"help\"." 
 	     # _Dbg_remove_history_item
 	     # typeset -a last_history=(`history 1`)
 	     # history -d ${last_history[0]}
+	     return -1
 	   fi
 	  ;;
       esac
