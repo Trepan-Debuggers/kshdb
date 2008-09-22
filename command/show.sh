@@ -29,7 +29,7 @@ _Dbg_do_show() {
   typeset label=$2
 
   # Warranty, copying, directories, and aliases are omitted below.
-  typeset subcmds="annotate args autoeval basename debugger force listsize prompt trace-commands"
+  typeset subcmds='annotate args autoeval basename debugger force listsize prompt trace-commands width'
 
   if [[ -z $show_cmd ]] ; then 
       typeset thing
@@ -41,9 +41,14 @@ _Dbg_do_show() {
 
   case $show_cmd in 
     al | ali | alia | alias | aliase | aliases )
-      for alias in ${!_Dbg_aliases[@]} ; do
-	  _Dbg_msg "	${alias}	${_Dbg_aliases[$alias]}"
+      unsetopt ksharrays
+      typeset -a list
+      list=()
+      for alias in ${(ki)_Dbg_aliases} ; do
+	 list+=("${alias}: ${_Dbg_aliases[$alias]}")
       done
+      setopt ksharrays
+      _Dbg_list_columns '  |  '
       return 0
       ;;
     ar | arg | args )
@@ -72,27 +77,10 @@ _Dbg_do_show() {
       return 0
       ;;
     com | comm | comma | comman | command | commands )
-      typeset -i default_hi_start=_Dbg_hi-1
-      if ((default_hi_start < 0)) ; then default_hi_start=0 ; fi
-      typeset hi_start=${2:-$default_hi_start}
-
-      eval "$_seteglob"
-      case $hi_start in
-	+ )
-	  ((hi_start=_Dbg_hi_last_stop-1))
+	  shift # shift off "commands"
+	  _Dbg_history_list $*
+	  return $?
 	  ;;
-	$int_pat | -$int_pat)
-	    ;;
-	* )
-	   _Dbg_msg "Invalid parameter $hi_start. Need an integer or '+'"
-      esac
-      eval "$_resteglob"
-      
-      typeset -i hi_stop=hi_start-10
-      _Dbg_do_history_list $hi_start $hi_stop
-      _Dbg_hi_last_stop=$hi_stop
-      return 0
-      ;;
     cop | copy| copyi | copyin | copying )
       _Dbg_msg \
 "
@@ -383,7 +371,8 @@ of promoting the sharing and reuse of software generally.
       ;;
     hi|his|hist|histo|histor|history)
       _Dbg_msg \
-"filename: The filename in which to record the command history is $_Dbg_histfile"
+"filename: The filename in which to record the command history is:"
+      _Dbg_msg "	$_Dbg_histfile"
       _Dbg_msg \
 "save: Saving of history save is" $(_Dbg_onoff $_Dbg_history_save)
       _Dbg_msg \
@@ -442,17 +431,22 @@ of promoting the sharing and reuse of software generally.
       _Dbg_do_info warranty
       return 0
       ;;
+    wi | wid | width )
+      [[ -n $label ]] && label='width: '
+     _Dbg_msg \
+"${label}Line width is $_Dbg_linewidth."
+      return 0
+      ;;
     *)
-      _Dbg_msg "Don't know how to show $show_cmd."
-      return 1
+	  _Dbg_errmsg "Unknown show subcommand: $show_cmd"
+	  _Dbg_errmsg "Show subcommands are:"
+	  typeset -a do_list=(${subcmds[@]})
+	  _Dbg_list_columns do_list '  ' errmsg
+	  return 1
   esac
 }
 
 _Dbg_do_show_version()
 {
-  _Dbg_printf "%-12s => $_Dbg_release" "Release"
-  _Dbg_msg "=================================================================="
-  if [[ -n $_Dbg_script ]] ; then
-    _Dbg_printf "%-12s => $_Dbg_ver", "$_Dbg_debugger_name"
-  fi
+  _Dbg_msg "${_Dbg_debugger_name}, release $_Dbg_release"
 }

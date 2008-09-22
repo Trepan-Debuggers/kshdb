@@ -23,12 +23,8 @@ _Dbg_help_add help \
 _Dbg_do_help() {
   if ((0==$#)) ; then
       _Dbg_msg 'Available commands:'
-      typeset commands="${!_Dbg_command_help[@]}"
-      unset columnized; columnize "$commands" 45
-      typeset -i i
-      for ((i=0; i<${#columnized[@]}; i++)) ; do 
-	  _Dbg_msg "  ${columnized[i]}"
-      done
+      typeset -a commands=("${!_Dbg_command_help[@]}")
+      _Dbg_list_columns commands 
       _Dbg_msg ''
       _Dbg_msg 'Readline command line editing (emacs/vi mode) is available.'
       _Dbg_msg 'Type "help" followed by command name for full documentation.'

@@ -11,7 +11,13 @@ test_columnized()
 	typeset last_line="$1"
 	shift
 	unset columnized
-	columnize "$@"
+	if (($# > 0)) ; then
+	    typeset -a to_do=($1)
+	    shift
+	else
+	    typeset -a todo_do=()
+	fi
+	columnize to_do "$@"
 	typeset size=${#columnized[@]}
 	assertEquals "$cols" "$size"
 	assertEquals "$last_line" "${columnized[size-1]}"
