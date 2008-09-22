@@ -11,6 +11,7 @@ pkgdata_DATA =      	\
 	gdb.sh  	\
 	help.sh  	\
 	journal.sh  	\
+	list.sh  	\
 	msg.sh    	\
 	processor.sh   	\
 	run.sh    	\
