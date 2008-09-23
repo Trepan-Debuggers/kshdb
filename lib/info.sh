@@ -34,76 +34,87 @@ _Dbg_info_help() {
       return
   fi
 
-  case $info_cmd in 
-#     ar | arg | args )
-#       _Dbg_msg \
-# "info args -- Argument variables (e.g. \$1, \$2, ...) of the current stack frame."
-#       return 0
-#       ;;
-#     b | br | bre | brea | 'break' | breakp | breakpo | breakpoints )
-#       _Dbg_msg \
-# 'info breakpoints -- Status of user-settable breakpoints'
-#       return 0
-#       ;;
-#     disp | displ | displa | display ) 
-#       _Dbg_msg \
-# 'info display -- Show all display expressions'
-#       return 0
-#       ;;
-#     fi | file| files | sources )
-#       _Dbg_msg \
-# 'info files -- Source files in the program'
-#       return 0
-#       ;;
-    l | li| lin | line )
-      _Dbg_msg \
-'info line -- list current line number and and file name'
-      return 0
-      ;;
-    p | pr | pro | prog | progr | progra | program )
-      _Dbg_msg \
-'info program -- Execution status of the program.'
-      return 0
-      ;;
-#     h | ha | han | hand | handl | handle | \
-#     si | sig | sign | signa | signal | signals )
-#       _Dbg_msg \
-# 'info signals -- What debugger does when program gets various signals'
-#       return 0
-#       ;;
-#     so | sou | sourc | source )
-#       _Dbg_msg \
-# 'info source -- Information about the current source file'
-#       return 0
-#       ;;
-    st | sta | stac | stack )
-      _Dbg_msg \
-'info stack -- Backtrace of the stack'
-      return 0
-      ;;
-#     te | ter | term | termi | termin | termina | terminal | tt | tty )
-#       _Dbg_msg \
-# 'info terminal -- Print terminal device'
-#       return 0
-#       ;;
-#     tr|tra|trac|trace|tracep | tracepo | tracepoi | tracepoint | tracepoints )
-#       _Dbg_msg \
-# 'info tracepoints -- Status of tracepoints'
-#       return 0
-#       ;;
-    v | va | var | vari | varia | variab | variabl | variable | variables )
-      _Dbg_msg \
-'info variables -- Variable lists by property (array, fn, export, ...)'
-      return 0
-      ;;
-    w | wa | war | warr | warra | warran | warrant | warranty )
-      _Dbg_msg \
-'info warranty -- Various kinds of warranty you do not have'
-      return 0
-      ;;
-    * )
-      _Dbg_errmsg \
-    "Undefined info command: \"$info_cmd\".  Try \"help info\"."
-  esac
+    if (($# > 0)) ; then
+	typeset info_cmd=$1
+	shift
+	case $info_cmd in 
+# 	    ar | arg | args )
+# 	        _Dbg_msg \
+# 		    "info args -- Argument variables (e.g. \$1, \$2, ...) of the current stack frame."
+# 	        return 0
+# 	        ;;
+# 	    b | br | bre | brea | 'break' | breakp | breakpo | breakpoints )
+# 	        _Dbg_msg \
+# 		    'info breakpoints -- Status of user-settable breakpoints'
+# 	        return 0
+# 	        ;;
+# 	    disp | displ | displa | display ) 
+# 	        _Dbg_msg \
+# 		    'info display -- Show all display expressions'
+# 	        return 0
+# 	        ;;
+# 	    'fi' | file | files )
+# 	        _Dbg_msg \
+# 		    'info files -- Source files in the program'
+# 	        return 0
+# 	        ;;
+	    l | li| lin | line )
+		_Dbg_msg \
+		    'info line -- list current line number and and file name'
+		return 0
+		;;
+	    p | pr | pro | prog | progr | progra | program )
+		_Dbg_msg \
+		    'info program -- Execution status of the program.'
+		return 0
+		;;
+# 	    h | ha | han | hand | handl | handle | \
+# 	        si | sig | sign | signa | signal | signals )
+# 	        _Dbg_msg \
+# 		    'info signals -- What debugger does when program gets various signals'
+# 	        return 0
+# 	        ;;
+# 	    so | sou | sourc | source )
+# 	        _Dbg_msg \
+# 		    'info source -- Information about the current source file'
+# 	        return 0
+# 	        ;;
+	    st | sta | stac | stack )
+		_Dbg_msg \
+		    'info stack -- Backtrace of the stack'
+		return 0
+		;;
+# 	    te | ter | term | termi | termin | termina | terminal | tt | tty )
+# 	        _Dbg_msg \
+# 		    'info terminal -- Print terminal device'
+# 	        return 0
+# 	        ;;
+# 	    tr|tra|trac|trace|tracep | tracepo | tracepoi | tracepoint | tracepoints )
+# 	        _Dbg_msg \
+# 		    'info tracepoints -- Status of tracepoints'
+# 	        return 0
+# 	        ;;
+	    v | va | var | vari | varia | variab | variabl | variable | variables )
+		_Dbg_msg \
+		    'info variables -- Variable lists by property (array, fn, export, ...)'
+		return 0
+		;;
+	    w | wa | war | warr | warra | warran | warrant | warranty )
+		_Dbg_msg \
+		    'info warranty -- Various kinds of warranty you do not have'
+		return 0
+		;;
+	    * )
+		_Dbg_errmsg \
+		    _Dbg_errmsg "Unknown info subcommand: $info_cmd"
+		msg=_Dbg_errmsg
+	esac
+    else
+	msg=_Dbg_msg
+    fi
+    $msg "Info subcommands are:"
+    typeset -a list; list=(${_Dbg_info_cmds})
+    _Dbg_list_columns '  ' $msg
+    [[ $msg == '_Dbg_errmsg' ]] && return 1 || return 0
 }
 
