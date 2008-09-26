@@ -13,13 +13,13 @@ AC_ARG_ENABLE([gnugetopt],
 	[Allow GNU-style long options (default enabled)]))
 
 if test "${enable_getopt}" != "no" ; then
-  $SH_PROG ./getopt-test.sh
+  $SH_PROG ${srcdir}/getopt-test.sh
   if test $? -eq 0 ; then
     AC_MSG_RESULT([Good! Your long options seem to be working okay.])
     TRY_GETOPT=1
   else
     AC_MSG_WARN([getopt doesn't seem to handle long options correctly.])
-    AC_MSG_WARN([Disabling long-options in bashdb.])
+    AC_MSG_WARN([Disabling long-options in] DEBUGGER[.])
     TRY_GETOPT=0
   fi  
 else
