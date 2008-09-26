@@ -1,4 +1,5 @@
 # -*- shell-script -*-
+# help.sh - Debugger Help Routines
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
@@ -26,20 +27,20 @@ function _Dbg_help_add {
      return 0
 }
 
-# typeset -r _Dbg_set_cmds="args annotate autoeval basename debugger editing linetrace listsize prompt showcommand trace-commands"
-typeset -r _Dbg_set_cmds="args annotate autoeval basename debugger force linetrace listsize prompt trace-commands"
+typeset _Dbg_set_cmds='args annotate autoeval basename debugger force linetrace listsize prompt trace-commands width'
 
 _Dbg_help_set() {
-  typeset set_cmd=$1
-  typeset label=$2
 
-  if [[ -z $set_cmd ]] ; then 
+  if (( $# == 0 )) ; then 
       typeset thing
       for thing in $_Dbg_set_cmds ; do 
 	_Dbg_help_set $thing 1
       done
-      return
+      return 0
   fi
+
+  typeset set_cmd="$1"
+  typeset label="$2"
 
   case $set_cmd in 
     ar | arg | args )
@@ -106,7 +107,7 @@ Follow this command with any number of args, to be passed to the program."
      lis | list | lists | listsi | listsiz | listsize )
       [[ -n $label ]] && label='set listsize  -- '
       _Dbg_msg \
-"${label}Set number of source lines zshdb will list by default."
+"${label}Set number of source lines $_Dbg_debugger_name will list by default."
       ;;
     p | pr | pro | prom | promp | prompt )
       [[ -n $label ]] && label='set prompt    -- '
@@ -126,6 +127,11 @@ Follow this command with any number of args, to be passed to the program."
       _Dbg_msg \
 "${label}Set showing debugger commands is $_Dbg_trace_commands."
       return 0
+      ;;
+     w | wi | wid | widt | width )
+      [[ -n $label ]] && label='set width          -- '
+      _Dbg_msg \
+"${label}Set line length to use in output."
       ;;
     * )
       _Dbg_msg \

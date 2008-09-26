@@ -19,10 +19,6 @@
 # Print location in gdb-style format: file:line
 # So happens this is how it's stored in global _Dbg_frame_stack which
 # is where we get the information from
-
-# Print location in gdb-style format: file:line
-# So happens this is how it's stored in global _Dbg_frame_stack which
-# is where we get the information from
 function _Dbg_print_location {
     if (($# > 1)); then 
       _Dbg_errmsg "got $# parameters, but need 0 or 1."
@@ -48,7 +44,7 @@ function _Dbg_print_location_and_command {
 
 # Print position $1 of stack frame (from global _Dbg_frame_stack)
 # Prefix the entry with $2 if that's set.
-function _Dbg_print_frame {
+_Dbg_print_frame() {
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset prefix=${2:-''}
 

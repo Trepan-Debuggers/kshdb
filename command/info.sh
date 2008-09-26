@@ -17,19 +17,13 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-# Print info args. Like GDB's "info args"
-# $1 is an additional offset correction - this routine is called from two
-# different places and one routine has one more additional call on top.
-# This code assumes the's debugger version of
-# bash where FUNCNAME is an array, not a variable.
-
 _Dbg_help_add info ''
 
 typeset -a _Dbg_info_subcmds
 # typeset -a _Dbg_infosubcmds=( args breakpoints display files functions program source \
 #                       sources stack terminal variables watchpoints )
 # _Dbg_info_subcmds=( breakpoints files program source stack variables )
-_Dbg_info_subcmds=( files program source stack variables )
+_Dbg_info_subcmds=( files line program source stack variables )
 _Dbg_do_info() {
       
   if (($# > 0)) ; then
@@ -48,10 +42,10 @@ _Dbg_do_info() {
 # 	      return 0
 # 	      ;;
 	  
-	  #       d | di | dis| disp | displ | displa | display )
-	  # 	_Dbg_do_list_display $*
-	  # 	return
-	  # 	;;
+# 	  d | di | dis| disp | displ | displa | display )
+# 	      _Dbg_do_list_display $*
+# 	      return 0
+# 	      ;;
 	  
 #           file| files | sources )
 #               _Dbg_msg "Source files which we have recorded info about:"
@@ -62,43 +56,44 @@ _Dbg_do_info() {
 #               return 0
 # 	      ;;
 	  
-	  #       h | ha | han | hand | handl | handle | \
-	  #           si | sig | sign | signa | signal | signals )
-	  #         _Dbg_info_signals
-	  #         return
-	  # 	;;
+# 	  h | ha | han | hand | handl | handle | \
+# 	      si | sig | sign | signa | signal | signals )
+# 	      _Dbg_info_signals
+# 	      return
+# 	      ;;
 	  
 	  l | li | lin | line )
               if (( ! _Dbg_running )) ; then
-		  _Dbg_errmsg "No line number information available."
-		  return $?
+		  _Dbg_errmsg 'No line number information available.'
+		  return 1
 	      fi
 	      
               _Dbg_msg "Line $_Dbg_frame_last_lineno of \"$_Dbg_frame_last_file\""
-	      return
+	      return 0
 	      ;;
 	  
 	  p | pr | pro | prog | progr | progra | program )
 	      if (( _Dbg_running )) ; then
-		  _Dbg_msg "Program stopped."
+		  _Dbg_msg 'Program stopped.'
 		  if (( _Dbg_currentbp )) ; then
 		      _Dbg_msg "It stopped at breakpoint ${_Dbg_currentbp}."
 		  elif [[ -n $_Dbg_stop_reason ]] ; then
 		      _Dbg_msg "It stopped ${_Dbg_stop_reason}."
 		  fi
 	      else
-		  _Dbg_errmsg "The program being debugged is not being run."
+		  _Dbg_errmsg 'The program being debugged is not being run.'
+		  return 1
 	      fi
-	      return $?
+	      return 0
 	      ;;
 	  
 	  so | sou | sourc | source )
               _Dbg_msg "Current script file is $_Dbg_frame_last_filename" 
               _Dbg_msg "Located in ${_Dbg_file2canonic[$_Dbg_frame_last_filename]}" 
 	      typeset -i max_line
-	      max_line=$(_Dbg_get_maxline $_Dbg_frame_last_filename)
-	      	_Dbg_msg "Contains $max_line lines." ; 
-              return $?
+# 	      max_line=$(_Dbg_get_maxline $_Dbg_frame_last_filename)
+# 	      _Dbg_msg "Contains $max_line lines."
+              return 0
 	      ;;
 	  
 	  st | sta | stac | stack )
@@ -106,10 +101,10 @@ _Dbg_do_info() {
 	      return $?
 	      ;;
 	  
-	  #       te | ter | term | termi | termin | termina | terminal | tt | tty )
-	  # 	_Dbg_msg "tty: $_Dbg_tty"
-	  # 	return;
-	  # 	;;
+# 	  te | ter | term | termi | termin | termina | terminal | tt | tty )
+# 	      _Dbg_msg "tty: $_Dbg_tty"
+# 	      return;
+# 	      ;;
 	  
 	  v | va | var | vari | varia | variab | variabl | variable | variables )
 	      _Dbg_do_info_variables $*
@@ -134,7 +129,7 @@ _Dbg_do_info() {
 }
 
 _Dbg_do_info_variables() {
-    typeset attrs="array, export,  float, function, hash, integer, or readonly"
+    typeset attrs="array, export, float, hash, integer, or readonly"
     if (($# > 0)) ; then
 	typeset kind="$1"
 	shift
@@ -147,10 +142,10 @@ _Dbg_do_info_variables() {
 		_Dbg_do_list_typeset_attr '+x' $*
 		return 0
 		;;
-	    fu|fun|func|funct|functi|functio|function )
-		_Dbg_do_list_typeset_attr '+f' $*
-		return 0
-		;;
+# 	    fu|fun|func|funct|functi|functio|function )
+# 		_Dbg_do_list_typeset_attr '+f' $*
+# 		return 0
+# 		;;
 # 	    fi|fix|fixe|fixed )
 # 		_Dbg_do_list_typeset_attr '+F' $*
 # 		return 0
