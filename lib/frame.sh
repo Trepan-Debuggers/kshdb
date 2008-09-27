@@ -147,6 +147,6 @@ _Dbg_frame_save_frames() {
     done
     # Set stack position to the most recent entry.
     _Dbg_stack_pos=0
-    _Dbg_frame_last_file="${_Dbg_frame_stack[0].filename}"
+    _Dbg_frame_last_filename="${_Dbg_frame_stack[0].filename}"
     _Dbg_frame_last_lineno="${_Dbg_frame_stack[0].lineno}"
 }

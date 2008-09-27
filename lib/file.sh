@@ -50,7 +50,7 @@ _Dbg_adjust_filename() {
 # mentioned in a debugger "file" command. If not and the file name
 # is a relative name use _Dbg_dir to substitute a relative directory name.
 #
-function _Dbg_resolve_expand_filename {
+_Dbg_resolve_expand_filename() {
 
   if (( $# == 0 )) ; then
     _Dbg_errmsg "Internal debug error: null file to find"
@@ -73,7 +73,7 @@ function _Dbg_resolve_expand_filename {
     full_find_file=$(_Dbg_expand_filename $find_file)
     print -- "$full_find_file"
     return 0
-  elif [[ ${find_file[0]} == '.' ]] ; then
+  elif [[ ${find_file:0:1} == '.' ]] ; then
     # Relative file name
     full_find_file=$(_Dbg_expand_filename ${_Dbg_init_cwd}/$find_file)
     if [[ -z "$full_find_file" ]] || [[ ! -r $full_find_file ]]; then

@@ -64,10 +64,12 @@ _Dbg_readin() {
 	fi
     fi
     
-    _Dbg_file2canonic[$filename]="$fullname"
     typeset -a text
     _Dbg_readfile text "$fullname"
+    _Dbg_file2canonic[$filename]="$fullname"
+    _Dbg_file2canonic[$fullname]="$fullname"
     _Dbg_filenames[$fullname].size=${#text[@]}
+    # _Dbg_filenames[$fullname].text=text
     return 0
 }
 
