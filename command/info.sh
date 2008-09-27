@@ -142,10 +142,10 @@ _Dbg_do_info_variables() {
 		_Dbg_do_list_typeset_attr '+x' $*
 		return 0
 		;;
-# 	    fu|fun|func|funct|functi|functio|function )
-# 		_Dbg_do_list_typeset_attr '+f' $*
-# 		return 0
-# 		;;
+	    fu|fun|func|funct|functi|functio|function )
+		_Dbg_do_list_typeset_attr '+f' $*
+		return 0
+		;;
 # 	    fi|fix|fixe|fixed )
 # 		_Dbg_do_list_typeset_attr '+F' $*
 # 		return 0

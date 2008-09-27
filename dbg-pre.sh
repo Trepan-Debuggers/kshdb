@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# dbg-pre.sh - Code common to zshdb and zshdb-trace that has to run first
+# dbg-pre.sh - Code common to kshdb and kshdb-trace that has to run first
 #
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
