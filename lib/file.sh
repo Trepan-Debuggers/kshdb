@@ -68,7 +68,7 @@ function _Dbg_resolve_expand_filename {
     return 0
   fi
 
-  if [[ ${find_file[0]} == '/' ]] ; then 
+  if [[ ${find_file:0:1} == '/' ]] ; then 
     # Absolute file name
     full_find_file=$(_Dbg_expand_filename $find_file)
     print -- "$full_find_file"

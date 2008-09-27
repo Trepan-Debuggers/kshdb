@@ -48,6 +48,5 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . $abs_top_srcdir/lib/columnize.sh
 
 # load shunit2
-srcdir=@srcdir@
-srcdir=${srcdir}/
-. ${srcdir}/shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
+. ${shunit_file}

@@ -7,16 +7,16 @@ PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}]
 test_readin()
 {
     typeset filename
-    _Dbg_readin ${srcdir}shunit2
+    _Dbg_readin ${shunit_file}
     assertEquals '0' $?
     typeset file2
-    file2=$(_Dbg_is_file ${srcdir}shunit2)
+    file2=$(_Dbg_is_file ${shunit_file})
     assertEquals '0' $?
     assertNotEquals '' "$file2"
 }
 
 
-# Make sure ../.. has a trailing slash
+# Make sure @top_builddir@ has a trailing slash
 if [ '@abs_top_srcdir@' = '' ] ; then
   echo "Something is wrong abs_top_srcdir is not set."
  exit 1
@@ -32,7 +32,6 @@ set -- -q  # Don't need to show banner
 . $abs_top_srcdir/lib/file.sh
 
 # load shunit2
-srcdir=@srcdir@
-srcdir=${srcdir%%/}/
-. ${srcdir}shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
+. ${shunit_file}
 

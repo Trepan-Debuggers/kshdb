@@ -3,39 +3,49 @@
 #
 #   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
 #
-#   zshdb is free software; you can redistribute it and/or modify it under
+#   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
 #   Software Foundation; either version 2, or (at your option) any later
 #   version.
 #
-#   zshdb is distributed in the hope that it will be useful, but WITHOUT ANY
+#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
 #   WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 #   for more details.
 #   
 #   You should have received a copy of the GNU General Public License along
-#   with zshdb; see the file COPYING.  If not, write to the Free Software
+#   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-# Keys are the canonic expanded filename. _Dbg_filenames[filename] is
+# Keys are the canonic expanded filename. 
 # name of variable which contains text.
-typeset -A _Dbg_filenames
+typeset -T Fileinfo_t=(
+    size=-1
+    typeset -a text=()
+    integer mtime=-1
+)
+
+Fileinfo_t -A _Dbg_filenames
 _Dbg_filenames=()
 
 # Maps a name into its canonic form which can then be looked up in filenames
 typeset -A _Dbg_file2canonic
 _Dbg_file2canonic=()
 
-# Information about a file.
-typeset -A _Dbg_fileinfo
-_Dbg_fileinfo=()
+function _Dbg_readfile # var file
+{
+   nameref var=$1
+   set -f	      
+   IFS=$'\n\n'
+   var=( $(< $2))
+}
 
 # Read $1 into _DBG_source_*n* array where *n* is an entry in
 # _Dbg_filenames.  Variable _Dbg_seen[canonic-name] will be set to
 # note the file has been read and the filename will be saved in array
 # _Dbg_filenames
 
-function _Dbg_readin {
+_Dbg_readin() {
     typeset filename
     if (($# != 0)) ; then 
 	filename="$1"
@@ -44,61 +54,20 @@ function _Dbg_readin {
 	filename="$_Dbg_frame_filename"
     fi
 
-    typeset -i line_count=0
-    typeset -i NOT_SMALLFILE=1000
-
-    typeset -i next;
-    next=${#_Dbg_filenames[@]}
-    typeset source_array_var;
-    source_array_var="_Dbg_source_${next}"
-
     if [[ -z $filename ]] || [[ $filename == _Dbg_bogus_file ]] ; then 
-	eval "typeset -a $source_array_var; ${source_array_var}=()"
-	typeset cmd="${source_array_var}[0]=\"$BASH_EXECUTION_STRING\""
-	eval $cmd
+	# FIXME
+	return 2
     else 
 	typeset fullname=$(_Dbg_resolve_expand_filename $filename)
-	if [[ -r $fullname ]] ; then
-	    _Dbg_file2canonic[$filename]="$fullname"
-	    eval "typeset -a $source_array_var; ${source_array_var}=()"
-	    typeset -r progress_prefix="Reading $filename"
-	    # No readarray. Do things the long way.
-	    typeset -i i=-1
-	    typeset -i fd
-# 	    exec {fd} < $fullname
-# 	    while read line <&${fd}
-# 	    do
-# 		((i++))
-# 		typeset assign_cmd="${source_array_var}[$i]=\"$line\""
-# 		eval $assign_cmd
-# 		if (( i % 1000 == 0 )) ; then
-# 		    if (( i==NOT_SMALLFILE )) ; then
-# 			if wc -l < /dev/null >/dev/null 2>&1 ; then 
-# 			    line_count=$(wc -l < "${fullname}")
-# 			else
-# 			    _Dbg_msg_nocr "${progress_prefix} "
-# 			fi
-# 		    fi
-# 		    if (( line_count == 0 )) ; then
-# 			_Dbg_msg_nocr "${i}... "
-# 		    else
-# 			_Dbg_progess_show "${progress_prefix}" ${line_count} ${i}
-# 		    fi
-# 		fi
-# 	    done
-# 	    (( line_count != 0 )) && _Dbg_progess_done
-	else
+	if [[ ! -r $fullname ]] ; then
 	    return 1
 	fi
     fi
     
-#    (( i >= NOT_SMALLFILE )) && _Dbg_msg "done."
-    
-    # Save info about file: # lines, checksum and date.
-    ## 
-    
-    # Add $filename to list of all filenames
-    _Dbg_filenames[$fullname]=$source_array_var;
+    _Dbg_file2canonic[$filename]="$fullname"
+    typeset -a text
+    _Dbg_readfile text "$fullname"
+    _Dbg_filenames[$fullname].size=${#text[@]}
     return 0
 }
 

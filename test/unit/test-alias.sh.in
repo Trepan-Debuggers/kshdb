@@ -19,7 +19,6 @@ test_alias()
 
     _Dbg_alias_add exit quit
     _Dbg_alias_find_aliased quit
-    set +x
     assertEquals 'exit, q' "$aliases_found"
 
     _Dbg_alias_remove q
@@ -43,9 +42,9 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 
 . $abs_top_srcdir/lib/alias.sh
 . $abs_top_srcdir/lib/help.sh
+. $abs_top_srcdir/lib/run.sh
 . $abs_top_srcdir/command/alias.sh
 
 # load shunit2
-srcdir=@srcdir@
-srcdir=${srcdir%%/}/
-. ${srcdir}/shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
+. ${shunit_file}

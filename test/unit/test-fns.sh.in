@@ -90,6 +90,7 @@ no__test_parse_linespec()
     assertEquals '0' ${#words[@]}
 }
 
+# Test _Dbg_split
 test_split()
 {
     typeset -a words
@@ -100,13 +101,17 @@ test_split()
     assertEquals 'foo' ${words[0]}
 }
 
-top_srcdir=@top_srcdir@
-srcdir=@srcdir@
-. ${top_srcdir}/lib/msg.sh
-. ${top_srcdir}/lib/fns.sh
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+
+_Dbg_libdir=$abs_top_srcdir
+set -- -q  # Don't need to show banner
+. $abs_top_srcdir/dbg-pre.sh
+. $abs_top_srcdir/lib/msg.sh
+. $abs_top_srcdir/lib/fns.sh
+. $abs_top_srcdir/lib/frame.sh
+. $abs_top_srcdir/lib/journal.sh
 
 # load shunit2
-srcdir=@srcdir@
-srcdir=${srcdir}/
-. ${srcdir}/shunit2
-
+shunit_file=${abs_top_srcdir}test/unit/shunit2
+. ${shunit_file}
