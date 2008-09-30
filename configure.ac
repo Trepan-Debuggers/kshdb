@@ -6,26 +6,6 @@ AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([no-define])
 
-AC_SUBST(TRY_GETOPT)
-
-AC_ARG_ENABLE([gnugetopt],
-	AC_HELP_STRING([--enable-getopt], 
-	[Allow GNU-style long options (default enabled)]))
-
-if test "${enable_getopt}" != "no" ; then
-  $SH_PROG ${srcdir}/getopt-test.sh
-  if test $? -eq 0 ; then
-    AC_MSG_RESULT([Good! Your long options seem to be working okay.])
-    TRY_GETOPT=1
-  else
-    AC_MSG_WARN([getopt doesn't seem to handle long options correctly.])
-    AC_MSG_WARN([Disabling long-options in] DEBUGGER[.])
-    TRY_GETOPT=0
-  fi  
-else
-  TRY_GETOPT=0
-fi
-
 AC_CONFIG_SRCDIR(DEBUGGER.in)
 if test x$srcdir = x ; then
   srcdir=$ac_pwd
@@ -48,8 +28,8 @@ then
 fi
 
 if test "$SH_PROG" = no; then
-  AC_MSG_ERROR([I didn't find the DEBUGGER executable.\
-  You might want to use the --with-DEBUGGER option.])
+  AC_MSG_ERROR([I didn't find the] POSIXSHELL [executable.\
+  You might want to use the] --with-POSIXSHELL [option.])
 fi
 
 AC_MSG_CHECKING([Checking whether $SH_PROG is compatible with DEBUGGER])
@@ -98,7 +78,8 @@ else
   fi
 fi
 
-AM_CONDITIONAL(INSTALL_EMACS_LISP, test "x$lispdir" != "x")
+AM_CONDITIONAL(INSTALL_EMACS_LISP, 
+	       [test "x$lispdir" != "x" -a "x$EMACS" != "xno"])
 
 AC_CONFIG_FILES([ \
 	Makefile \
@@ -121,6 +102,8 @@ AC_CONFIG_FILES([test/example/hanoi.sh],
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
 AC_CONFIG_FILES([test/unit/test-columns.sh], 
                 [chmod +x test/unit/test-columns.sh])
+AC_CONFIG_FILES([test/unit/test-dbg-opts.sh], 
+                [chmod +x test/unit/test-dbg-opts.sh])
 AC_CONFIG_FILES([test/unit/test-filecache.sh],
 	        [chmod +x test/unit/test-filecache.sh])
 AC_CONFIG_FILES([test/unit/test-fns.sh],   [chmod +x test/unit/test-fns.sh])

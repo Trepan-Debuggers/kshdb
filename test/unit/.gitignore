@@ -3,6 +3,7 @@
 /Makefile.in
 /test-alias.sh
 /test-columns.sh
+/test-dbg-opts.sh
 /test-filecache.sh
 /test-fns.sh
 /test-frame.sh

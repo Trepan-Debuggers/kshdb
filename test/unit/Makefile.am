@@ -3,6 +3,7 @@
 
 TESTS = test-alias.sh        \
 	test-columns.sh      \
+	test-dbg-opts.sh     \
 	test-filecache.sh    \
 	test-fns.sh          \
 	test-frame.sh        \
@@ -20,6 +21,7 @@ abs_builddir=@abs_builddir@
 EXTRA_DIST = $(TESTS) $(check_DATA) \
 	test-alias.sh.in            \
 	test-columns.sh.in          \
+	test-dbg-opts.sh.in         \
 	test-filecache.sh.in        \
 	test-fns.sh.in              \
 	test-frame.sh.in            \

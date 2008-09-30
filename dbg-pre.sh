@@ -38,8 +38,6 @@ typeset -r _Dbg_release='0.01git'
 # Will be set to 1 if the top-level call is a debugger.
 typeset -i _Dbg_script=0
 
-typeset -i _Dbg_basename_only=0
-
 # Expand filename given as $1.
 # we echo the expanded name or return $1 unchanged if a bad filename.
 # Return is 0 if good or 1 if bad.
@@ -56,7 +54,7 @@ function _Dbg_expand_filename {
   typeset -x dirname=${filename%/*}
 
   # No slash given in filename? Then use . for dirname
-  [[ $dirname == $basename ]] && dirname='.'
+  [[ $dirname == $basename ]] && [[ $filename != '/' ]] && dirname='.'
 
   # Dirname is ''? Then use / for dirname
   dirname=${dirname:-/}
@@ -64,11 +62,11 @@ function _Dbg_expand_filename {
   # Handle tilde expansion in dirname
   dirname=$(echo $dirname)
 
-  typeset long_path;
+  typeset long_path
 
   [[ $basename == '.' ]] && basename=''
   if long_path=$( (cd "$dirname" ; pwd) ) ; then
-    if [[ $long_path == '/' ]] ; then
+    if [[ "$long_path" == '/' ]] ; then
       echo "/$basename"
     else
       echo "$long_path/$basename"
@@ -91,6 +89,8 @@ _Dbg_tempname() {
 
 # Process command-line options
 . ${_Dbg_libdir}/dbg-opts.sh
+OPTLIND=1
+_Dbg_parse_options "$@"
 
 if [[ ! -d $_Dbg_tmpdir ]] && [[ ! -w $_Dbg_tmpdir ]] ; then
   echo "${_Dbg_pname}: cannot write to temp directory $_Dbg_tmpdir." >&2
@@ -107,9 +107,6 @@ typeset _Dbg_init_cwd=$PWD
 #     _Dbg_have_set0=1
 #   fi
 # fi
-
-typeset -a _Dbg_script_args
-_Dbg_script_args=($@)
 
 typeset -i _Dbg_running=1      # True we are not finished running the program
 
