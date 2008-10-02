@@ -73,7 +73,6 @@ _Dbg_parse_options() {
 	basename 0                       \
 	cmdfile  required_argument       \
     	help     0                       \
-	'?'      0                       \
 	library  required_argument       \
 	no-init  0                       \
 	nx       0                       \
@@ -88,7 +87,7 @@ _Dbg_parse_options() {
 		_Dbg_basename_only=1	;;
 	    x | command )
 		DBG_INPUT=$OPTLARG	;;
-	    h | '?' | help )
+	    h | help )
 		_Dbg_usage		;;
 	    L | library ) 		;;
 	    V | version )
@@ -99,8 +98,11 @@ _Dbg_parse_options() {
 		_Dbg_o_quiet=1		;;
 	    tempdir) 
 		_Dbg_tmpdir=$OPTLARG	;;
+	    '?' )  # Path taken on a bad option
+		echo "Use -h or --help to see options" >&2
+		exit 2                  ;;
 	    * ) 
-		print "Unknown option $opt. Use -h or --help to see options" >&2
+		echo "Unknown option $opt. Use -h or --help to see options" >&2
 		exit 2		;;
 	esac
     done
