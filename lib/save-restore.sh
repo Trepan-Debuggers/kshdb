@@ -37,12 +37,17 @@ function _Dbg_restore_user_vars {
 # We assume that we are nested two calls deep from the point of debug
 # or signal fault. If this isn't the constant 2, then consider adding
 # a parameter to this routine.
+_Dbg_set_debugger_entry() {
 
-function _Dbg_set_debugger_entry {
-
-  _Dbg_old_IFS="$IFS"
-  _Dbg_old_PS4="$PS4"
-  _Dbg_set_debugger_internal
+    _Dbg_rc=0
+    _Dbg_return_rc=0
+    _Dbg_old_IFS="$IFS"
+    _Dbg_old_PS4="$PS4"
+    _Dbg_set_debugger_internal
+    _Dbg_source_journal
+    if (( _Dbg_QUIT_LEVELS > 0 )) ; then
+	_Dbg_do_quit $_Dbg_debugged_exit_code
+    fi
 }
 
 function _Dbg_set_to_return_from_debugger {

@@ -40,12 +40,83 @@ function _Dbg_readfile # var file
    var=( $(< $2))
 }
 
+# Check that line $2 is not greater than the number of lines in 
+# file $1
+_Dbg_check_line() {
+  typeset -i line_number=$1
+  typeset filename=$2
+#   typeset -i max_line=$(_Dbg_get_maxline $filename)
+#   if (( $line_number >  max_line )) ; then 
+#     (( _Dbg_basename_only )) && filename=${filename##*/}
+#     _Dbg_err_msg "Line $line_number is too large." \
+#       "File $filename has only $max_line lines."
+#     return 1
+#   fi
+  return 0
+}
+
+# Print the maximum line of filename $1. $1 is expected to be
+# read in already and therefore stored in _Dbg_file2canonic.
+function _Dbg_get_maxline {
+    (( $# != 1 )) && return 1
+    typeset fullname=${_Dbg_file2canonic["$1"]}
+    (( $? != 0 )) && return 1
+    print ${_Dbg_filenames[$fullname].size}
+    return $?
+}
+
+# _Dbg_is_file echoes the full filename if $1 is a filename found in files
+# '' is echo'd if no file found. Return 0 (in $?) if found, 1 if not.
+function _Dbg_is_file {
+    if (( $# == 0 )) ; then
+	_Dbg_errmsg "Internal debug error: null file to find"
+	echo ''
+	return 1
+    fi
+    typeset find_file="$1"
+
+    if [[ ${find_file:0:1} == '/' ]] ; then 
+	# Absolute file name
+	if [[ -n ${_Dbg_filenames[$find_file]} ]] ; then
+	    print -- "$find_file"
+	    return 0
+	fi
+    elif [[ ${find_file:0:1} == '.' ]] ; then
+	# Relative file name
+	try_find_file=$(_Dbg_expand_filename ${_Dbg_init_cwd}/$find_file)
+	# FIXME: turn into common subroutine
+	if [[ -n ${_Dbg_filenames[$try_find_file]} ]] ; then
+	    print -- "$try_find_file"
+	    return 0
+	fi
+    else
+	# Resolve file using _Dbg_dir
+	typeset -i n=${#_Dbg_dir[@]}
+	typeset -i i
+	for (( i=0 ; i < n; i++ )) ; do
+	    typeset basename="${_Dbg_dir[i]}"
+	    if [[  $basename == '\$cdir' ]] ; then
+		basename=$_Dbg_cdir
+	    elif [[ $basename == '\$cwd' ]] ; then
+		basename=$(pwd)
+	    fi
+	    try_find_file="$basename/$find_file"
+	    if [[ -f "$try_find_file" ]] ; then
+		print -- "$try_find_file"
+		return 0
+	    fi
+	done
+    fi
+    echo ''
+    return 1
+}
+
 # Read $1 into _DBG_source_*n* array where *n* is an entry in
 # _Dbg_filenames.  Variable _Dbg_seen[canonic-name] will be set to
 # note the file has been read and the filename will be saved in array
 # _Dbg_filenames
 
-_Dbg_readin() {
+function _Dbg_readin {
     typeset filename
     if (($# != 0)) ; then 
 	filename="$1"
@@ -64,73 +135,28 @@ _Dbg_readin() {
 	fi
     fi
     
-    typeset -a text
+    nameref text=_Dbg_filenames[$fullname].text
     _Dbg_readfile text "$fullname"
     _Dbg_file2canonic[$filename]="$fullname"
     _Dbg_file2canonic[$fullname]="$fullname"
     _Dbg_filenames[$fullname].size=${#text[@]}
-    # _Dbg_filenames[$fullname].text=text
+    _Dbg_filenames[$fullname].text=text
     return 0
 }
 
-
-# _Dbg_is_file echoes the full filename if $1 is a filename found in files
-# '' is echo'd if no file found. Return 0 (in $?) if found, 1 if not.
-function _Dbg_is_file {
-  if (( $# == 0 )) ; then
-    _Dbg_errmsg "Internal debug error: null file to find"
-    echo ''
-    return 1
-  fi
-  typeset find_file="$1"
-
-  if [[ ${find_file[0]} == '/' ]] ; then 
-      # Absolute file name
-      if [[ -n ${_Dbg_filenames[$find_file]} ]] ; then
-	  print -- "$find_file"
-	  return 0
-      fi
-  elif [[ ${find_file[0]} == '.' ]] ; then
-      # Relative file name
-      try_find_file=$(_Dbg_expand_filename ${_Dbg_init_cwd}/$find_file)
-      # FIXME: turn into common subroutine
-      if [[ -n ${_Dbg_filenames[$try_find_file]} ]] ; then
-	  print -- "$try_find_file"
-	  return 0
-      fi
-  else
-    # Resolve file using _Dbg_dir
-    typeset -i n=${#_Dbg_dir[@]}
-    typeset -i i
-    for (( i=0 ; i < n; i++ )) ; do
-      typeset basename="${_Dbg_dir[i]}"
-      if [[  $basename == '\$cdir' ]] ; then
-	basename=$_Dbg_cdir
-      elif [[ $basename == '\$cwd' ]] ; then
-	basename=$(pwd)
-      fi
-      try_find_file="$basename/$find_file"
-      if [[ -f "$try_find_file" ]] ; then
-	  print -- "$try_find_file"
-	  return 0
-      fi
-    done
-  fi
-  echo ''
-  return 1
+# Read in file $1 unless it has already been read in.
+# 0 is returned if everything went ok.
+function _Dbg_readin_if_new {
+    (( $# != 1 )) && return 1
+    typeset filename="$1"
+    typeset fullname=_Dbg_file2canonic["$filename"]
+    if [[ -z $fullname ]] ; then 
+	_Dbg_readin $filename
+	typeset rc=$?
+	(( $rc != 0 )) && return $rc
+	fullname=_Dbg_file2canonic["$filename"]
+	[[ -z $fullname ]] && return 1
+    fi
+    return 0
 }
 
-# Check that line $2 is not greater than the number of lines in 
-# file $1
-_Dbg_check_line() {
-  typeset -i line_number=$1
-  typeset filename=$2
-#   typeset -i max_line=$(_Dbg_get_maxline $filename)
-#   if (( $line_number >  max_line )) ; then 
-#     (( _Dbg_basename_only )) && filename=${filename##*/}
-#     _Dbg_err_msg "Line $line_number is too large." \
-#       "File $filename has only $max_line lines."
-#     return 1
-#   fi
-  return 0
-}

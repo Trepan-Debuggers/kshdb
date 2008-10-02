@@ -17,14 +17,26 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-typeset  -i _Dbg_debug_debugger=0  # 1 if we are debugging the debugger
-typeset     _Dbg_stop_reason=''    # The reason we are in the debugger.
+typeset -i _Dbg_debug_debugger=0  # 1 if we are debugging the debugger
+typeset    _Dbg_stop_reason=''    # The reason we are in the debugger.
 
-function _Dbg_debug_trap_handler {
-    _Dbg_old_set_opts=$-
+typeset -i _Dbg_QUIT_LEVELS=0     # Number of nested shells we have to exit
+
+# Return code that debugged program reports
+typeset -i _Dbg_program_exit_code=0
+
+# This is the main hook routine that gets called before every statement.
+# It's the function called via trap DEBUG.
+function _Dbg_hook {
+
+    # Save old set options before destroying them
+    _Dbg_old_set_opts=$-  
+
     # Turn off line and variable trace listing.
-    set +x +v +u +e
+    ((!_Dbg_debug_debugger)) && set +x
+    set +v +u +e
 
+    _Dbg_set_debugger_entry 'create_unsetopt'
     typeset -i _Dbg_debugged_exit_code=$1
     shift
 
@@ -50,21 +62,18 @@ function _Dbg_debug_trap_handler {
 
     if ((_Dbg_skip_ignore > 0)) ; then
 	if ((! _Dbg_skipping_fn )) ; then
-	    _Dbg_set_debugger_entry
 	    ((_Dbg_skip_ignore--))
 	    _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
-	    
-	    _Dbg_set_to_return_from_debugger 1
-	    return 2
+	    _Dbg_set_to_return_from_debugger 2
+	    return 2 # 2 indicates skip statement.
 	fi
     fi
-
+    
     # Determine if we stop or not. 
 
-    # Check if step mode and number steps to ignore.
+    # Check if step mode and number of steps to ignore.
     if ((_Dbg_step_ignore == 0 && ! _Dbg_skipping_fn )); then
 
-	_Dbg_set_debugger_entry
 	if ((_Dbg_step_force)) ; then
 	    typeset _Dbg_frame_previous_file="$_Dbg_frame_last_file"
 	    typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
@@ -78,12 +87,8 @@ function _Dbg_debug_trap_handler {
 	    _Dbg_frame_save_frames 1
 	fi
 
-	_Dbg_print_location_and_command
-
-	_Dbg_stop_reason='after being stepped'
-	_Dbg_process_commands
-	_Dbg_set_to_return_from_debugger 1
-	return $_Dbg_rc
+	_Dbg_hook_enter_debugger 'after being stepped'
+	return $?
 
     fi
     if ((_Dbg_linetrace)) ; then 
@@ -91,12 +96,20 @@ function _Dbg_debug_trap_handler {
 	    sleep $_Dbg_linetrace_delay
 	fi
 
-	_Dbg_set_debugger_entry
 	_Dbg_frame_save_frames 1
 	_Dbg_print_location_and_command
-
-	_Dbg_set_to_return_from_debugger 1
     fi
+    _Dbg_set_to_return_from_debugger
+    return 0
+}
+
+# Go into the command loop
+_Dbg_hook_enter_debugger() {
+    _Dbg_stop_reason="$1"
+    _Dbg_print_location_and_command
+    _Dbg_process_commands
+    _Dbg_set_to_return_from_debugger $?
+    return $_Dbg_rc # _Dbg_rc set to $? by above
 }
 
 # Cleanup routine: erase temp files before exiting.

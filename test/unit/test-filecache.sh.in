@@ -4,15 +4,21 @@ PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}]
 '
 
 # Test _Dbg_glob_filename
-test_readin()
+test_readin_maxline()
 {
     typeset filename
-    _Dbg_readin ${shunit_file}
-    assertEquals '0' $?
+    shu=$(_Dbg_resolve_expand_filename $shunit_file)
+    _Dbg_readin ${shu}
+    assertEquals "Read ${shu} status test" '0' $?
     typeset file2
     file2=$(_Dbg_is_file ${shunit_file})
-    assertEquals '0' $?
-    assertNotEquals '' "$file2"
+    assertEquals "Cached read of ${shu} test" '0' $?
+    assertNotEquals "Getting cached file name back" '' "$file2"
+    typeset -i maxline
+    maxline=$(_Dbg_get_maxline $file2)
+    assertEquals "Line-count of $file exit status" '0' $?
+    # We'll assume shunit2 isn't going to get smaller ;-)
+    assertEquals "Number of lines in $file2" 1 $(( maxline > 1000 ))
 }
 
 

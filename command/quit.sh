@@ -18,11 +18,57 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 _Dbg_help_add quit \
-'quit -- Quit the debugger.  The program being debugged is aborted.'
+'quit [EXIT-CODE [SHELL-LEVELS]] -- Quit the debugger.
+
+The program being debugged is aborted.  If EXIT-CODE is given that
+will be the exit return code. If SHELL-LEVELS then up to that many
+nested shells are quit. However to be effective, the last of those
+shells should have been run under the debugger.
+
+See also "finish", "return" and "restart".'
 
 function _Dbg_do_quit {
-    _Dbg_cleanup
-   exit
+    typeset -i return_code=${1:-$_Dbg_program_exit_code}
+
+    typeset -i desired_quit_levels=${2:-0}
+
+    if [[ $desired_quit_levels != [0-9]* ]] ; then
+	_Dbg_errmsg "Argument ($desired_quit_levels) should be a number or nothing."
+	return 0
+    fi
+
+    if (( desired_quit_levels == 0 \
+	|| desired_quit_levels > .sh.subshell+1)) ; then
+	((desired_quit_levels=.sh.subshell+1))
+    fi
+
+    ((_Dbg_QUIT_LEVELS+=desired_quit_levels))
+
+    # Reduce the number of recorded levels that we need to leave by
+    # if _Dbg_QUIT_LEVELS is greater than 0.
+    ((_Dbg_QUIT_LEVELS--))
+
+    ## write this to the next level up can read it.
+    _Dbg_write_journal "_Dbg_QUIT_LEVELS=$_Dbg_QUIT_LEVELS"
+    _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
+
+    # Reset signal handlers to their default but only if 
+    # we are not in a subshell.
+    if (( ZSH_SUBSHELL == 0 )) ; then
+	
+	# If we were told to restart from deep down, restart instead of quit.
+	if [ -n "$_Dbg_RESTART_COMMAND" ] ; then 
+	    _Dbg_erase_journals
+	    _Dbg_save_state
+	    exec $_Dbg_RESTART_COMMAND
+	fi
+	_Dbg_cleanup
+
+    fi
+
+    # And just when you thought we'd never get around to it...
+    exit $return_code
 }
+
 _Dbg_alias_add q quit
 _Dbg_alias_add exit quit
