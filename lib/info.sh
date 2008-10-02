@@ -113,8 +113,10 @@ _Dbg_info_help() {
 	msg=_Dbg_msg
     fi
     $msg "Info subcommands are:"
-    typeset -a list; list=(${_Dbg_info_cmds})
-    _Dbg_list_columns '  ' $msg
+    typeset -a to_do; to_do=(${_Dbg_info_cmds})
+    set -x
+    _Dbg_list_columns to_do
+    set +x
     [[ $msg == '_Dbg_errmsg' ]] && return 1 || return 0
 }
 

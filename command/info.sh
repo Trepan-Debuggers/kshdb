@@ -25,7 +25,7 @@ typeset -a _Dbg_info_subcmds
 # _Dbg_info_subcmds=( breakpoints files program source stack variables )
 _Dbg_info_subcmds=( files line program source stack variables )
 _Dbg_do_info() {
-      
+
   if (($# > 0)) ; then
       typeset info_cmd=$1
       shift
@@ -47,14 +47,14 @@ _Dbg_do_info() {
 # 	      return 0
 # 	      ;;
 	  
-#           file| files | sources )
-#               _Dbg_msg "Source files which we have recorded info about:"
-# 	      for file in ${(ki)_Dbg_file2canonic} ; do
-# 		  typeset -i lines=$(_Dbg_get_maxline $file)
-# 		  _Dbg_msg "  ${file}: ${_Dbg_file2canonic[$file]}, $lines lines"
-# 	      done
-#               return 0
-# 	      ;;
+          files )
+              _Dbg_msg "Source files which we have recorded info about:"
+	      for file in ${!_Dbg_file2canonic[@]} ; do
+		  typeset -i lines=$(_Dbg_get_maxline $file)
+		  _Dbg_msg "  ${file}: ${_Dbg_file2canonic[$file]}, $lines lines"
+	      done
+              return 0
+	      ;;
 	  
 # 	  h | ha | han | hand | handl | handle | \
 # 	      si | sig | sign | signa | signal | signals )
@@ -123,8 +123,8 @@ _Dbg_do_info() {
       msg=_Dbg_msg
   fi
   $msg "Info subcommands are:"
-  typeset -a list; list=(${_Dbg_info_subcmds[@]})
-  _Dbg_list_columns '  ' errmsg
+  typeset -a todo; todo=(${_Dbg_info_subcmds[@]})
+  _Dbg_list_columns todo
   return 1
 }
 
