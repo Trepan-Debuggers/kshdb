@@ -27,7 +27,7 @@ function _Dbg_print_location {
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset -n frame=_Dbg_frame_stack[pos]
     typeset filename=${frame.filename}
-    ## _Dbg_readin "${filename}"
+    _Dbg_readin "${filename}"
     typeset fn=${frame.fn}
     ((_Dbg_basename_only)) && filename=${filename##*/}
     _Dbg_msg "(${filename}:${frame.lineno}):"

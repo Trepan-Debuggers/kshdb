@@ -47,7 +47,7 @@ _Dbg_do_info() {
 # 	      return 0
 # 	      ;;
 	  
-          files )
+          fi | fil | file| files )
               _Dbg_msg "Source files which we have recorded info about:"
 	      for file in ${!_Dbg_file2canonic[@]} ; do
 		  typeset -i lines=$(_Dbg_get_maxline $file)
@@ -68,7 +68,7 @@ _Dbg_do_info() {
 		  return 1
 	      fi
 	      
-              _Dbg_msg "Line $_Dbg_frame_last_lineno of \"$_Dbg_frame_last_file\""
+              _Dbg_msg "Line $_Dbg_frame_last_lineno of \"$_Dbg_frame_last_filename\""
 	      return 0
 	      ;;
 	  
@@ -179,7 +179,7 @@ _Dbg_do_info_variables() {
 	esac
     fi
     _Dbg_errmsg "Need to specify a variable class which is one of: "
-    _Dbg_errmsg "\t$attrs"
+    _Dbg_errmsg "  $attrs"
     return 1
 }
 

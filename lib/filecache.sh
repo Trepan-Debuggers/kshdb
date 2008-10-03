@@ -19,6 +19,7 @@
 
 # Keys are the canonic expanded filename. 
 # name of variable which contains text.
+[[ -z ${#_Dbg_filenames[@]} ]] && return
 typeset -T Fileinfo_t=(
     size=-1
     typeset -a text=()
@@ -35,9 +36,11 @@ _Dbg_file2canonic=()
 function _Dbg_readfile # var file
 {
    nameref var=$1
-   set -f	      
-   IFS=$'\n\n'
-   var=( $(< $2))
+   typeset old_IFS="$IFS"
+   set -f
+   IFS=$'\n\n' var=( $(< $2))
+   set +f
+   IFS="$old_IFS"
 }
 
 # Check that line $2 is not greater than the number of lines in 
