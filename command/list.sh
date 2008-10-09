@@ -17,52 +17,65 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-# _Dbg_help_add list \
-# 'list [START|.|FN] [COUNT] -- List lines of a script.
+_Dbg_help_add list \
+'list [LOC|.|-] [COUNT] -- List COUNT lines of a script starting from LOC
 
-# START is the starting line or dot (.) for current line. Subsequent
-# list commands continue from the last line listed. If a function name
-# is given list the text of the function.
+START is the starting location or dot (.) for current file and
+line. Subsequent list commands continue from the last line
+listed. Frame switching however resets the line to dot.
 
-# If COUNT is omitted, use the setting LISTSIZE. Use "set listsize" to 
-# change this setting.'
+If COUNT is omitted, use the setting LISTSIZE. Use "set listsize" to 
+change this setting.'
 
-# # l [start|.] [cnt] List cnt lines from line start.
-# # l sub       List source code fn
+# l [start|.|-] [cnt] List cnt lines from line start.
 
-# _Dbg_do_list() {
-#     typeset first_arg
-#     if (( $# > 0 )) ; then
-# 	first_arg="$1"
-# 	shift
-#     else
-# 	first_arg='.'
-#     fi
+_Dbg_do_list() {
+    typeset first_arg
+    if (( $# == 0 )) ; then
+	if ((_Dbg_listline < 0 )) ; then
+	    first_arg='.'
+	else
+	    first_arg=$_Dbg_listline
+	fi
+    else
+	first_arg="$1"
+	shift
+    fi
+    typeset count=${1:-$_Dbg_listsize}
+
+    if [[ $first_arg == '.' ]] ; then
+	first_arg=$_Dbg_frame_last_lineno
+    elif [[ $first_arg == '-' ]] ; then
+	typeset -i start_line
+	if ((_Dbg_listline < 0 )) ; then
+	    ((start_line=_Dbg_frame_last_lineno-_Dbg_listsize))
+	else
+	    ((start_line=_Dbg_listline-2*_Dbg_listsize))
+	fi
+	if (( start_line <= 0 )) ; then
+	    ((count=count+start_line-1))
+	    start_line=1
+	fi
+	first_arg=$start_line
+    fi
+
+    typeset filename
+    typeset -i line_number
+    typeset full_filename
     
-#     if [[ $first_arg == '.' ]] ; then
-# 	echo "$_Dbg_frame_last_filename"
-# 	echo "$*"
-# 	_Dbg_list $_Dbg_frame_last_filename $*
-# 	return $?
-#     fi
-
-#     typeset filename
-#     typeset -i line_number
-#     typeset full_filename
+    _Dbg_linespec_setup $first_arg
     
-#     _Dbg_linespec_setup $first_arg
-    
-#     if [[ -n $full_filename ]] ; then 
-# 	(( $line_number ==  0 )) && line_number=1
-# 	_Dbg_check_line $line_number "$full_filename"
-# 	(( $? == 0 )) && \
-# 	    _Dbg_list "$full_filename" "$line_number" $*
-# 	return $?
-#     else
-# 	_Dbg_file_not_read_in $filename
-# 	return 1
-#     fi
-# }
+    if [[ -n $full_filename ]] ; then 
+	(( $line_number ==  0 )) && line_number=1
+	_Dbg_check_line $line_number "$full_filename"
+	(( $? == 0 )) && \
+	    _Dbg_list "$full_filename" "$line_number" $count
+	return $?
+    else
+	_Dbg_file_not_read_in $filename
+	return 1
+    fi
+}
 
 # _Dbg_do_list_globals() {
 #     (($# != 0)) && return 1

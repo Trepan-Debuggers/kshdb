@@ -64,7 +64,7 @@ _Dbg_frame_adjust() {
     ((pos=_Dbg_stack_pos+(count*signum)))
   fi
 
-  if (( $pos < 0 )) ; then 
+  if (( pos < 0 )) ; then 
     _Dbg_errmsg 'Would be beyond bottom-most (most recent) entry.'
     return 1
   elif (( pos >= ${#_Dbg_frame_stack[@]} )) ; then 
