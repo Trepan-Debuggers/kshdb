@@ -3,7 +3,16 @@
 PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
 '
 
-# Test _Dbg_glob_filename
+this_script=$0
+# Test _Dbg_get_source_line
+test_get_source_line()
+{
+    typeset source_line
+    _Dbg_get_source_line 2 $this_script
+    assertEquals '# -*- shell-script -*-' "$source_line"
+}
+
+# Test readin and maxline
 test_readin_maxline()
 {
     typeset filename
@@ -11,7 +20,7 @@ test_readin_maxline()
     _Dbg_readin ${shu}
     assertEquals "Read ${shu} status test" '0' $?
     typeset file2
-    file2=$(_Dbg_is_file ${shunit_file})
+    file2=$(_Dbg_is_file ${shu})
     assertEquals "Cached read of ${shu} test" '0' $?
     assertNotEquals "Getting cached file name back" '' "$file2"
     typeset -i maxline

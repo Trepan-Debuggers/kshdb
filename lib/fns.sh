@@ -188,9 +188,9 @@ function _Dbg_parse_linespec {
   typeset linespec=$1
   case "$linespec" in
 
-    # line number only - use .sh.file for filename
+    # line number only - use filename from last adjust_frame
     [0-9]* )	
-      echo "$linespec 0 ${.sh.file}"
+      echo "$linespec 0 ${_Dbg_frame_last_filename}"
       ;;
     
     # file:line

@@ -76,6 +76,32 @@ function _Dbg_get_maxline {
     return $?
 }
 
+# Return text for source line for line $1 of filename $2 in variable
+# $source_line. The hope is that this has been declared "typeset" in the 
+# caller.
+
+# If $2 is omitted, # use _Dbg_frame_filename, if $1 is omitted use 
+# _Dbg_frame_lineno. The return value is put in source_line.
+_Dbg_get_source_line() {
+    typeset -i lineno
+    if (( $# == 0 )); then
+	lineno=$Dbg_frame_last_lineno
+    else
+	lineno=$1
+	shift
+    fi
+    typeset filename
+    if (( $# == 0 )) ; then
+	filename=$_Dbg_frame_last_filename
+    else
+	filename=$1
+    fi
+  _Dbg_readin_if_new $filename
+  fullname=${_Dbg_file2canonic[$filename]}
+  nameref text=_Dbg_filenames[$fullname].text
+  source_line=${text[$lineno-1]}
+}
+
 # _Dbg_is_file echoes the full filename if $1 is a filename found in files
 # '' is echo'd if no file found. Return 0 (in $?) if found, 1 if not.
 function _Dbg_is_file {
@@ -160,7 +186,7 @@ function _Dbg_readin {
 function _Dbg_readin_if_new {
     (( $# != 1 )) && return 1
     typeset filename="$1"
-    typeset fullname=_Dbg_file2canonic["$filename"]
+    typeset fullname=${_Dbg_file2canonic["$filename"]}
     if [[ -z $fullname ]] ; then 
 	_Dbg_readin $filename
 	typeset rc=$?
