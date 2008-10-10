@@ -66,49 +66,14 @@ get a list of commands and some help for each.
 
 3. WHAT'S NOT HERE YET IN DETAIL
 
-3.a) source listing commands
-
-Commands to list the source code and show the command that is about to
-be run is missing. There are a couple reasons for this. First, I use
-the emacs interface and that shows me source code lines. To use this:
-
-  M-x load-library (with kshdb/emacs/kshdb.el in source)
-  M-x kshdb (name of program when prompted)
-
-The other reason listing is not around is that bash doesn't have
-assocative arrays in 3.x and this would simplify the code. Indpendent
-of that, the code needs to be modularized better. In ruby-debug and
-pydb, this is its own module. Also possible is that ksh could add more
-support for showing the command to be executed. Ruby has a neat
-mechanism that causes the source as an array of lines to be stored
-when a certain associative array is defined. Finally bashdb adds a
-builtin to speed up reading files into an array. 
-
-3.b) breakpoints
-
-This is probably a straight-forward port of code from bashdb. Possibly
-some simplification with associative arrays.
-
-3.c) next (step over function calls) 
-
-This can be implemented without support from ksh, but probably
-debugging support would be faster with the code added to ksh. So I'm
-punting on this for now.
-
-3.d) Showing frame arguments
+3.a) Showing frame arguments, subshell nesting in the call stack
 
 Like next, this can done with or without support from ksh, albeit
 faster with help from ksh. 
 
-3.e) Information persisting when a subshell is left
+3.b) Setting $0
 
-Adding breakpoints and debugger settings will make this problem more apparent.
-
-3.f) Skipping code 
-
-3.g) Setting $0
-
-3.h) lots of other stuff including...
+3.c) lots of other stuff including...
 
   display expressions, signal handling, invoking the debugger directly
   from a script, command history, command completion.

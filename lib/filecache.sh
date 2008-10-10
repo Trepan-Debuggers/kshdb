@@ -17,9 +17,10 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
+[[ -z ${.sh.type.Fileinfo_t} ]] || return
+
 # Keys are the canonic expanded filename. 
 # name of variable which contains text.
-[[ -z ${#_Dbg_filenames[@]} ]] && return
 typeset -T Fileinfo_t=(
     size=-1
     typeset -a text=()
@@ -48,14 +49,20 @@ function _Dbg_readfile # var file
 _Dbg_check_line() {
   typeset -i line_number=$1
   typeset filename=$2
-#   typeset -i max_line=$(_Dbg_get_maxline $filename)
-#   if (( $line_number >  max_line )) ; then 
-#     (( _Dbg_basename_only )) && filename=${filename##*/}
-#     _Dbg_err_msg "Line $line_number is too large." \
-#       "File $filename has only $max_line lines."
-#     return 1
-#   fi
-  return 0
+    typeset -i max_line
+    max_line=$(_Dbg_get_maxline $filename)
+    if (( $? != 0 )) ; then
+	_Dbg_errmsg "internal error getting number of lines in $filename"
+	return 1
+    fi
+
+    if (( $line_number >  max_line )) ; then 
+	(( _Dbg_basename_only )) && filename=${filename##*/}
+	_Dbg_errmsg "Line $line_number is too large." \
+	    "File $filename has only $max_line lines."
+	return 1
+    fi
+    return 0
 }
 
 # Error message for file not read in

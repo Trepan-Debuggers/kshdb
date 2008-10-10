@@ -96,7 +96,9 @@ _Dbg_info_help() {
 # 	        ;;
 	    v | va | var | vari | varia | variab | variabl | variable | variables )
 		_Dbg_msg \
-		    'info variables -- Variable lists by property (array, fn, export, ...)'
+		    "info variables [PROPERTY] -- Variable lists by property.
+PROPERTY is one of: 
+\t$_Dbg_info_var_attrs"
 		return 0
 		;;
 	    w | wa | war | warr | warra | warran | warrant | warranty )

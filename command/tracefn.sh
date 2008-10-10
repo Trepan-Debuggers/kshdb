@@ -27,12 +27,12 @@ _Dbg_help_add trace \
 'trace *function*	- Wrap *function* in set -x'
 
 function _Dbg_do_trace_fn {
-    typeset fn=$1
-    typeset -i clear_debug_trap=${2:-1}
-    if [[ -z $fn ]] ; then
-	_Dbg_errmsg "trace_fn: missing or invalid function name"
+    if (($# == 0)) ; then
+	_Dbg_errmsg "trace_fn: missing function name."
 	return 2
     fi
+    typeset fn=$1
+    typeset -i clear_debug_trap=${2:-1}
     _Dbg_is_function "$fn" 1 || {
 	_Dbg_errmsg "trace_fn: function \"$fn\" is not a function."
 	return 3

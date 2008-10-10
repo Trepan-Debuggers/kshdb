@@ -41,19 +41,21 @@ _Dbg_do_eval() {
 
    print "(( .sh.level =  new_level ))" >> $_Dbg_evalfile
    print "$@" >> $_Dbg_evalfile
+   print '_Dbg_rc=$?' >> $_Dbg_evalfile
+   typeset -i _Dbg_rc
    print "(( .sh.level = $old_level ))" >> $_Dbg_evalfile
 
    if [[ -n $_Dbg_tty  ]] ; then
      _Dbg_set_dol_q $_Dbg_debugged_exit_code
      . $_Dbg_evalfile >>$_Dbg_tty
    else
-     _Dbg_set_dol_q $_Dbg_debugged_exit_code
-     . $_Dbg_evalfile
+       _Dbg_set_dol_q $_Dbg_debugged_exit_code
+       . $_Dbg_evalfile
    fi
-
   # We've reset some variables like IFS and PS4 to make eval look
   # like they were before debugger entry - so reset them now.
   _Dbg_set_debugger_internal
+  return $_Dbg_rc
 }
 
 _Dbg_alias_add 'e' 'eval'
@@ -71,7 +73,6 @@ _Dbg_do_print() {
   typeset _Dbg_expr=${@:-"$_Dbg_last_print_args"}
   typeset dq_expr
   dq_expr=$(_Dbg_esc_dq "$_Dbg_expr")
-
   _Dbg_do_eval _Dbg_msg "$_Dbg_expr"
 }
 

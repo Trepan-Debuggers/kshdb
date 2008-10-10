@@ -20,7 +20,7 @@
 # Where are we in stack? This can be changed by "up", "down" or "frame"
 # commands.
 
-typeset -i _Dbg_stack_pos=0
+[[ -z ${.sh.type.Frame_t} ]] || return
 
 typeset -T Frame_t=(
 	filename=''
@@ -31,6 +31,9 @@ typeset -T Frame_t=(
 	    print -r "file \`${_.filename}' at line ${_.lineno}"
 	}
 )
+
+typeset -i _Dbg_stack_pos=0
+
 
 # Save the last-entered frame for to determine stopping when
 # "set force" or step+ is in effect.
