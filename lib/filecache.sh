@@ -47,8 +47,9 @@ function _Dbg_readfile # var file
 # Check that line $2 is not greater than the number of lines in 
 # file $1
 _Dbg_check_line() {
-  typeset -i line_number=$1
-  typeset filename=$2
+    (( $# != 2 )) && return 1
+    typeset -i line_number=$1
+    typeset filename=$2
     typeset -i max_line
     max_line=$(_Dbg_get_maxline $filename)
     if (( $? != 0 )) ; then
