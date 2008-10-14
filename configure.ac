@@ -72,7 +72,7 @@ if test x$EMACS = xno ; then
   emacs_lisp=no
 else 
   $EMACS -batch -q -no-site-file -eval \
-  '(if (<= emacs-major-version 21) (error "You need Emacs 22 or better."))'
+  '(if (<= emacs-major-version 21) (error "You need GNU Emacs 22 or better for GNU Emacs support."))'
   if test $? -ne 0 ; then
     emacs_lisp=no
   fi
