@@ -78,9 +78,6 @@ function _Dbg_expand_filename {
   fi
 }
 
-# $_Dbg_tmpdir could have been set by the top-level debugger script.
-[[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
-
 # Create temporary file based on $1
 # file $1
 _Dbg_tempname() {
@@ -99,14 +96,7 @@ if [[ ! -d $_Dbg_tmpdir ]] && [[ ! -w $_Dbg_tmpdir ]] ; then
 fi
 
 # Save the initial working directory so we can reset it on a restart.
-typeset _Dbg_init_cwd=$PWD
-
-# typeset -i _Dbg_have_set0=0
-# if [[ -r $_Dbg_libdir/builtin/set0 ]] ; then
-#   if enable -f $_Dbg_libdir/builtin/set0  set0 >/dev/null 2>&1 ; then
-#     _Dbg_have_set0=1
-#   fi
-# fi
+typeset -x _Dbg_init_cwd=$PWD
 
 typeset -i _Dbg_running=1      # True we are not finished running the program
 
@@ -117,7 +107,7 @@ typeset -i _Dbg_currentbp=0    # If nonzero, the breakpoint number that we
 typeset _Dbg_trace_commands='off'
 
 # Known normal IFS consisting of a space, tab and newline
-typeset _Dbg_space_IFS=' 	
+typeset -x _Dbg_space_IFS=' 	
 '
 
 # Number of statements to run before entering the debugger.  Is used
