@@ -18,6 +18,17 @@ test_expand_filename()
     do_test "$file1" ~
 }
 
+test_do_show_version()
+{
+    # Name we refer to ourselves by
+    typeset _Dbg_debugger_name='@PACKAGE@'
+    # The release name we are configured to run under.
+    typeset _Dbg_release='@PACKAGE_VERSION@'
+
+    version_string=$(_Dbg_do_show_version)
+    assertEquals "@PACKAGE@, release @PACKAGE_VERSION@" "$version_string"
+}
+
 # load shunit2
 top_srcdir=@top_srcdir@
 _Dbg_libdir=@top_srcdir@

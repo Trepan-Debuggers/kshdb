@@ -445,8 +445,3 @@ of promoting the sharing and reuse of software generally.
 	  return 1
   esac
 }
-
-_Dbg_do_show_version()
-{
-  _Dbg_msg "${_Dbg_debugger_name}, release $_Dbg_release"
-}
