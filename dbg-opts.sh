@@ -47,7 +47,7 @@ _Dbg_show_version() {
 
 }
 
-# Script arguments before adulteration by _Dbg_parse_otps
+# Script arguments before adulteration by _Dbg_parse_opts
 typeset -a _Dbg_orig_script_args
 _Dbg_orig_script_args=($@)
 
@@ -61,6 +61,8 @@ typeset -i _Dbg_linetrace=0
 typeset -i _Dbg_basename_only=0
 typeset -i _Dbg_o_nx=0
 
+# $_Dbg_tmpdir could have been set by the top-level debugger script.
+[[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
 
 _Dbg_parse_options() {
 
