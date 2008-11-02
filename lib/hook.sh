@@ -71,6 +71,28 @@ function _Dbg_hook {
     
     # Determine if we stop or not. 
 
+    # Check breakpoints.
+    if ((_Dbg_brkpt_count > 0)) ; then 
+	typeset -i _Dbg_brkpt_num
+	if _Dbg_hook_breakpoint_hit ; then 
+	    if ((_Dbg_step_force)) ; then
+		typeset _Dbg_frame_previous_file="$_Dbg_frame_last_filename"
+		typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
+	    fi
+	    _Dbg_frame_save_frames 1
+	    ((_Dbg_brkpt_counts[_Dbg_brkpt_num]++))
+	    _Dbg_msg "Breakpoint $_Dbg_brkpt_num hit."
+	    if (( ${_Dbg_brkpt[_Dbg_brkpt_num].onetime} == 1 )) ; then
+		_Dbg_stop_reason='at a breakpoint that has since been deleted'
+		_Dbg_delete_brkpt_entry $_Dbg_brkpt_num
+	    else
+		_Dbg_stop_reason='breakpoint reached'
+	    fi
+	    _Dbg_hook_enter_debugger $_Dbg_stop_reason
+	    return $?
+	fi
+    fi
+
     # Check if step mode and number of steps to ignore.
     if ((_Dbg_step_ignore == 0 && ! _Dbg_skipping_fn )); then
 
@@ -101,6 +123,38 @@ function _Dbg_hook {
     fi
     _Dbg_set_to_return_from_debugger
     return 0
+}
+
+# Return 0 if we are at a breakpoint position or 1 if not.
+# Sets _Dbg_brkpt_num to the breakpoint number found.
+_Dbg_hook_breakpoint_hit() {
+    typeset full_filenaname
+    typeset file_line
+#     file_line=${funcfiletrace[1]}
+#     typeset -a split_result; _Dbg_split "$file_line" ':'
+#     full_filename=${split_result[0]}
+#     lineno=${split_result[1]}
+#     full_filename=$(_Dbg_is_file $full_filename)
+#     if [[ -r $full_filename ]] ; then 
+# 	_Dbg_file2canonic[$filename]="$fullname"
+#     fi
+#     typeset -a linenos
+#     linenos=${_Dbg_brkpt_file2linenos[$full_filename]}
+#     typeset -i try_lineno
+#     typeset -i i=-1
+#     # Check breakpoints within full_filename
+#     for try_lineno in $linenos ; do 
+# 	((i++))
+# 	if (( try_lineno == lineno )) ; then
+# 	    # Got a match, but is the breakpoint enabled? 
+# 	    typeset -a brkpt_nos; brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
+# 	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
+# 	    if ((_Dbg_brkpt_enable[_Dbg_brkpt_num] )) ; then
+# 		return 0
+# 	    fi
+# 	fi
+#     done
+    return 1
 }
 
 # Go into the command loop

@@ -12,6 +12,7 @@ pkgdata_DATA =       \
 	run.sh       \
 	set.sh       \
 	show.sh      \
+	source.sh    \
 	stepping.sh  \
 	tracefn.sh   \
 	where.sh
