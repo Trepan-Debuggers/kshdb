@@ -54,8 +54,8 @@ _Dbg_do_show() {
     ar | arg | args )
       [[ -n $label ]] && label='args:     '
       _Dbg_msg \
-"${label}Argument list to give script when debugged program starts is:\n" \
-"      \"${_Dbg_script_args[@]}\"."
+"${label}Argument list to give script when debugged program starts is:
+	\"${_Dbg_script_args[@]}\"."
       return 0
       ;;
     an | ann | anno | annot | annota | annotat | annotate )
