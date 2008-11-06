@@ -2,6 +2,7 @@
 #$Id: Makefile.am,v 1.1 2008/06/01 00:49:16 rockyb Exp $
 
 TESTS = test-alias.sh        \
+	test-break.sh        \
 	test-columns.sh      \
 	test-dbg-opts.sh     \
 	test-filecache.sh    \
@@ -20,6 +21,7 @@ abs_builddir=@abs_builddir@
 
 EXTRA_DIST = $(TESTS) $(check_DATA) \
 	test-alias.sh.in            \
+	test-break.sh.in            \
 	test-columns.sh.in          \
 	test-dbg-opts.sh.in         \
 	test-filecache.sh.in        \

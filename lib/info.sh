@@ -22,6 +22,7 @@ typeset  _Dbg_info_cmds='line program stack variables warranty'
 _Dbg_info_help() {
   typeset info_cmd=$1
   typeset label=$2
+  typeset msg_fn
 
   if [[ -z $info_cmd ]] ; then 
       typeset thing
@@ -109,16 +110,14 @@ PROPERTY is one of:
 	    * )
 		_Dbg_errmsg \
 		    _Dbg_errmsg "Unknown info subcommand: $info_cmd"
-		msg=_Dbg_errmsg
+		msg_fn=_Dbg_errmsg
 	esac
     else
-	msg=_Dbg_msg
+	msg_fn=_Dbg_msg
     fi
-    $msg "Info subcommands are:"
+    $msg_fn "Info subcommands are:"
     typeset -a to_do; to_do=(${_Dbg_info_cmds})
-    set -x
     _Dbg_list_columns to_do
-    set +x
-    [[ $msg == '_Dbg_errmsg' ]] && return 1 || return 0
+    [[ $msg_fn == '_Dbg_errmsg' ]] && return 1 || return 0
 }
 
