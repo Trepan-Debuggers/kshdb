@@ -74,12 +74,12 @@ function _Dbg_hook {
     # Check breakpoints.
     if ((_Dbg_brkpt_count > 0)) ; then 
 	typeset -i _Dbg_brkpt_num
+	_Dbg_frame_save_frames 1
 	if _Dbg_hook_breakpoint_hit ; then 
 	    if ((_Dbg_step_force)) ; then
 		typeset _Dbg_frame_previous_file="$_Dbg_frame_last_filename"
 		typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
 	    fi
-	    _Dbg_frame_save_frames 1
 	    ((_Dbg_brkpt_counts[_Dbg_brkpt_num]++))
 	    _Dbg_msg "Breakpoint $_Dbg_brkpt_num hit."
 	    if (( ${_Dbg_brkpt[_Dbg_brkpt_num].onetime} == 1 )) ; then
@@ -99,7 +99,7 @@ function _Dbg_hook {
 	if ((_Dbg_step_force)) ; then
 	    typeset _Dbg_frame_previous_file="$_Dbg_frame_last_file"
 	    typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
-	    _Dbg_frame_save_frames 1
+	    ((_Dbg_brkpt_count == 0)) && _Dbg_frame_save_frames 1
 	    if ((_Dbg_frame_previous_lineno == _Dbg_frame_last_lineno)) && \
 		[ "$_Dbg_frame_previous_file" = "$_Dbg_frame_last_file" ] ; then
 		_Dbg_set_to_return_from_debugger 1
@@ -128,32 +128,23 @@ function _Dbg_hook {
 # Return 0 if we are at a breakpoint position or 1 if not.
 # Sets _Dbg_brkpt_num to the breakpoint number found.
 _Dbg_hook_breakpoint_hit() {
-    typeset full_filenaname
-    typeset file_line
-#     file_line=${funcfiletrace[1]}
-#     typeset -a split_result; _Dbg_split "$file_line" ':'
-#     full_filename=${split_result[0]}
-#     lineno=${split_result[1]}
-#     full_filename=$(_Dbg_is_file $full_filename)
-#     if [[ -r $full_filename ]] ; then 
-# 	_Dbg_file2canonic[$filename]="$fullname"
-#     fi
-#     typeset -a linenos
-#     linenos=${_Dbg_brkpt_file2linenos[$full_filename]}
-#     typeset -i try_lineno
-#     typeset -i i=-1
-#     # Check breakpoints within full_filename
-#     for try_lineno in $linenos ; do 
-# 	((i++))
-# 	if (( try_lineno == lineno )) ; then
-# 	    # Got a match, but is the breakpoint enabled? 
-# 	    typeset -a brkpt_nos; brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
-# 	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
-# 	    if ((_Dbg_brkpt_enable[_Dbg_brkpt_num] )) ; then
-# 		return 0
-# 	    fi
-# 	fi
-#     done
+    typeset full_filename=${_Dbg_frame_last_filename}
+    typeset lineno=${_Dbg_frame_last_lineno}
+    # FIXME: combine with _Dbg_unset_brkpt
+    typeset -a linenos
+    linenos=(${_Dbg_brkpt_file2linenos[$full_filename]})
+    typeset -a brkpt_nos
+    brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
+    typeset -i i
+    for ((i=0; i < ${#linenos[@]}; i++)); do 
+	if (( linenos[i] == lineno )) ; then
+ 	    # Got a match, but is the breakpoint enabled? 
+ 	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
+ 	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
+ 		return 0
+ 	    fi
+ 	fi
+    done
     return 1
 }
 

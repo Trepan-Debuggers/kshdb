@@ -23,7 +23,7 @@ typeset -a _Dbg_info_subcmds
 # typeset -a _Dbg_infosubcmds=( args breakpoints display files functions program source \
 #                       sources stack terminal variables watchpoints )
 # _Dbg_info_subcmds=( breakpoints files program source stack variables )
-_Dbg_info_subcmds=( files line program source stack variables )
+_Dbg_info_subcmds=( breakpoints files line program source stack variables )
 _Dbg_do_info() {
 
   if (($# > 0)) ; then
@@ -34,13 +34,13 @@ _Dbg_do_info() {
               _Dbg_do_info_args 3  # located in dbg-stack.sh
 	      return 0
 	      ;;
-# 	  b | br | bre | brea | 'break' | breakp | breakpo | breakpoints )
-# 	      #      b | br | bre | brea | 'break' | breakp | breakpo | breakpoints | \
-# 	      #      w | wa | wat | watc | 'watch' | watchp | watchpo | watchpoints )
-# 	      _Dbg_do_list_brkpt $*
+ 	  b | br | bre | brea | 'break' | breakp | breakpo | breakpoints )
+ 	      #      b | br | bre | brea | 'break' | breakp | breakpo | breakpoints | \
+ 	      #      w | wa | wat | watc | 'watch' | watchp | watchpo | watchpoints )
+ 	      _Dbg_do_list_brkpt $*
 # 	      #	_Dbg_list_watch $*
-# 	      return 0
-# 	      ;;
+ 	      return 0
+ 	      ;;
 	  
 # 	  d | di | dis| disp | displ | displa | display )
 # 	      _Dbg_do_list_display $*

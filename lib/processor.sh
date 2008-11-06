@@ -112,6 +112,12 @@ _Dbg_onecmd() {
 	  _Dbg_do_alias $@
 	  ;;
 
+	# Set breakpoint on a line
+	break )
+	  _Dbg_do_break 0 $args 
+	  _Dbg_last_cmd="break"
+	  ;;
+
 # 	# Delete all breakpoints by line number.
 # 	clear )
 # 	  _Dbg_do_clear_brkpt $args

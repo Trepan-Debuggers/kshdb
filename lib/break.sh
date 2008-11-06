@@ -216,10 +216,10 @@ _Dbg_unset_brkpt() {
     fullname=$(_Dbg_expand_filename "$filename")
     
     [[ -z ${_Dbg_brkpt_file2linenos[$fullname]} ]] && return 0
+    # FIXME: combine with _hook_breakpoint_hit
     typeset -a linenos=()
     linenos=(${_Dbg_brkpt_file2linenos[$fullname]})
     typeset -a brkpt_nos
-    brkpt_nos=(${_Dbg_file2brkpt[$fullname].brkpt_nums[@]})
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$fullname]})
     typeset -i i
     for ((i=0; i < ${#linenos[@]}; i++)); do 
