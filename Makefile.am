@@ -36,7 +36,6 @@ bin_SCRIPTS = kshdb
 
 EXTRA_DIST = $(pkgdata_DATA) THANKS
 
-# cvs2cl
 MAINTAINERCLEANFILES = ChangeLog
 
 test: check
@@ -53,7 +52,7 @@ if MAINTAINER_MODE
 
 CL = ChangeLog
 ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL)
+	git log --pretty --numstat --summary | $(GIT2CL) >$@
 
 ACLOCAL_AMFLAGS=-I .
 
