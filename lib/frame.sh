@@ -48,7 +48,7 @@ Frame_t -a _Dbg_frame_stack  #=() causes a problem
 _Dbg_frame_stack=()
 
 _Dbg_frame_adjust() {
-  (($# != 2)) && return -1
+  (($# != 2)) && return -- -1
 
   typeset -i count=$1
   typeset -i signum=$2
