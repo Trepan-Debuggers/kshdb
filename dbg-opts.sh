@@ -33,6 +33,7 @@ options:
                             Set the directory location of library helper file: $_Dbg_main
     -c | --command STRING   Run STRING instead of a script file
     -n | --nx | --no-init   Don't run initialization files.
+    -t | --tty DEV          Run using device for your programs standard input and output
     -V | --version          Print the debugger version number.
     -x | --eval-command CMDFILE
                             Execute debugger commands from CMDFILE.
@@ -60,6 +61,8 @@ typeset -i _Dbg_annotate=0
 typeset -i _Dbg_linetrace=0
 typeset -i _Dbg_basename_only=0
 typeset -i _Dbg_o_nx=0
+typeset -i _Dbg_o_linetrace=0
+typeset    _Dbg_tty=''
 
 # $_Dbg_tmpdir could have been set by the top-level debugger script.
 [[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
@@ -73,17 +76,18 @@ _Dbg_parse_options() {
 
     while getopts_long A:Bc:x:hL:nqTt:VX opt \
 	annotate required_argument           \
-	basename 0                           \
+	basename no_argument                 \
 	command  required_argument           \
 	eval-command required_argument       \
 	cmdfile  required_argument           \
-    	help     0                           \
+    	help     no_argument                 \
 	library  required_argument           \
-	no-init  0                           \
-	nx       0                           \
-	quiet    0                           \
+	no-init  no_argument                 \
+	nx       no_argument                 \
+	quiet    no_argument                 \
         tempdir  required_argument           \
-	version  0                           \
+        tty      required_argument           \
+	version  no_argument                 \
 	'' "$@"
     do
 	case "$opt" in 
@@ -102,6 +106,8 @@ _Dbg_parse_options() {
 		_Dbg_o_nx=1		;;
 	    q | quiet )
 		_Dbg_o_quiet=1		;;
+	    t | tty) 
+		_Dbg_tty=$OPTLARG	;;
 	    tempdir) 
 		_Dbg_tmpdir=$OPTLARG	;;
 	    x | eval-command )
@@ -120,7 +126,7 @@ _Dbg_parse_options() {
 	_Dbg_do_show_version
 	exit 0
     elif (( ! _Dbg_o_quiet )); then 
-	echo "$_Dbg_shell_name debugger, release $_Dbg_release"
+	echo "$_Dbg_shell_name Shell Debugger, release $_Dbg_release"
 	printf '
 Copyright 2008 Rocky Bernstein
 This is free software, covered by the GNU General Public License, and you are

@@ -13,7 +13,8 @@ TESTS = test-alias.sh        \
 	test-pre.sh          \
 	test-run.sh          \
 	test-save-restore.sh \
-	test-sort.sh
+	test-sort.sh         \
+	test-tty.sh
 check_DATA = shunit2
 
 abs_srcdir=@abs_srcdir@

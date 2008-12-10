@@ -31,7 +31,7 @@ for file in ${_Dbg_libdir}/command/*.sh ; do
 done
 
 # Have we already specified where to read debugger input from?  
-if [ -n "$DBG_INPUT" ] ; then 
+if [[ -n "$DBG_INPUT" ]] ; then 
   _Dbg_do_source "$DBG_INPUT"
   _Dbg_no_init=1
 fi
@@ -41,3 +41,5 @@ typeset _Dbg_startup_cmdfile=${HOME:-.}/.${_Dbg_debugger_name}rc
 if [[ -z $_Dbg_no_init && -r $_Dbg_startup_cmdfile ]] ; then
   _Dbg_do_source $_Dbg_startup_cmdfile
 fi
+
+[[ -n "$_Dbg_tty" ]] && _Dbg_do_set inferior-tty $_Dbg_tty

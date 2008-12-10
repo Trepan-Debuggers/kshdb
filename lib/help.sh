@@ -92,6 +92,10 @@ Follow this command with any number of args, to be passed to the program."
       _Dbg_msg \
 "${label}Set stepping forces a different line is" $onoff
       ;;
+    inferior-tty )
+     [[ -n $label ]] && label='set inferior-tty     -- '
+      _Dbg_msg "${label}"
+      ;;
     lin | line | linet | linetr | linetra | linetrac | linetrace )
       [[ -n $label ]] && label='set linetrace -- '
       typeset onoff='off.'
