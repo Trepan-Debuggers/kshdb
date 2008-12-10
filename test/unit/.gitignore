@@ -14,3 +14,4 @@
 /test-run.sh
 /test-save-restore.sh
 /test-sort.sh
+/test-tty.sh
