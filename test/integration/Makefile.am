@@ -4,6 +4,7 @@ TESTS = \
 	test-bug-errexit   \
 	test-frame         \
 	test-next          \
+	test-restart	   \
 	test-skip	   \
 	test-step
 
