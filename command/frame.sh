@@ -34,10 +34,11 @@ _Dbg_do_down() {
 _Dbg_alias_add 'd' down
 
 _Dbg_help_add frame \
-'frame FRAME-NUM -- Move the current frame to the FRAME-NUM.
+'frame [FRAME-NUM] -- Move the current frame to the FRAME-NUM.
 
 If FRAME-NUM is negative, count back from the least-recent frame; -1
-is the oldest frame. FRAME-NUM can be any arithmetic expression.'
+is the oldest frame. FRAME-NUM can be any arithmetic expression. If
+FRAME is omitted, 0 or the most-recent frame moved to.'
 
 _Dbg_do_frame() {
   _Dbg_not_running && return 1
