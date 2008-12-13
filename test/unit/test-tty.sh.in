@@ -7,8 +7,9 @@ typeset -a _Dbg_fd=(1)
 
 test_tty()
 {
-    _Dbg_is_tty 'not there' # when is_tty is better, try: $0
+    _Dbg_open_if_tty $0
     assertEquals "1" "$?"
+    assertEquals "-1" "$_Dbg_new_fd"
     tty=$(tty)
     if (($? == 0)); then 
 	if [[ $tty =~ 'not a tty' ]] ; then
@@ -17,14 +18,18 @@ test_tty()
 	else
 	    result=0
 	fi
-	_Dbg_is_tty $tty
+	_Dbg_open_if_tty $tty
 	assertEquals "$result" "$?"
 	if ((result == 0)) ; then
+	    assertNotEquals "-1" "$Dbg_new_fd"
+	    command exec {_Dbg_new_fd}>&- 
+	    _Dbg_new_fd=-1
 	    _Dbg_set_tty $tty
+	    assertEquals "$result" "$?"
+	    assertNotEquals "-1" "$Dbg_new_fd"
 	fi
     fi
 }
-
 
 if [ '@abs_top_srcdir@' = '' ] ; then
   echo "Something is wrong abs_top_srcdir is not set."

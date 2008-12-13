@@ -18,35 +18,47 @@
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 #
-# Return 1 if $1 is a tty else 0.
+# Return 0 if $1 is a tty and open it. Otherwise return 0. _Dbg_new_fd
+# will be set to the file descriptor of the open tty or set to -1 if
+# none could be opened.
 #
-function _Dbg_is_tty {
+# We write the interface this way because intead of say a routine to
+# test a name refers to a terminal, because it's easy to tell if a
+# file descriptor is a tty but not so easy using just the name. And we
+# want to avoid opening and closing file descriptors unnecessarily.
+#
+function _Dbg_open_if_tty {
     (( $# != 1 )) && return 1
     [[ ! -r $1 ]] || [[ ! -w $1 ]] && return 1
-## Uncomment after next ksh release after 12/10
-#     integer n
-#     typeset -i r=1
-#     # Code courtesy of David Korn:
-#     if command exec {n}<> $1; then    
-# 	if [[ -t $n  ]] ; then 
-# 	    r=0
-#             command exec {n}<>&-
-# 	fi
-#     fi
-#     return $r
-    return 0
+    # Code modelled off of code from David Korn:
+    typeset -i r=1
+    { 
+	if command exec {_Dbg_new_fd}<>$1 ; then
+	    if [[ -t $_Dbg_new_fd  ]] ; then 
+		r=0
+	    else
+		# Can't specify <> below like we did on the open
+		# above, but since there's one input/output file
+		# descriptor, in zsh both input and output are closed.
+		command exec {_Dbg_new_fd}<&- 
+		_Dbg_new_fd=-1
+	    fi
+	fi;
+    } 2> /dev/null
+
+    return $r
 }
 
 # Redirect input and output to tty. 
 function _Dbg_set_tty {
-    if (( $# != 1 )) ; then
-	_Dbg_errmsg "Need a single tty parameter got $# args instead"
-	return 1
-    fi
-    if _Dbg_is_tty $1 ; then
-	exec {_Dbg_fdi}<>$tty
-	_Dbg_fd[-1]=$_Dbg_fdi
-    else
-	_Dbg_errmsg "$1 is not reputed to be a tty."
-    fi
+  if (( $# != 1 )) ; then
+    _Dbg_errmsg "Need a single tty parameter; got $# args instead."
+    return 1
+  fi
+  typeset -i _Dbg_new_fd
+  if _Dbg_open_if_tty $1 ; then
+      _Dbg_fd[-1]=$_Dbg_fdi
+  else
+      _Dbg_errmsg "$1 is not reputed to be a tty."
+  fi
 }
