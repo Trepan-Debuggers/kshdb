@@ -33,4 +33,5 @@ EXTRA_DIST = $(TESTS) $(check_DATA) \
 	test-pre.sh.in              \
 	test-run.sh.in              \
 	test-save-restore.sh.in     \
-	test-sort.sh.in
+	test-sort.sh.in             \
+	test-tty.sh.in
