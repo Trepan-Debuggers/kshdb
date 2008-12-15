@@ -405,8 +405,8 @@ of promoting the sharing and reuse of software generally.
     p | pr | pro | prom | promp | prompt )
       [[ -n $label ]] && label='prompt:   '
       _Dbg_msg \
-"${label}${_Dbg_debugger_name}'s prompt is:\n" \
-"      \"$_Dbg_prompt_str\"."
+"${label}${_Dbg_debugger_name}'s prompt is:
+	\"$_Dbg_prompt_str\"."
       return 0
       ;;
     sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
