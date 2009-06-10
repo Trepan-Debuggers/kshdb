@@ -1,7 +1,6 @@
 # -*- shell-script -*-
-# dbg-fns.inc - Debugger Utility Functions
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -68,3 +67,11 @@ function _Dbg_printf_nocr {
   fi
 }
 
+# Common funnel for "Undefined command" message
+_Dbg_undefined_cmd() {
+    if (( $# == 2 )) ; then
+	_Dbg_msg "Undefined $1 subcommand \"$2\". Try \"help $1\"."
+    else
+	_Dbg_msg "Undefined command \"$1\". Try \"help\"."
+    fi
+}

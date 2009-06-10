@@ -16,6 +16,12 @@ test_msg()
     assertEquals 'fo ' "$msg"
 }
 
+test_undefined()
+{
+    typeset msg=$(_Dbg_undefined_cmd foo bar)
+    assertEquals 'Undefined foo command "bar". Try "help".' "$msg"
+}
+
 top_srcdir=@top_srcdir@
 . ${top_srcdir}/lib/msg.sh
 

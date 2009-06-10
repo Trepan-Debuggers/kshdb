@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008 Rocky Bernstein  rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein  rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it
 #   under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ _Dbg_save_breakpoints() {
 # Start out with general break/watchpoint functions first...
 
 # Enable/disable breakpoint or watchpoint by entry numbers.
-_Dbg_enable_disable() {
+function _Dbg_enable_disable {
   if (($# == 0)) ; then
     _Dbg_errmsg "Expecting a list of breakpoint/watchpoint numbers. Got none."
     return 1
@@ -194,7 +194,7 @@ _Dbg_set_brkpt() {
 }
 
 # Internal routine to unset the actual breakpoint arrays
-_Dbg_unset_brkpt_arrays() {
+function _Dbg_unset_brkpt_arrays {
     (( $# != 1 )) && return 1
     typeset -i del=$1
     _Dbg_write_journal_eval "_Dbg_brkpt[$del].lineno=0"
@@ -208,7 +208,7 @@ _Dbg_unset_brkpt_arrays() {
 
 # Internal routine to delete a breakpoint by file/line.
 # The number of breakpoints unset returned.
-_Dbg_unset_brkpt() {
+function _Dbg_unset_brkpt {
     (( $# != 2 )) && return 0
     typeset    filename="$1"
     typeset -i lineno=$2
@@ -239,13 +239,13 @@ _Dbg_unset_brkpt() {
 
 # Routine to a delete breakpoint by entry number: $1.
 # Returns whether or not anything was deleted.
-_Dbg_delete_brkpt_entry() {
+function _Dbg_delete_brkpt_entry {
     (( $# == 0 )) && return 0
     typeset -r  del="$1"
     typeset -i  i
     typeset -i  found=0
     
-    if [[ -z ${_Dbg_brkpt_file[$del]} ]] ; then
+    if [[ -z ${_Dbg_brkpt[$del]} ]] ; then
 	_Dbg_errmsg "No breakpoint number $del."
 	return 0
     fi
@@ -254,7 +254,7 @@ _Dbg_delete_brkpt_entry() {
     typeset -i try 
     typeset -a new_lineno_val; new_lineno_val=()
     typeset -a new_brkpt_nos; new_brkpt_nos=()
-    typeset -i i
+    typeset -i i=-1
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$source_file]})
     for try in ${_Dbg_brkpt_file2linenos[$source_file]} ; do 
 	((i++))
@@ -279,12 +279,11 @@ _Dbg_delete_brkpt_entry() {
 	    _Dbg_write_journal_eval "_Dbg_brkpt_file2brkpt[$source_file]=${new_brkpt_nos}"
 	fi
     fi
-    
     return $found
 }
 
 # Enable/disable breakpoint(s) by entry numbers.
-_Dbg_enable_disable_brkpt() {
+function _Dbg_enable_disable_brkpt {
   (($# != 3)) && return 1
   typeset -i on=$1
   typeset en_dis=$2

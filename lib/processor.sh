@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -71,7 +71,7 @@ function _Dbg_process_commands {
     	_Dbg_onecmd "$_Dbg_cmd" "$args"
         rc=$?
         # _Dbg_postcmd
-        (( $rc > 0 )) && return $rc
+        (( rc > 0 && rc != 255 )) && return $rc
     done
 
     unset _Dbg_fd[_Dbg_fd_last--]
@@ -135,6 +135,18 @@ _Dbg_onecmd() {
 	  fi
 	  ;;
 
+	# Delete breakpoints by entry numbers. 
+	delete )
+	  _Dbg_do_delete $args
+	  _Dbg_last_cmd='delete'
+	  ;;
+
+	# Disable breakpoints
+	disable )
+	  _Dbg_do_disable $args
+	  _Dbg_last_cmd='disable'
+	  ;;
+
 	# Move call stack down
 	down )
 	  _Dbg_do_down $@
@@ -145,6 +157,12 @@ _Dbg_onecmd() {
 	edit )
 	  _Dbg_do_edit $args
 	  _Dbg_last_cmd='edit'
+	  ;;
+
+	# enable breakpoints or watchpoints
+	enable )
+	  _Dbg_do_enable $args
+	  _Dbg_last_cmd='enable'
 	  ;;
 
 	# evaluate as shell command
@@ -258,13 +276,13 @@ _Dbg_onecmd() {
 
 	* ) 
 	   if (( _Dbg_autoeval )) ; then
-	     ! _Dbg_do_eval $_Dbg_cmd $args && return -1
+	     ! _Dbg_do_eval $_Dbg_cmd $args && return 255
 	   else
-             _Dbg_msg "Undefined command: \"$_Dbg_cmd\". Try \"help\"." 
+             _Dbg_undefined_cmd $_Dbg_cmd
 	     # _Dbg_remove_history_item
 	     # typeset -a last_history=(`history 1`)
 	     # history -d ${last_history[0]}
-	     return -1
+	     return 255
 	   fi
 	  ;;
       esac

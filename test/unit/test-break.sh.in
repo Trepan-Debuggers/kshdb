@@ -25,16 +25,16 @@ test_breakpoint()
 
     # Test parameter count checking for _Dbg_set_brkpt
     _Dbg_set_brkpt 
-    assertNotEquals '0' "$?"
+    assertNotEquals '_Dbg_set_brkpt no parms - should be bad' '0' "$?"
     _Dbg_set_brkpt 1 2 3 4 5
-    assertNotEquals '0' "$?"
+    assertNotEquals '_Dbg_set_brkpt parms - should be good' '0' "$?"
 
-    assertEquals 0 $_Dbg_brkpt_count
+    assertEquals '$_Dbg_brkpt_count should be 0' 0 $_Dbg_brkpt_count
 
     # This should work
     _Dbg_set_brkpt test.sh 5 0
     assertEquals 'Breakpoint 1 set in file test.sh, line 5.' "${msgs[-1]}" 
-    assertEquals 1 $_Dbg_brkpt_count
+    assertEquals '$_Dbg_brkpt_count should be 1' 1 $_Dbg_brkpt_count
     msgs=()
 
     # Test parameter count checking for _Dbg_unset_brkpt
