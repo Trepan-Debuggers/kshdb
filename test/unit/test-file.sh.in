@@ -1,0 +1,73 @@
+#!@SH_PROG@
+# -*- shell-script -*-
+PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+'
+
+# Test _Dbg_glob_filename
+test_glob_filename()
+{
+    typeset filename
+    filename=''
+    _Dbg_glob_filename $shunit_file
+    assertEquals '0' $?
+    filename=${filename##*/}  
+    assertEquals 'shunit2' $filename
+    _Dbg_glob_filename ./${srcdir}shunit?
+    assertEquals '0' $?
+    filename=${filename##*/}  
+    assertEquals 'shunit2' $filename
+    _Dbg_glob_filename ${srcdir}abcdefg
+    assertEquals '1' $?
+    filename=${filename##*/}  
+    assertEquals 'abcdefg' $filename
+}
+
+# Test _Dbg_adjust_filename
+test_adjust_filename()
+{
+    typeset filename
+    _Dbg_annotate=0
+    _Dbg_basename=0
+    filename=$(_Dbg_adjust_filename abc)
+    assertEquals 'abc' $filename
+    filename=$(_Dbg_adjust_filename /abc)
+    assertEquals '/abc' $filename
+    _Dbg_basename_only=1
+    filename=$(_Dbg_adjust_filename /abc)
+    assertEquals 'abc' $filename
+}
+
+# Test _Dbg_glob_filename
+test_resolve_expand_filename()
+{
+    filename=$(_Dbg_resolve_expand_filename /)
+    assertEquals '0' $?
+    assertEquals '/' "$filename"
+    filename=$(_Dbg_resolve_expand_filename .)
+    assertEquals '0' $?
+    assertEquals '/' "${filename:0:1}"
+    filename=$(_Dbg_resolve_expand_filename ./fdafdsa)
+    assertEquals '0' $?
+    typeset -i len=${#filename}
+    assertEquals '/fdafdsa' "${filename:len-8:len}"
+    assertNotEquals '.' "${filename:len-9:len-8}"
+}
+
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+
+_Dbg_libdir=$abs_top_srcdir
+set -- -q  # Don't need to show banner
+. $abs_top_srcdir/dbg-pre.sh
+. $abs_top_srcdir/lib/filecache.sh
+. $abs_top_srcdir/lib/file.sh
+
+SHUNIT_PARENT=$0
+
+srcdir=@srcdir@
+srcdir=${srcdir%%/}/
+
+# load shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
+. ${shunit_file}
+
