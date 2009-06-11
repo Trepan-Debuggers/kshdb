@@ -1,3 +1,9 @@
+Version 0.02
+2009-06-12
+
+Add enable, disable, and examine debugger commands
+"set inferior-tty" and --tty option.
+
 Version 0.01
 2008-11-17
 

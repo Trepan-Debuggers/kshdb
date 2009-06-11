@@ -171,6 +171,11 @@ _Dbg_onecmd() {
 	  _Dbg_last_cmd='eval'
 	  ;;
 
+	# intelligent print of variable, function or expression
+	examine )
+	  _Dbg_do_examine "$args"
+	  ;;
+
 	#  Set stack frame
 	frame )
 	  _Dbg_do_frame $@
