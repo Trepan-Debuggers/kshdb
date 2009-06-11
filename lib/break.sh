@@ -65,7 +65,7 @@ typeset -A _Dbg_brkpt_file2brkpt; _Dbg_brkpt_file2brkpt=()
 
 #========================= FUNCTIONS   ============================#
 
-_Dbg_save_breakpoints() {
+function _Dbg_save_breakpoints {
   typeset -p _Dbg_brkpt              >> $_Dbg_statefile 
   typeset -p _Dbg_brkpt_file2linenos >> $_Dbg_statefile
 # typeset -p _Dbg_file2brkpt          >> $_Dbg_statefile
@@ -140,7 +140,7 @@ function _Dbg_print_brkpt_count {
 }
 
 # Clear all breakpoints.
-_Dbg_clear_all_brkpt() {
+function _Dbg_clear_all_brkpt {
   # _Dbg_write_journal_eval "_Dbg_file2brkpt=()"
   _Dbg_write_journal_eval "_Dbg_brkpt_file2linenos=()"
   _Dbg_write_journal_eval "_Dbg_brkpt_file2brkpt=()"
