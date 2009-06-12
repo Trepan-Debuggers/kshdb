@@ -1,5 +1,7 @@
 #!@SH_PROG@
 # -*- shell-script -*-
+PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+'
 
 test_msg()
 {
@@ -19,14 +21,15 @@ test_msg()
 test_undefined()
 {
     typeset msg=$(_Dbg_undefined_cmd foo bar)
-    assertEquals 'Undefined foo command "bar". Try "help".' "$msg"
+    assertEquals 'Undefined foo subcommand "bar". Try "help foo".' "$msg"
 }
 
-top_srcdir=@top_srcdir@
-. ${top_srcdir}/lib/msg.sh
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+
+. ${abs_top_srcdir}/lib/msg.sh
 
 # load shunit2
-srcdir=@srcdir@
-srcdir=${srcdir}/
-. ${srcdir}/shunit2
+shunit_file=${abs_top_srcdir}/test/unit/shunit2
+. ${shunit_file}
 
