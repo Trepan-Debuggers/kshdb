@@ -20,5 +20,7 @@ TESTS_ENVIRONMENT = \
 EXTRA_DIST = $(TESTS) $(check_DATA) \
 	check-common.sh.in
 
+CLEANFILES = *.check
+
 test: check
 test-integration: check

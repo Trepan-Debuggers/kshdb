@@ -43,14 +43,14 @@ abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
 
 _Dbg_libdir=$abs_top_srcdir
-. ${abs_top_srcdir}/lib/fns.sh
-. ${abs_top_srcdir}/lib/msg.sh
-. ${abs_top_srcdir}/lib/help.sh
-. ${abs_top_srcdir}/lib/alias.sh
-. ${abs_top_srcdir}/lib/save-restore.sh
-. ${abs_top_srcdir}/command/examine.sh
+. ${abs_top_srcdir}lib/fns.sh
+. ${abs_top_srcdir}lib/msg.sh
+. ${abs_top_srcdir}lib/help.sh
+. ${abs_top_srcdir}lib/alias.sh
+. ${abs_top_srcdir}lib/save-restore.sh
+. ${abs_top_srcdir}command/examine.sh
 
 # load shunit2
-shunit_file=${abs_top_srcdir}/test/unit/shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
 . ${shunit_file}
 

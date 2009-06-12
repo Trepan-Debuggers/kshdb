@@ -29,9 +29,9 @@ test_undefined()
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
 
-. ${abs_top_srcdir}/lib/msg.sh
+. ${abs_top_srcdir}lib/msg.sh
 
 # load shunit2
-shunit_file=${abs_top_srcdir}/test/unit/shunit2
+shunit_file=${abs_top_srcdir}test/unit/shunit2
 . ${shunit_file}
 

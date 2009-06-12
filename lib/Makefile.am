@@ -4,14 +4,14 @@ pkgdata_DATA =      	\
 	break.sh        \
 	columnize.sh    \
 	dbg-call.sh  	\
-	file.sh         \
 	filecache.sh    \
+	file.sh         \
 	fns.sh          \
 	frame.sh        \
+	gdb.sh  	\
 	help.sh  	\
 	hook.sh		\
 	info.sh		\
-	gdb.sh  	\
 	journal.sh  	\
 	list.sh  	\
 	msg.sh    	\
@@ -19,6 +19,7 @@ pkgdata_DATA =      	\
 	run.sh    	\
 	save-restore.sh	\
 	set-d-vars.sh   \
+	sort.sh         \
 	tty.sh
 
 EXTRA_DIST = $(pkgdata_DATA)

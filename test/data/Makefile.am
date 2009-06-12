@@ -9,6 +9,8 @@ check_DATA = \
 	frame.right        \
 	next.cmd           \
 	next.right	   \
+	restart.cmd	   \
+	restart.right	   \
 	setshow.cmd        \
 	setshow.right      \
 	settrace.cmd       \
