@@ -1,0 +1,56 @@
+#!@SH_PROG@
+# -*- shell-script -*-
+PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+'
+
+test_examine()
+{
+    typeset -i _Dbg_logging=0
+    typeset -i _Dbg_logging_redirect=0
+    typeset _Dbg_tty=''
+    typeset msg
+    # Integer property variable
+    typeset -i an_int=2
+    msg=$(_Dbg_do_examine an_int)
+    assertEquals 'typeset -i an_int=2' "$msg"
+
+    # String variable
+    typeset str_var='ho'
+    msg=$(_Dbg_do_examine str_var)
+    assertEquals "str_var=ho" "$msg"
+
+    # Exported string variable
+    typeset -x exported_str_var='exported string'
+    msg=$(_Dbg_do_examine exported_str_var)
+    assertEquals "typeset -x exported_str_var='exported string'" "$msg"
+
+    # Array variable
+    typeset -a an_array=(1 2 3)
+    msg=$(_Dbg_do_examine an_array)
+    assertEquals 'typeset -a an_array=(1 2 3)' "$msg"
+
+    # Expression involving variables
+    msg=$(_Dbg_do_examine an_array[1]+_Dbg_logging+5)
+    assertEquals '7' "$msg"
+
+    # Expression involving variables
+    function a_function { :; }
+    msg=$(_Dbg_do_examine a_function)
+    assertEquals 'function a_function { :; }' "$msg"
+}
+
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+
+_Dbg_libdir=$abs_top_srcdir
+. ${abs_top_srcdir}/lib/fns.sh
+. ${abs_top_srcdir}/lib/msg.sh
+. ${abs_top_srcdir}/lib/help.sh
+. ${abs_top_srcdir}/lib/alias.sh
+. ${abs_top_srcdir}/lib/save-restore.sh
+. ${abs_top_srcdir}/command/examine.sh
+
+# load shunit2
+shunit_file=${abs_top_srcdir}/test/unit/shunit2
+. ${shunit_file}
+
