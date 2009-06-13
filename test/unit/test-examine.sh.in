@@ -50,7 +50,7 @@ test_examine()
 	msg=$(_Dbg_do_examine an_array[1]+_Dbg_logging+5)
 	assertEquals '7' "$msg"
 
-	# Expression involving variables
+	# Expression involving a function
 	function a_function { :; }
 	msg=$(_Dbg_do_examine a_function)
 	assertEquals 'function a_function { :; }' "$msg"

@@ -34,7 +34,7 @@ function _Dbg_do_examine {
     _Dbg_msg "$_Dbg_result"
   elif _Dbg_is_function "$_Dbg_expr" $_Dbg_debug_debugger; then 
     _Dbg_result=$(typeset -f $_Dbg_expr)
-    _Dbg_msg "$_Dbg_result"
+    print -r -- "$_Dbg_result" 
   else 
     typeset -i _Dbg_rc
     . ${_Dbg_libdir}/lib/set-d-vars.sh
