@@ -9,10 +9,16 @@ test_examine()
     typeset -i _Dbg_logging_redirect=0
     typeset _Dbg_tty=''
     typeset msg
+    typeset expect
     # Integer property variable
     typeset -i an_int=2
     msg=$(_Dbg_do_examine an_int)
-    assertEquals 'typeset -i an_int=2' "$msg"
+    if ((.sh.version <= 20081210 )) ; then 
+	expect='typeset -i an_int=2'
+    else
+	expect='an_int=2'
+    fi
+    assertEquals  "$expect" "$msg"
 
     # String variable
     typeset str_var='ho'
@@ -21,22 +27,34 @@ test_examine()
 
     # Exported string variable
     typeset -x exported_str_var='exported string'
+    if ((.sh.version <= 20081210 )) ; then 
+	expect="typeset -x exported_str_var='exported string'"
+    else
+	expect="exported_str_var='exported string'"
+    fi
     msg=$(_Dbg_do_examine exported_str_var)
-    assertEquals "typeset -x exported_str_var='exported string'" "$msg"
+    assertEquals  "$expect" "$msg"
 
     # Array variable
     typeset -a an_array=(1 2 3)
+    if ((.sh.version <= 20081210 )) ; then 
+	expect='typeset -a an_array=(1 2 3)'
+    else
+	expect='an_array=(1 2 3)'
+    fi
     msg=$(_Dbg_do_examine an_array)
-    assertEquals 'typeset -a an_array=(1 2 3)' "$msg"
+    assertEquals "$expect" "$msg"
 
-    # Expression involving variables
-    msg=$(_Dbg_do_examine an_array[1]+_Dbg_logging+5)
-    assertEquals '7' "$msg"
+    if ((.sh.version <= 20081210 )) ; then 
+	# Expression involving variables
+	msg=$(_Dbg_do_examine an_array[1]+_Dbg_logging+5)
+	assertEquals '7' "$msg"
 
-    # Expression involving variables
-    function a_function { :; }
-    msg=$(_Dbg_do_examine a_function)
-    assertEquals 'function a_function { :; }' "$msg"
+	# Expression involving variables
+	function a_function { :; }
+	msg=$(_Dbg_do_examine a_function)
+	assertEquals 'function a_function { :; }' "$msg"
+    fi
 }
 
 abs_top_srcdir=@abs_top_srcdir@

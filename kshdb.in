@@ -98,6 +98,15 @@ fi
 
 if (( ${#_Dbg_script_args[@]} > 0 )) ; then
     _Dbg_script_file="${_Dbg_script_args[0]}"
+    case ${_Dbg_script_file:0:1} in
+	'.' | '/' ) 
+	    # Leave alone
+	    ;;
+    * )
+	    # Make . explicit.
+	    _Dbg_script_file="./${_Dbg_script_file}"
+	    _Dbg_script_args[0]="$_Dbg_script_file"
+    esac
     # FIXME: 
     # shift _Dbg_script_args
 elif [[ -z $_Dbg_EXECUTION_STRING ]] ; then
