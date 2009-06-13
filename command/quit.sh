@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # quit.sh - gdb-like "quit" debugger command
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -54,7 +54,7 @@ function _Dbg_do_quit {
 
     # Reset signal handlers to their default but only if 
     # we are not in a subshell.
-    if (( ZSH_SUBSHELL == 0 )) ; then
+    if (( .sh.subshell == 0 )) ; then
 	
 	# If we were told to restart from deep down, restart instead of quit.
 	if [ -n "$_Dbg_RESTART_COMMAND" ] ; then 
