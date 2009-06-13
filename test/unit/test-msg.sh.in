@@ -3,6 +3,7 @@
 PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
 '
 
+# Test Dbg_msg, Dbg_printf, Dbg_printf_nocr, ...
 test_msg()
 {
     typeset -i _Dbg_logging=0
