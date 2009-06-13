@@ -21,9 +21,10 @@ test_msg()
 
 test_undefined()
 {
-    typeset msg=$(_Dbg_undefined_cmd foo bar)
+    typeset msg
+    msg=$(_Dbg_undefined_cmd foo bar)
     assertEquals 'Undefined foo subcommand "bar". Try "help foo".' "$msg"
-    typeset msg=$(_Dbg_undefined_cmd foo)
+    msg=$(_Dbg_undefined_cmd foo)
     assertEquals 'Undefined command "foo". Try "help".' "$msg"
 }
 
