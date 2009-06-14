@@ -16,6 +16,44 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
+# Called when a dangerous action is about to be done to make sure it's
+# okay. `prompt' is printed, and "yes", or "no" is solicited.  The
+# user response is returned in variable $_Dbg_response and $? is set
+# to 0.  _Dbg_response is set to 'error' and $? set to 1 on an error.
+# 
+_Dbg_confirm() {
+    if (( $# < 1 || $# > 2 )) ; then
+	_Dbg_response='error'
+	return 0
+    fi
+    typeset _Dbg_confirm_prompt=$1
+    typeset _Dbg_confirm_default=${2:-'no'}
+    typeset -l _Dbg_response
+    while read "_Dbg_response?$_Dbg_confirm_prompt" args <&${_Dbg_fd[_Dbg_fd_last]}
+    do
+	case "$_Dbg_response" in
+	    'y' | 'yes' | 'yeah' | 'ya' | 'ja' | 'si' | 'oui' | 'ok' | 'okay' )
+		_Dbg_response='y'
+		return 0
+		;;
+	    'n' | 'no' | 'nope' | 'nyet' | 'nein' | 'non' )
+		_Dbg_response='n'
+		return 0
+		;;
+	    *)
+		if [[ $_Dbg_response =~ ^[ \t]*$ ]] ; then
+		    _Dbg_response=$_Dbg_confirm_default
+		    return 0
+		else
+		    _Dbg_msg "I don't understand \"$_Dbg_response\"."
+		    _Dbg_msg "Please try again entering 'yes' or 'no'."
+		fi
+		;;
+	esac
+
+    done
+}
+
 function _Dbg_errmsg {
     typeset -r prefix='**'
     _Dbg_msg "$prefix $@"
