@@ -80,7 +80,7 @@ function _Dbg_hook {
 		typeset _Dbg_frame_previous_file="$_Dbg_frame_last_filename"
 		typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
 	    fi
-	    ((_Dbg_brkpt_counts[_Dbg_brkpt_num]++))
+	    (( _Dbg_brkpt[_Dbg_brkpt_num].hits++ ))
 	    _Dbg_msg "Breakpoint $_Dbg_brkpt_num hit."
 	    if (( ${_Dbg_brkpt[_Dbg_brkpt_num].onetime} == 1 )) ; then
 		_Dbg_stop_reason='at a breakpoint that has since been deleted'
@@ -141,7 +141,6 @@ _Dbg_hook_breakpoint_hit() {
  	    # Got a match, but is the breakpoint enabled? 
  	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
  	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
-		(( _Dbg_brkpt[_Dbg_brkpt_num].hits++ ))
  		return 0
  	    fi
  	fi
