@@ -41,6 +41,7 @@ Breakpoint 2 hit.
 +info break
 Num Type       Disp Enb What
 2   breakpoint keep y   stepping.sh:5
+    breakpoint already hit 1 time
 +break 6
 Breakpoint 3 set in file stepping.sh, line 6.
 +############################### 

@@ -141,6 +141,7 @@ _Dbg_hook_breakpoint_hit() {
  	    # Got a match, but is the breakpoint enabled? 
  	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
  	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
+		(( _Dbg_brkpt[_Dbg_brkpt_num].hits++ ))
  		return 0
  	    fi
  	fi
