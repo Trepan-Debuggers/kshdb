@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # list.sh - Some listing commands
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -62,7 +62,7 @@ _Dbg_do_list() {
     typeset filename
     typeset -i line_number
     typeset full_filename
-    
+
     _Dbg_linespec_setup $first_arg
     
     if [[ -n $full_filename ]] ; then 
@@ -107,3 +107,4 @@ _Dbg_do_list_typeset_attr() {
     return $?
 }
 
+_Dbg_alias_add l list
