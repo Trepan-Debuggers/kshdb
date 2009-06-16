@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -128,8 +128,8 @@ _Dbg_do_list_brkpt() {
 	      ${_Dbg_keep[${_Dbg_brkpt_onetime[$i]}]} \
 	      ${_Dbg_yn[${_Dbg_brkpt_enable[$i]}]} \
 	      $source_file ${_Dbg_brkpt_line[$i]}
-	  if [[ ${_Dbg_brkpt_cond[$i]} != '1' ]] ; then
-	      _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt_cond[$i]}"
+	  if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
+	      _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
 	  fi
 	  _Dbg_print_brkpt_count $i
 	  return 0
@@ -149,7 +149,7 @@ _Dbg_do_list_brkpt() {
 	  ${_Dbg_keep[${_Dbg_brkpt[$i].onetime}]} \
 	  ${_Dbg_yn[${_Dbg_brkpt[$i].enable}]} \
 	  $source_file ${_Dbg_brkpt[$i].lineno}
-	if [[ ${_Dbg_brkpt_cond[$i]} != '1' ]] ; then
+	if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
 	  _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
 	fi
 	_Dbg_print_brkpt_count $i

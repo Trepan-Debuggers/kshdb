@@ -244,11 +244,21 @@ function _Dbg_delete_brkpt_entry {
     typeset -r  del="$1"
     typeset -i  i
     typeset -i  found=0
-    
-    if [[ -z ${_Dbg_brkpt[$del]} ]] ; then
+
+    typeset    try
+    for try in ${!_Dbg_brkpt[*]} ; do 
+	if (( try == $del )) ; then
+	    found=1
+	    break
+	elif (( try > $del )) ; then
+	    break # Not found
+	fi
+    done
+    if (( found == 0 )) ; then
 	_Dbg_errmsg "No breakpoint number $del."
 	return 0
     fi
+    found=0
     typeset    source_file=${_Dbg_brkpt[$del].filename}
     typeset -i lineno=${_Dbg_brkpt[$del].lineno}
     typeset -i try 
@@ -279,6 +289,7 @@ function _Dbg_delete_brkpt_entry {
 	    _Dbg_write_journal_eval "_Dbg_brkpt_file2brkpt[$source_file]=${new_brkpt_nos}"
 	fi
     fi
+    unset _Dbg_brkpt[$del]
     return $found
 }
 

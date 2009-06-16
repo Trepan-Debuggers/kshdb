@@ -274,9 +274,9 @@ args:     Argument list to give script when debugged program starts is:
 autoeval: Evaluate unrecognized commands is off.
 basename: Show short filenames (the basename) in debug output is on.
 debugger: Allow debugging the debugger is off.
-listsize: Number of source lines zshdb will list by default is 10.
-prompt:   zshdb's prompt is:
-       "zshdb<1> ".
+listsize: Number of source lines kshdb will list by default is 10.
+prompt:   kshdb's prompt is:
+       "kshdb<1> ".
 trace-commands: State of command tracing is on.
 +#### and show...
 +show args
@@ -301,7 +301,7 @@ Annotation_level is 0.
 +set annotate 1
 Argument required (integer to set it to.).
 +show listsize
-Number of source lines zshdb will list by default is 10.
+Number of source lines kshdb will list by default is 10.
 +show annotate
 Annotation_level is 0.
 +# set history size
