@@ -6,13 +6,10 @@ The command syntax generally follows that of the GNU debugger gdb.
 
 However this debugger depends on a number bug fixes and of debugging
 support features that are neither part of the POSIX 1003.1 standard
-and are not all but the most recent ksh93t releases. In particular, there
-are fixes to a number of the .sh variables like .sh.level and .sh.file.
+and only in ksh93t+ releases. In particular, there are fixes to a
+number of the .sh variables like .sh.level and .sh.file.
 
 1. SETUP
-
-Although debuggers are useful for novice, right now code setup is not
-really but novices. Some assembly is required. 
 
 To get the code, install git and run in a ksh shell:
 
@@ -23,15 +20,10 @@ To get the code, install git and run in a ksh shell:
 If you've got a suitable ksh93t installed, then
   make && make test
 
-To simplify demonstration/testing there is a little program testing.sh
-in the same directory kshdb lives in the source code which gets run
-when kshdb is run without any options. so to run this demo code:
-  ./kshdb # in the kshdb project
-
-Or try on a real program such as perhaps:
+To try on a real program such as perhaps /etc/profile:
   ./kshdb /etc/profile # substitute /etc/profile with your favorite ksh script
 
-If you are happy (which I doubt), install via:
+If you are happy and "make test" above worked, install via:
   sudo make install
 
 and uninstall with 
@@ -40,14 +32,6 @@ and uninstall with
 See INSTALL for generic configure installation instructions.
 
 2. WHAT'S HERE, WHAT'S NOT and WHY NOT
-
-Usually when folks write programs such as a debugger, initially there
-will be a number of useful commands minimally done. Since I sort of
-know where I want to wind up (somewhere along the lines of bashdb),
-initially I've been focusing on the skeleton and framework rather than
-the features no matter how useful they may be. So for example, Unit
-tests and a some integration tests work, even though there no command
-to set breakpoints.
 
 What's missing falls into a two categories:
 
@@ -75,8 +59,7 @@ faster with help from ksh.
 
 3.c) lots of other stuff including...
 
-  display expressions, signal handling, invoking the debugger directly
-  from a script, command history, command completion.
+  display expressions, signal handling
 
   None of this is rocket science. Should be pretty straight-forward to
   add.
