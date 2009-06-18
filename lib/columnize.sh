@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -99,11 +99,12 @@ columnize() {
 	text_row=''
 	for (( col=0; col<text_size; col++ )); do
 	    fmt="%-${colwidths[col]}s"
-	    text_cell="$(printf $fmt ${texts[col]})"
-	    text_row+="$text_cell"
+	    text_cell=$(printf $fmt "${texts[col]}")
+	    text_row+="${text_cell}"
 	    ((col != text_size-1)) && text_row+="${colsep}"
 	done
 	columnized+=("$text_row")
+	set +x
     done
 }
 
