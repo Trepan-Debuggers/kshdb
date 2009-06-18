@@ -41,14 +41,12 @@ _Dbg_do_show() {
 
   case $show_cmd in 
     al | ali | alia | alias | aliase | aliases )
-      unsetopt ksharrays
-      typeset -a list
-      list=()
-      for alias in ${(ki)_Dbg_aliases} ; do
-	 list+=("${alias}: ${_Dbg_aliases[$alias]}")
+      typeset -a do_list
+      do_list=()
+      for alias in ${!_Dbg_aliases[*]} ; do
+	 do_list+=("${alias}: ${_Dbg_aliases[$alias]}")
       done
-      setopt ksharrays
-      _Dbg_list_columns '  |  '
+      _Dbg_list_columns do_list ' | ' 
       return 0
       ;;
     ar | arg | args )
