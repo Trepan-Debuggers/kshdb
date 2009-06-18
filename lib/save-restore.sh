@@ -53,8 +53,8 @@ _Dbg_set_debugger_entry() {
 function _Dbg_set_to_return_from_debugger {
   _Dbg_rc=$?
 
-#   _Dbg_currentbp=0
-#   _Dbg_stop_reason=''
+  _Dbg_brkpt_num=0
+  _Dbg_stop_reason=''
 #   if (( $1 != 0 )) ; then
 #     _Dbg_last_ksh_command="$_Dbg_ksh_command"
 #     _Dbg_last_curline="$_curline"
