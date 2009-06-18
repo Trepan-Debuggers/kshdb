@@ -3,6 +3,7 @@ TESTS = \
 	test-bugIFS        \
 	test-bug-errexit   \
 	test-delete        \
+	test-enable        \
 	test-frame         \
 	test-list          \
 	test-next          \

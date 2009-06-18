@@ -5,8 +5,14 @@ check_DATA = \
 	bug-errexit.right  \
 	bugIFS.cmd         \
 	bugIFS.right       \
+	delete.cmd         \
+	delete.right       \
+	enable.cmd         \
+	enable.right       \
 	frame.cmd          \
 	frame.right        \
+	list.cmd           \
+	list.right	   \
 	next.cmd           \
 	next.right	   \
 	restart.cmd	   \
