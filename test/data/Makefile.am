@@ -9,6 +9,8 @@ check_DATA = \
 	delete.right       \
 	enable.cmd         \
 	enable.right       \
+	examine.cmd        \
+	examine.right      \
 	frame.cmd          \
 	frame.right        \
 	list.cmd           \
