@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # fns.sh - Debugger Utility Functions
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -22,10 +22,10 @@ _Dbg_yn=("n" "y")
 
 # Return $2 copies of $1. If successful, $? is 0 and the return value
 # is in result.  Otherwise $? is 1 and result ''
-function _Dbg_copies { 
+_Dbg_copies() { 
     result=''
     (( $# < 2 )) && return 1
-    typeset -r string="$1"
+    typeset string="$1"
     typeset -i count=$2 || return 2;
     (( count > 0 )) || return 3
     result=$(printf "%${count}s" ' ') || return 3
