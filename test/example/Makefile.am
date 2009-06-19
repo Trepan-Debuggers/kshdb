@@ -2,8 +2,9 @@ check_DATA = \
 	bug-args.sh    \
 	bug-errexit.sh \
 	bugIFS.sh      \
-	dbg-test1.sh   \
 	bugIFS.sh      \
+	dbg-test1.sh   \
+	exam.sh        \
 	hanoi.sh       \
 	nexting.sh     \
 	restart.sh     \
