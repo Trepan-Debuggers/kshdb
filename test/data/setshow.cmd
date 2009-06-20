@@ -38,7 +38,7 @@ show annotate
 #########################
 #### Test 'autoeval'...
 set autoeval on
-xx=1 ; declare -p xx
+xx=1 ; typeset -p xx
 set autoeval off
-xx=1 ; declare -p xx
+xx=1 ; typeset -p xx
 quit

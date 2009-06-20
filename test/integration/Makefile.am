@@ -9,6 +9,7 @@ TESTS = \
 	test-list          \
 	test-next          \
 	test-restart	   \
+	test-setshow	   \
 	test-skip	   \
 	test-step
 
