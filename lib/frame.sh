@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -24,7 +24,8 @@
 
 typeset -T Frame_t=(
 	filename=''
-	integer lineno=0
+	# integer lineno=0
+	lineno=0
 	fn=''
 	to_file_line()
 	{
@@ -114,7 +115,7 @@ _Dbg_frame_int_setup() {
   fi
 }
 
-_Dbg_frame_lineno() {
+function _Dbg_frame_lineno {
     (($# > 1)) && return -1
     # FIXME check to see that $1 doesn't run off the end.
     typeset -i pos=${1:-$_Dbg_stack_pos}
