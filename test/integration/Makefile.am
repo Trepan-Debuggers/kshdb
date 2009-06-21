@@ -11,7 +11,8 @@ TESTS = \
 	test-restart	   \
 	test-setshow	   \
 	test-skip	   \
-	test-step
+	test-step          \
+	test-subshell1	   
 
 check_DATA = check-common.sh
 

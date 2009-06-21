@@ -67,7 +67,11 @@ function _Dbg_do_quit {
     fi
 
     # And just when you thought we'd never get around to it...
-    exit $return_code
+    if ((0 == .sh.subshell)) ; then
+	exit $return_code
+    else
+	kill $$
+    fi
 }
 
 _Dbg_alias_add q quit
