@@ -1,0 +1,9 @@
+EXT=1
+man1_MANS = @PACKAGE@.$(EXT)
+
+EXTRA_DIST = $(man1_MANS) @PACKAGE@-man.pod
+
+all: $(INFO_DEPS) $(man1_MANS) html 
+
+$(man1_MANS): @PACKAGE@-man.pod
+	pod2man --name=@PACKAGE@ --release=$(PACKAGE_VERSION) --center="GNU Tools" --section=$(EXT) $(srcdir)/@PACKAGE@-man.pod >$@
