@@ -26,6 +26,8 @@ check_DATA = \
 	skip.cmd           \
 	skip.right         \
 	step.cmd           \
-	step.right
+	step.right         \
+	subshell1.cmd      \
+	subshell1.right
 
 EXTRA_DIST = $(check_DATA)

@@ -9,6 +9,7 @@ check_DATA = \
 	hanoi.sh       \
 	nexting.sh     \
 	restart.sh     \
-	stepping.sh
+	stepping.sh    \
+	subshell.sh
 
 EXTRA_DIST = $(check_DATA)
