@@ -5,6 +5,8 @@ check_DATA = \
 	bug-errexit.right  \
 	bugIFS.cmd         \
 	bugIFS.right       \
+	condition.cmd      \
+	condition.right    \
 	delete.cmd         \
 	delete.right       \
 	enable.cmd         \

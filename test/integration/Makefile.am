@@ -2,6 +2,7 @@ TESTS = \
 	test-bug-args      \
 	test-bugIFS        \
 	test-bug-errexit   \
+	test-condition     \
 	test-delete        \
 	test-enable        \
 	test-examine       \
