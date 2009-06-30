@@ -24,7 +24,7 @@ AC_ARG_WITH(POSIXSHELL, AC_HELP_STRING([--with-POSIXSHELL],
 
 if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
 then
-  AC_PATH_PROG(SH_PROG, ksh93, no)
+  AC_PATH_PROGS(SH_PROG, ksh93t ksh93 ksh, no)
 fi
 
 if test "$SH_PROG" = no; then
