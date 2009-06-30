@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # dbg-opts.sh - kshdb command options processing. The bane of programming.
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -34,6 +34,8 @@ options:
     -c | --command STRING   Run STRING instead of a script file
     -n | --nx | --no-init   Don't run initialization files.
     -t | --tty DEV          Run using device for your programs standard input and output
+    -T | --tempdir DIRECTORY 
+                            Use DIRECTORY to store temporary files in
     -V | --version          Print the debugger version number.
     -x | --eval-command CMDFILE
                             Execute debugger commands from CMDFILE.

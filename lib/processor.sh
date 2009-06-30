@@ -151,6 +151,12 @@ _Dbg_onecmd() {
 # 	  _Dbg_last_cmd='clear'
 # 	  ;;
 
+	# Breakpoint/Watchpoint Conditions
+	condition )
+	  _Dbg_do_condition $args
+	  _Dbg_last_cmd='condition'
+	  ;;
+
 	# Continue
 	continue )
 	  

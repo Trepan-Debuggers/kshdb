@@ -2,6 +2,7 @@ TESTS = \
 	test-bug-args      \
 	test-bugIFS        \
 	test-bug-errexit   \
+	test-condition     \
 	test-delete        \
 	test-enable        \
 	test-examine       \
@@ -9,8 +10,10 @@ TESTS = \
 	test-list          \
 	test-next          \
 	test-restart	   \
+	test-setshow	   \
 	test-skip	   \
-	test-step
+	test-step          \
+	test-subshell1	   
 
 check_DATA = check-common.sh
 

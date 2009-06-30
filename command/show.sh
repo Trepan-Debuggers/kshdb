@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # show.sh - Show debugger settings
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -404,7 +404,7 @@ of promoting the sharing and reuse of software generally.
       [[ -n $label ]] && label='prompt:   '
       _Dbg_msg \
 "${label}${_Dbg_debugger_name}'s prompt is:
-	\"$_Dbg_prompt_str\"."
+	$_Dbg_prompt_str."
       return 0
       ;;
     sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )

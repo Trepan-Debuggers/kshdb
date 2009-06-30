@@ -5,6 +5,8 @@ check_DATA = \
 	bug-errexit.right  \
 	bugIFS.cmd         \
 	bugIFS.right       \
+	condition.cmd      \
+	condition.right    \
 	delete.cmd         \
 	delete.right       \
 	enable.cmd         \
@@ -26,6 +28,8 @@ check_DATA = \
 	skip.cmd           \
 	skip.right         \
 	step.cmd           \
-	step.right
+	step.right         \
+	subshell1.cmd      \
+	subshell1.right
 
 EXTRA_DIST = $(check_DATA)

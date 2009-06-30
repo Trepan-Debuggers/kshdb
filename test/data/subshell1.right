@@ -1,0 +1,20 @@
+(subshell.sh:5):
+x=1
++### Test step inside multi-statement line...
++print "SUBSHELL: ${.sh.subshell}"
+SUBSHELL: 0
++step 
+(subshell.sh:5):
+y=2
++step 
+(subshell.sh:5):
+z=3
++step 
+(subshell.sh:6):
+cd .
++### Should now be inside a subshell...
++print "SUBSHELL: ${.sh.subshell}"
+SUBSHELL: 1
++print "Test unconditional quit..."
+Test unconditional quit...
++quit 

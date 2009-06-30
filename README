@@ -50,18 +50,33 @@ get a list of commands and some help for each.
 
 3. WHAT'S NOT HERE YET IN DETAIL
 
-3.a) Showing frame arguments, subshell nesting in the call stack
+3.a) Showing frame arguments
 
-Like next, this can done with or without support from ksh, albeit
-faster with help from ksh. 
+This can done with or without support from ksh, albeit faster with
+help from ksh.
 
 3.b) Setting $0
 
 3.c) lots of other stuff including...
 
-  display expressions, signal handling
+  display expressions, signal handling, 
+  debugger commands:
+     debug
+     condition
+     file
+     handle
+     history
+     pwd
+     signal
+     tty
+     watch
 
   None of this is rocket science. Should be pretty straight-forward to
   add.
+
+4. WHAT MAY NEED MORE WORK AND SUPPORT FROM KSH
+
+4.a) stopping points that can be used for breakpoint
+
 
 
