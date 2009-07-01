@@ -24,7 +24,8 @@ TESTS_ENVIRONMENT = \
   srcdir="$(abs_srcdir)" \
   builddir="$(abs_builddir)"
 
-EXTRA_DIST = $(TESTS) $(check_DATA) \
+TEST_SOURCE=$(patsubst %,%.in, $(TESTS)
+EXTRA_DIST = $(TESTS) $(check_DATA) $(TEST_SOURCES)) \
 	check-common.sh.in
 
 CLEANFILES = *.check
