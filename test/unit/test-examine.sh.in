@@ -13,7 +13,7 @@ test_examine()
     # Integer property variable
     typeset -i an_int=2
     msg=$(_Dbg_do_examine an_int)
-    if ((.sh.version <= 20081210 )) ; then 
+    if ((.sh.version <= 20081210 || .sh.version >= 20090630)) ; then 
 	expect='typeset -i an_int=2'
     else
 	expect='an_int=2'
@@ -27,7 +27,7 @@ test_examine()
 
     # Exported string variable
     typeset -x exported_str_var='exported string'
-    if ((.sh.version <= 20081210 )) ; then 
+    if ((.sh.version <= 20081210 || .sh.version >= 20090630)) ; then 
 	expect="typeset -x exported_str_var='exported string'"
     else
 	expect="exported_str_var='exported string'"
@@ -37,7 +37,7 @@ test_examine()
 
     # Array variable
     typeset -a an_array=(1 2 3)
-    if ((.sh.version <= 20081210 )) ; then 
+    if ((.sh.version <= 20081210 || .sh.version >= 20090630)) ; then 
 	expect='typeset -a an_array=(1 2 3)'
     else
 	expect='an_array=(1 2 3)'
