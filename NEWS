@@ -1,10 +1,18 @@
+Version 0.03
+2009-07-14
+
+- Add "condition" command
+- Add "kill" command
+- More OSX friendly
+- Add manual page and "--help" usage corrections
+
 Version 0.02
 2009-06-12
 
-Add enable, disable, and examine debugger commands
-"set inferior-tty" and --tty option.
+- Add "enable", "disable", and "examine" debugger commands.
+- Add "set inferior-tty" and --tty option.
 
-Bug fix to find scripts in . that don't start with . or / to run.
+- Bug fix to find scripts in . that don't start with . or / to run.
 
 Version 0.01
 2008-11-17
