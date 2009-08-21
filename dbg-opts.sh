@@ -60,6 +60,8 @@ typeset -a _Dbg_script_args
 
 # Use gdb-style annotate?
 typeset -i _Dbg_annotate=0
+
+# Simulate set -x?
 typeset -i _Dbg_linetrace=0
 typeset -i _Dbg_basename_only=0
 typeset -i _Dbg_o_nx=0
