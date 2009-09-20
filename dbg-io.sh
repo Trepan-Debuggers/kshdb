@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # dbg-io.inc - Korn Shell Debugger Input/Output routines
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   Kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -88,22 +88,3 @@ function _Dbg_progess_done {
     fi
     _Dbg_msg $1
 }
-
-
-# Return text for source line for line $1 of filename $2 in variable
-# $source_line. The hope is that this has been declared "typeset" in the 
-# caller.
-
-# If $2 is omitted, # use .sh.file, if $1 is omitted use _curline.
-function _Dbg_get_source_line {
-  typeset lineno=${1:-$_curline}
-  typeset filename=${2:-${.sh.file}}
-  typeset is_read=$(_Dbg_get_assoc_scalar_entry "_Dbg_read_" $filevar)
-  [[ $is_read ]] || _Dbg_readin $filename 
-  
-  source_line=`_Dbg_get_assoc_array_entry _Dbg_source_${filevar} $lineno`
-}
-
-# This is put at the so we have something at the end when we debug this.
-[[ -z _Dbg_io_ver ]] && typeset -r _Dbg_io_ver=\
-'$Id: dbg-io.inc,v 1.13 2008/05/27 03:51:45 rockyb Exp $'

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Things related to file handling.
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -62,7 +62,7 @@ _Dbg_resolve_expand_filename() {
   # Is this one of the files we've that has been specified in a debugger
   # "FILE" command?
   typeset found_file
-  found_file="${_Dbg_file2canonic[$find_file]}"
+  found_file=${_Dbg_file2canonic[$find_file]}
   if [[ -n  $found_file ]] ; then
     print -- "$found_file"
     return 0
@@ -70,15 +70,15 @@ _Dbg_resolve_expand_filename() {
 
   if [[ ${find_file:0:1} == '/' ]] ; then 
     # Absolute file name
-    full_find_file=$(_Dbg_expand_filename $find_file)
+    full_find_file=$(_Dbg_expand_filename "$find_file")
     print -- "$full_find_file"
     return 0
   elif [[ ${find_file:0:1} == '.' ]] ; then
     # Relative file name
-    full_find_file=$(_Dbg_expand_filename ${_Dbg_init_cwd}/$find_file)
+    full_find_file=$(_Dbg_expand_filename "${_Dbg_init_cwd}/$find_file")
     if [[ -z "$full_find_file" ]] || [[ ! -r $full_find_file ]]; then
       # Try using cwd rather that Dbg_init_cwd
-      full_find_file=$(_Dbg_expand_filename $find_file)
+      full_find_file=$(_Dbg_expand_filename "$find_file")
     fi
     print -- "$full_find_file"
     return 0

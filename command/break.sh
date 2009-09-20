@@ -141,7 +141,7 @@ _Dbg_do_list_brkpt() {
     typeset -i i
 
     _Dbg_msg "Num Type       Disp Enb What"
-    for (( i=1; (( i <= _Dbg_brkpt_max )) ; i++ )) ; do
+    for (( i=1; i <= _Dbg_brkpt_max; i++ )) ; do
       typeset source_file=${_Dbg_brkpt[$i].filename}
       if [[ -n ${_Dbg_brkpt[$i].lineno} ]] ; then
 	source_file=$(_Dbg_adjust_filename "$source_file")

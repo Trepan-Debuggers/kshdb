@@ -47,7 +47,7 @@ _Dbg_list() {
     _Dbg_readin_if_new "$filename"
 
     typeset -i max_line
-    max_line=$(_Dbg_get_maxline $filename)
+    max_line=$(_Dbg_get_maxline "$filename")
     if (( $? != 0 )) ; then
 	_Dbg_errmsg "internal error getting number of lines in $filename"
 	return 1
@@ -67,7 +67,7 @@ _Dbg_list() {
     for ((  ; (( _Dbg_listline <= n && _Dbg_listline <= max_line )) \
             ; _Dbg_listline++ )) ; do
      typeset prefix='    '
-     _Dbg_get_source_line $_Dbg_listline $filename
+     _Dbg_get_source_line $_Dbg_listline "$filename"
 
        (( _Dbg_listline == _Dbg_frame_last_lineno )) \
          && [[ $fullname == $frame_fullfile ]] &&  prefix=' => '

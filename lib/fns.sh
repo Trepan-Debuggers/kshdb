@@ -74,8 +74,8 @@ _Dbg_get_typeset_attr() {
     eval $cmd
 }
 
-# Add escapes to a string $1 so that when it is read back via "$1"
-# it is the same as $1.
+# Print "on" or "off" depending on whether $1 is true (0) or false
+# (nonzero).
 function _Dbg_onoff {
   typeset onoff='off.'
   (( $1 != 0 )) && onoff='on.'
@@ -159,21 +159,21 @@ _Dbg_linespec_setup() {
     (($# != 1)) && return 2
     typeset linespec=$1
     typeset -a word
-    word=($(_Dbg_parse_linespec "$linespec"))
+    eval "word=($(_Dbg_parse_linespec $linespec))"
     if [[ ${#word[@]} == 0 ]] ; then
 	_Dbg_errmsg "Invalid line specification: $linespec"
 	return 1
     fi
     
-    filename=${word[2]}
+    filename="${word[2]}"
     typeset -i is_function=${word[1]}
     line_number=${word[0]}
-    full_filename=$(_Dbg_is_file $filename)
+    full_filename=$(_Dbg_is_file "$filename")
     
     if (( is_function )) ; then
 	if [[ -z $full_filename ]] ; then 
 	    _Dbg_readin "$filename"
-	    full_filename=$(_Dbg_is_file $filename)
+	    full_filename=$(_Dbg_is_file "$filename")
 	fi
     fi
 }
@@ -190,7 +190,7 @@ function _Dbg_parse_linespec {
 
     # line number only - use filename from last adjust_frame
     [0-9]* )	
-      echo "$linespec 0 ${_Dbg_frame_last_filename}"
+      echo "$linespec 0 \"${_Dbg_frame_last_filename}\""
       ;;
     
     # file:line
@@ -213,12 +213,4 @@ function _Dbg_parse_linespec {
       fi
       ;;
    esac
-}
-
-# Add escapes to a string $1 so that when it is read back via "$1"
-# it is the same as $1.
-function _Dbg_onoff {
-  typeset onoff='off.'
-  (( $1 != 0 )) && onoff='on.'
-  echo $onoff
 }
