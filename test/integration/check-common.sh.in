@@ -28,7 +28,7 @@ run_debugger() {
   typeset debugged_script=$1
   typeset dbg_opts=${2:-"-L ${top_srcdir} -n -B -q"}
   typeset cmdfile=${3:-"${top_srcdir}/test/data/${TEST_NAME}.cmd"}
-  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x $cmdfile $debugged_script $ARGS
+  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x "$cmdfile" "$debugged_script" $ARGS
 }
 
 TEST_FILE="${top_builddir}/test/integration/${TEST_NAME}.check"
@@ -44,8 +44,8 @@ run_test_check() {
 	print -r -- "You need to set srcdir before running this."
 	exit 10
     fi
-    (cd $srcdir && run_debugger $debugged_script 2>&1 >$TEST_FILE </dev/null)
-    check_output $TEST_FILE $RIGHT_FILE
+    (cd $srcdir && run_debugger "$debugged_script" 2>&1 >$TEST_FILE </dev/null)
+    check_output "$TEST_FILE" "$RIGHT_FILE"
     # Return code tells testing mechanism whether passed or not.
     exit $?
 }

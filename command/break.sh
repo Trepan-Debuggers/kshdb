@@ -127,7 +127,7 @@ _Dbg_do_list_brkpt() {
 	  _Dbg_printf "%-3d breakpoint %-4s %-3s %s:%s" $i \
 	      ${_Dbg_keep[${_Dbg_brkpt_onetime[$i]}]} \
 	      ${_Dbg_yn[${_Dbg_brkpt_enable[$i]}]} \
-	      $source_file ${_Dbg_brkpt_line[$i]}
+	      "$source_file" ${_Dbg_brkpt_line[$i]}
 	  if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
 	      _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
 	  fi
@@ -148,7 +148,7 @@ _Dbg_do_list_brkpt() {
 	_Dbg_printf "%-3d breakpoint %-4s %-3s %s:%s" $i \
 	  ${_Dbg_keep[${_Dbg_brkpt[$i].onetime}]} \
 	  ${_Dbg_yn[${_Dbg_brkpt[$i].enable}]} \
-	  $source_file ${_Dbg_brkpt[$i].lineno}
+	  "$source_file" ${_Dbg_brkpt[$i].lineno}
 	if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
 	  _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
 	fi
