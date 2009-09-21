@@ -1,0 +1,8 @@
+#!/usr/bin/ksh93t
+# -*- shell-script -*-
+TEST_NAME='file with spaces'
+
+[ -z "$builddir" ] && export builddir=$PWD
+
+. ${builddir}/check-common.sh
+run_test_check
