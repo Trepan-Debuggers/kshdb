@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# restart command.
+# run command.
 #
-#   Copyright (C) 2008 Rocky Bernstein  rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein  rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -26,22 +26,14 @@ _Dbg_help_add run \
 _Dbg_do_run() {
 
   typeset script_args
-  typeset exec_cmd
+  typeset exec_cmd_prefix
   if (( $# == 0 )) ; then 
-      script_args=${_Dbg_script_args[@]}
-      SH_RUN_CMDLINE=''; _Dbg_run_cmdline
-      if [[ -n $SH_RUN_CMDLINE ]] ; then
-	  exec_cmd="$SH_RUN_CMDLINE";
-      else
-	  exec_cmd="$_Dbg_script_file"
-	  [[ -n $script_args ]] && exec_cmd+=" $script_args"
-      fi
+      script_args=$(printf "%q " "${_Dbg_script_args[@]}")
   else
-      exec_cmd="$_Dbg_script_file"
-      script_args=$@
-      [[ -n $script_args ]] && exec_cmd+=" $script_args"
+      script_args=$(printf "%q " "$@")
   fi
 
+  typeset exec_cmd_prefix="$_Dbg_orig_0"
   if (( !_Dbg_script )); then
 #     if [[ $_cur_source_file == $_Dbg_bogus_file ]] ; then
 #       script_args="--debugger -c \"$SH_EXECUTION_STRING\""
@@ -55,7 +47,7 @@ _Dbg_do_run() {
   if (( _Dbg_basename_only )) ; then 
     _Dbg_msg "Restarting with: $script_args"
   else
-    _Dbg_msg "Restarting with: $exec_cmd"
+    _Dbg_msg "Restarting with: $exec_cmd_prefix $script_args"
   fi
 
 #   # If we are in a subshell we need to get out of those levels
@@ -72,7 +64,7 @@ _Dbg_do_run() {
   cd $_Dbg_init_cwd
   
   _Dbg_cleanup
-  eval "exec $exec_cmd"
+  eval "exec $exec_cmd_prefix $script_args"
 }
 
 _Dbg_alias_add R run

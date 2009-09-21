@@ -30,10 +30,11 @@ Aliases for list: l
  32:    fn1;
  33:    fn3 33
  34:    # source example/dbg-test1.sub
+ 35:    exit 0;
 +list 
- 34:    # source example/dbg-test1.sub
+ 35:    exit 0;
 +list 
- 34:    # source example/dbg-test1.sub
+ 35:    exit 0;
 +### Original set and then beginning
 +list .
  22: => x=22
@@ -61,7 +62,7 @@ Aliases for list: l
 +# Should not see anything since we are out of bounds
 +# 
 +list 999
-** Line 999 is too large. File dbg-test1.sh has only 34 lines.
+** Line 999 is too large. File dbg-test1.sh has only 35 lines.
 +######################################################### 
 +### 'list file:line' and canonicalization of filenames...
 +list ../example/dbg-test1.sh:1
@@ -92,8 +93,9 @@ Aliases for list: l
  32:    fn1;
  33:    fn3 33
  34:    # source example/dbg-test1.sub
+ 35:    exit 0;
 +list ../example/dbg-test1.sh:999
-** Line 999 is too large. File dbg-test1.sh has only 34 lines.
+** Line 999 is too large. File dbg-test1.sh has only 35 lines.
 +list ./badfile:1
 ** File "badfile" not found in read-in files.
 ** See 'info files' for a list of known files and

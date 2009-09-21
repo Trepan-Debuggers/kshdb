@@ -64,7 +64,7 @@ _Dbg_do_list() {
     typeset full_filename
 
     _Dbg_linespec_setup $first_arg
-    
+
     if [[ -n $full_filename ]] ; then 
 	(( $line_number ==  0 )) && line_number=1
 	_Dbg_check_line $line_number "$full_filename"
@@ -72,7 +72,7 @@ _Dbg_do_list() {
 	    _Dbg_list "$full_filename" "$line_number" $count
 	return $?
     else
-	_Dbg_file_not_read_in $filename
+	_Dbg_file_not_read_in "$filename"
 	return 1
     fi
 }

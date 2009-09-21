@@ -2,7 +2,7 @@
 # -*- shell-script -*-
 # kshdb - top-level debugger program.
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -121,8 +121,12 @@ fi
 
 _Dbg_step_ignore=2
 while : ; do
-    trap '_Dbg_hook $? "$@"' DEBUG
-    . ${_Dbg_script_args[@]}
+    # We need to escape the script arguments in case there are
+    # embedded blanks say in the debugged script filename. The below
+    # two lines are the only way I know how to do this. Perhaps
+    # there's a simpler way?
+    source_cmd=$(printf '%q ' "${_Dbg_script_args[@]}")
+    eval " trap '_Dbg_hook $? \"$@\"' DEBUG; source $source_cmd"
     trap '' DEBUG
     _Dbg_msg_nocr 'Program terminated.'
     if (( !o_no_quit )); then

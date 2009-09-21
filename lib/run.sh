@@ -18,7 +18,12 @@
 function _Dbg_run_cmdline {
   typeset -a cmd
   cmd=( $(COLUMNS=3000 ps h -o command -p $$) )
-  SH_RUN_CMDLINE=${cmd[@]}
+  if (( $? == 0 )) ; then
+      SH_RUN_CMDLINE=$(printf "%q " "${cmd[@]}")
+      return 0
+  else
+      return 1
+  fi
 }
 
 _Dbg_not_running ()  {

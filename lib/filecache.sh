@@ -51,7 +51,7 @@ _Dbg_check_line() {
     typeset -i line_number=$1
     typeset filename=$2
     typeset -i max_line
-    max_line=$(_Dbg_get_maxline $filename)
+    max_line=$(_Dbg_get_maxline "$filename")
     if (( $? != 0 )) ; then
 	_Dbg_errmsg "internal error getting number of lines in $filename"
 	return 1
@@ -174,17 +174,17 @@ function _Dbg_readin {
 	# FIXME
 	return 2
     else 
-	typeset fullname=$(_Dbg_resolve_expand_filename $filename)
+	typeset fullname=$(_Dbg_resolve_expand_filename "$filename")
 	if [[ ! -r $fullname ]] ; then
 	    return 1
 	fi
     fi
-    
+
     nameref text=_Dbg_filenames[$fullname].text
     _Dbg_readfile text "$fullname"
     _Dbg_file2canonic[$filename]="$fullname"
     _Dbg_file2canonic[$fullname]="$fullname"
-    _Dbg_filenames[$fullname].size=${#text[@]}
+    _Dbg_filenames[$fullname].size=${#text[@]}+1
     _Dbg_filenames[$fullname].text=text
     return 0
 }

@@ -49,8 +49,8 @@ _Dbg_do_info() {
 	  
           fi | fil | file| files )
               _Dbg_msg "Source files which we have recorded info about:"
-	      for file in ${!_Dbg_file2canonic[@]} ; do
-		  typeset -i lines=$(_Dbg_get_maxline $file)
+	      for file in "${!_Dbg_file2canonic[@]}" ; do
+		  typeset -i lines=$(_Dbg_get_maxline "$file")
 		  _Dbg_msg "  ${file}: ${_Dbg_file2canonic[$file]}, $lines lines"
 	      done
               return 0

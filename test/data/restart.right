@@ -5,6 +5,7 @@ x=1
   4: => x=1
   5:    cd /
   6:    y=2
+  7:    z=0
 +step 
 (restart.sh:5):
 cd /
@@ -15,3 +16,16 @@ y=2
 Breakpoint 1 set in file restart.sh, line 5.
 +run -B -q -L ... restart.sh
 Restarting with ... restart.sh
+(restart.sh:4):
+x=1
++# 2nd part of Restart test
++list 
+  4: => x=1
+  5:    cd /
+  6:    y=2
+  7:    z=0
++info break
+** No breakpoints have been set.
++continue 
+Program terminated.Type 's' to restart.
++quit 
