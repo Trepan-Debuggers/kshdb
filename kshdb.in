@@ -51,12 +51,12 @@ typeset _Dbg_release='@PACKAGE_VERSION@'
 typeset _Dbg_shell_name=${_Dbg_shell##*/}  # Equivalent to basename(_Dbg_shell)
 
 # Parse just the libdir option
-typeset -i i
-for ((i=0; $i<${#_Dbg_script_args[@]}-1; i++)) ; do 
-    typeset arg=${_Dbg_script_args[$i]}
+typeset -i _Dbg_i
+for ((_Dbg_i=0; $_Dbg_i<${#_Dbg_script_args[@]}-1; _Dbg_i++)) ; do 
+    typeset arg=${_Dbg_script_args[$_Dbg_i]}
     if [[ $arg == '-L' || $arg == '--libdir' ]] ; then
-	((i++))
-	_Dbg_libdir="${_Dbg_script_args[$i]}"
+	((_Dbg_i++))
+	_Dbg_libdir="${_Dbg_script_args[$_Dbg_i]}"
 	break
     fi
 done
