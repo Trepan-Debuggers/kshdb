@@ -20,6 +20,7 @@ check_DATA = \
 	next.cmd           \
 	next.right	   \
 	restart.cmd	   \
+	restart2.cmd	   \
 	restart.right	   \
 	setshow.cmd        \
 	setshow.right      \
