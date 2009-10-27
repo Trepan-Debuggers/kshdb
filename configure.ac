@@ -1,7 +1,7 @@
 dnl Configure script for Shell debugger
 define(DEBUGGER, kshdb)
 define(POSIXSHELL, ksh)
-AC_INIT([kshdb],[0.04git],[rocky@gnu.org])
+AC_INIT([kshdb],[0.04],[rocky@gnu.org])
 AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([no-define])
