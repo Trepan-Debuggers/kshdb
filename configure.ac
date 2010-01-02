@@ -105,6 +105,8 @@ AC_CONFIG_FILES([test/example/hanoi.sh],
 
 AC_CONFIG_FILES([test/integration/test-bug-args], 
                 [chmod +x test/integration/test-bug-args])
+AC_CONFIG_FILES([test/integration/test-break], 
+                [chmod +x test/integration/test-break])
 AC_CONFIG_FILES([test/integration/test-bug-errexit], 
                 [chmod +x test/integration/test-bug-errexit])
 AC_CONFIG_FILES([test/integration/test-bugIFS], 

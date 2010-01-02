@@ -1,4 +1,6 @@
 check_DATA = \
+	break.cmd          \
+	break.right        \
 	bug-args.cmd       \
 	bug-args.right     \
 	bug-errexit.cmd    \

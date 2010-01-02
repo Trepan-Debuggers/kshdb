@@ -1,4 +1,5 @@
 TESTS = \
+	test-break         \
 	test-bug-args      \
 	test-bugIFS        \
 	test-bug-errexit   \

@@ -115,11 +115,12 @@ _Dbg_frame_int_setup() {
   fi
 }
 
-function _Dbg_frame_lineno {
+_Dbg_frame_lineno() {
     (($# > 1)) && return -1
     # FIXME check to see that $1 doesn't run off the end.
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset -n frame=_Dbg_frame_stack[pos]
+    _Dbg_frame_lineno=${frame.lineno}
     return ${frame.lineno}
 }
 

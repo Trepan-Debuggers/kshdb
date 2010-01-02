@@ -1,0 +1,8 @@
+(stepping.sh:3):
+(( i=0 ))
++# Make sure autostep is off for next text
++set force on
++############################### 
++break 
+Breakpoint 1 set in file stepping.sh, line 3.
++quit 

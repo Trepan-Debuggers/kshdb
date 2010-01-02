@@ -3,6 +3,7 @@
 /Makefile
 /Makefile.in
 /check-common.sh
+/test-break
 /test-bug-args
 /test-bug-errexit
 /test-bugIFS
