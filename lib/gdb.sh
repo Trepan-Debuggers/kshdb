@@ -33,6 +33,10 @@ function _Dbg_print_location {
     _Dbg_msg "(${filename}:${frame.lineno}):"
 }
 
+function _Dbg_print_command {
+   _Dbg_msg ${.sh.command}
+}
+
 function _Dbg_print_location_and_command {
     _Dbg_print_location $@
     # typeset -i .old_level=.sh.level

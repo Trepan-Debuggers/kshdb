@@ -1,7 +1,7 @@
 dnl Configure script for Shell debugger
 define(DEBUGGER, kshdb)
 define(POSIXSHELL, ksh)
-AC_INIT([kshdb],[0.04],[rocky@gnu.org])
+AC_INIT([kshdb],[0.05git],[rocky@gnu.org])
 AM_PATH_LISPDIR
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([no-define])
@@ -85,6 +85,8 @@ AM_CONDITIONAL(INSTALL_EMACS_LISP,
 
 AC_CONFIG_FILES([ \
 	Makefile \
+	command/info_sub/Makefile \
+	command/show_sub/Makefile \
 	command/Makefile \
 	doc/Makefile \
 	dbg-trace.sh \
@@ -99,7 +101,7 @@ AC_CONFIG_FILES([ \
 	test/unit/Makefile \
 	])
 
-AC_CONFIG_FILES([kshdb], [chmod +x DEBUGGER])
+AC_CONFIG_FILES(DEBUGGER, [chmod +x DEBUGGER])
 AC_CONFIG_FILES([test/example/hanoi.sh], 
                 [chmod +x test/example/hanoi.sh])
 

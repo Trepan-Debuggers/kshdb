@@ -99,7 +99,7 @@ _Dbg_info_help() {
 		_Dbg_msg \
 		    "info variables [PROPERTY] -- Variable lists by property.
 PROPERTY is one of: 
-\t$_Dbg_info_var_attrs"
+	$_Dbg_info_var_attrs"
 		return 0
 		;;
 	    w | wa | war | warr | warra | warran | warrant | warranty )

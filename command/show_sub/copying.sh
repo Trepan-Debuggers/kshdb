@@ -1,19 +1,25 @@
-(dbg-test2.sh:24):
-set -xv
-+# Test of miscellaneous commands:
-+# 'source', 'info args', 'show args', 'show warranty', 'show copying', etc.
-+#### Invalid commands...
-+show badcommand
-** Unknown show subcommand: badcommand
-** Show subcommands are:
-**   annotate  autoeval  debugger  listsize  trace-commands
-**   args      basename  force     prompt    width         
-+another-bad-command 
-Undefined command "another-bad-command". Try "help".
-+#### *** GNU things...
-+# show warranty
-+show copying
+# -*- shell-script -*-
+# "show copying" debugger command
+#
+#   Copyright (C) 2010 Rocky Bernstein rocky@gnu.org
+#
+#   kshdb is free software; you can redistribute it and/or modify it under
+#   the terms of the GNU General Public License as published by the Free
+#   Software Foundation; either version 2, or (at your option) any later
+#   version.
+#
+#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
+#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#   for more details.
+#   
+#   You should have received a copy of the GNU General Public License along
+#   with kshdb; see the file COPYING.  If not, write to the Free Software
+#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
+_Dbg_do_show_copying() {
+      _Dbg_msg \
+"
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
 
@@ -77,13 +83,13 @@ modification follow.
 
   0. This License applies to any program or other work which contains
 a notice placed by the copyright holder saying it may be distributed
-under the terms of this General Public License.  The "Program", below,
-refers to any such program or work, and a "work based on the Program"
+under the terms of this General Public License.  The \"Program\", below,
+refers to any such program or work, and a \"work based on the Program\"
 means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated into another
 language.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
+the term \"modification\".)  Each licensee is addressed as \"you\".
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -256,8 +262,8 @@ be similar in spirit to the present version, but may differ in detail to
 address new problems or concerns.
 
 Each version is given a distinguishing version number.  If the Program
-specifies a version number of this License which applies to it and "any
-later version", you have the option of following the terms and conditions
+specifies a version number of this License which applies to it and \"any
+later version\", you have the option of following the terms and conditions
 either of that version or of any later version published by the Free
 Software Foundation.  If the Program does not specify a version number of
 this License, you may choose any version ever published by the Free Software
@@ -270,64 +276,6 @@ Software Foundation, write to the Free Software Foundation; we sometimes
 make exceptions for this.  Our decision will be guided by the two goals
 of preserving the free status of all derivatives of our free software and
 of promoting the sharing and reuse of software generally.
-
-+show 
-annotate: Annotation_level is 0.
-args:     Argument list to give script when debugged program starts is:
- testarg1 testarg2".
-autoeval: Evaluate unrecognized commands is off.
-basename: Show short filenames (the basename) in debug output is on.
-debugger: Allow debugging the debugger is off.
-force: Show stepping forces a new line is off.
-listsize: Number of source lines kshdb will list by default is 10.
-prompt:   kshdb's prompt is:
-	"$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> ".
-trace-commands: State of command tracing is on.
-width: Line width is 80.
-+#### and show...
-+show args
-Argument list to give script when debugged program starts is:
- testarg1 testarg2".
-+set args now is the time
-+show args
-Argument list to give script when debugged program starts is:
-	"now is the time".
-+set misspelled 40
-Undefined set subcommand "misspelled". Try "help set".
-+set listsize 40
-+set listsize bad
-** Integer argument expected; got: bad
-+set annotate bad
-Integer argument expected; got: bad
-+set annotate 6
-Annotation level must be between 0 and 3. Got: 6.
-+show annotate
-Annotation_level is 0.
-+set annotate 1
-+show listsize
-Number of source lines kshdb will list by default is 40.
-+show annotate
-Annotation_level is 1.
-+# set history size
-+# set history size 10
-+# show history
-+# show history save
-+# set history save off
-+# show history
-+# set history save on
-+# show history
-+######################### 
-+#### Test 'show commands'...
-+# show commands
-+# show commands +
-+# show commands -5
-+# show commands 12
-+######################### 
-+#### Test 'autoeval'...
-+set autoeval on
-+xx=1 ; typeset -p xx
-xx=1
-+set autoeval off
-+xx=1 ; typeset -p xx
-Undefined command "xx=1". Try "help".
-+quit 
+"
+    return 0
+}

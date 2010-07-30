@@ -1,6 +1,6 @@
 #!/bin/ksh
 autoreconf -i && \
 autoconf && {
-  print "Running configure with $@"
-  ./configure $@
+  print "Running configure with --enable-maintainer-mode $@"
+  ./configure --enable-maintainer-mode $@
 }
