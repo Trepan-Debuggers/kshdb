@@ -93,7 +93,7 @@ function _Dbg_process_commands {
     done
 
     unset _Dbg_fd[_Dbg_fd_last--]
-  done
+  done  # Loop over all open pending file descriptors
 
   # EOF hit. Same as quit without arguments
   _Dbg_msg "That's all folks..." # Cause <cr> since EOF may not have put in.

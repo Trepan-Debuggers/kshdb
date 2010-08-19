@@ -170,7 +170,7 @@ function _Dbg_readin {
 	filename="$_Dbg_frame_filename"
     fi
 
-    if [[ -z $filename ]] || [[ $filename == _Dbg_bogus_file ]] ; then 
+    if [[ -z $filename ]] || [[ $filename == $_Dbg_bogus_file ]] ; then 
 	# FIXME
 	return 2
     else 

@@ -1,3 +1,5 @@
+SUBDIRS = info_sub show_sub
+
 pkgdatadir        = ${datadir}/@PACKAGE@/command
 pkgdata_DATA =       \
 	alias.sh     \
