@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # filecache.sh - cache file information
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -114,11 +114,17 @@ _Dbg_get_source_line() {
 # '' is echo'd if no file found. Return 0 (in $?) if found, 1 if not.
 function _Dbg_is_file {
     if (( $# == 0 )) ; then
-	_Dbg_errmsg "Internal debug error: null file to find"
+	_Dbg_errmsg "Internal debug error _Dbg_is_file(): null file to find"
 	echo ''
 	return 1
     fi
     typeset find_file="$1"
+
+    if [[ -z $find_file ]] ; then
+	_Dbg_errmsg "Internal debug error _Dbg_is_file(): file argument null"
+	echo ''
+	return 1
+    fi
 
     if [[ ${find_file:0:1} == '/' ]] ; then 
 	# Absolute file name

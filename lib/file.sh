@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Things related to file handling.
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -21,6 +21,10 @@
 
 typeset -a _Dbg_dir
 _Dbg_dir=('\$cdir' '\$cwd' )
+
+# _Dbg_cdir is the directory in which the script is located.
+[[ -z ${_Dbg_cdir} ]] && typeset _Dbg_cdir=${_Dbg_source_file%/*}
+[[ -z ${_Dbg_cdir} ]] && typeset _Dbg_cdir=$(pwd)
 
 # $1 contains the name you want to glob. return 0 if exists and is
 # readible or 1 if not. 
@@ -53,7 +57,8 @@ _Dbg_adjust_filename() {
 _Dbg_resolve_expand_filename() {
 
   if (( $# == 0 )) ; then
-    _Dbg_errmsg "Internal debug error: null file to find"
+    _Dbg_errmsg \
+	"Internal debug error _Dbg_resolve_expand_filename(): null file to find"
     echo ''
     return 1
   fi
