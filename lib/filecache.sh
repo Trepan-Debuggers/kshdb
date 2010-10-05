@@ -80,7 +80,9 @@ function _Dbg_get_maxline {
     (( $# != 1 )) && return 1
     typeset fullname=${_Dbg_file2canonic["$1"]}
     (( $? != 0 )) && return 1
-    print ${_Dbg_filenames[$fullname].size}
+    typeset -i max_line
+    ((max_line=_Dbg_filenames[$fullname].size-1))
+    print $max_line
     return $?
 }
 
