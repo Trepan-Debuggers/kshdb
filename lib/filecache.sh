@@ -102,11 +102,11 @@ _Dbg_get_source_line() {
     fi
     typeset filename
     if (( $# == 0 )) ; then
-	filename=$_Dbg_frame_last_filename
+	filename="$_Dbg_frame_last_filename"
     else
-	filename=$1
+	filename="$1"
     fi
-  _Dbg_readin_if_new $filename
+  _Dbg_readin_if_new "$filename"
   fullname=${_Dbg_file2canonic[$filename]}
   nameref text=_Dbg_filenames[$fullname].text
   source_line=${text[$lineno-1]}
@@ -182,8 +182,8 @@ function _Dbg_readin {
 	# FIXME
 	return 2
     else 
-	typeset fullname=$(_Dbg_resolve_expand_filename "$filename")
-	if [[ ! -r $fullname ]] ; then
+	typeset fullname="$(_Dbg_resolve_expand_filename "$filename")"
+	if [[ ! -r "$fullname" ]] ; then
 	    return 1
 	fi
     fi
@@ -194,6 +194,7 @@ function _Dbg_readin {
     _Dbg_file2canonic[$fullname]="$fullname"
     _Dbg_filenames[$fullname].size=${#text[@]}+1
     _Dbg_filenames[$fullname].text=text
+    set +x
     return 0
 }
 
@@ -204,7 +205,7 @@ function _Dbg_readin_if_new {
     typeset filename="$1"
     typeset fullname=${_Dbg_file2canonic["$filename"]}
     if [[ -z $fullname ]] ; then 
-	_Dbg_readin $filename
+	_Dbg_readin "$filename"
 	typeset rc=$?
 	(( $rc != 0 )) && return $rc
 	fullname=_Dbg_file2canonic["$filename"]

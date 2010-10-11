@@ -10,6 +10,7 @@
 /test-filecache.sh
 /test-fns.sh
 /test-frame.sh
+/test-get-sourceline.sh
 /test-io.sh
 /test-journal.sh
 /test-msg.sh
