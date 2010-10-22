@@ -34,7 +34,7 @@ _Dbg_do_show() {
   typeset label=$2
 
   # Warranty, copying, directories, and aliases are omitted below.
-  typeset subcmds='annotate args autoeval basename debugger force listsize prompt trace-commands width'
+  typeset subcmds='annotate args autoeval autolist basename debugger force listsize prompt trace-commands width'
 
   if [[ -z $show_cmd ]] ; then 
       typeset thing
@@ -62,10 +62,18 @@ _Dbg_do_show() {
 "${label}Annotation_level is $_Dbg_annotate."
       return 0
       ;;
-    au | aut | auto | autoe | autoev | autoeva | autoeval )
+    autoe | autoev | autoeva | autoeval )
       [[ -n $label ]] && label='autoeval: '
       _Dbg_msg \
 "${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_autoeval)
+      return 0
+      ;;
+    autol | autoli | autolis | autolist )
+      [[ -n $label ]] && label='autolist: '
+      typeset -l onoff="on."
+      [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
+      _Dbg_msg \
+"${label}Auto run of 'list' command is ${onoff}"
       return 0
       ;;
     b | ba | bas | base | basen | basena | basenam | basename )
@@ -85,8 +93,9 @@ _Dbg_do_show() {
       ;;
     de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
 	  _Dbg_do_show_debugging
+	  return $?
 	  ;;
-    di|dir|dire|direc|direct|directo|director|directori|directorie|directories)
+    dir|dire|direc|direct|directo|director|directori|directorie|directories)
       typeset list=${_Dbg_dir[0]}
       typeset -i n=${#_Dbg_dir[@]}
       typeset -i i
@@ -97,8 +106,8 @@ _Dbg_do_show() {
      _Dbg_msg "Source directories searched: $list"
       return 0
       ;;
-    force )
-      [[ -n $label ]] && label='force: '
+    force | diff | differ | different )
+      [[ -n $label ]] && label='different: '
       _Dbg_msg \
 "${label}Show stepping forces a new line is" $(_Dbg_onoff $_Dbg_step_auto_force)
       return 0

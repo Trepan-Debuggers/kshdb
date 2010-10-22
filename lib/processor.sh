@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -15,7 +15,6 @@
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
-# ==================== VARIABLES =======================================
 # Are we inside the middle of a "skip" command?
 typeset -i  _Dbg_inside_skip=0
 
@@ -33,6 +32,7 @@ typeset _Dbg_last_printe=''    # expression on last print expression command
 # Duplicate standard input
 typeset -i _Dbg_fdi ; exec {_Dbg_fdi}<&0
 
+# Save descriptor number
 typeset -i _Dbg_fd_last=0
 
 # A list of source'd command files. If the entry is '', then we are 
@@ -47,6 +47,8 @@ typeset -a _Dbg_fd=()
 
 # ===================== FUNCTIONS =======================================
 
+# The main debugger command reading loop.
+# 
 # Note: We have to be careful here in naming "local" variables. In contrast
 # to other places in the debugger, because of the read/eval loop, they are
 # in fact seen by those using the debugger. So in contrast to other "local"s
@@ -57,7 +59,12 @@ function _Dbg_process_commands {
   _Dbg_write_journal_eval "_Dbg_step_ignore=-1"
 
   # Evaluate all the display expressions
-  ## _Dbg_eval_all_display
+  typeset -l key
+
+  # Evaluate all hooks
+  for hook in ${_Dbg_cmdloop_hooks[@]} ; do
+      ${hook}
+  done
 
   # Loop over all pending open input file descriptors
   while (( _Dbg_fd_last >= 0 )) ; do
@@ -282,6 +289,12 @@ _Dbg_onecmd() {
 	show )
 	  _Dbg_do_show $args
 	  _Dbg_last_cmd='show'
+	  ;;
+
+	# Run a debugger command file
+	source )
+	  _Dbg_last_cmd='source'
+	  _Dbg_do_source $@
 	  ;;
 
 	# single-step 

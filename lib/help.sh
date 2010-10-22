@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 # help.sh - Debugger Help Routines
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2010 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -27,8 +27,8 @@ function _Dbg_help_add {
      return 0
 }
 
-typeset _Dbg_set_cmds='args annotate autoeval basename debugger 
-force inferior-tty linetrace listsize prompt trace-commands width'
+typeset _Dbg_set_cmds="args annotate autoeval autolist basename debugger 
+force inferior-tty linetrace listsize prompt trace-commands width"
 
 _Dbg_help_set() {
 
@@ -62,12 +62,20 @@ Follow this command with any number of args, to be passed to the program."
 "${label}Set annotation level.$post_label"
       return 0
       ;;
-    au | aut | auto | autoe | autoev | autoeva | autoeval )
+    autoe | autoev | autoeva | autoeval )
       [[ -n $label ]] && label='set autoeval  -- '
       typeset onoff="off."
       (( $_Dbg_autoeval != 0 )) && onoff='on.'
       _Dbg_msg \
 "${label}Evaluate unrecognized commands is" $onoff
+      return 0
+      ;;
+    autol | autoli | autolis | autolist )
+      [[ -n $label ]] && label='set autolist  -- '
+      typeset -l onoff="on."
+      [[ -z ${_Dbg_cmdloop_hooks['list']} ]] && onoff='off.'
+      _Dbg_msg \
+"${label}Run list command is ${onoff}"
       return 0
       ;;
     b | ba | bas | base | basen | basena | basenam | basename )
@@ -143,10 +151,8 @@ Follow this command with any number of args, to be passed to the program."
   esac
 }
 
-# typeset _Dbg_show_cmds="aliases annotate args autoeval basename debugger commands debugger directories linetrace listsize prompt trace-commands warranty"
-
-typeset _Dbg_show_cmds="aliases annotate args autoeval basename copying 
-debugger force linetrace listsize prompt trace-commands warranty"
+typeset _Dbg_show_cmds="aliases annotate args autoeval autolist basename commands 
+copying directories debugger force linetrace listsize prompt trace-commands warranty"
 
 _Dbg_help_show() {
   typeset show_cmd=$1
@@ -176,11 +182,16 @@ _Dbg_help_show() {
 "show annotate    -- Show annotation_level"
       return 0
       ;;
-    au | aut | auto | autoe | autoev | autoeva | autoeval )
+    autoe | autoev | autoeva | autoeval )
       _Dbg_msg \
 'show autoeval    -- Show if we evaluate unrecognized commands.'
       return 0
       ;;
+    autol | autoli | autolis | autolist )
+       _Dbg_msg \
+"show autolist    -- Run list before command loop?"
+       return 0
+       ;;
     b | ba | bas | base | basen | basena | basenam | basename )
       _Dbg_msg \
 'show basename    -- Show if we are are to show short or long filenames.'
@@ -199,9 +210,9 @@ _Dbg_help_show() {
 'show debugger    -- Show if we are set to debug the debugger.'
       return 0
       ;;
-    di|dir|dire|direc|direct|directo|director|directori|directorie|directories)
+    dir|dire|direc|direct|directo|director|directori|directorie|directories)
       _Dbg_msg \
-'show directories -- Show if we are set to debug the debugger.'
+"show directories -- Show file directories searched for listing source."
       ;;
     force)
       _Dbg_msg \

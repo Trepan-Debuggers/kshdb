@@ -2,6 +2,7 @@
 (( i=0 ))
 +# Make sure autostep is off for next text
 +set force off
+Show stepping forces a new line is off.
 +show force
 Show stepping forces a new line is off.
 +# Test that step+ skips multiple statements
@@ -12,6 +13,7 @@ Show stepping forces a new line is off.
 (stepping.sh:4):
 (( i=0 ))
 +set force on
+Show stepping forces a new line is on.
 +show force
 Show stepping forces a new line is on.
 +# Same thing - skip loop

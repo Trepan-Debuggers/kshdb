@@ -1,6 +1,7 @@
 (hanoi.sh:30):
 max=3
 +set basename on
+Show short filenames (the basename) in debug output is on.
 +# Test of frame commands
 +# Let's start with a couple of stack entries
 +step 10

@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -154,4 +154,5 @@ _Dbg_frame_save_frames() {
     _Dbg_stack_pos=0
     _Dbg_frame_last_filename="${_Dbg_frame_stack[0].filename}"
     _Dbg_frame_last_lineno="${_Dbg_frame_stack[0].lineno}"
+    _Dbg_listline=-1
 }
