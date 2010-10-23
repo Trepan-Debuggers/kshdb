@@ -63,7 +63,7 @@ Follow this command with any number of args, to be passed to the program."
 	  return 0
 	  ;;
       autoe | autoev | autoeva | autoeval )
-	  _Dbg_help_set_onoff 'autoeval' \
+	  _Dbg_help_set_onoff 'autoeval' 'autoeval' \
 	      "Evaluate unrecognized commands"
 	  return 0
 	  ;;
@@ -76,17 +76,17 @@ Follow this command with any number of args, to be passed to the program."
 	  return 0
 	  ;;
       b | ba | bas | base | basen | basena | basenam | basename )
-	  _Dbg_help_set_onoff 'basename' \
+	  _Dbg_help_set_onoff 'basename' 'basename' \
 	      "Set short filenames (the basename) in debug output"
 	  return 0
 	  ;;
       deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
-	  _Dbg_help_set_onoff 'debugging' \
+	  _Dbg_help_set_onoff 'debugging' 'debugging' \
 	      "Set debugging the debugger"
 	  return 0
       ;;
     force | dif | diff | differ | different )
-	  _Dbg_help_set_onoff 'different' \
+	  _Dbg_help_set_onoff 'different' 'different' \
 	      "Set stepping forces a different line"
 	  return 0
 	  ;;
