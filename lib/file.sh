@@ -36,13 +36,13 @@ _Dbg_glob_filename() {
   [[ -r $filename ]]
 }
 
-# Either fill out or strip filename as determined by "basename_only"
+# Either fill out or strip filename as determined by "_Dbg_basename"
 # and annotate settings
 _Dbg_adjust_filename() {
   typeset -r filename="$1"
   if (( _Dbg_annotate == 1 )) ; then
     print -- $(_Dbg_resolve_expand_filename $filename)
-  elif ((_Dbg_basename_only)) ; then
+  elif ((_Dbg_basename)) ; then
     print -- ${filename##*/}
   else
     print -- $filename

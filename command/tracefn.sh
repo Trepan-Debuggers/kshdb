@@ -40,7 +40,7 @@ function _Dbg_do_trace_fn {
     cmd=old_$(typeset -f -- "$fn") || {
 	return 4
     }
-    ((_Dbg_debug_debugger)) && print "$cmd"
+    ((_Dbg_debugging)) && print "$cmd"
     typeset save_clear_debug_trap_cmd=''
     typeset restore_trap_cmd=''
     if (( clear_debug_trap )) ; then

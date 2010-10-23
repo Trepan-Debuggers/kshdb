@@ -87,7 +87,7 @@ no__test_parse_linespec()
     # Necessary set up for function call.
     typeset _seteglob=''
     typeset -r int_pat="[0-9]*([0-9])"
-    typeset  -i _Dbg_debug_debugger=0
+    typeset  -i _Dbg_debugging=0
 
     typeset -a words=( $(_Dbg_parse_linespec 'test_defined') )
     assertEquals '4' ${words[0]}

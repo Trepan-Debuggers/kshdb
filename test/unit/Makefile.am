@@ -16,6 +16,7 @@ TESTS = test-alias.sh        \
 	test-pre.sh          \
 	test-run.sh          \
 	test-save-restore.sh \
+	test-setshow.sh      \
 	test-sort.sh         \
 	test-tty.sh
 check_DATA = shunit2
