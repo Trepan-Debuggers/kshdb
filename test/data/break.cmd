@@ -1,5 +1,5 @@
 set trace-commands on
-# Make sure autostep is off for next text
+# Make sure autostep is on for next test
 set force on
 ###############################
 break
