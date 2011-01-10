@@ -84,7 +84,7 @@ _Dbg_frame_adjust() {
 
 # Return the frame file for stack $1 or _Dbg_stack_pos if $1 
 # is omitted. If $2 is given, it indicates if we want the basename
-# only. Otherwise the $_Dbg_basename setting is used.
+# only. Otherwise the $_Dbg_set_basename setting is used.
 # 0 is returned if no error, nonzero means some sort of error.
 _Dbg_frame_file() {
     (($# > 1)) && return 2
@@ -92,7 +92,7 @@ _Dbg_frame_file() {
     typeset -i pos=${1:-$_Dbg_stack_pos}
     typeset -n frame=_Dbg_frame_stack[pos]
     _Dbg_frame_filename=${frame.filename}
-    (( _Dbg_basename )) && _Dbg_frame_filename=${_Dbg_frame_filename##*/}
+    (( _Dbg_set_basename )) && _Dbg_frame_filename=${_Dbg_frame_filename##*/}
     return 0
 }
 

@@ -25,8 +25,8 @@ typeset -i _Dbg_linewidth; _Dbg_linewidth=${COLUMNS:-80}
 typeset -i _Dbg_linetrace_expand=0 # expand variables in linetrace output
 typeset -f _Dbg_linetrace_delay=0  # sleep after linetrace
 
-typeset -i _Dbg_autoeval=0     # Evaluate unrecognized commands?
-typeset -i _Dbg_listsize=10    # How many lines in a listing? 
+typeset -i _Dbg_set_autoeval=0     # Evaluate unrecognized commands?
+typeset -i _Dbg_listsize=10        # How many lines in a listing? 
 
 # Sets whether or not to display command before executing it.
 typeset _Dbg_trace_commands='off'
@@ -69,20 +69,8 @@ _Dbg_do_set() {
 	  return 0
 	  ;;
       autoe | autoev | autoeva | autoeval )
-	  typeset onoff=${1:-'off'}
-	  case $onoff in 
-	      on | 1 ) 
-		  _Dbg_write_journal_eval "_Dbg_autoeval=1"
-		  ;;
-	      off | 0 )
-		  _Dbg_write_journal_eval "_Dbg_autoeval=0"
-		  ;;
-	      * )
-		  _Dbg_msg "\"on\" or \"off\" expected."
-		  return 1
-	  esac
-	  _Dbg_do_show 'autoeval'
-	  return 0
+	  _Dbg_set_onoff "$1" 'autoeval'
+	  return $?
 	  ;;
       autol | autoli | autolis | autolist )
 	  typeset onoff=${1:-'off'}
@@ -102,12 +90,12 @@ _Dbg_do_set() {
 	  return 0
 	  ;;
       b | ba | bas | base | basen | basena | basenam | basename )
-	  rc=_Dbg_set_onoff $1 'basename'
-	  return $rc
+	  _Dbg_set_onoff "$1" 'basename'
+	  return $?
 	  ;;
       de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
-	  rc=_Dbg_set_onoff $1 'basename'
-	  return $rc
+	  _Dbg_set_onoff $1 'debugging'
+	  return $?
 	  ;;
       e | ed | edi | edit | editi | editin | editing )
 	  typeset onoff=${1:-'on'}
@@ -123,8 +111,8 @@ _Dbg_do_set() {
 	  esac
 	  ;;
       force | dif | diff | differ | different )
-	  rc=_Dbg_set_onoff $1 'different'
-	  return $rc
+	  _Dbg_set_onoff "$1" 'different'
+	  return $?
 	  ;;
       hi|his|hist|histo|histor|history)
 	  case $1 in 

@@ -1,4 +1,4 @@
-# set.sh - debugger settings
+# setshow.sh - Helper routines for help/set/show
 #
 #   Copyright (C) 2010 Rocky Bernstein rocky@gnu.org
 #
@@ -42,7 +42,7 @@ _Dbg_help_set_onoff() {
     typeset -l variable_value
     eval_cmd="variable_value=\${_Dbg_$cmd}"
     eval $eval_cmd
-    [[ -n $label ]] && label="set $cmd  -- "
+    [[ -n $label ]] && label="set $label  -- "
     typeset -l onoff="off."
     (( $variable_value != 0 )) && onoff='on.'
     _Dbg_msg \

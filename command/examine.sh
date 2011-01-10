@@ -32,7 +32,7 @@ function _Dbg_do_examine {
   elif _Dbg_defined $_Dbg_expr ; then
     _Dbg_result=$(typeset -p $_Dbg_expr)
     _Dbg_msg "$_Dbg_result"
-  elif _Dbg_is_function "$_Dbg_expr" $_Dbg_debugging; then 
+  elif _Dbg_is_function "$_Dbg_expr" $_Dbg_set_debugging; then 
     _Dbg_result=$(typeset -f $_Dbg_expr)
     print -r -- "$_Dbg_result" 
   else 

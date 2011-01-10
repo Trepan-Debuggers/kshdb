@@ -29,7 +29,7 @@ function _Dbg_print_location {
     typeset filename=${frame.filename}
     _Dbg_readin "${filename}"
     typeset fn=${frame.fn}
-    ((_Dbg_basename)) && filename=${filename##*/}
+    ((_Dbg_set_basename)) && filename=${filename##*/}
     _Dbg_msg "(${filename}:${frame.lineno}):"
 }
 
