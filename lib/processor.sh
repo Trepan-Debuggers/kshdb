@@ -18,6 +18,10 @@
 # Are we inside the middle of a "skip" command?
 typeset -i  _Dbg_inside_skip=0
 
+# Hooks that get run on each command loop
+typeset -A _Dbg_cmdloop_hooks
+# _Dbg_cmdloop_hooks['display']='_Dbg_eval_all_display'
+
 typeset _Dbg_prompt_str='$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> '
 
 # The canonical name of last command run.

@@ -7,6 +7,7 @@ another-bad-command
 #### *** GNU things...
 # show warranty
 show copying
+set width 80
 show
 #### and show...
 show args
