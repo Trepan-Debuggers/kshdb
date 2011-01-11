@@ -136,9 +136,9 @@ _Dbg_do_show() {
       
       lis | list | lists | listsi | listsiz | listsize )
 	  [[ -n $label ]] && label='listsize: '
-	  _Dbg_msg \
-	      "${label}Number of source lines ${_Dbg_debugger_name} will list by default is" \
-	      "$_Dbg_listsize."
+	    _Dbg_msg \
+		"${label}Number of source lines ${_Dbg_debugger_name} will list by default is" \
+		"$_Dbg_set_listsize."
 	  return 0
 	  ;;
       

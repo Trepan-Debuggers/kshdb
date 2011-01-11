@@ -124,7 +124,8 @@ _Dbg_annotation() {
 # Parameters: _Dbg_cmd and args
 # 
 _Dbg_onecmd() {
-    expanded_alias=''; _Dbg_alias_expand $1
+    typeset _Dbg_orig_cmd=$1
+    expanded_alias=''; _Dbg_alias_expand $_Dbg_orig_cmd
     typeset _Dbg_cmd="$expanded_alias"
     eval "set -- \"$2\""
 

@@ -1,21 +1,23 @@
 # -*- shell-script -*-
 # examine.sh: Examine debugger command.
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein  rocky@gnu.org
+#   Copyright (C) 2008, 2010, 2011 
+#   Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 _Dbg_help_add 'examine' \
 "examine EXPR -- Print value of an expression via \'typeset', \`let' and failing these, eval. 
@@ -34,13 +36,13 @@ function _Dbg_do_examine {
     _Dbg_msg "$_Dbg_result"
   elif _Dbg_is_function "$_Dbg_expr" $_Dbg_set_debugging; then 
     _Dbg_result=$(typeset -f $_Dbg_expr)
-    print -r -- "$_Dbg_result" 
+    _Dbg_msg "$_Dbg_result"
   else 
     typeset -i _Dbg_rc
     . ${_Dbg_libdir}/lib/set-d-vars.sh
     eval let _Dbg_result=$_Dbg_expr 2>/dev/null; _Dbg_rc=$?
     _Dbg_set_debugger_internal
-    if (( $_Dbg_rc != 0 )) ; then
+    if (( _Dbg_rc != 0 )) ; then
 	_Dbg_do_print "$_Dbg_expr"
     else
 	_Dbg_msg "$_Dbg_result"
