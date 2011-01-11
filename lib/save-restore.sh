@@ -1,21 +1,22 @@
 # -*- shell-script -*-
-# save-restore.sh - Debugger Utility Functions
+#  Save and restore user settings
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 # Does things to after on entry of after an eval to set some debugger
 # internal settings  
@@ -57,10 +58,10 @@ function _Dbg_set_to_return_from_debugger {
   _Dbg_stop_reason=''
 #   if (( $1 != 0 )) ; then
 #     _Dbg_last_ksh_command="$_Dbg_ksh_command"
-#     _Dbg_last_curline="$_curline"
+#     _Dbg_last_frame_lineno="$_Dbg_frame_lineno"
 #     _Dbg_last_source_file="${.sh.file}"
 #   else
-#     _Dbg_last_curline==${KSH_LINENO[1]}
+#     _Dbg_last_frame_lineno==${KSH_LINENO[1]}
 #     _Dbg_last_source_file=${KSH_SOURCE[2]:-$_Dbg_bogus_file}
 #     _Dbg_last_ksh_command="**unsaved _kshdb command**"
 #   fi

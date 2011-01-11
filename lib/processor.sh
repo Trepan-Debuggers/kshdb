@@ -152,7 +152,7 @@ _Dbg_onecmd() {
 
 	# Set breakpoint on a line
 	break )
-	  _Dbg_do_break 0 $args 
+	  _Dbg_do_break $args 
 	  _Dbg_last_cmd="break"
 	  ;;
 
