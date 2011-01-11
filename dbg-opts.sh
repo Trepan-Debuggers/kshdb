@@ -67,7 +67,7 @@ typeset -a _Dbg_script_args
 typeset -i _Dbg_annotate=0
 
 # Simulate set -x?
-typeset -i _Dbg_linetrace=0
+typeset -i _Dbg_set_linetrace=0
 typeset -i _Dbg_set_basename=0
 typeset -i _Dbg_o_nx=0
 typeset -i _Dbg_o_linetrace=0
@@ -170,6 +170,6 @@ if [[ -n "$_Dbg_dbg_opts_test" ]] ; then
     [[ -n $_Dbg_input ]] && typeset -p _Dbg_input
     _Dbg_parse_options "$@"
     typeset -p _Dbg_annotate
-    typeset -p _Dbg_linetrace
+    typeset -p _Dbg_set_linetrace
     typeset -p _Dbg_set_basename
 fi

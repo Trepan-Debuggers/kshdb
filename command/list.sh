@@ -115,7 +115,7 @@ _Dbg_do_list_typeset_attr() {
     typeset attr="$1"; shift
     typeset -a columnize_list=( $(_Dbg_get_typeset_attr "$attr" $*) )
     typeset -i rc=$?
-    (( $rc != 0 )) && return $rc
+    (( rc != 0 )) && return $rc
     _Dbg_list_columns columnize_list
     return $?
 }
