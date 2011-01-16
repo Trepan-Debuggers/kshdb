@@ -126,7 +126,7 @@ while : ; do
     # two lines are the only way I know how to do this. Perhaps
     # there's a simpler way?
     source_cmd=$(printf '%q ' "${_Dbg_script_args[@]}")
-    eval " trap '_Dbg_hook $? \"$@\"' DEBUG; source $source_cmd"
+    eval " trap '_Dbg_trap_handler $? \"$@\"' DEBUG; source $source_cmd"
     trap '' DEBUG
     _Dbg_msg_nocr 'Program terminated.'
     if (( !o_no_quit )); then
