@@ -5,6 +5,7 @@ pkgdata_DATA =      	\
 	break.sh        \
 	columnize.sh    \
 	dbg-call.sh  	\
+	display.sh  	\
 	filecache.sh    \
 	file.sh         \
 	fns.sh          \
