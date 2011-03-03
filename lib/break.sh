@@ -132,11 +132,11 @@ function _Dbg_enable_disable {
 function _Dbg_print_brkpt_count {
   typeset -i i; i=$1
   if (( _Dbg_brkpt[i].hits != 0 )) ; then
-    if (( _Dbg_brkpt[i].hits == 1 )) ; then 
-      _Dbg_printf '    breakpoint already hit 1 time'
-    else
-      _Dbg_printf "    breakpoint already hit %d times" ${_Dbg_brkpt[$i].hits}
-    fi
+      if (( _Dbg_brkpt[i].hits == 1 )) ; then 
+	  _Dbg_printf '    breakpoint already hit 1 time'
+      else
+	  _Dbg_printf "    breakpoint already hit %d times" ${_Dbg_brkpt[$i].hits}
+      fi
   fi
 }
 

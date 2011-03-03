@@ -105,6 +105,7 @@ _Dbg_do_clear_brkpt() {
   if [[ -n $full_filename ]] ; then 
     if (( line_number ==  0 )) ; then 
       _Dbg_msg "There is no line 0 to clear."
+      return 0
     else 
       _Dbg_check_line $line_number "$full_filename"
       if (( $? == 0 )) ; then
@@ -112,13 +113,67 @@ _Dbg_do_clear_brkpt() {
 	typeset -r found=$?
 	if [[ $found != 0 ]] ; then 
 	  _Dbg_msg "Removed $found breakpoint(s)."
-	else 
-	  _Dbg_msg "Didn't find any breakpoints to remove at $n."
+	  return $found
 	fi
       fi
     fi
   else
-    _Dbg_file_not_read_in "$filename"
+    _Dbg_file_not_read_in "$full_filename"
+    return 0
+  fi
+}
+
+# list breakpoints and break condition.
+# If $1 is given just list those associated for that line.
+_Dbg_do_list_brkpt() {
+
+  if (( $# != 0  )) ; then 
+      typeset brkpt_num="$1"
+      if [[ $brkpt_num != [0-9]* ]] ; then
+	  _Dbg_errmsg "Bad breakpoint number $brkpt_num."
+      elif [[ -z ${_Dbg_brkpt_file[$brkpt_num]} ]] ; then
+	  _Dbg_errmsg "Breakpoint entry $brkpt_num is not set."
+      else
+	  typeset -r -i i=$brkpt_num
+	  typeset source_file=${_Dbg_brkpt_file[$i]}
+	  source_file=$(_Dbg_adjust_filename "$source_file")
+	  _Dbg_msg "Num Type       Disp Enb What"
+	  _Dbg_printf "%-3d breakpoint %-4s %-3s %s:%s" $i \
+	      ${_Dbg_keep[${_Dbg_brkpt_onetime[$i]}]} \
+	      ${_Dbg_yn[${_Dbg_brkpt[$i].enable}]} \
+	      "$source_file" ${_Dbg_brkpt[$i].lineno}
+	  if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
+	      _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
+	  fi
+	  _Dbg_print_brkpt_count $i
+      fi
+      return 0
+  fi
+
+  if (( _Dbg_brkpt_count > 0 )); then
+      typeset -i i
+      
+      _Dbg_msg "Num Type       Disp Enb What"
+      for (( i=1; i <= _Dbg_brkpt_max; i++ )) ; do
+	  typeset source_file=${_Dbg_brkpt[$i].filename}
+	  if [[ -n ${_Dbg_brkpt[$i].lineno} ]] ; then
+	      source_file=$(_Dbg_adjust_filename "$source_file")
+	      _Dbg_printf "%-3d breakpoint %-4s %-3s %s:%s" $i \
+		  ${_Dbg_keep[${_Dbg_brkpt_onetime[$i]}]} \
+		  ${_Dbg_yn[${_Dbg_brkpt[$i].enable}]} \
+		  "$source_file" ${_Dbg_brkpt[$i].lineno}
+	      if [[ ${_Dbg_brkpt[$i].condition} != '1' ]] ; then
+		  _Dbg_printf "\tstop only if %s" "${_Dbg_brkpt[$i].condition}"
+	      fi
+	      if (( _Dbg_brkpt[$i].hits != 0 )) ; then
+		  _Dbg_print_brkpt_count $i
+	      fi
+	  fi
+      done
+      return 0
+  else
+      _Dbg_msg 'No breakpoints have been set.'
+      return 1
   fi
 }
 

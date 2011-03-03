@@ -31,7 +31,7 @@ x=1
   6:    y=2
   7:    z=0
 +info break
-** No breakpoints have been set.
+No breakpoints have been set.
 +continue 
 Program terminated.Type 's' to restart.
 +quit 
