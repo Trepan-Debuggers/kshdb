@@ -20,7 +20,7 @@ typeset -i  _Dbg_inside_skip=0
 
 # Hooks that get run on each command loop
 typeset -A _Dbg_cmdloop_hooks
-# _Dbg_cmdloop_hooks['display']='_Dbg_eval_all_display'
+_Dbg_cmdloop_hooks['display']='_Dbg_eval_all_display'
 
 typeset _Dbg_prompt_str='$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> '
 
@@ -192,6 +192,12 @@ _Dbg_onecmd() {
 	  _Dbg_last_cmd='disable'
 	  ;;
 
+	# Disable breakpoints
+	display )
+	  _Dbg_do_display $args
+	  _Dbg_last_cmd='display'
+	  ;;
+
 	# Move call stack down
 	down )
 	  _Dbg_do_down $@
@@ -317,6 +323,12 @@ _Dbg_onecmd() {
 	up )
 	  _Dbg_do_up $args
 	  _Dbg_last_cmd='up'
+	  ;;
+
+	# Disable breakpoints
+	undisplay )
+	  _Dbg_do_undisplay $args
+	  _Dbg_last_cmd='undisplay'
 	  ;;
 
 # 	# Remove a function trace

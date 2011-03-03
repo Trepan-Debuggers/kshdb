@@ -1,32 +1,28 @@
 # -*- shell-script -*-
 # info.sh - gdb-like "info" debugger commands
 #
-#   Copyright (C) 2008, 2010 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2008, 2009,
+#   2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
-
-# Print info args. Like GDB's "info args"
-# $1 is an additional offset correction - this routine is called from two
-# different places and one routine has one more additional call on top.
-# This code assumes the's debugger version of
-# bash where FUNCNAME is an array, not a variable.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 _Dbg_help_add info ''
 
 typeset -a _Dbg_info_subcmds
-_Dbg_info_subcmds=( breakpoints files line program source stack variables )
+_Dbg_info_subcmds=( breakpoints display files line program source stack variables )
 
 # Load in "info" subcommands
 for _Dbg_file in ${_Dbg_libdir}/command/info_sub/*.sh ; do 
@@ -51,12 +47,12 @@ _Dbg_do_info() {
 	      return 0
 	      ;;
 	  
-	  #       d | di | dis| disp | displ | displa | display )
-	  # 	_Dbg_do_list_display $*
-	  # 	return
-	  # 	;;
-	  
-          file| files )
+	  d | di | dis| disp | displ | displa | display )
+	      _Dbg_do_info_display $@
+	      return 0
+	      ;;
+
+	  file | files )
 	      _Dbg_do_info_files
 	      return $?
 	      ;;
@@ -69,22 +65,22 @@ _Dbg_do_info() {
 	  
 	  l | li | lin | line )
 	      _Dbg_do_info_line
-	      return $?
+	      return 0
 	      ;;
 	  
 	  p | pr | pro | prog | progr | progra | program )
 	      _Dbg_do_info_program
-	      return $?
+	      return 0
 	      ;;
 	  
 	  so | sou | sourc | source )
 	      _Dbg_do_info_source
-	      return $?
+	      return 0
 	      ;;
 	  
 	  st | sta | stac | stack )
-	      _Dbg_do_backtrace 1 $*
-	      return $?
+	      _Dbg_do_backtrace 1 $@
+	      return 0
 	      ;;
 	  
 	  #       te | ter | term | termi | termin | termina | terminal | tt | tty )
@@ -93,13 +89,12 @@ _Dbg_do_info() {
 	  # 	;;
 	  
 	  v | va | var | vari | varia | variab | variabl | variable | variables )
-	      _Dbg_do_info_variables $*
-	      return $?
-	      ;;
-	  
+	      _Dbg_do_info_variables "$1"
+	      return 0
+              ;;
 	  w | wa | war | warr | warra | warran | warrant | warranty )
 	      _Dbg_do_info_warranty
-	      return $?
+	      return 0
 	      ;;
 	  *)
 	      _Dbg_errmsg "Unknown info subcommand: $info_cmd"
@@ -114,4 +109,4 @@ _Dbg_do_info() {
   return 1
 }
 
-_Dbg_alias_add 'i' info
+_Dbg_alias_add i info

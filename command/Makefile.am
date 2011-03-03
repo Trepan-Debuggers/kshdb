@@ -8,6 +8,7 @@ pkgdata_DATA =       \
 	continue.sh  \
 	delete.sh    \
 	disable.sh   \
+	display.sh   \
 	edit.sh      \
 	enable.sh    \
 	eval.sh      \
@@ -23,6 +24,7 @@ pkgdata_DATA =       \
 	source.sh    \
 	stepping.sh  \
 	tracefn.sh   \
+	undisplay.sh   \
 	where.sh
 
 EXTRA_DIST = $(pkgdata_DATA)

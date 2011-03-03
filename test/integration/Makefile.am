@@ -5,6 +5,7 @@ TESTS = \
 	test-bug-errexit   \
 	test-condition     \
 	test-delete        \
+	test-display       \
 	test-enable        \
 	test-examine       \
 	test-frame         \

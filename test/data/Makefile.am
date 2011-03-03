@@ -11,6 +11,8 @@ check_DATA = \
 	condition.right    \
 	delete.cmd         \
 	delete.right       \
+	display.cmd        \
+	display.right      \
 	enable.cmd         \
 	enable.right       \
 	examine.cmd        \
