@@ -1,0 +1,77 @@
+(dbg-test1.sh:22):
+x=22
++# Test break, watch, watche, step, next, continue and stack handling
++# 
++### Try a simple display...
++display $x
+ 0: $x
++break 23
+Breakpoint 1 set in file dbg-test1.sh, line 23.
++break 25
+Breakpoint 2 set in file dbg-test1.sh, line 25.
++continue 
+Breakpoint 1 hit.
+(dbg-test1.sh:23):
+y=23
+ 0: $x = 22
++continue 
+Breakpoint 2 hit.
+(dbg-test1.sh:25):
+(( x += i ))
+ 0: $x = 22
++### Try disabling display ...
++disable display 0
+Display entry 0 disabled.
++info display
+Auto-display statements now in effect:
+Num Enb Expression          
+0     0 $x
++step 
+Breakpoint 2 hit.
+(dbg-test1.sh:25):
+for i in 1
++continue 
+Breakpoint 2 hit.
+(dbg-test1.sh:25):
+(( x += i ))
++### Try enabling display ...
++enable display 0
+Display entry 0 enabled.
++info display
+Auto-display statements now in effect:
+Num Enb Expression          
+0     1 $x
++### Try display to show again status ...
++display 
+ 0: $x = 22
++continue 28
+One-time breakpoint 3 set in file dbg-test1.sh, line 28.
+Breakpoint 2 hit.
+(dbg-test1.sh:25):
+for i in 3
+ 0: $x = 23
++info display
+Auto-display statements now in effect:
+Num Enb Expression          
+0     1 $x
++continue 
+Breakpoint 2 hit.
+(dbg-test1.sh:25):
+(( x += i ))
+ 0: $x = 23
++### Try undisplay to delete ...
++undisplay 
+** You need to pass in some display numbers.
++undisplay 0
+Display entry 0 unset.
++info display
+No display expressions have been set.
++step 
+(dbg-test1.sh:27):
+x=27
++step 
+Breakpoint 3 hit.
+(dbg-test1.sh:28):
+y=b
++### quitting...
++quit 
