@@ -88,6 +88,7 @@ AC_CONFIG_FILES([ \
 	command/info_sub/Makefile \
 	command/show_sub/Makefile \
 	command/Makefile \
+	data/Makefile \
 	doc/Makefile \
 	dbg-trace.sh \
 	emacs/Makefile \

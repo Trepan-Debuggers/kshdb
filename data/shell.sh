@@ -1,4 +1,7 @@
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+# -*- shell-script -*-
+# shell.sh - helper routines for 'shell' debugger command
+#
+#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -15,41 +18,22 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-AUTOMAKE_OPTIONS = dist-bzip2
+trap '_Dbg_write_saved_vars' EXIT
+typeset -a _Dbg_save_vars
 
-SUBDIRS = command lib data doc test
+# _Dbg_tmpdir='/tmp'
+# _Dbg_restore_info="${_Dbg_tmpdir}/${_Dbg_debugger_name}_restore_$$"
+typeset -a _Dbg_save_vars; _Dbg_save_vars=()
 
-pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
-	dbg-main.sh  \
-	dbg-opts.sh  \
-	dbg-trace.sh \
-	getopts_long.sh
+# User level routine which should be called to mark which 
+# variables should persist. 
+save_vars() {
+    _Dbg_save_vars+=($@)
+}
 
-# Set up the install target. Can't figure out how to use @PACKAGE@
-bin_SCRIPTS = kshdb
-
-MOSTLYCLEANFILES = *.orig *.rej
-
-EXTRA_DIST = $(pkgdata_DATA) THANKS
-
-# Unit testing
-check-unit: test-unit
-
-test-unit:
-	cd test/unit && make check
-
-test-integration:
-	cd test/integration && make check
-
-MAINTAINERCLEANFILES = ChangeLog
-
-if MAINTAINER_MODE
-
-ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL) > $@
-
-ACLOCAL_AMFLAGS=-I .
-
-endif
+_Dbg_write_saved_vars() {
+    typeset param
+    for param in "${_Dbg_save_vars[@]}" ; do 
+	typeset -p $param | sed -e 's:declare [^ ]* ::'
+    done > $_Dbg_restore_info
+}
