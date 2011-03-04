@@ -1,21 +1,54 @@
 # -*- shell-script -*-
 # hook.sh - Debugger trap hook
 #
-#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   Copyright (C) 2002, 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011
+#   Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
-#   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
+
+typeset _Dbg_RESTART_COMMAND=''
+
+# This is set to 1 if you want to debug debugger routines, i.e. routines
+# which start _Dbg_. But you better should know what you are doing
+# if you do this or else you may get into a recursive loop.
+typeset -i _Dbg_debug_debugger=0
+
+typeset -i _Dbg_set_debugging=0  # 1 if we are debugging the debugger
+typeset    _Dbg_stop_reason=''    # The reason we are in the debugger.
+
+# Set to 0 to clear "trap DEBUG" after entry
+typeset -i _Dbg_restore_debug_trap=1
+
+# Are we inside the middle of a "skip" command? If so this gets copied
+# to _Dbg_continue_rc which controls the return code from the trap.
+typeset -i _Dbg_inside_skip=0
+
+# If _Dbg_continue_rc is not less than 0, continue execution of the
+# program. As specified by the shopt extdebug option. See extdebug of
+# "The Shopt Builtin" in the bash info guide. The information
+# summarized is:
+#
+# - A return code 2 is special and means return from a function or
+#   "source" command immediately
+#
+# - A nonzero return indicate the next statement should not be run. 
+#   Typically we use 1 for that value.
+# - A set return code 0 continues execution.
+typeset -i _Dbg_continue_rc=-1
 
 typeset -i _Dbg_set_debugging=0   # 1 if we are debugging the debugger
 typeset    _Dbg_stop_reason=''    # The reason we are in the debugger.
