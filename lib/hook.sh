@@ -191,14 +191,15 @@ _Dbg_hook_enter_debugger() {
 
 # Cleanup routine: erase temp files before exiting.
 _Dbg_cleanup() {
-  rm $_Dbg_evalfile 2>/dev/null
-  _Dbg_erase_journals
-  _Dbg_restore_user_vars
+    [[ -f $_Dbg_evalfile ]] && rm -f $_Dbg_evalfile 2>/dev/null
+    _Dbg_erase_journals
+    _Dbg_restore_user_vars
 }
 
 # Somehow we can't put this in _Dbg_cleanup and have it work.
 # I am not sure why.
 _Dbg_cleanup2() {
-  _Dbg_erase_journals
-  trap - EXIT
+    [[ -f $_Dbg_evalfile ]] && rm -f $_Dbg_evalfile 2>/dev/null
+    _Dbg_erase_journals
+    trap - EXIT
 }
