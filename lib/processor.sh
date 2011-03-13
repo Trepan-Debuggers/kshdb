@@ -132,8 +132,9 @@ _Dbg_annotation() {
 # Parameters: _Dbg_cmd and args
 # 
 _Dbg_onecmd() {
+    typeset full_cmd; full_cmd=$@
     typeset _Dbg_orig_cmd="$1"
-    expanded_alias=''; _Dbg_alias_expand $_Dbg_orig_cmd
+    typeset expanded_alias; _Dbg_alias_expand "$_Dbg_orig_cmd"
     typeset _Dbg_cmd="$expanded_alias"
     eval "set -- \"$2\""
 
@@ -142,7 +143,8 @@ _Dbg_onecmd() {
 	_Dbg_cmd=$_Dbg_last_next_step_cmd
 	# FIXME: remove $args
 	args=$_Dbg_last_next_step_args
-	_Dbg_args=$args
+	_Dbg_args=$_Dbg_last_next_step_args
+	full_cmd="$_Dbg_cmd $_Dbg_args"
      fi
      
      # If "set trace-commands" is "on", echo the the command
@@ -156,6 +158,14 @@ _Dbg_onecmd() {
 	 _Dbg_redo=0
 
 	 [[ -z $_Dbg_cmd ]] && _Dbg_cmd=$_Dbg_last_cmd
+	 if [[ -n ${_Dbg_debugger_commands[$_Dbg_cmd]} ]] ; then
+	     ${_Dbg_debugger_commands[$_Dbg_cmd]} $_Dbg_args
+	     IFS=$_Dbg_space_IFS;
+	     # eval "_Dbg_prompt=$_Dbg_prompt_str"
+	     ((_Dbg_continue_rc >= 0)) && return $_Dbg_continue_rc
+	     continue
+	 fi
+
 	 case $_Dbg_cmd in
 	     # Comment line
 	     [#]* ) 
