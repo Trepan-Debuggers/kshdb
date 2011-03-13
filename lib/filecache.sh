@@ -95,7 +95,7 @@ function _Dbg_get_maxline {
 _Dbg_get_source_line() {
     typeset -i lineno
     if (( $# == 0 )); then
-	lineno=$Dbg_frame_last_lineno
+	lineno=$_Dbg_frame_last_lineno
     else
 	lineno=$1
 	shift
@@ -109,7 +109,7 @@ _Dbg_get_source_line() {
   _Dbg_readin_if_new "$filename"
   fullname=${_Dbg_file2canonic[$filename]}
   nameref text=_Dbg_filenames[$fullname].text
-  source_line=${text[$lineno-1]}
+  _Dbg_source_line=${text[$lineno-1]}
 }
 
 # _Dbg_is_file echoes the full filename if $1 is a filename found in files

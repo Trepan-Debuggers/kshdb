@@ -22,7 +22,7 @@ _Dbg_help_add condition \
 "condition N COND	-- Break only if COND is true in breakpoint number N.
 
 N is an integer and COND is an expression to be evaluated whenever 
-breakpoint N is reached."
+breakpoint N is reached." 1
 
 # Set a condition for a given breakpoint $1 is a breakpoint number
 # $2 is a condition. If not given, set "unconditional" or 1.
@@ -39,12 +39,12 @@ function _Dbg_do_condition {
   typeset condition="$@"
   if [[ $n != [0-9]* ]]; then
     _Dbg_errmsg "condition: Bad breakpoint number: $n"
-    return 1
+    return 2
   fi
 
   if [[ -z ${_Dbg_brkpt[$n].filename} ]] ; then
     _Dbg_errmsg "condition: Breakpoint entry $n is not set. Condition not changed."
-    return 1
+    return 3
   fi
   
   if [[ -z $condition ]] ; then

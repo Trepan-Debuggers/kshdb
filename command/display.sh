@@ -1,8 +1,8 @@
 # -*- shell-script -*-
-# display.sh - gdb-like "(un)display" and list display debugger commands
+# display.sh - gdb-like "display" debugger command
 #
-#   Copyright (C) 2002, 2003, 2006, 2007, 2008, 2009, 2010
-#   Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2002, 2003, 2006, 2007, 2008, 2009, 2010, 2011
+#   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -30,7 +30,7 @@ Examples:
   display echo \$x  # show the current value of x each time debugger stops
   display          # evaluate all display statements
 
-See also 'undisplay' and 'info display'."
+See also 'undisplay' and 'info display'." 1
 
 # Set display command or list all current display expressions
 _Dbg_do_display() {

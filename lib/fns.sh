@@ -74,6 +74,32 @@ _Dbg_get_typeset_attr() {
     eval $cmd
 }
 
+# Removes "[el]if" .. "; then" or "while" .. "; do" or "return .."
+# leaving resumably the expression part.  This fuction is called by
+# the eval?  command where we want to evaluate the expression part in
+# a source line of code
+_Dbg_eval_extract_condition()
+{
+    orig="$1"
+    extracted=$(echo "$orig" | sed -e's/^\(\s*if\|elif\)\s\s*//')
+    if [[ "$extracted" != "$orig" ]] ; then
+	extracted=$(echo "$extracted" | sed -e's/;\s*then\(\s\s*$\|$\)//')
+    else
+	extracted=$(echo "$orig" | sed -e's/^\s*return\s\s*/echo /')
+	if [[ "$extracted" != "$orig" ]] ; then
+	    extracted=$(echo "$orig" | sed -e's/^\s*return\s*/echo /')
+	    if [[ "$extracted" != "$orig" ]] ; then
+		extracted=$(echo "$extracted" | sed -e's/\s\s*in\s*$//')
+	    fi
+	else
+	    extracted=$(echo "$orig" | sed -e's/^\s*while\s*//')
+	    if [[ "$extracted" != "$orig" ]] ; then
+		extracted=$(echo "$extracted" | sed -e's/;\s*do\(\s\s*$\|$\)//')
+	    fi
+	fi
+    fi
+}
+
 # Print "on" or "off" depending on whether $1 is true (0) or false
 # (nonzero).
 function _Dbg_onoff {

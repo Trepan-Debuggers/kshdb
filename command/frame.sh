@@ -25,26 +25,13 @@ _Dbg_help_add frame \
 
 If FRAME-NUM is negative, count back from the least-recent frame; -1
 is the oldest frame. FRAME-NUM can be any arithmetic expression. If
-FRAME is omitted, 0 or the most-recent frame moved to.'
+FRAME is omitted, 0 or the most-recent frame moved to.' 1
 
 _Dbg_do_frame() {
-  _Dbg_not_running && return 1
-  typeset -i pos=${1:-0}
-  _Dbg_frame_adjust $pos 0
-  _Dbg_print_location
+    _Dbg_not_running && return 1
+    typeset -i pos=${1:-0}
+    _Dbg_frame_adjust $pos 0
+    typeset -i rc=$?
+    ((0 == rc)) && _Dbg_last_cmd='frame'
+    _Dbg_print_location
 }
-
-# Move default values up $1 or one in the stack. 
-_Dbg_help_add up \
-'up [COUNT] -- Set the call stack position up by COUNT. 
-
-If COUNT is omitted, use 1. COUNT can be any arithmetic expression.'
-
-_Dbg_do_up() {
-  _Dbg_not_running && return 1
-  typeset -i count=${1:-1}
-  _Dbg_frame_adjust $count +1
-  _Dbg_print_location
-}
-
-_Dbg_alias_add 'u' 'up'

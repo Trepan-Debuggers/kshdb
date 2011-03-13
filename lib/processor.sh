@@ -136,6 +136,7 @@ _Dbg_onecmd() {
     typeset _Dbg_orig_cmd="$1"
     typeset expanded_alias; _Dbg_alias_expand "$_Dbg_orig_cmd"
     typeset _Dbg_cmd="$expanded_alias"
+    typeset _Dbg_args=$args
     eval "set -- \"$2\""
 
      # Set default next, step or skip command
@@ -189,12 +190,6 @@ _Dbg_onecmd() {
 # 	  _Dbg_last_cmd='clear'
 # 	  ;;
 
-	     # Breakpoint/Watchpoint Conditions
-	     condition )
-		 _Dbg_do_condition $args
-		 _Dbg_last_cmd='condition'
-		 ;;
-	     
 	     # Continue
 	     continue )
 		 
@@ -206,57 +201,9 @@ _Dbg_onecmd() {
 		 fi
 		 ;;
 	     
-	     # Delete breakpoints by entry numbers. 
-	     delete )
-		 _Dbg_do_delete $args
-		 _Dbg_last_cmd='delete'
-		 ;;
-	     
-	     # Disable breakpoints
-	     disable )
-		 _Dbg_do_disable $args
-		 _Dbg_last_cmd='disable'
-		 ;;
-	     
-	     # Disable breakpoints
-	     display )
-		 _Dbg_do_display $args
-		 _Dbg_last_cmd='display'
-		 ;;
-	     
-	     # Move call stack down
-	     down )
-		 _Dbg_do_down $@
-		 _Dbg_last_cmd='down'
-		 ;;
-	     
-	     # edit file currently positioned at
-	     edit )
-		 _Dbg_do_edit $args
-		 _Dbg_last_cmd='edit'
-		 ;;
-	     
-	     # enable breakpoints or watchpoints
-	     enable )
-		 _Dbg_do_enable $args
-		 _Dbg_last_cmd='enable'
-		 ;;
-	     
-	     # evaluate as shell command
-	     eval )
-		 _Dbg_do_eval $@
-		 _Dbg_last_cmd='eval'
-		 ;;
-	     
 	     # intelligent print of variable, function or expression
 	     examine )
 		 _Dbg_do_examine "$args"
-		 ;;
-	     
-	     #  Set stack frame
-	     frame )
-		 _Dbg_do_frame $@
-		 _Dbg_last_cmd='frame'
 		 ;;
 	     
 	     # print help command menu
@@ -284,12 +231,6 @@ _Dbg_onecmd() {
 	     'next+' | 'next-' | 'next' )
 		 _Dbg_do_next "$_Dbg_cmd" $@
 		 return $?
-		 ;;
-	     
-	     # print globbed or substituted variables
-	     print )
-		 _Dbg_do_print "$args"
-		 _Dbg_last_cmd='print'
 		 ;;
 	     
 	     # quit
@@ -343,12 +284,6 @@ _Dbg_onecmd() {
 	     # Trace a function
 	     trace )
 		 _Dbg_do_trace_fn $args 
-		 ;;
-	     
-	     # Move call stack up
-	     up )
-		 _Dbg_do_up $args
-		 _Dbg_last_cmd='up'
 		 ;;
 	     
 	     # Disable breakpoints

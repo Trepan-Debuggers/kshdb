@@ -1,21 +1,22 @@
 # -*- shell-script -*-
-# edit.sh - Debugger Edit routine
+# Debugger Edit command
 
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 #================ VARIABLE INITIALIZATIONS ====================#
 
@@ -24,7 +25,7 @@ _Dbg_help_add edit \
 
 If LOCATION is not given, use the current location. 
 Uses EDITOR environment variable contents as editor (or ex as default).
-Assumes the editor positions at a file using options +linenumber filename."
+Assumes the editor positions at a file using options +linenumber filename." 1
 
 _Dbg_do_edit() {
   if (($# > 2)) ; then 
@@ -46,8 +47,12 @@ _Dbg_do_edit() {
   fi
   if [[ ! -r $full_filename ]]  ; then 
       _Dbg_errmsg "File $full_filename is not readable"
+      return 2
   fi
   $editor +$line_number $full_filename
+  rc=$?
+  ((rc==0)) && _Dbg_last_cmd='edit'
+  return $rc
 }
 
 _Dbg_alias_add 'ed' 'edit'

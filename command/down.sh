@@ -29,13 +29,16 @@ the most recent frame.
 
 If COUNT is omitted, use 1. COUNT can be any arithmetic expression.
 
-See also "up" and "frame".'
+See also "up" and "frame".' 1
 
 _Dbg_do_down() {
-  _Dbg_not_running && return 1
-  typeset -i count=${1:-1}
-  _Dbg_frame_adjust $count -1
-  _Dbg_print_location
+    _Dbg_not_running && return 1
+    typeset -i count=${1:-1}
+    _Dbg_frame_adjust $count -1
+    typeset -i rc=$?
+    ((0 == rc)) && _Dbg_last_cmd='down'
+    _Dbg_print_location
+    return $rc
 }
 
 _Dbg_alias_add 'd' down

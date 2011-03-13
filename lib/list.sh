@@ -80,7 +80,7 @@ _Dbg_list() {
 
        (( _Dbg_listline == _Dbg_frame_last_lineno )) \
          && [[ $fullname == $frame_fullfile ]] &&  prefix=' => '
-      _Dbg_printf "%3d:%s%s" $_Dbg_listline "$prefix" "$source_line"
+      _Dbg_printf "%3d:%s%s" $_Dbg_listline "$prefix" "$_Dbg_source_line"
     done
     (( _Dbg_listline > max_line && _Dbg_listline-- ))
     return 0
