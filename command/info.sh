@@ -19,7 +19,7 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add info ''
+_Dbg_help_add info '' 1 
 
 typeset -a _Dbg_info_subcmds
 _Dbg_info_subcmds=( breakpoints display files line program source stack variables )

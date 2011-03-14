@@ -32,7 +32,7 @@ change this setting.
 By default aliases "l>" and "list>" are set to list. In this case and
 more generally when the alias ends in ">", rather than center lines
 around LOC that will be used as the starting point.
-'
+' 1
 
 # l [start|.|-] [cnt] List cnt lines from line start.
 
@@ -87,6 +87,7 @@ _Dbg_do_list() {
     else
 	_Dbg_file_not_read_in "$filename"
     fi
+    _Dbg_last_cmd="$_Dbg_cmd"
     return 0
 }
 

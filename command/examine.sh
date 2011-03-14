@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# examine.sh: Examine debugger command.
+# "Examine" debugger command.
 #
 #   Copyright (C) 2008, 2010, 2011 
 #   Rocky Bernstein <rocky@gnu.org>
@@ -24,7 +24,7 @@ _Dbg_help_add 'examine' \
 
 Single variables and arithmetic expressions do not need leading $ for
 their value is to be substituted. However if neither these, variables
-need $ to have their value substituted."
+need $ to have their value substituted." 1 
 
 function _Dbg_do_examine {
   typeset _Dbg_expr; _Dbg_expr=${@:-"$_Dbg_last_x_args"}
@@ -49,6 +49,7 @@ function _Dbg_do_examine {
     fi
   fi
   _Dbg_last_x_args="$_Dbg_x_args"
+  return 0
 }
 
 _Dbg_alias_add 'x' 'examine'

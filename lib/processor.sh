@@ -201,32 +201,6 @@ _Dbg_onecmd() {
 		 fi
 		 ;;
 	     
-	     # intelligent print of variable, function or expression
-	     examine )
-		 _Dbg_do_examine "$args"
-		 ;;
-	     
-	     # print help command menu
-	     help )
-		 _Dbg_do_help $args ;;
-	     
-	     #  Info subcommands
-	     info )
-		 _Dbg_do_info $args ;;
-	     
-	     # Send signal (kill) to this process
-	     kill )
-		 _Dbg_do_kill $args
-		 _Dbg_last_cmd='kill'
-		 ;;
-	     
-	     # List line.
-	     # print lines in file
-	     list )
-		 _Dbg_do_list $args
-		 _Dbg_last_cmd='list'
-		 ;;
-	     
 	     # single-step ignoring functions
 	     'next+' | 'next-' | 'next' )
 		 _Dbg_do_next "$_Dbg_cmd" $@
