@@ -38,6 +38,18 @@ function _Dbg_help_add {
     return 0
 }
 
+# Add help text $3 for in subcommand $1 under key $2
+# FIXME:
+# function _Dbg_help_add_sub {
+#     add_command=${4:-1}
+#     (($# != 3)) && (($# != 4))  && return 1
+#     eval "_Dbg_command_help_$1[$2]=\"$3\""
+#     if (( add_command )) ; then
+# 	eval "_Dbg_debugger_$1_commands[$2]=\"_Dbg_do_${1}_${2}\""
+#     fi
+#     return 0
+# }
+
 typeset _Dbg_set_cmds="args annotate autoeval autolist basename debugger 
 different inferior-tty linetrace listsize prompt trace-commands width"
 
