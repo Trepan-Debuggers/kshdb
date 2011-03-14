@@ -1,3 +1,17 @@
+Version 0.05
+2011-3-15 Ron Frankel release
+
+- Add an easy way to evaluate the current source line or expression inside
+  the source line (debugger commands "eval" and "eval?")
+- ability to go into a nested shell but keeping existing variables and
+  functions set. (debugger command "shell")
+- show hit counts in breakpoint display
+- Add debugger "display" command
+- Add debugger set/show autolist
+- Make sure we can debug files with a space in the directory path.
+- Many cleanups and some small bugfixes
+- Remove emacs code. Use emacs-dbgr from github instead.
+
 Version 0.04
 2009-10-27 Halala ngosuku lokuzalwa
 
