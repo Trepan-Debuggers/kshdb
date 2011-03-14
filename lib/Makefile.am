@@ -22,6 +22,7 @@ pkgdata_DATA =      	\
 	run.sh    	\
 	save-restore.sh	\
 	set-d-vars.sh   \
+	shell.sh        \
 	sort.sh         \
 	term-highlight.py \
 	tty.sh

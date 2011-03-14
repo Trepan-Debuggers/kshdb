@@ -34,6 +34,6 @@ save_vars() {
 _Dbg_write_saved_vars() {
     typeset param
     for param in "${_Dbg_save_vars[@]}" ; do 
-	typeset -p $param | sed -e 's:declare [^ ]* ::'
+	typeset -p $param | sed -e 's:typeset [^ ]* ::'
     done > $_Dbg_restore_info
 }

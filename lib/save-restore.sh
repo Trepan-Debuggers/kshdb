@@ -69,3 +69,40 @@ function _Dbg_set_to_return_from_debugger {
   _Dbg_restore_user_vars
 }
 
+_Dbg_save_state() {
+  _Dbg_statefile=$(_Dbg_tempname statefile)
+  echo '' > $_Dbg_statefile
+  _Dbg_save_breakpoints
+  _Dbg_save_actions
+  _Dbg_save_watchpoints
+  _Dbg_save_display
+  _Dbg_save_Dbg_set
+  echo "unset DBG_RESTART_FILE" >> $_Dbg_statefile
+  echo "rm $_Dbg_statefile" >> $_Dbg_statefile
+  export DBG_RESTART_FILE="$_Dbg_statefile"
+  _Dbg_write_journal "export DBG_RESTART_FILE=\"$_Dbg_statefile\""
+}
+
+_Dbg_save_Dbg_set() {
+  declare -p _Dbg_set_basename     >> $_Dbg_statefile
+  declare -p _Dbg_debug_debugger   >> $_Dbg_statefile
+  declare -p _Dbg_edit             >> $_Dbg_statefile
+  declare -p _Dbg_set_listsize     >> $_Dbg_statefile
+  declare -p _Dbg_prompt_str       >> $_Dbg_statefile
+  declare -p _Dbg_set_show_command >> $_Dbg_statefile
+}
+
+_Dbg_restore_state() {
+  typeset statefile=$1
+  . $1
+}
+
+# Things we do when coming back from a nested shell.
+# "shell", and "debug" create nested shells.
+_Dbg_restore_from_nested_shell() {
+    rm -f $_Dbg_shell_temp_profile 2>&1 >/dev/null
+    if [[ -r $_Dbg_restore_info ]] ; then
+	. $_Dbg_restore_info
+	rm $_Dbg_restore_info
+    fi
+}

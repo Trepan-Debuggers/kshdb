@@ -21,6 +21,7 @@ pkgdata_DATA =       \
 	quit.sh      \
 	run.sh       \
 	set.sh       \
+	shell.sh     \
 	show.sh      \
 	source.sh    \
 	stepping.sh  \
