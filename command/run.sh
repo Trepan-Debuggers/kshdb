@@ -1,54 +1,56 @@
 # -*- shell-script -*-
-# run command.
+# gdb-like "restart" debugger command
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein  rocky@gnu.org
+#   Copyright (C) 2002, 2003, 2004, 2006, 2008, 2009, 2010 Rocky Bernstein 
+#   <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 # Restart script in same way with saved arguments (probably the same
 # ones as we were given before).
 
 _Dbg_help_add run \
-'run [args] -- Attempt to restart the program.'
+'run [args] -- Attempt to restart the program.' 1
 
 _Dbg_do_run() {
 
-  typeset script_args
-  typeset exec_cmd_prefix
-  if (( $# == 0 )) ; then 
-      script_args=$(printf "%q " "${_Dbg_script_args[@]}")
-  else
-      script_args=$(printf "%q " "$@")
-  fi
-
-  typeset exec_cmd_prefix="$_Dbg_orig_0"
-  if (( !_Dbg_script )); then
+    typeset script_args
+    typeset exec_cmd_prefix
+    if (( $# == 0 )) ; then 
+	script_args=$(printf "%q " "${_Dbg_script_args[@]}")
+    else
+	script_args=$(printf "%q " "$@")
+    fi
+    
+    typeset exec_cmd_prefix="$_Dbg_orig_0"
+    if (( !_Dbg_script )); then
 #     if [[ $_cur_source_file == $_Dbg_bogus_file ]] ; then
 #       script_args="--debugger -c \"$SH_EXECUTION_STRING\""
 #       exec_cmd="$SH_RUN_CMDLINE --debugger -c \"$SH_EXECUTION_STRING\"";
 #     else
 #       exec_cmd="$SH_RUN_CMDLINE --debugger $_Dbg_orig_0 $script_args";
 #     fi
-      :
-  fi
+	:
+    fi
 
-  if (( _Dbg_set_basename )) ; then 
-    _Dbg_msg "Restarting with: $script_args"
-  else
-    _Dbg_msg "Restarting with: $exec_cmd_prefix $script_args"
-  fi
+    if (( _Dbg_set_basename )) ; then 
+	_Dbg_msg "Restarting with: $script_args"
+    else
+	_Dbg_msg "Restarting with: $exec_cmd_prefix $script_args"
+    fi
 
 #   # If we are in a subshell we need to get out of those levels
 #   # first before we restart. The strategy is to write into persistent
@@ -61,10 +63,10 @@ _Dbg_do_run() {
 #   fi
 #   _Dbg_save_state
 
-  cd $_Dbg_init_cwd
-  
-  _Dbg_cleanup
-  eval "exec $exec_cmd_prefix $script_args"
+    cd $_Dbg_init_cwd
+    
+    _Dbg_cleanup
+    eval "exec $exec_cmd_prefix $script_args"
 }
 
 _Dbg_alias_add R run

@@ -23,7 +23,7 @@
 # but the command is different.
 typeset _Dbg_show_command="auto"
 
-_Dbg_help_add show ''  # Help routine is elsewhere
+_Dbg_help_add show '' 1 # Help routine is elsewhere
 
 # Load in "show" subcommands
 for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do 

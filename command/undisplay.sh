@@ -29,7 +29,7 @@ Examples:
     undisplay 0     # Removes display statement 0
     undisplay 0 3 4 # Removes display statements 0, 3, and 4
 
-See also 'display' and 'info display'."
+See also 'display' and 'info display'." 1
 
 _Dbg_do_undisplay() {
     typeset -i del

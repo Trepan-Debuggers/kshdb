@@ -207,34 +207,10 @@ _Dbg_onecmd() {
 		 return $?
 		 ;;
 	     
-	     # quit
-	     quit )
-		 _Dbg_last_cmd='quit'
-		 _Dbg_do_quit $@
-		 ;;
-	     
 	     # skip N times (default 1)
 	     sk | ski | skip )
 		 _Dbg_last_cmd='skip'
 		 _Dbg_do_skip $@ && return 2
-		 ;;
-	     
-	     # Run a debugger command file
-	     source )
-		 _Dbg_last_cmd='source'
-		 _Dbg_do_source $@
-		 ;;
-	     
-	     # restart debug session.
-	     run )
-		 _Dbg_last_cmd='run'
-		 _Dbg_do_run $args
-		 ;;
-	     
-	     # Command to set debugger options
-	     set )
-		 _Dbg_do_set $args
-		 _Dbg_last_cmd='set'
 		 ;;
 	     
 	     # Command to show debugger settings
@@ -243,11 +219,6 @@ _Dbg_onecmd() {
 		 _Dbg_last_cmd='show'
 		 ;;
 	     
-	     # Run a debugger command file
-	     source )
-		 _Dbg_last_cmd='source'
-		 _Dbg_do_source $@
-		 ;;
 	     
 	     # single-step 
 	     'step+' | 'step-' | 'step' )
@@ -258,12 +229,6 @@ _Dbg_onecmd() {
 	     # Trace a function
 	     trace )
 		 _Dbg_do_trace_fn $args 
-		 ;;
-	     
-	     # Disable breakpoints
-	     undisplay )
-		 _Dbg_do_undisplay $args
-		 _Dbg_last_cmd='undisplay'
 		 ;;
 	     
 	     # 	# Remove a function trace
