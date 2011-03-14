@@ -17,7 +17,7 @@
 
 AUTOMAKE_OPTIONS = dist-bzip2
 
-SUBDIRS = command data lib data doc test
+SUBDIRS = command data lib doc test
 
 pkgdata_DATA =       \
 	dbg-pre.sh   \
