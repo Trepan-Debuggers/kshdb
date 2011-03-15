@@ -96,6 +96,8 @@ _Dbg_eval_extract_condition()
 	extracted="echo ${.sh.match[1]}"
     elif [[ $orig =~ ${_Dbg_eval_re[2]} ]] ; then
 	extracted=${.sh.match[1]}
+    else
+	extracted=$orig
     fi
 }
 

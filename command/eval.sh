@@ -59,26 +59,20 @@ _Dbg_do_eval() {
     if (( $# == 0 )) ; then
 	# FIXME: add parameter to get unhighlighted line, or 
 	# always save a copy of that in _Dbg_sget_source_line
-	typeset source_line_save="$_Dbg_source_line"
-	typeset highlight_save=$_Dbg_set_highlight
-	_Dbg_set_highlight=0
-	_Dbg_get_source_line
-	
+	typeset source_line
+	source_line=${.sh.command}	
+
 	# Were we called via ? as the suffix? 
 	typeset suffix
 	suffix=${_Dbg_orig_cmd:${#_Dbg_orig_cmd}-1:1}
 	if [[ '?' == "$suffix" ]] ; then
 	    typeset extracted
-	    _Dbg_eval_extract_condition "$_Dbg_source_line"
-	    _Dbg_source_line="$extracted"
-	    source_line_save="$extracted"
+	    _Dbg_eval_extract_condition "$source_line"
+	    source_line="$extracted"
 	fi
 	
-	print "$_Dbg_source_line" >> $_Dbg_evalfile
-	# _Dbg_msg "eval: ${source_line_save}"
-	# _Dbg_source_line="$source_line_save"
-	_Dbg_msg "eval: ${_Dbg_source_line}"
-	_Dbg_set_highlight=$_Dbg_highlight_save
+	print "$source_line" >> $_Dbg_evalfile
+	_Dbg_msg "eval: ${source_line}"
     else
 	print "$@" >> $_Dbg_evalfile
     fi
