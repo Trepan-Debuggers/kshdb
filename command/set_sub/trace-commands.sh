@@ -1,4 +1,7 @@
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+# -*- shell-script -*-
+# "set tracecommands" debugger command
+#
+#   Copyright (C) 2010 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -15,41 +18,22 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-AUTOMAKE_OPTIONS = dist-bzip2
+# Sets whether or not to display command before executing it.
+typeset _Dbg_set_trace_commands='off'
 
-SUBDIRS = command data lib doc test
-
-pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
-	dbg-main.sh  \
-	dbg-opts.sh  \
-	dbg-trace.sh \
-	getopts_long.sh
-
-# Set up the install target. Can't figure out how to use @PACKAGE@
-bin_SCRIPTS = kshdb
-
-MOSTLYCLEANFILES = *.orig *.rej
-
-EXTRA_DIST = $(pkgdata_DATA) THANKS
-
-# Unit testing
-check-unit: test-unit
-
-test-unit:
-	cd test/unit && make check
-
-test-integration:
-	cd test/integration && make check
-
-MAINTAINERCLEANFILES = ChangeLog
-
-if MAINTAINER_MODE
-
-ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL) > $@
-
-ACLOCAL_AMFLAGS=-I .
-
-endif
+_Dbg_do_set_trace_commands() {
+    case "$1" in 
+	1 )
+	    _Dbg_write_journal_eval "_Dbg_set_trace_commands=on"
+	    ;;
+	0 )
+	    _Dbg_write_journal_eval "_Dbg_set_trace_commands=off"
+	    ;;
+	on | off )
+	    _Dbg_write_journal_eval "_Dbg_set_trace_commands=$1"
+	    ;;
+	* )
+	    _Dbg_msg "\"on\", \"off\" expected."
+    esac
+    return 0
+}

@@ -1,4 +1,7 @@
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+# -*- shell-script -*-
+# "set autolist" debugger command
+#
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -15,41 +18,23 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-AUTOMAKE_OPTIONS = dist-bzip2
+_Dbg_help_add_sub set autolist \
+'Run list command automatically every time the debugger enters' 1
 
-SUBDIRS = command data lib doc test
-
-pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
-	dbg-main.sh  \
-	dbg-opts.sh  \
-	dbg-trace.sh \
-	getopts_long.sh
-
-# Set up the install target. Can't figure out how to use @PACKAGE@
-bin_SCRIPTS = kshdb
-
-MOSTLYCLEANFILES = *.orig *.rej
-
-EXTRA_DIST = $(pkgdata_DATA) THANKS
-
-# Unit testing
-check-unit: test-unit
-
-test-unit:
-	cd test/unit && make check
-
-test-integration:
-	cd test/integration && make check
-
-MAINTAINERCLEANFILES = ChangeLog
-
-if MAINTAINER_MODE
-
-ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL) > $@
-
-ACLOCAL_AMFLAGS=-I .
-
-endif
+_Dbg_do_set_autolist() {
+    typeset onoff=${1:-'off'}
+    case $onoff in 
+	on | 1 ) 
+	    _Dbg_write_journal_eval "_Dbg_cmdloop_hooks[list]=_Dbg_do_list"
+	    ;;
+	off | 0 )
+	    _Dbg_write_journal_eval "unset '_Dbg_cmdloop_hooks[list]'"
+	    unset '_Dbg_cmdloop_hooks[\"list\"]'
+	    ;;
+	* )
+	    _Dbg_errmsg "\"on\" or \"off\" expected."
+	    return 1
+    esac
+    _Dbg_do_show 'autolist'
+    return 0
+}

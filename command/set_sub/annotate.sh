@@ -1,4 +1,7 @@
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+# -*- shell-script -*-
+# "set annotate" debugger command
+#
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -15,41 +18,22 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-AUTOMAKE_OPTIONS = dist-bzip2
+_Dbg_help_add_sub set annotate \
+'Set annotation level.
+0 == normal;     1 == fullname (for use when running under emacs).' 1
 
-SUBDIRS = command data lib doc test
-
-pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
-	dbg-main.sh  \
-	dbg-opts.sh  \
-	dbg-trace.sh \
-	getopts_long.sh
-
-# Set up the install target. Can't figure out how to use @PACKAGE@
-bin_SCRIPTS = kshdb
-
-MOSTLYCLEANFILES = *.orig *.rej
-
-EXTRA_DIST = $(pkgdata_DATA) THANKS
-
-# Unit testing
-check-unit: test-unit
-
-test-unit:
-	cd test/unit && make check
-
-test-integration:
-	cd test/integration && make check
-
-MAINTAINERCLEANFILES = ChangeLog
-
-if MAINTAINER_MODE
-
-ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL) > $@
-
-ACLOCAL_AMFLAGS=-I .
-
-endif
+_Dbg_do_set_annotate() {
+    if (( $# != 1 )) ; then
+	_Dbg_msg "A single argument is required (got $# arguments)."
+    elif [[ $1 == [0-9]* ]] ; then 
+	if (( $1 > 3 )) ; then
+	    _Dbg_msg "Annotation level must be between 0 and 3. Got: ${1}."
+	else
+	    _Dbg_write_journal_eval "_Dbg_set_annotate=$1"
+	fi
+    else
+	_Dbg_msg "Integer argument expected; got: $1"
+	return 1
+    fi
+    return 0
+}

@@ -1,4 +1,7 @@
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+# -*- shell-script -*-
+# "set listsize" debugger command
+#
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -15,41 +18,18 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-AUTOMAKE_OPTIONS = dist-bzip2
+_Dbg_help_add_sub set listsize \
+'number of source lines debugger will list by default' 1
 
-SUBDIRS = command data lib doc test
+# How many lines in a "list" command?
+typeset -i _Dbg_set_listsize=10    
 
-pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
-	dbg-main.sh  \
-	dbg-opts.sh  \
-	dbg-trace.sh \
-	getopts_long.sh
-
-# Set up the install target. Can't figure out how to use @PACKAGE@
-bin_SCRIPTS = kshdb
-
-MOSTLYCLEANFILES = *.orig *.rej
-
-EXTRA_DIST = $(pkgdata_DATA) THANKS
-
-# Unit testing
-check-unit: test-unit
-
-test-unit:
-	cd test/unit && make check
-
-test-integration:
-	cd test/integration && make check
-
-MAINTAINERCLEANFILES = ChangeLog
-
-if MAINTAINER_MODE
-
-ChangeLog:
-	git log --pretty --numstat --summary | $(GIT2CL) > $@
-
-ACLOCAL_AMFLAGS=-I .
-
-endif
+_Dbg_do_set_listsize() {
+    if [[ $1 == [0-9]* ]] ; then 
+	_Dbg_write_journal_eval "_Dbg_set_listsize=$1"
+    else
+	_Dbg_errmsg "Integer argument expected; got: $1"
+	return 1
+    fi
+    return 0
+}

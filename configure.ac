@@ -70,6 +70,7 @@ AC_PATH_PROG(RM, rm, true)
 AC_CONFIG_FILES([ \
 	Makefile \
 	command/info_sub/Makefile \
+	command/set_sub/Makefile \
 	command/show_sub/Makefile \
 	command/Makefile \
 	data/Makefile \

@@ -60,7 +60,7 @@ _Dbg_do_show() {
       an | ann | anno | annot | annota | annotat | annotate )
 	  [[ -n $label ]] && label='annotate: '
 	  _Dbg_msg \
-	      "${label}Annotation_level is $_Dbg_annotate."
+	      "${label}Annotation_level is $_Dbg_set_annotate."
 	  return 0
 	  ;;
       autoe | autoev | autoeva | autoeval )
@@ -164,7 +164,7 @@ _Dbg_do_show() {
 	  [[ -n $label ]] && label='trace-commands: '
 	  _Dbg_msg \
 	      "${label}State of command tracing is" \
-	      "$_Dbg_trace_commands."
+	      "$_Dbg_set_trace_commands."
 	  return 0
 	  ;;
       v | ve | ver | vers | versi | versio | version )
