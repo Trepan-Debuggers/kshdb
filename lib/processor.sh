@@ -149,7 +149,7 @@ _Dbg_onecmd() {
      fi
      
      # If "set trace-commands" is "on", echo the the command
-     if [[  $_Dbg_trace_commands == 'on' ]]  ; then
+     if [[  $_Dbg_set_trace_commands == 'on' ]]  ; then
 	 _Dbg_msg "+$_Dbg_cmd $args"
      fi
      
@@ -266,7 +266,7 @@ _Dbg_onecmd() {
 }
 
 _Dbg_preloop() {
-    if ((_Dbg_annotate)) ; then
+    if ((_Dbg_set_annotate)) ; then
 	_Dbg_annotation 'breakpoints' _Dbg_do_info breakpoints
 	# _Dbg_annotation 'locals'      _Dbg_do_backtrace 3 
 	_Dbg_annotation 'stack'       _Dbg_do_backtrace 3 
@@ -274,7 +274,7 @@ _Dbg_preloop() {
 }
 
 _Dbg_postcmd() {
-    if ((_Dbg_annotate)) ; then
+    if ((_Dbg_set_annotate)) ; then
 	case $_Dbg_last_cmd in
             break | tbreak | disable | enable | condition | clear | delete ) 
 		_Dbg_annotation 'breakpoints' _Dbg_do_info breakpoints

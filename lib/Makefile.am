@@ -23,6 +23,7 @@ pkgdata_DATA =      	\
 	save-restore.sh	\
 	setshow.sh      \
 	set-d-vars.sh   \
+	setshow.sh      \
 	shell.sh        \
 	sort.sh         \
 	term-highlight.py \
