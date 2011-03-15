@@ -1,21 +1,22 @@
 # -*- shell-script -*-
-# dbg-opts.sh - kshdb command options processing. The bane of programming.
+# debugger command options processing. The bane of programming.
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 _Dbg_usage() {
   printf "Usage: 
@@ -51,7 +52,7 @@ _Dbg_show_version() {
 }
 
 # Script arguments before adulteration by _Dbg_parse_opts
-typeset -a _Dbg_orig_script_args
+typeset -xa _Dbg_orig_script_args
 
 # The 'eval' is used below to preserve embedded spaces which might
 # occur for example in $@. Short of using a loop I'm not sure of an
@@ -61,7 +62,7 @@ eval "_Dbg_orig_script_args=(\"\$@\")"
 
 # The following globals are set by _Dbg_parse_opts. Any values set are 
 # the default values.
-typeset -a _Dbg_script_args
+typeset -xa _Dbg_script_args
 
 # Use gdb-style annotate?
 typeset -i _Dbg_set_annotate=0
@@ -137,7 +138,7 @@ _Dbg_parse_options() {
     elif (( ! _Dbg_o_quiet )); then 
 	echo "$_Dbg_shell_name Shell Debugger, release $_Dbg_release"
 	printf '
-Copyright 2008, 2009, 2010 Rocky Bernstein
+Copyright 2008, 2009, 2010, 2011 Rocky Bernstein
 This is free software, covered by the GNU General Public License, and you are
 welcome to change it and/or distribute copies of it under certain conditions.
 

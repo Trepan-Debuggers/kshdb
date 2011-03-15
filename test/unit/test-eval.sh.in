@@ -7,9 +7,11 @@ test_eval_subst()
     typeset extracted
     typeset -a texts
     texts=(
-	'if (( x == 0 )); then'
-	'if (( y == 0 )) ; then'
-	'if (( z == 1 ))'
+	'if (( x == 1 )); then'
+	'if (( y == 2 )) ; then'
+	'if (( y == 3 )) ;'
+	'if (( y == 4 ))'
+	'if (( z == 5 ))   '
 	'return something'
 	'elif [[ $x = test1 ]] && [ $? -eq 0 ] ; then'
 	'while [[ $x = test2 ]] && [ $? -eq 0 ] ; do'
@@ -17,18 +19,20 @@ test_eval_subst()
     )
     
     expected=(
-	'(( x == 0 ))'
-	'(( y == 0 )) '
-	'(( z == 1 ))'
+	'(( x == 1 ))'
+	'(( y == 2 )) '
+	'(( y == 3 )) '
+	'(( y == 4 ))'
+	'(( z == 5 ))   '
 	'echo something'
 	'[[ $x = test1 ]] && [ $? -eq 0 ] '
 	'[[ $x = test2 ]] && [ $? -eq 0 ] '
 	'[[ $x = test3 ]] && [ $? -eq 0 ]'
     )
     typeset -i i
-    for (( i=0 ; i<${#expected}; i++ )) ; do
+    for (( i=0 ; i<${#expected[@]}; i++ )) ; do
 	_Dbg_eval_extract_condition "${texts[i]}"
-	assertEquals "$extracted" "${expected[i]}"
+	assertEquals "${expected[i]}" "$extracted"
     done
 }
 
