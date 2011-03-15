@@ -136,7 +136,7 @@ _Dbg_parse_options() {
 	_Dbg_do_show_version
 	exit 0
     elif (( ! _Dbg_o_quiet )); then 
-	echo "$_Dbg_shell_name Shell Debugger, release $_Dbg_release"
+	echo "$_Dbg_shell_name debugger, $_Dbg_debugger_name, release $_Dbg_release"
 	printf '
 Copyright 2008, 2009, 2010, 2011 Rocky Bernstein
 This is free software, covered by the GNU General Public License, and you are
