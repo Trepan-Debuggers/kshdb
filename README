@@ -62,7 +62,6 @@ help from ksh.
   display expressions, signal handling, 
   debugger commands:
      debug
-     condition
      file
      handle
      history
