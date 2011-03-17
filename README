@@ -11,25 +11,7 @@ number of the .sh variables like .sh.level and .sh.file.
 
 1. SETUP
 
-To get the code, install git and run in a ksh shell:
-
-  git-clone git://github.com/rocky/kshdb.git
-  cd kshdb
-  ./autogen.sh  # Add configure options. See ./configure --help 
-
-If you've got a suitable ksh93t installed, then
-  make && make test
-
-To try on a real program such as perhaps /etc/profile:
-  ./kshdb /etc/profile # substitute /etc/profile with your favorite ksh script
-
-If you are happy and "make test" above worked, install via:
-  sudo make install
-
-and uninstall with 
-  sudo make uninstall # ;-)
-
-See INSTALL for generic configure installation instructions.
+See https://github.com/rocky/kshdb/wiki/How-to-install for how to install this code. 
 
 2. WHAT'S HERE, WHAT'S NOT and WHY NOT
 
