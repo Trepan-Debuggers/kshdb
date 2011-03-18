@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -26,7 +26,7 @@ typeset _Dbg_show_command="auto"
 _Dbg_help_add show '' 1 # Help routine is elsewhere
 
 # Load in "show" subcommands
-for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do 
+for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do
     source $_Dbg_file
 done
 

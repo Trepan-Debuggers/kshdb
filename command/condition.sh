@@ -46,7 +46,7 @@ function _Dbg_do_condition {
     _Dbg_errmsg "condition: Breakpoint entry $n is not set. Condition not changed."
     return 3
   fi
-  
+
   if [[ -z $condition ]] ; then
     condition=1
     _Dbg_msg "Breakpoint $n now unconditional."

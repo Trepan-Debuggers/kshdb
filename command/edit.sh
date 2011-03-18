@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -45,7 +45,7 @@ _Dbg_do_edit() {
   else
     _Dbg_linespec_setup "$1"
   fi
-  if [[ ! -r $full_filename ]]  ; then 
+  if [[ ! -r $full_filename ]]  ; then
       _Dbg_errmsg "File $full_filename is not readable"
       return 2
   fi

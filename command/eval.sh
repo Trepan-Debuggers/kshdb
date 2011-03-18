@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -22,14 +22,14 @@
 typeset _Dbg_evalfile=$(_Dbg_tempname eval)
 
 _Dbg_help_add eval \
-'eval CMD 
-eval 
+'eval CMD
+eval
 eval?
 
 In the first form CMD is a string CMD is a string sent to special
-shell builtin eval. 
+shell builtin eval.
 
-In the second form, use evaluate the current source line text. 
+In the second form, use evaluate the current source line text.
 
 Often one is stopped at the line of the first part of an "if", "elif",
 "case", "return" or "while" compound statement and what you want to

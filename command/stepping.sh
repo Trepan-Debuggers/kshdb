@@ -69,7 +69,7 @@ stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
 In contrast to \"next\", functions and source\'d files are stepped
-into. 
+into.
 
 See also \"next\", \"skip\", \"step-\" \"step+\", and \"set force\"."
 
@@ -85,7 +85,7 @@ _Dbg_help_add 'step-' \
 "step- -- Single step a statement without the \`step force' setting.
 
 Set step force may have been set on. step- ensures we turn that off for
-this command. 
+this command.
 
 See also \"step\" and \"set force\"."
 
@@ -131,7 +131,7 @@ stopping. Otherwise COUNT is one. COUNT an be an arithmetic
 expression.
 
 In contrast to \"step\", functions and source\'d files are not stepped
-into. 
+into.
 
 See also \"step\" \"skip\", \"next-\" \"next+\", and \"set force\"."
 
@@ -147,7 +147,7 @@ _Dbg_help_add 'next-' \
 "next- -- Next stepping a statement without the \`set force' setting.
 
 Set step force may have been set on. step- ensures we turn that off for
-this command. 
+this command.
 
 See also \"next+\", \"next\" and \"set force\"."
 

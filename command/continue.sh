@@ -30,7 +30,7 @@ function _Dbg_do_continue {
   typeset filename
   typeset -i line_number
   typeset full_filename
-  
+
   if [[ $1 == '-' ]] ; then
       _Dbg_restore_debug_trap=0
       return 0

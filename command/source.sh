@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # gdb-like "source" command.
 #
-#   Copyright (C) 2002, 2003, 2004, 2006, 2008, 2010 
+#   Copyright (C) 2002, 2003, 2004, 2006, 2008, 2010
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -13,7 +13,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
