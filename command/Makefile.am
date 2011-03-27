@@ -1,5 +1,7 @@
 SUBDIRS = info_sub set_sub show_sub
 
+MOSTLYCLEANFILES = *.orig *.rej
+
 pkgdatadir        = ${datadir}/@PACKAGE@/command
 pkgdata_DATA =       \
 	alias.sh     \
