@@ -336,3 +336,4 @@ Evaluate unrecognized commands is off.
 +xx=1 ; typeset -p xx
 Undefined command "xx=1". Try "help".
 +quit 
+kshdb: That's all, folks...

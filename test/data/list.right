@@ -154,3 +154,4 @@ Number of source lines kshdb will list by default is 4.
 +#<-This comment doesn't have a space after
 +#the initial `#'
 +quit 
+kshdb: That's all, folks...

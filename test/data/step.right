@@ -54,3 +54,4 @@ print 3rd loop 0
 (stepping.sh:8):
 (( i=0 ))
 +quit 
+kshdb: That's all, folks...

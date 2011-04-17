@@ -9,3 +9,4 @@ PS4=foo
 +print "+$IFS+"
 +.+
 +quit 
+kshdb: That's all, folks...

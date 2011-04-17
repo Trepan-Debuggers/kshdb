@@ -64,6 +64,7 @@ function _Dbg_do_quit {
 	    _Dbg_save_state
 	    exec $_Dbg_RESTART_COMMAND
 	fi
+        _Dbg_msg "${_Dbg_debugger_name}: That's all, folks..."
 	_Dbg_cleanup
 
     fi

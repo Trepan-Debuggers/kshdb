@@ -71,3 +71,4 @@ Breakpoint 4 hit.
 +where 1
 ->0 in file `stepping.sh' at line 7
 +quit 
+kshdb: That's all, folks...

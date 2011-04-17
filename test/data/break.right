@@ -7,3 +7,4 @@ Show stepping forces a new line is on.
 +break 
 Breakpoint 1 set in file stepping.sh, line 3.
 +quit 
+kshdb: That's all, folks...
