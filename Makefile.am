@@ -17,13 +17,10 @@
 
 AUTOMAKE_OPTIONS = dist-bzip2
 
-SUBDIRS = command data lib doc test
+SUBDIRS = command data init lib doc test
 
 pkgdata_DATA =       \
-	dbg-pre.sh   \
-	dbg-io.sh    \
 	dbg-main.sh  \
-	dbg-opts.sh  \
 	dbg-trace.sh \
 	getopts_long.sh
 

@@ -95,7 +95,7 @@ _Dbg_tempname() {
 }
 
 # Process command-line options
-. ${_Dbg_libdir}/dbg-opts.sh
+. ${_Dbg_libdir}/init/opts.sh
 OPTLIND=1
 _Dbg_parse_options "$@"
 

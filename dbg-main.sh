@@ -16,9 +16,11 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-# Stuff common to kshdb and dbg-trace. Include the rest of options
-# processing. Also includes things which have to come before other includes
-. ${_Dbg_libdir}/dbg-pre.sh
+# Code that specifically has to come first.
+# Note: "init" comes first and "cmds" has to come after "io".
+for _Dbg_file in pre io ; do 
+    source ${_Dbg_libdir}/init/${_Dbg_file}.sh
+done
 
 # All debugger lib code has to come before debugger command code.
 typeset _Dbg_file

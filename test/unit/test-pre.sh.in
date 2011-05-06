@@ -32,7 +32,7 @@ test_do_show_version()
 # load shunit2
 top_srcdir=@top_srcdir@
 _Dbg_libdir=@top_srcdir@
-. ${top_srcdir}/dbg-pre.sh
+. ${top_srcdir}/init/pre.sh
 
 # load shunit2
 srcdir=@srcdir@

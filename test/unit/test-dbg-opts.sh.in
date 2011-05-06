@@ -24,7 +24,7 @@ do_opts_test() {
     # typeset -p expected_eval
     # typeset -p expected_value
 
-    . ${abs_top_srcdir}/dbg-opts.sh
+    . ${abs_top_srcdir}/init/opts.sh
     OPTLIND=1
     _Dbg_parse_options "$@"
     assertEquals "$assert_msg" "$expected_value" "$(eval $expected_eval)"

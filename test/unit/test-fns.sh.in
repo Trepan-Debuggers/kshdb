@@ -115,7 +115,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 
 _Dbg_libdir=$abs_top_srcdir
 set -- -q  # Don't need to show banner
-. $abs_top_srcdir/dbg-pre.sh
+. $abs_top_srcdir/init/pre.sh
 . $abs_top_srcdir/lib/msg.sh
 . $abs_top_srcdir/lib/fns.sh
 . $abs_top_srcdir/lib/frame.sh

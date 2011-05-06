@@ -70,15 +70,16 @@ AC_PATH_PROG(RM, rm, true)
 
 AC_CONFIG_FILES([ \
 	Makefile \
+        command/Makefile          \
         command/info_sub/Makefile \
         command/set_sub/Makefile  \
         command/show_sub/Makefile \
-	command/Makefile \
-	data/Makefile \
-	doc/Makefile \
-	dbg-trace.sh \
-	lib/Makefile \
-	test/Makefile \
+        data/Makefile             \
+        doc/Makefile              \
+	dbg-trace.sh 		  \
+        init/Makefile             \
+        lib/Makefile              \
+        test/Makefile             \
         test/data/Makefile        \
         test/example/Makefile     \
 	test/integration/Makefile \
