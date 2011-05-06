@@ -3,6 +3,7 @@
 /Makefile.in
 /test-alias.sh
 /test-break.sh
+/test-cmd-complete.sh
 /test-columns.sh
 /test-dbg-opts.sh
 /test-eval.sh
@@ -14,6 +15,7 @@
 /test-get-sourceline.sh
 /test-io.sh
 /test-journal.sh
+/test-lib-complete.sh
 /test-msg.sh
 /test-pre.sh
 /test-run.sh

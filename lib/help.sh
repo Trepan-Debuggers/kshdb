@@ -52,20 +52,20 @@ function _Dbg_help_add_sub {
     return 0
 }
 
-typeset _Dbg_set_cmds="args annotate autoeval autolist basename debugger 
-different inferior-tty linetrace listsize prompt trace-commands width"
-
 _Dbg_help_set() {
 
+    typeset subcmd
     if (( $# == 0 )) ; then 
-	typeset thing
-	for thing in $_Dbg_set_cmds ; do 
-	    _Dbg_help_set $thing 1
+        typeset -a list
+        list=("${!_Dbg_command_help_show[@]}")
+        sort_list 0 ${#list[@]}-1
+	for subcmd in $list ; do 
+	    _Dbg_help_set $subcmd 1
 	done
 	return 0
     fi
     
-    typeset subcmd="$1"
+    subcmd="$1"
     typeset label="$2"
     
     if [[ -n "${_Dbg_command_help_set[$subcmd]}" ]] ; then 
@@ -163,9 +163,6 @@ Follow this command with any number of args, to be passed to the program."
 		"There is no \"set $subcmd\" command."
     esac
 }
-
-typeset _Dbg_show_cmds="aliases annotate args autoeval autolist basename commands 
-copying directories debugger force linetrace listsize prompt trace-commands warranty"
 
 _Dbg_help_show() {
     typeset show_cmd=$1

@@ -20,7 +20,7 @@ AC_SUBST(DIFF_OPTS)
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
 AC_ARG_WITH(POSIXSHELL, AC_HELP_STRING([--with-POSIXSHELL], 
-		  [location of POSIXSHELL program]), SH_PROG=$withval)
+                  [location of POSIXSHELL program]), SH_PROG=$withval)
 
 if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
 then
@@ -50,8 +50,8 @@ if test "$DIFF" = no ; then
 else 
    dnl Try for GNU diff options.
   # MSDOG output uses \r\n rather than \n in tests
-  for diff_opt in -w --unified ; do 
-    if $DIFF $diff_opt . . > /dev/null 2>&1; then
+  for diff_opt in -w --unified -b ; do 
+    if $DIFF $diff_opt $0 $0 > /dev/null 2>&1; then
       AC_MSG_RESULT([adding $diff_opt to diff in regression tests])
       DIFF_OPTS="$DIFF_OPTS $diff_opt"
     fi
@@ -70,20 +70,20 @@ AC_PATH_PROG(RM, rm, true)
 
 AC_CONFIG_FILES([ \
 	Makefile \
-	command/info_sub/Makefile \
-	command/set_sub/Makefile \
-	command/show_sub/Makefile \
+        command/info_sub/Makefile \
+        command/set_sub/Makefile  \
+        command/show_sub/Makefile \
 	command/Makefile \
 	data/Makefile \
 	doc/Makefile \
 	dbg-trace.sh \
 	lib/Makefile \
 	test/Makefile \
-	test/data/Makefile \
-	test/example/Makefile \
+        test/data/Makefile        \
+        test/example/Makefile     \
 	test/integration/Makefile \
 	test/integration/check-common.sh \
-	test/unit/Makefile \
+        test/unit/Makefile        \
 	])
 
 AC_CONFIG_FILES(DEBUGGER, [chmod +x DEBUGGER])
@@ -128,6 +128,10 @@ AC_CONFIG_FILES([test/integration/test-subshell1],
 AC_CONFIG_FILES([test/unit/test-alias.sh], [chmod +x test/unit/test-alias.sh])
 AC_CONFIG_FILES([test/unit/test-break.sh], 
                 [chmod +x test/unit/test-break.sh])
+AC_CONFIG_FILES([test/unit/test-cmd-complete.sh], 
+                [chmod +x test/unit/test-cmd-complete.sh])
+AC_CONFIG_FILES([test/unit/test-lib-complete.sh], 
+                [chmod +x test/unit/test-lib-complete.sh])
 AC_CONFIG_FILES([test/unit/test-columns.sh], 
                 [chmod +x test/unit/test-columns.sh])
 AC_CONFIG_FILES([test/unit/test-dbg-opts.sh], 

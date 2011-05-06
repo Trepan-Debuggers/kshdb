@@ -20,6 +20,20 @@
 
 typeset -a _Dbg_matches; _Dbg_matches=()
 
+compgen_opt_words() {
+    typeset -a words
+    words=( $1 )
+    typeset find
+    find=$2
+    typeset try
+    for try in ${words[@]} ; do 
+	if [[ $try =~ "^$find" ]] ; then 
+	    COMPREPLY+=( $try )
+	fi
+    done
+    COMPREPLY=( "${COMPREPLY[@]}" )
+}
+
 # Print a list of completions in global variable _Dbg_matches 
 # for 'subcmd' that start with 'text'.
 # We get the list of completions from _Dbg._*subcmd*_cmds.
@@ -80,7 +94,8 @@ _Dbg_complete_level0() {
     # echo "level 0 called with comp_line: $COMP_LINE , comp_point: $COMP_POINT"
     if (( COMP_POINT >  0)) ; then 
 	typeset commands="${!_Dbg_command_help[@]}"
-	COMPREPLY=( $(compgen -W  "$commands" "$COMP_LINE") )
+	compgen_opt_words "$commands" "$COMP_LINE"
+	COMPREPLY=( $() )
     else
 	COMPREPLY=( ${!_Dbg_command_help[@]} )
     fi
@@ -89,6 +104,13 @@ _Dbg_complete_level0() {
 _Dbg_complete_level_0_init() {
     complete -D -F _Dbg_complete_level0
 }
+
+# Demo it
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    typeset -a COMPREPLY
+    compgen_opt_words "aa aab ac b a" "aa"
+    typeset -p COMPREPLY
+fi
 
 #;;; Local Variables: ***
 #;;; mode:shell-script ***
