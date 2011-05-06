@@ -11,13 +11,13 @@ _Dbg_msg() {
 
 test_help_set_onoff()
 {
-    typeset -l onoff
+    typeset onoff
     onoff=('off.' 'on.')
-    typeset -l _Dbg_foo
+    typeset -i _Dbg_set_foo
     for i in 0 1 ; do 
-	_Dbg_foo=$i
+	_Dbg_set_foo=$i
 	_Dbg_help_set_onoff "foo" "foo" "Set short xx"
-	assertEquals "set foo  -- set short xx is ${onoff[$i]}" "${msgs[$i]}" 
+	assertEquals "set foo  -- Set short xx is ${onoff[$i]}" "${msgs[$i]}" 
     done
 }
 

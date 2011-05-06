@@ -20,7 +20,7 @@
 # Sets variable _Dbg_$2 to value $1 and then runs _Dbg_do_show $2.
 _Dbg_set_onoff() {
     typeset -l onoff=${1:-'off'}
-    typeset -l cmdname=$2
+    typeset cmdname=$2
     case $onoff in 
 	on | 1 ) 
 	    _Dbg_write_journal_eval "_Dbg_set_${cmdname}=1"
@@ -36,27 +36,46 @@ _Dbg_set_onoff() {
     return 0
 }
 
+_Dbg_show_onoff() {
+    typeset cmd="$1"
+    typeset msg="$2"
+    typeset label="$3"
+    [[ -n $label ]] && label="${cmd}: "
+    typeset onoff='off.'
+    typeset value
+    eval "value=\$_Dbg_set_${cmd}"
+    (( value )) && onoff='on.'
+    _Dbg_msg \
+"${label}$msg is" ${onoff}
+    return 0
+
+}
+
 _Dbg_help_set_onoff() {
-    typeset -l cmd=$1
-    typeset -l label=$2
-    typeset -l msg=$3
-    typeset -l variable_value
+    typeset cmd="$1"
+    typeset label="$2"
+    typeset msg="$3"
+    typeset -i variable_value
     eval_cmd="variable_value=\${_Dbg_set_$cmd}"
     eval $eval_cmd
-    [[ -n $label ]] && label="set $label  -- "
-    typeset -l onoff="off."
-    (( $variable_value != 0 )) && onoff='on.'
+    [[ -n $label ]] && label="set $cmd  -- "
+    typeset onoff="off."
+    (( variable_value != 0 )) && onoff='on.'
     _Dbg_msg \
 	"${label}${msg} is" $onoff
     return 0
 }
 
-# _Dbg_msg() {
-#     print $*
-# }
-
-# for i in 0 1 ; do 
-#     _Dbg_foo=$i
-#     _Dbg_help_set_onoff "foo" "foo" "Set short xx"
-#     typeset -l _Dbg_foo
-# done
+# Demo it
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    _Dbg_msg() {
+	print $*
+    }
+    
+    typeset -i _Dbg_foo
+    for i in 0 1 ; do 
+	_Dbg_set_foo=$i
+	_Dbg_help_set_onoff "foo" "foo" "Set short xx"
+	typeset -p _Dbg_set_foo
+    done
+fi
