@@ -1,9 +1,9 @@
 (stepping.sh:3):
 (( i=0 ))
 +# Make sure autostep is off for next text
-+set force off
++set different off
 Show stepping forces a new line is off.
-+show force
++show different
 Show stepping forces a new line is off.
 +# Test that step+ skips multiple statements
 +step+ 
@@ -12,9 +12,9 @@ Show stepping forces a new line is off.
 1st loop 2
 (stepping.sh:4):
 (( i=0 ))
-+set force on
++set different on
 Show stepping forces a new line is on.
-+show force
++show different
 Show stepping forces a new line is on.
 +# Same thing - skip loop
 +step 
@@ -23,7 +23,7 @@ Show stepping forces a new line is on.
 2nd loop 2
 (stepping.sh:5):
 (( i=0 ))
-+# Override force
++# Override different
 +step- 
 (stepping.sh:5):
 (( i<3 ))

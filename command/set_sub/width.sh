@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set width \
-'Set maximum width of lines' 1
+'set width N
+
+Set maximum width of lines.' 1
 
 typeset -i _Dbg_set_linewidth; _Dbg_set_linewidth=${COLUMNS:-80} 
 

@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# "set listsize" debugger command
+# "show basename" debugger command
 #
 #   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -18,20 +18,18 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set listsize \
-'set listsize N
+_Dbg_help_add_sub show basename \
+'show basename
 
-Set the number of source lines debugger will list by default' 1
+Show whether use short filenames
 
-# How many lines in a "list" command?
-typeset -i _Dbg_set_listsize=10    
+See also \"set basename\".' 1
 
-_Dbg_do_set_listsize() {
-    if [[ $1 == [0-9]* ]] ; then
-        _Dbg_write_journal_eval "_Dbg_set_listsize=$1"
-    else
-        _Dbg_errmsg "Integer argument expected; got: $1"
-        return 1
-    fi
+_Dbg_do_show_basename() {
+    [[ -n $1 ]] && label='basename: '
+    _Dbg_msg \
+	"${label}Show short filenames (the basename) in debug output is" $(_Dbg_onoff $_Dbg_set_basename)
+    typeset onoff="on."
+    [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
     return 0
 }

@@ -19,7 +19,7 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set basename \
-'Set short filenames (the basename) in debug output'
+'Set short filenames (the basename) in debug output.'
 
 _Dbg_do_set_basename() {
     _Dbg_set_onoff "$1" 'basename'

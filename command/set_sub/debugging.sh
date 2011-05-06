@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set debugging \
-'Set debugging the debugger' 1
+'set debugging [on|off]
+
+When set, we allow debugging the debugger.' 1
 
 _Dbg_do_set_debugging() {
     _Dbg_set_onoff "$1" 'debugging'

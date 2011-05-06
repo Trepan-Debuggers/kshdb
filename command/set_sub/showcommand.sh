@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set showcommand \
-'Set showing the command to execute' 1
+'Set showcommand [on|off]
+
+Set showing the command to execute.' 1
 
 # Sets whether or not to display command to be executed in debugger prompt.
 # If yes, always show. If auto, show only if the same line is to be run

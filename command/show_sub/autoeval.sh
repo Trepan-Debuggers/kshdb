@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# "set listsize" debugger command
+# "show autoeval" debugger command
 #
 #   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -18,20 +18,16 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set listsize \
-'set listsize N
+_Dbg_help_add_sub show autoeval \
+'show autoeval
 
-Set the number of source lines debugger will list by default' 1
+Show whether unrecognized commands are automatically evaluated.
 
-# How many lines in a "list" command?
-typeset -i _Dbg_set_listsize=10    
+See also \"set autoeval\".' 1
 
-_Dbg_do_set_listsize() {
-    if [[ $1 == [0-9]* ]] ; then
-        _Dbg_write_journal_eval "_Dbg_set_listsize=$1"
-    else
-        _Dbg_errmsg "Integer argument expected; got: $1"
-        return 1
-    fi
+_Dbg_do_show_autoeval() {
+    [[ -n $1 ]] && label='autoeval: '
+    _Dbg_msg \
+	"${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_set_autoeval)
     return 0
 }

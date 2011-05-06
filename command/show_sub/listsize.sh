@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# "set listsize" debugger command
+# "show listsize" debugger command
 #
 #   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -18,20 +18,17 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set listsize \
-'set listsize N
+_Dbg_help_add_sub show listsize \
+'show listsize
 
-Set the number of source lines debugger will list by default' 1
+Show maximum number of lines in a \"list\" display
 
-# How many lines in a "list" command?
-typeset -i _Dbg_set_listsize=10    
+See also \"set listsize\".' 1
 
-_Dbg_do_set_listsize() {
-    if [[ $1 == [0-9]* ]] ; then
-        _Dbg_write_journal_eval "_Dbg_set_listsize=$1"
-    else
-        _Dbg_errmsg "Integer argument expected; got: $1"
-        return 1
-    fi
+_Dbg_do_show_listsize() {
+    [[ -n $1 ]] && label='listsize: '
+    _Dbg_msg \
+	"${label}Number of source lines ${_Dbg_debugger_name} will list by default is" \
+	"$_Dbg_set_listsize."
     return 0
 }

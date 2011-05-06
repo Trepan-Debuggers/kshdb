@@ -3,9 +3,9 @@ p
 +set basename on
 Show short filenames (the basename) in debug output is on.
 +# Make sure autostep is off for next text
-+set force off
++set different off
 Show stepping forces a new line is off.
-+show force
++show different
 Show stepping forces a new line is off.
 +next 
 0
@@ -40,10 +40,10 @@ x=7
 p
 +where 1
 ->0 in file `nexting.sh' at line 8
-+# Now check with set force on
-+set force on
++# Now check with set different on
++set different on
 Show stepping forces a new line is on.
-+show force
++show different
 Show stepping forces a new line is on.
 +next 
 0
@@ -52,7 +52,7 @@ Show stepping forces a new line is on.
 p
 +where 1
 ->0 in file `nexting.sh' at line 9
-+# Override force
++# Override different
 +next- 
 0
 ===

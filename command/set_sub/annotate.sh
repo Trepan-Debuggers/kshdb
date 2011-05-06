@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set annotate \
-'Set annotation level.
+'Set annotation level [N]
+
+Set the amount of output shown
 0 == normal;     1 == fullname (for use when running under emacs).' 1
 
 _Dbg_do_set_annotate() {

@@ -19,7 +19,10 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set editing \
-'Readline editing of command lines' 1
+'set editing {on|off|emacs|vi}
+
+Readline editing of command lines and edit style.
+' 1
 
 _Dbg_do_set_editing() {
     typeset onoff=${1:-'on'}

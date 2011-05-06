@@ -40,7 +40,7 @@ _Dbg_do_show() {
     (($# >= 1)) && shift
 
     # Warranty, copying, directories, and aliases are omitted below.
-    typeset subcmds='annotate args autoeval autolist basename debugging force listsize prompt trace-commands width'
+    typeset subcmds='annotate args autoeval autolist basename debugging different listsize prompt trace-commands width'
 
     if [[ -z $show_cmd ]] ; then 
 	typeset thing
@@ -54,19 +54,6 @@ _Dbg_do_show() {
     fi
     
     case $show_cmd in 
-	ar | arg | args )
-	  [[ -n $label ]] && label='args:     '
-	  _Dbg_msg \
-	      "${label}Argument list to give script when debugged program starts is:
-	\"${_Dbg_script_args[@]}\"."
-	  return 0
-	  ;;
-	an | ann | anno | annot | annota | annotat | annotate )
-	    [[ -n $label ]] && label='annotate: '
-	    _Dbg_msg \
-		"${label}Annotation_level is $_Dbg_set_annotate."
-	    return 0
-	    ;;
 	autoe | autoev | autoeva | autoeval )
 	    [[ -n $label ]] && label='autoeval: '
 	    _Dbg_msg \
@@ -79,12 +66,6 @@ _Dbg_do_show() {
 	    [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
 	    _Dbg_msg \
 		"${label}Auto run of 'list' command is ${onoff}"
-	    return 0
-	    ;;
-	b | ba | bas | base | basen | basena | basenam | basename )
-	    [[ -n $label ]] && label='basename: '
-	    _Dbg_msg \
-		"${label}Show short filenames (the basename) in debug output is" $(_Dbg_onoff $_Dbg_set_basename)
 	    return 0
 	    ;;
 	com | comm | comma | comman | command | commands )
@@ -101,12 +82,6 @@ _Dbg_do_show() {
 	    done
 	    
 	    _Dbg_msg "Source directories searched: $list"
-	    return 0
-	    ;;
-	force | diff | differ | different )
-	    [[ -n $label ]] && label='different: '
-	    _Dbg_msg \
-		"${label}Show stepping forces a new line is" $(_Dbg_onoff $_Dbg_set_different)
 	    return 0
 	    ;;
 	hi|his|hist|histo|histor|history)
@@ -127,14 +102,6 @@ _Dbg_do_show() {
 		"${label}Show line tracing is" $onoff
 	    _Dbg_msg \
 		"${label}Show line trace delay is ${_Dbg_linetrace_delay}."
-	    return 0
-	    ;;
-	
-	lis | list | lists | listsi | listsiz | listsize )
-	    [[ -n $label ]] && label='listsize: '
-	    _Dbg_msg \
-		"${label}Number of source lines ${_Dbg_debugger_name} will list by default is" \
-		"$_Dbg_set_listsize."
 	    return 0
 	    ;;
 	

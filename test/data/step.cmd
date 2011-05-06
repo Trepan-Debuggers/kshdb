@@ -1,14 +1,14 @@
 set trace-commands on
 # Make sure autostep is off for next text
-set force off
-show force
+set different off
+show different
 # Test that step+ skips multiple statements
 step+
-set force on 
-show force
+set different on 
+show different
 # Same thing - skip loop
 step 
-# Override force
+# Override different
 step-
 s-
 # A null command should use the last step

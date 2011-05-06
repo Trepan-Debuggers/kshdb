@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set different \
-'Set to stop at a different line' 1
+'set different [on|off]
+
+When set, stop at a different line from the last one stopped.' 1
 
 _Dbg_do_set_different() {
     _Dbg_set_onoff "$1" 'different'

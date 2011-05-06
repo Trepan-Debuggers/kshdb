@@ -1,8 +1,8 @@
 set trace-commands on
 set basename on
 # Make sure autostep is off for next text
-set force off
-show force
+set different off
+show different
 next
 where 1
 n
@@ -15,12 +15,12 @@ next
 where 1
 next
 where 1
-# Now check with set force on
-set force on
-show force
+# Now check with set different on
+set different on
+show different
 next
 where 1
-# Override force
+# Override different
 next-
 where 1
 n-

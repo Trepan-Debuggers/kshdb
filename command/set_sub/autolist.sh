@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set autolist \
-'Run list command automatically every time the debugger enters' 1
+'set autolist [on|off]
+
+Run a \"list\" command automatically every time the debugger enters.' 1
 
 _Dbg_do_set_autolist() {
     typeset onoff=${1:-'off'}

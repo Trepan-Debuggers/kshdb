@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "set listsize" debugger command
+# "show annotate" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,20 +18,16 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set listsize \
-'set listsize N
+_Dbg_help_add_sub show annotate \
+'show annotate
 
-Set the number of source lines debugger will list by default' 1
+Show annotation level.
 
-# How many lines in a "list" command?
-typeset -i _Dbg_set_listsize=10    
+See \"set annotate\" for level numbers.
+' 1
 
-_Dbg_do_set_listsize() {
-    if [[ $1 == [0-9]* ]] ; then
-        _Dbg_write_journal_eval "_Dbg_set_listsize=$1"
-    else
-        _Dbg_errmsg "Integer argument expected; got: $1"
-        return 1
-    fi
-    return 0
+_Dbg_do_show_annotate() {
+    [[ -n $1 ]] && label='annotate:     '
+    _Dbg_msg \
+	"${label}Annotation_level is $_Dbg_set_annotate."
 }

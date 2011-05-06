@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set prompt \
-'Set debugger prompt string' 1
+'set prompt PROMPT-STRING
+
+Set the debugger prompt string.' 1
 
 _Dbg_do_set_prompt() {
     _Dbg_prompt_str="$1"

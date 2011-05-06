@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set linetrace \
-'set -x style tracing execution of lines' 1
+'set linetrace [on|off]
+
+Set shell-like \"set -x\" line tracing' 1
 
 typeset -i _Dbg_linetrace_expand=0 # expand variables in linetrace output
 typeset -i _Dbg_linetrace_delay=0  # sleep after linetrace
