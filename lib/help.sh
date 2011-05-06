@@ -56,38 +56,35 @@ _Dbg_help_set() {
 
     typeset subcmd
     if (( $# == 0 )) ; then 
-        typeset -a list
-        list=("${!_Dbg_command_help_show[@]}")
-        sort_list 0 ${#list[@]}-1
+        typeset list
+        list="${!_Dbg_command_help_set[@]}"
 	for subcmd in $list ; do 
 	    _Dbg_help_set $subcmd 1
 	done
 	return 0
     fi
-    
+
     subcmd="$1"
     typeset label="$2"
-    
+
     if [[ -n "${_Dbg_command_help_set[$subcmd]}" ]] ; then 
 	if [[ -z $label ]] ; then 
  	    _Dbg_msg "${_Dbg_command_help_set[$subcmd]}"
 	    return 0
 	else
-	    label=$(builtin printf "set %-12s-- " $subcmd)
+	    label=$(printf "set %-12s-- " $subcmd)
 	fi
     fi
-
+    
     case $subcmd in 
-	ar | arg | args )
-	    [[ -n $label ]] && label='set args -- '
-	    _Dbg_msg \
-		"${label}Set argument list to give program being debugged when it is started.
-Follow this command with any number of args, to be passed to the program."
-	    return 0
-	    ;;
-	an | ann | anno | annot | annota | annotat | annotate )
-	    if [[ -z $label ]] ; then 
-		typeset post_label='
+        ar | arg | args )
+            _Dbg_msg \
+                "${label}Set argument list to give program when restarted."
+            return 0
+            ;;
+        an | ann | anno | annot | annota | annotat | annotate )
+            if [[ -z $label ]] ; then 
+                typeset post_label='
 0 == normal;     1 == fullname (for use when running under emacs).'
 	    fi
 	    _Dbg_msg \
@@ -116,11 +113,42 @@ Follow this command with any number of args, to be passed to the program."
 	      "Set debugging the debugger"
 	    return 0
 	    ;;
-	force | dif | diff | differ | different )
-	    _Dbg_help_set_onoff 'different' 'different' \
-	      "Set stepping forces a different line"
-	    return 0
-	    ;;
+        di|dif|diff|diffe|differe|differen|different )
+            typeset onoff=${1:-'on'}
+            (( _Dbg_set_different )) && onoff='on.'
+            _Dbg_msg \
+                "${label}Set to stop at a different line is" $onoff
+            return 0
+            ;;
+        e | ed | edi | edit | editi | editin | editing )
+            _Dbg_msg_nocr \
+                "${label}Set editing of command lines as they are typed is "
+            if [[ -z $_Dbg_edit ]] ; then 
+                _Dbg_msg 'off.'
+            else
+                _Dbg_msg 'on.'
+            fi
+            return 0
+            ;;
+        high | highl | highlight )
+            _Dbg_msg_nocr \
+                "${label}Set syntax highlighting of source listings is "
+            if [[ -z $_Dbg_edit ]] ; then 
+                _Dbg_msg 'off.'
+            else
+                _Dbg_msg 'on.'
+            fi
+            return 0
+            ;;
+        his | hist | history )
+            _Dbg_msg_nocr \
+                "${label}Set record command history is "
+            if [[ -z $_Dbg_set_edit ]] ; then 
+                _Dbg_msg 'off.'
+            else
+                _Dbg_msg 'on.'
+            fi
+            ;;
 	inferior-tty )
 	    _Dbg_msg "${label} set tty for input and output"
 	    ;;
@@ -165,13 +193,11 @@ Follow this command with any number of args, to be passed to the program."
 }
 
 _Dbg_help_show() {
-    typeset show_cmd=$1
-    
+    typeset subcmd
     if (( $# == 0 )) ; then 
-        typeset -a list
-        list=("${!_Dbg_command_help_show[@]}")
-        sort_list 0 ${#list[@]}-1
-        for subcmd in ${list[@]}; do
+        typeset list
+        list="${!_Dbg_command_help_set[@]}"
+        for subcmd in $list; do
             _Dbg_help_show $subcmd 1
 	done
         return 0
@@ -185,7 +211,7 @@ _Dbg_help_show() {
  	    _Dbg_msg "${_Dbg_command_help_show[$subcmd]}"
 	    return 0
 	else
-	    label=$(builtin printf "show %-12s--" $subcmd)
+	    label=$(printf "show %-12s-- " $subcmd)
 	fi
     fi
 
@@ -241,29 +267,56 @@ _Dbg_help_show() {
 	    _Dbg_msg \
 		"$label Show file directories searched for listing source."
 	    ;;
+        editing )
+            _Dbg_msg \
+                "$label Show editing of command lines and edit style."
+            ;;
+        highlight )
+            _Dbg_msg \
+                "$label Show if we syntax highlight source listings."
+            return 0
+            ;;
+        history )
+            _Dbg_msg \
+                "$label Show if we are recording command history."
+            return 0
+            ;;
 	lin | line | linet | linetr | linetra | linetrac | linetrace )
 	    _Dbg_msg \
 		"$label Show whether to trace lines before execution."
+	    return 0
 	    ;;
 	lis | list | lists | listsi | listsiz | listsize )
 	    _Dbg_msg \
 		"$label Show number of source lines debugger will list by default."
+	    return 0
 	    ;;
 	p | pr | pro | prom | promp | prompt )
 	    _Dbg_msg \
 		"$label Show debugger prompt."
 	    return 0
 	    ;;
+        sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
+            [[ -n $label ]] && label='set showcommand -- '
+            _Dbg_msg \
+                "${label}Set showing the command to execute is $_Dbg_set_show_command."
+            return 0
+            ;;
 	t|tr|tra|trac|trace|trace-|trace-c|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
 	    _Dbg_msg \
 		'show trace-commands -- Show if we are echoing debugger commands'
 	    return 0
 	    ;;
-	w | wa | war | warr | warra | warran | warrant | warranty )
+	wa | war | warr | warra | warran | warrant | warranty )
 	    _Dbg_msg \
 		"$label Various kinds of warranty you do not have."
 	    return 0
 	    ;;
+        wi|wid|widt|width )
+            _Dbg_msg \
+                "${label}Set maximum width of lines is $_Dbg_set_linewidth."
+            return 0
+            ;;
 	* )
 	    _Dbg_msg \
 		"Undefined show command: \"$subcmd\".  Try \"help show\"."

@@ -52,13 +52,13 @@ _Dbg_show_onoff() {
 }
 
 _Dbg_help_set_onoff() {
-    typeset cmd="$1"
+    typeset subcmd="$1"
     typeset label="$2"
     typeset msg="$3"
     typeset -i variable_value
-    eval_cmd="variable_value=\${_Dbg_set_$cmd}"
+    eval_cmd="variable_value=\${_Dbg_set_$subcmd}"
     eval $eval_cmd
-    [[ -n $label ]] && label="set $cmd  -- "
+    [[ -n $label ]] && label=$(printf "set %-12s-- " $subcmd)
     typeset onoff="off."
     (( variable_value != 0 )) && onoff='on.'
     _Dbg_msg \

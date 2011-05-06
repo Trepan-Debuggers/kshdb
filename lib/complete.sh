@@ -21,6 +21,7 @@
 typeset -a _Dbg_matches; _Dbg_matches=()
 
 compgen_opt_words() {
+    typeset -a result=()
     typeset -a words
     words=( $1 )
     typeset find
@@ -28,10 +29,10 @@ compgen_opt_words() {
     typeset try
     for try in ${words[@]} ; do 
 	if [[ $try =~ "^$find" ]] ; then 
-	    COMPREPLY+=( $try )
+	    result+=( $try )
 	fi
     done
-    COMPREPLY=( "${COMPREPLY[@]}" )
+    COMPREPLY=( "${result[@]}" )
 }
 
 # Print a list of completions in global variable _Dbg_matches 
@@ -109,6 +110,11 @@ _Dbg_complete_level_0_init() {
 if [[ $0 == ${.sh.file##*/} ]] ; then
     typeset -a COMPREPLY
     compgen_opt_words "aa aab ac b a" "aa"
+    typeset -p COMPREPLY
+    PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+'
+
+    compgen_opt_words "d dd e f" "d"
     typeset -p COMPREPLY
 fi
 

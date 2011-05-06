@@ -10,6 +10,9 @@ test_lib_complete()
     compgen_opt_words "aa aab ac b a" "aa"
     list="${COMPREPLY[@]}"
     assertEquals 'aa aab' "$list"
+    compgen_opt_words "d dd e f" "d"
+    list="${COMPREPLY[@]}"
+    assertEquals 'd dd' "$list"
 }
 
 if [ '@abs_top_srcdir@' = '' ] ; then

@@ -17,7 +17,7 @@ test_help_set_onoff()
     for i in 0 1 ; do 
 	_Dbg_set_foo=$i
 	_Dbg_help_set_onoff "foo" "foo" "Set short xx"
-	assertEquals "set foo  -- Set short xx is ${onoff[$i]}" "${msgs[$i]}" 
+	assertEquals  "set foo         -- Set short xx is ${onoff[$i]}" "${msgs[$i]}"
     done
 }
 
