@@ -69,7 +69,7 @@ function _Dbg_msg {
 }
 
 function _Dbg_msg_nocr {
-    echo -n $@
+    echo -n "$@"
 }
 
 # print message to output device

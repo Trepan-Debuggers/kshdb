@@ -53,7 +53,7 @@ _Dbg_do_set() {
     shift
 
     if [[ -n ${_Dbg_debugger_set_commands[$set_cmd]} ]] ; then
-	${_Dbg_debugger_set_commands[$set_cmd]} $label "$@"
+	${_Dbg_debugger_set_commands[$set_cmd]} "$@"
 	return $?
     fi
   

@@ -1,25 +1,26 @@
 # -*- shell-script -*-
 # filecache.sh - cache file information
 #
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein
+#   <rocky@gnu.org>
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
 #   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
+#   with this program; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 [[ -z ${.sh.type.Fileinfo_t} ]] || return
 
-# Keys are the canonic expanded filename. 
+# Keys are the canonic expanded filename. _Dbg_filenames[filename] is
 # name of variable which contains text.
 typeset -T Fileinfo_t=(
     size=-1
@@ -28,7 +29,10 @@ typeset -T Fileinfo_t=(
 )
 
 Fileinfo_t -A _Dbg_filenames
-_Dbg_filenames=()
+_Dbg_filecache_reset() {
+    _Dbg_filenames=()
+}
+_Dbg_filecache_reset
 
 # Maps a name into its canonic form which can then be looked up in filenames
 typeset -A _Dbg_file2canonic
@@ -49,7 +53,7 @@ function _Dbg_readfile # var file
 _Dbg_check_line() {
     (( $# != 2 )) && return 1
     typeset -i line_number=$1
-    typeset filename=$2
+    typeset filename="$2"
     typeset -i max_line
     max_line=$(_Dbg_get_maxline "$filename")
     if (( $? != 0 )) ; then
@@ -57,7 +61,7 @@ _Dbg_check_line() {
 	return 1
     fi
 
-    if (( $line_number >  max_line )) ; then 
+    if (( line_number >  max_line )) ; then 
 	(( _Dbg_set_basename )) && filename=${filename##*/}
 	_Dbg_errmsg "Line $line_number is too large." \
 	    "File $filename has only $max_line lines."
@@ -87,11 +91,10 @@ function _Dbg_get_maxline {
 }
 
 # Return text for source line for line $1 of filename $2 in variable
-# $source_line. The hope is that this has been declared "typeset" in the 
-# caller.
+# $_Dbg_source_line. 
 
-# If $2 is omitted, # use _Dbg_frame_filename, if $1 is omitted use 
-# _Dbg_frame_lineno. The return value is put in source_line.
+# If $2 is omitted, use _Dbg_frame_filename, if $1 is omitted use 
+# _Dbg_frame_last_lineno. The return value is put in _Dbg_source_line.
 _Dbg_get_source_line() {
     typeset -i lineno
     if (( $# == 0 )); then
@@ -164,7 +167,7 @@ function _Dbg_is_file {
     return 1
 }
 
-# Read $1 into _DBG_source_*n* array where *n* is an entry in
+# Read $1 into _Dbg_source_*n* array where *n* is an entry in
 # _Dbg_filenames.  Variable _Dbg_seen[canonic-name] will be set to
 # note the file has been read and the filename will be saved in array
 # _Dbg_filenames
