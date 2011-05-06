@@ -1,32 +1,5 @@
-pkgdatadir        = ${datadir}/@PACKAGE@/lib
-pkgdata_DATA =      	\
-	action.sh       \
-	alias.sh        \
-	break.sh        \
-	columnize.sh    \
-	dbg-call.sh  	\
-	display.sh  	\
-	filecache.sh    \
-	file.sh         \
-	fns.sh          \
-	frame.sh        \
-	gdb.sh  	\
-	help.sh  	\
-	hook.sh		\
-	info.sh		\
-	journal.sh  	\
-	list.sh  	\
-	log.sh  	\
-	msg.sh    	\
-	processor.sh   	\
-	run.sh    	\
-	save-restore.sh	\
-	set-d-vars.sh   \
-	setshow.sh      \
-	shell.sh        \
-	sort.sh         \
-	term-highlight.py \
-	tty.sh
+pkgdatadir = ${datadir}/@PACKAGE@/lib
+pkgdata_DATA = $(wildcard *.sh)
 
 install-data-hook: 
 	chmod +x $(DESTDIR)$(pkgdatadir)/term-highlight.py

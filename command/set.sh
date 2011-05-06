@@ -27,6 +27,9 @@ typeset -i _Dbg_linewidth; _Dbg_linewidth=${COLUMNS:-80}
 typeset -i _Dbg_linetrace_expand=0 # expand variables in linetrace output
 typeset -f _Dbg_linetrace_delay=0  # sleep after linetrace
 
+typeset -A _Dbg_debugger_set_commands
+typeset -A _Dbg_command_help_set
+
 typeset -i _Dbg_set_autoeval=0     # Evaluate unrecognized commands?
 typeset -i _Dbg_set_listsize=10    # How many lines in a listing? 
 
@@ -41,64 +44,31 @@ for _Dbg_file in ${_Dbg_libdir}/command/set_sub/*.sh ; do
 done
 
 _Dbg_do_set() {
-    typeset -l set_cmd=$1
-    typeset -l rc
+    typeset set_cmd=$1
+    typeset rc
     if [[ $set_cmd == '' ]] ; then
 	_Dbg_msg "Argument required (expression to compute)."
 	return;
     fi
     shift
+
+    if [[ -n ${_Dbg_debugger_set_commands[$set_cmd]} ]] ; then
+	${_Dbg_debugger_set_commands[$set_cmd]} $label "$@"
+	return $?
+    fi
+  
     case $set_cmd in 
-	ar | arg | args )
-	    _Dbg_do_set_args $@
-	    ;;
-	an | ann | anno | annot | annota | annotat | annotate )
-	    _Dbg_do_set_annotate $@
-	    ;;
-	autoe | autoev | autoeva | autoeval )
-	    _Dbg_set_onoff "$1" 'autoeval'
-	    ;;
-	autol | autoli | autolis | autolist )
-	    _Dbg_do_set args $@
-	    ;;
-	b | ba | bas | base | basen | basena | basenam | basename )
-	    _Dbg_set_onoff "$1" 'basename'
-	    ;;
-	de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
-	    _Dbg_set_onoff $1 'debugging'
-	    ;;
-	e | ed | edi | edit | editi | editin | editing )
-	    _Dbg_set_editing $@
-	    ;;
-	force | dif | diff | differ | different )
+	force  )
 	    _Dbg_set_onoff "$1" 'different'
-	    ;;
-	hi|his|hist|histo|histor|history)
-	    _Dbg_do_set_history $@
 	    ;;
 	inferior-tty )
 	    _Dbg_set_tty $@
 	    ;;
-	lin | line | linet | linetr | linetra | linetrac | linetrace )
-	    _Dbg_do_set_linetrace $@
-	    ;;
-	li | lis | list | lists | listsi | listsiz | listsize )
-	    _Dbg_do_set_listsize $@
-	    ;;
 	lo | log | logg | loggi | loggin | logging )
-	    _Dbg_cmd_set_logging $*
-	    ;;
-	p | pr | pro | prom | promp | prompt )
-	    _Dbg_prompt_str="$1"
-	    ;;
-	sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
-	    _Dbg_do_set_showcommand $@
+	    _Dbg_cmd_set_logging $@
 	    ;;
 	t|tr|tra|trac|trace|trace-|trace-c|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
 	    _Dbg_do_set_trace_commands $@
-	    ;;
-	w | wi | wid | width )
-	    _Dbg_do_set_width $@
 	    ;;
 	*)
 	    _Dbg_undefined_cmd "set" "$set_cmd"

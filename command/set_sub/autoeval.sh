@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# "set highlight" debugger command
+# "set autoeval" debugger command
 #
 #   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -18,32 +18,10 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set highlight \
-'Set syntax highlighting of source listings' 1
+_Dbg_help_add_sub set autoeval \
+'Evaluate unrecognized commands' 1 
 
-_Dbg_do_set_highlight() {
-    pygmentize --version  2>/dev/null 1>/dev/null
-    if (( $? != 0 )) ; then
-	errmsg "Can't run pygmentize. Setting forced off"
-	return 1
-    fi
-    typeset onoff=${1:-'on'}
-    case $onoff in 
-	on | 1 ) 
-	    _Dbg_set_highlight=1
-	    ;;
-	off | 0 )
-	    _Dbg_set_highlight=0
-	    ;;
-	reset ) 
-	    _Dbg_set_highlight=1
-	    _Dbg_filecache_reset
-	    _Dbg_readin $_Dbg_frame_last_filename
-	    ;;
-	* )
-	    _Dbg_errmsg '"on", "off", or "reset" expected.'
-	    return 1
-    esac
-    _Dbg_do_show highlight
-    return 0
+_Dbg_do_set_autoeval() {
+    _Dbg_set_onoff "$1" 'autoeval'
+    return $?
 }

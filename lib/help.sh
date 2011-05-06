@@ -31,10 +31,13 @@ typeset -A _Dbg_debugger_commands
 
 # Add help text $2 for command $1
 function _Dbg_help_add {
-    (($# != 2)) && (($# != 3))  && return 1
+    (($# < 2)) || (($# > 4))  && return 1
     typeset -i add_command; add_command=${3:-0}
     _Dbg_command_help[$1]="$2"
     (( add_command )) && _Dbg_debugger_commands[$1]="_Dbg_do_$1"
+    # if (($# == 4)); then
+    # 	complete -F "$4" "$1"
+    # fi
     return 0
 }
 
@@ -43,10 +46,9 @@ function _Dbg_help_add_sub {
     add_command=${4:-1}
     (($# != 3)) && (($# != 4))  && return 1
     eval "_Dbg_command_help_$1[$2]=\"$3\""
-    # FIXME: figure out how to do this:
-    # if (( add_command )) ; then
-    # 	eval "_Dbg_debugger_$1_commands[$2]=\"_Dbg_do_${1}_${2}\""
-    # fi
+    if (( add_command )) ; then
+    	eval "_Dbg_debugger_${1}_commands[$2]=\"_Dbg_do_${1}_${2}\""
+    fi
     return 0
 }
 
