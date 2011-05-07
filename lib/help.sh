@@ -108,7 +108,7 @@ _Dbg_help_set() {
 		"Set short filenames (the basename) in debug output"
 	    return 0
 	    ;;
-	deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
+	deb|debu|debug )
 	    _Dbg_help_set_onoff 'debugging' 'debugging' \
 	      "Set debugging the debugger"
 	    return 0
