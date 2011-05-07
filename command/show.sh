@@ -40,7 +40,7 @@ _Dbg_do_show() {
     (($# >= 1)) && shift
 
     # Warranty, copying, directories, and aliases are omitted below.
-    typeset subcmds='annotate args autoeval autolist basename debugging different listsize prompt trace-commands width'
+    typeset subcmds='annotate args autoeval autolist basename debug different listsize prompt trace-commands width'
 
     if [[ -z $show_cmd ]] ; then 
 	typeset thing

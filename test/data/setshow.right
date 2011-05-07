@@ -6,8 +6,8 @@ set -xv
 +show badcommand
 ** Unknown show subcommand: badcommand
 ** Show subcommands are:
-**   annotate  autoeval  basename   different  prompt          width
-**   args      autolist  debugging  listsize   trace-commands
+**   annotate  autoeval  basename  different  prompt          width
+**   args      autolist  debug     listsize   trace-commands
 +another-bad-command 
 Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
@@ -279,7 +279,7 @@ args:     Argument list to give script when debugged program starts is:
 autoeval: Evaluate unrecognized commands is off.
 autolist: Auto run of 'list' command is off.
 basename: Show short filenames (the basename) in debug output is on.
-debugging: Allow debugging the debugger is off.
+debug: Allow debugging the debugger is off.
 different: Show stepping forces a new line is off.
 listsize: Number of source lines kshdb will list by default is 10.
 prompt:   kshdb's prompt is:

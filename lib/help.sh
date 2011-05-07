@@ -109,7 +109,7 @@ _Dbg_help_set() {
 	    return 0
 	    ;;
 	deb|debu|debug )
-	    _Dbg_help_set_onoff 'debugging' 'debugging' \
+	    _Dbg_help_set_onoff 'debug' 'debug' \
 	      "Set debugging the debugger"
 	    return 0
 	    ;;
