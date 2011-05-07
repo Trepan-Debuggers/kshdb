@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# "set debugging" debugger command
+# "set debug" debugger command
 #
 #   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -18,12 +18,12 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub set debugging \
-'set debugging [on|off]
+_Dbg_help_add_sub set debug \
+'set debug [on|off]
 
-When set, we allow debugging the debugger.' 1
+When set, we allow debug the debugger.' 1
 
-_Dbg_do_set_debugging() {
-    _Dbg_set_onoff "$1" 'debugging'
+_Dbg_do_set_debug() {
+    _Dbg_set_onoff "$1" 'debug'
     return $?
 }
