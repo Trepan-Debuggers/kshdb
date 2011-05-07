@@ -70,7 +70,7 @@ _Dbg_get_typeset_attr() {
 	    cmd+=" | grep $pat"
 	fi
     fi
-    ((!_Dbg_set_debugging)) && cmd+=' | grep -v ^_Dbg_'
+    ((!_Dbg_set_debug)) && cmd+=' | grep -v ^_Dbg_'
     eval $cmd
 }
 
@@ -234,7 +234,7 @@ function _Dbg_parse_linespec {
 
     # Function name or error
     * )
-      if _Dbg_is_function $linespec ${_Dbg_set_debugging} ; then 
+      if _Dbg_is_function $linespec ${_Dbg_set_debug} ; then 
 	typeset -a word==( $(typeset -p +f $linespec) )
 	typeset -r fn=${word[1]%\(\)}
 	echo "${word[3]} 1 ${word[4]}"

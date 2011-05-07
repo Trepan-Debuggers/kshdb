@@ -27,7 +27,7 @@ typeset _Dbg_RESTART_COMMAND=''
 # if you do this or else you may get into a recursive loop.
 typeset -i _Dbg_debug_debugger=0
 
-typeset -i _Dbg_set_debugging=0  # 1 if we are debugging the debugger
+typeset -i _Dbg_set_debug=0       # 1 if we are debug the debugger
 typeset    _Dbg_stop_reason=''    # The reason we are in the debugger.
 
 # Set to 0 to clear "trap DEBUG" after entry
@@ -50,7 +50,7 @@ typeset -i _Dbg_inside_skip=0
 # - A set return code 0 continues execution.
 typeset -i _Dbg_continue_rc=-1
 
-typeset -i _Dbg_set_debugging=0   # 1 if we are debugging the debugger
+typeset -i _Dbg_set_debug=0       # 1 if we are debugging the debugger
 typeset    _Dbg_stop_reason=''    # The reason we are in the debugger.
 
 typeset -i _Dbg_QUIT_LEVELS=0     # Number of nested shells we have to exit
@@ -66,7 +66,7 @@ function _Dbg_trap_handler {
     _Dbg_old_set_opts=$-  
 
     # Turn off line and variable trace listing.
-    ((!_Dbg_set_debugging)) && set +x
+    ((!_Dbg_set_debug)) && set +x
     set +v +u +e
 
     _Dbg_set_debugger_entry 'create_unsetopt'

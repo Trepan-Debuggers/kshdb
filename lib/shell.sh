@@ -28,7 +28,7 @@ _Dbg_shell_append_typesets() {
 	if [[ typeset != ${_Dbg_words[0]} ]] ; then
 	    [[ -n ${_Dbg_excluded[${_Dbg_words[0]}]} ]] && continue
 	    if [[ ${_Dbg_words[0]} =~ ^[A-Za-z_][A-Za-z_0-9]+ ]] ; then
-		((0 == _Dbg_set_debugging)) && \
+		((0 == _Dbg_set_debug)) && \
 		    [[ ${_Dbg_words[0]} =~ ^_Dbg_ ]] && continue
 		echo $(typeset -p ${_Dbg_words[0]} 2>/dev/null)
 		continue
@@ -37,7 +37,7 @@ _Dbg_shell_append_typesets() {
 	typeset -i _Dbg_i
 	for ((_Dbg_i=1; _Dbg_i<${#_Dbg_words[@]}; _Dbg_i++)); do
 	    _Dbg_var_name=${_Dbg_words[_Dbg_i]%%=*}
-	    ((0 == _Dbg_set_debugging)) && \
+	    ((0 == _Dbg_set_debug)) && \
 		[[ $_Dbg_var_name =~ ^_Dbg_ ]] && continue
 	    _Dbg_flags=${_Dbg_words[_Dbg_i]}
 	    case ${_Dbg_flags:0:2} in 
@@ -71,7 +71,7 @@ _Dbg_shell_append_fn_typesets() {
     typeset -a words 
     typeset +pf | while read -A words ; do 
 	fn_name=${words[0]%%'('*}
-	((0 == _Dbg_set_debugging)) && [[ $fn_name =~ ^_Dbg_ ]] && continue	
+	((0 == _Dbg_set_debug)) && [[ $fn_name =~ ^_Dbg_ ]] && continue	
 	typeset -pf ${fn_name}  >>$_Dbg_shell_temp_profile
     done 
 }
