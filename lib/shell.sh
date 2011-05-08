@@ -27,7 +27,7 @@ _Dbg_shell_append_typesets() {
     typeset +p | while read -A _Dbg_words ; do 
 	if [[ typeset != ${_Dbg_words[0]} ]] ; then
 	    [[ -n ${_Dbg_excluded[${_Dbg_words[0]}]} ]] && continue
-	    if [[ ${_Dbg_words[0]} =~ ^[A-Za-z_][A-Za-z_0-9]+ ]] ; then
+	    if [[ ${_Dbg_words[0]} =~ ^[A-Za-z_][A-Za-z_0-9]* ]] ; then
 		((0 == _Dbg_set_debug)) && \
 		    [[ ${_Dbg_words[0]} =~ ^_Dbg_ ]] && continue
 		echo $(typeset -p ${_Dbg_words[0]} 2>/dev/null)
