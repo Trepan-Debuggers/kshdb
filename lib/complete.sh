@@ -81,12 +81,12 @@ _Dbg_subcmd_complete() {
 #     _Dbg_set_read_completion=1
 # fi
 
-_Dbg_complete_num_range() {
+function _Dbg_complete_num_range {
     COMPREPLY=()
-    typeset -i i
+    typeset -i _Dbg_i
     typeset -i j=0
-    for ((i=$1; i<=$2; i++)) ; do
-	((COMPREPLY[j]+=i))
+    for ((_Dbg_i=$1; _Dbg_i<=$2; _Dbg_i++)) ; do
+	((COMPREPLY[j]+=_Dbg_i))
 	((j++))
     done
 }

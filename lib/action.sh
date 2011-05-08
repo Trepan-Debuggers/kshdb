@@ -61,20 +61,20 @@ function _Dbg_save_actions {
 }
 
 # list actions
-_Dbg_list_action() {
+function _Dbg_list_action {
 
   if [ ${#_Dbg_action_line[@]} != 0 ]; then
     _Dbg_msg "Actions at following places:"
-    typeset -i i
+    typeset -i _Dbg_i
 
     _Dbg_msg "Num Enb Stmt               file:line"
-    for (( i=1; (( i <= _Dbg_action_max )) ; i++ )) ; do
-      if [[ -n ${_Dbg_action_line[$i]} ]] ; then
+    for (( _Dbg_i=1; (( _Dbg_i <= _Dbg_action_max )) ; _Dbg_i++ )) ; do
+      if [[ -n ${_Dbg_action_line[$_Dbg_i]} ]] ; then
 	typeset source_file=${_Dbg_action_file[$i]}
 	source_file=$(_Dbg_adjust_filename "$source_file")
-	_Dbg_printf "%-3d %3d %-18s %s:%s" $i ${_Dbg_action_enable[$i]} \
-	  "${_Dbg_action_stmt[$i]}" \
-	  $source_file ${_Dbg_action_line[$i]}
+	_Dbg_printf "%-3d %3d %-18s %s:%s" $_Dbg_i ${_Dbg_action_enable[$_Dbg_i]} \
+	  "${_Dbg_action_stmt[$_Dbg_i]}" \
+	  $source_file ${_Dbg_action_line[$_Dbg_i]}
       fi
     done
   else
@@ -125,7 +125,7 @@ _Dbg_set_action() {
 # Internal routine to delete an action by file/line.
 # 0 is returned if we were able to unset the action.
 # Nonzero is returned otherwize.
-_Dbg_unset_action() {
+function _Dbg_unset_action {
     (( $# == 2 )) || return 1
     typeset -r  filename="$1"
     $(_Dbg_is_int "$2") || return 1
@@ -139,14 +139,14 @@ _Dbg_unset_action() {
     typeset -a action_nos
     eval "action_nos=(${_Dbg_action_file2action[$fullname]})"
 
-    typeset -i i
-    for ((i=0; i < ${#linenos[@]}; i++)); do 
-	if (( linenos[i] == lineno )) ; then
+    typeset -i _Dbg_i
+    for ((_Dbg_i=0; _Dbg_i < ${#linenosf[@]}; _Dbg_i++)); do 
+	if (( linenos[_Dbg_i] == lineno )) ; then
 	    # Got a match, find action entry number
 	    typeset -i action_num
 	    (( action_num = action_nos[i] ))
 	    _Dbg_unset_action_arrays $action_num
-	    unset linenos[i]
+	    unset linenos[_Dbg_i]
 	    _Dbg_action_file2linenos[$fullname]=${linenos[@]}
 	    return 0
 	fi

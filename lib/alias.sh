@@ -44,11 +44,10 @@ _Dbg_alias_expand() {
 
 # Return in help_aliases an array of strings that are aliases
 # of $1
-_Dbg_alias_find_aliased() {
+function _Dbg_alias_find_aliased {
     (($# != 1)) &&  return 255
     typeset find_name=$1
     aliases_found=''
-    typeset -i i
     for alias in ${!_Dbg_aliases[@]} ; do
 	if [[ ${_Dbg_aliases[$alias]} == "$find_name" ]] ; then 
 	    [[ -n $aliases_found ]] && aliases_found+=', '

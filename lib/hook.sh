@@ -159,7 +159,7 @@ function _Dbg_trap_handler {
 
 # Return 0 if we are at a breakpoint position or 1 if not.
 # Sets _Dbg_brkpt_num to the breakpoint number found.
-_Dbg_hook_breakpoint_hit() {
+function _Dbg_hook_breakpoint_hit {
     typeset full_filename=${_Dbg_frame_last_filename}
     typeset lineno=${_Dbg_frame_last_lineno}
     # FIXME: combine with _Dbg_unset_brkpt
@@ -167,11 +167,11 @@ _Dbg_hook_breakpoint_hit() {
     linenos=(${_Dbg_brkpt_file2linenos[$full_filename]})
     typeset -a brkpt_nos
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
-    typeset -i i
-    for ((i=0; i < ${#linenos[@]}; i++)); do 
-	if (( linenos[i] == lineno )) ; then
+    typeset -i _Dbg_i
+    for ((_Dbg_i=0; _Dbg_i < ${#linenos[@]}; _Dbg_i++)); do 
+	if (( linenos[_Dbg_i] == lineno )) ; then
  	    # Got a match, but is the breakpoint enabled? 
- 	    (( _Dbg_brkpt_num = brkpt_nos[i] ))
+ 	    (( _Dbg_brkpt_num = brkpt_nos[_Dbg_i] ))
  	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
  		return 0
  	    fi

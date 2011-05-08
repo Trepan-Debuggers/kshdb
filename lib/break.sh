@@ -130,12 +130,12 @@ function _Dbg_enable_disable {
 # breakpoint number $1 if the number of times is greater than 0.
 # Uses global array _Dbg_brkpt_counts.
 function _Dbg_print_brkpt_count {
-  typeset -i i; i=$1
-  if (( _Dbg_brkpt[i].hits != 0 )) ; then
-      if (( _Dbg_brkpt[i].hits == 1 )) ; then 
+  typeset -i _Dbg_i; _Dbg_i=$1
+  if (( _Dbg_brkpt[_Dbg_i].hits != 0 )) ; then
+      if (( _Dbg_brkpt[_Dbg_i].hits == 1 )) ; then 
 	  _Dbg_printf '    breakpoint already hit 1 time'
       else
-	  _Dbg_printf "    breakpoint already hit %d times" ${_Dbg_brkpt[$i].hits}
+	  _Dbg_printf "    breakpoint already hit %d times" ${_Dbg_brkpt[$_Dbg_i].hits}
       fi
   fi
 }
@@ -225,14 +225,14 @@ function _Dbg_unset_brkpt {
     linenos=(${_Dbg_brkpt_file2linenos[$fullname]})
     typeset -a brkpt_nos
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$fullname]})
-    typeset -i i
-    for ((i=0; i < ${#linenos[@]}; i++)); do 
-	if (( linenos[i] == lineno )) ; then
+    typeset -i _Dbg_i
+    for ((_Dbg_i=0; _Dbg_i < ${#linenos[@]}; _Dbg_i++)); do 
+	if (( linenos[_Dbg_i] == lineno )) ; then
 	    # Got a match, find breakpoint entry number
 	    typeset -i brkpt_num
 	    (( brkpt_num = brkpt_nos[i] ))
 	    _Dbg_unset_brkpt_arrays $brkpt_num
-	    unset linenos[i]
+	    unset linenos[_Dbg_i]
 	    _Dbg_brkpt_file2linenos[$fullname]=${linenos[@]}
 	    return 1
 	fi
@@ -246,7 +246,6 @@ function _Dbg_unset_brkpt {
 function _Dbg_delete_brkpt_entry {
     (( $# == 0 )) && return 0
     typeset -r  del="$1"
-    typeset -i  i
     typeset -i  found=0
 
     typeset    try

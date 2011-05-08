@@ -1,8 +1,8 @@
 # -*- shell-script -*-
-# display.sh - Bourne Again Shell Debugger display routines
+# display.sh -  Debugger display routines
 #
-#   Copyright (C) 2010 Rocky Bernstein 
-#   rocky@gnu.org
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -63,20 +63,20 @@ _Dbg_disp_enable_disable() {
     return 0
 }
 
-_Dbg_eval_all_display() {
-  typeset -i i
-  for (( i=0; i < _Dbg_disp_max ; i++ )) ; do
-    if [ -n "${_Dbg_disp_exp[$i]}" ] \
-      && [[ ${_Dbg_disp_enable[i]} != 0 ]] ; then
-      _Dbg_printf_nocr "%2d: %s = " $i "${_Dbg_disp_exp[i]}"
+function _Dbg_eval_all_display {
+  typeset -i _Dbg_i
+  for (( _Dbg_i=0; _Dbg_i < _Dbg_disp_max ; _Dbg_i++ )) ; do
+    if [ -n "${_Dbg_disp_exp[$_Dbg_i]}" ] \
+      && [[ ${_Dbg_disp_enable[_Dbg_i]} != 0 ]] ; then
+      _Dbg_printf_nocr "%2d: %s = " $_Dbg_i "${_Dbg_disp_exp[_Dbg_i]}"
       typeset -i _Dbg_show_eval_rc; _Dbg_show_eval_rc=0
-      _Dbg_do_eval "_Dbg_msg ${_Dbg_disp_exp[i]}"
+      _Dbg_do_eval "_Dbg_msg ${_Dbg_disp_exp[_Dbg_i]}"
     fi
   done
 }  
 
 # Enable/disable display(s) by entry numbers.
-_Dbg_enable_disable_display() {
+function _Dbg_enable_disable_display {
   typeset -i on=$1
   typeset en_dis=$2
   typeset -i i=$3

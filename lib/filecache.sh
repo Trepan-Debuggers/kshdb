@@ -148,9 +148,9 @@ function _Dbg_is_file {
     else
 	# Resolve file using _Dbg_dir
 	typeset -i n=${#_Dbg_dir[@]}
-	typeset -i i
-	for (( i=0 ; i < n; i++ )) ; do
-	    typeset basename="${_Dbg_dir[i]}"
+	typeset -i _Dbg_i
+	for (( _Dbg_i=0 ; _Dbg_i < n; _Dbg_i++ )) ; do
+	    typeset basename="${_Dbg_dir[_Dbg_i]}"
 	    if [[  $basename == '\$cdir' ]] ; then
 		basename=$_Dbg_cdir
 	    elif [[ $basename == '\$cwd' ]] ; then
