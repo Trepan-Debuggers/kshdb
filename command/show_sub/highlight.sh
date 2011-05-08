@@ -23,7 +23,7 @@ _Dbg_help_add_sub show highlight \
 
 _Dbg_do_show_highlight() {
     typeset label="$1"
-    [[ -n $label ]] && label='highlight: '
+    label=$(_Dbg_printf "%-12s: " highlight)
     _Dbg_msg_nocr \
         "${label}Syntax highlight in source listings is "
     if (( $_Dbg_set_highlight == 0)) ; then

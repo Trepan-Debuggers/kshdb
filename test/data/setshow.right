@@ -273,19 +273,19 @@ of promoting the sharing and reuse of software generally.
 
 +set width 80
 +show 
-annotate:     Annotation_level is 0.
-args:     Argument list to give script when debugged program starts is:
+annotate    : Annotation_level is 0.
+args        :     Argument list to give script when debugged program starts is:
  testarg1 testarg2".
-autoeval: Evaluate unrecognized commands is off.
-autolist: Auto run of 'list' command is off.
-basename: Show short filenames (the basename) in debug output is on.
+autoeval    : Evaluate unrecognized commands is off.
+autolist    : Auto run of 'list' command is off.
+basename    : Show short filenames (the basename) in debug output is on.
 debug: Allow debugging the debugger is off.
-different: Show stepping forces a new line is off.
-listsize: Number of source lines kshdb will list by default is 10.
-prompt:   kshdb's prompt is:
+different   : Show stepping forces a new line is off.
+listsize    : Number of source lines kshdb will list by default is 10.
+prompt      : kshdb's prompt is:
 	"$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> ".
 trace-commands: State of command tracing is on.
-width: Line width is 80.
+width       : Line width is 80.
 +#### and show...
 +show args
 Argument list to give script when debugged program starts is:

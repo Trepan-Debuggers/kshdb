@@ -26,7 +26,7 @@ Show whether unrecognized commands are automatically evaluated.
 See also \"set autoeval\".' 1
 
 _Dbg_do_show_autoeval() {
-    [[ -n $1 ]] && label='autoeval: '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " autoeval)
     _Dbg_msg \
 	"${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_set_autoeval)
     return 0

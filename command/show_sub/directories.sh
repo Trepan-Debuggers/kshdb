@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show annotate" debugger command
+# "show directories" debugger command
 #
-#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,16 +18,23 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub show annotate \
-'show annotate
+_Dbg_help_add_sub show directories \
+'show directories
 
-Show annotation level.
+Show list of drectories used to search for not fully qualified file names.' 1
+# FIXME add dir and then See also dir.
 
-See \"set annotate\" for level numbers.
-' 1
+_Dbg_do_show_directories() {
+    # Don't do anything if called as part of "show" (all)
+    [[ -n $1 ]] && return  
 
-_Dbg_do_show_annotate() {
-    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " annotate)
-    _Dbg_msg \
-	"${label}Annotation_level is $_Dbg_set_annotate."
+    typeset list=${_Dbg_dir[0]}
+    typeset -i n=${#_Dbg_dir[@]}
+    typeset -i i
+    for (( i=1 ; i < n; i++ )) ; do
+	list="${list}:${_Dbg_dir[i]}"
+    done
+    
+    _Dbg_msg "Source directories searched: $list"
+    return 0
 }

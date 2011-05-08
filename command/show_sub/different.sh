@@ -26,7 +26,7 @@ Show whether stepping forces a new line.
 See also \"set different\".' 1
 
 _Dbg_do_show_different() {
-    [[ -n $1 ]] && label='different: '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " different)
     _Dbg_msg \
 	"${label}Show stepping forces a new line is" $(_Dbg_onoff $_Dbg_set_different)
     return 0

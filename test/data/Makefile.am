@@ -38,3 +38,5 @@ check_DATA = \
 	subshell1.right
 
 EXTRA_DIST = $(check_DATA)
+
+MOSTLYCLEANFILES = *.orig *.rej

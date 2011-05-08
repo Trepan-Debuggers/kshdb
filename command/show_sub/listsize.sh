@@ -26,7 +26,7 @@ Show maximum number of lines in a \"list\" display
 See also \"set listsize\".' 1
 
 _Dbg_do_show_listsize() {
-    [[ -n $1 ]] && label='listsize: '
+    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " listsize)
     _Dbg_msg \
 	"${label}Number of source lines ${_Dbg_debugger_name} will list by default is" \
 	"$_Dbg_set_listsize."

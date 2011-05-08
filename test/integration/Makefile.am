@@ -34,3 +34,5 @@ CLEANFILES = *.check
 
 test: check
 test-integration: check
+
+MOSTLYCLEANFILES = *.orig *.rej

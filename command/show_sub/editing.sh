@@ -23,7 +23,7 @@ _Dbg_help_add_sub show editing \
 
 _Dbg_do_show_editing() {
     typeset label="$1"
-    [[ -n $label ]] && label='editing:  '
+    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " editing)
     _Dbg_msg_nocr \
         "${label}Editing of command lines as they are typed is "
     if [[ -z $_Dbg_edit ]] ; then

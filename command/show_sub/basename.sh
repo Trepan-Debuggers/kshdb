@@ -26,7 +26,7 @@ Show whether use short filenames
 See also \"set basename\".' 1
 
 _Dbg_do_show_basename() {
-    [[ -n $1 ]] && label='basename: '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " basename)
     _Dbg_msg \
 	"${label}Show short filenames (the basename) in debug output is" $(_Dbg_onoff $_Dbg_set_basename)
     typeset onoff="on."

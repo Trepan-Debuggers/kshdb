@@ -25,7 +25,7 @@ Print the argument list to given when debugged program restarts.
 ' 1
 
 _Dbg_do_show_args() {
-    [[ -n $1 ]] && label='args:     '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " args)
     _Dbg_msg \
 	"${label}Argument list to give script when debugged program starts is:
 " \

@@ -26,7 +26,7 @@ Show maximum width of a line
 See also \"set width\".' 1
 
 _Dbg_do_show_width() {
-    [[ -n $1 ]] && label='width: '
+    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " width)
     _Dbg_msg \
 	"${label}Line width is $_Dbg_set_linewidth."
     return 0

@@ -34,7 +34,7 @@ for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do
 done
 
 _Dbg_do_show() {
-    typeset show_cmd=$1
+    typeset subcmd=$1
     (($# >= 1)) && shift
     typeset label=$1
     (($# >= 1)) && shift
@@ -42,18 +42,18 @@ _Dbg_do_show() {
     # Warranty, copying, directories, and aliases are omitted below.
     typeset subcmds='annotate args autoeval autolist basename debug different listsize prompt trace-commands width'
 
-    if [[ -z $show_cmd ]] ; then 
+    if [[ -z $subcmd ]] ; then 
 	typeset thing
 	for thing in $subcmds ; do 
 	    _Dbg_do_show $thing 1
 	done
 	return 0
-    elif [[ -n ${_Dbg_debugger_show_commands[$show_cmd]} ]] ; then
-	${_Dbg_debugger_show_commands[$show_cmd]} $label "$@"
+    elif [[ -n ${_Dbg_debugger_show_commands[$subcmd]} ]] ; then
+	${_Dbg_debugger_show_commands[$subcmd]} $label "$@"
 	return 0
     fi
     
-    case $show_cmd in 
+    case $subcmd in 
 	autoe | autoev | autoeva | autoeval )
 	    [[ -n $label ]] && label='autoeval: '
 	    _Dbg_msg \
@@ -73,25 +73,15 @@ _Dbg_do_show() {
 	    _Dbg_history_list $*
 	    return $?
 	    ;;
-	dir|dire|direc|direct|directo|director|directori|directorie|directories)
-	    typeset list=${_Dbg_dir[0]}
-	    typeset -i n=${#_Dbg_dir[@]}
-	    typeset -i i
-	    for (( i=1 ; i < n; i++ )) ; do
-		list="${list}:${_Dbg_dir[i]}"
-	    done
-	    
-	    _Dbg_msg "Source directories searched: $list"
-	    return 0
-	    ;;
 	hi|his|hist|histo|histor|history)
+	    _Dbg_printf "%-12s-- " history
 	    _Dbg_msg \
-		"filename: The filename in which to record the command history is:"
+		"  filename: The filename in which to record the command history is:"
 	    _Dbg_msg "	$_Dbg_histfile"
 	    _Dbg_msg \
-		"save: Saving of history save is" $(_Dbg_onoff $_Dbg_set_history)
+		"  save: Saving of history save is" $(_Dbg_onoff $_Dbg_set_history)
 	    _Dbg_msg \
-		"size: Debugger history size is $_Dbg_history_length"
+		"  size: Debugger history size is $_Dbg_history_length"
 	    ;;
 	
 	lin | line | linet | linetr | linetra | linetrac | linetrace )
@@ -108,13 +98,6 @@ _Dbg_do_show() {
 	lo | log | logg | loggi | loggin | logging )
 	    shift
 	    _Dbg_do_show_logging $*
-	    ;;
-	p | pr | pro | prom | promp | prompt )
-	    [[ -n $label ]] && label='prompt:   '
-	    _Dbg_msg \
-		"${label}${_Dbg_debugger_name}'s prompt is:
-	\"$_Dbg_prompt_str\"."
-	    return 0
 	    ;;
 	sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
 	    [[ -n $label ]] && label='showcommand: '
@@ -145,7 +128,7 @@ _Dbg_do_show() {
 	    return 0
 	    ;;
 	*)
-	    _Dbg_errmsg "Unknown show subcommand: $show_cmd"
+	    _Dbg_errmsg "Unknown show subcommand: $subcmd"
 	    _Dbg_errmsg "Show subcommands are:"
 	    typeset -a do_list=(${subcmds[@]})
 	    _Dbg_list_columns do_list '  ' errmsg

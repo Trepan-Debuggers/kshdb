@@ -44,20 +44,20 @@ for _Dbg_file in ${_Dbg_libdir}/command/set_sub/*.sh ; do
 done
 
 _Dbg_do_set() {
-    typeset set_cmd=$1
-    typeset rc
-    if [[ $set_cmd == '' ]] ; then
+    if (($# == 0)) ; then
 	_Dbg_msg "Argument required (expression to compute)."
-	return;
+	return 1
     fi
+    typeset subcmd=$1
+    typeset rc
     shift
 
-    if [[ -n ${_Dbg_debugger_set_commands[$set_cmd]} ]] ; then
-	${_Dbg_debugger_set_commands[$set_cmd]} "$@"
+    if [[ -n ${_Dbg_debugger_set_commands[$subcmd]} ]] ; then
+	${_Dbg_debugger_set_commands[$subcmd]} "$@"
 	return $?
     fi
   
-    case $set_cmd in 
+    case $subcmd in 
 	force  )
 	    _Dbg_set_onoff "$1" 'different'
 	    ;;
@@ -71,7 +71,7 @@ _Dbg_do_set() {
 	    _Dbg_do_set_trace_commands $@
 	    ;;
 	*)
-	    _Dbg_undefined_cmd "set" "$set_cmd"
+	    _Dbg_undefined_cmd "set" "$subcmd"
 	    return 1
     esac
     return 0

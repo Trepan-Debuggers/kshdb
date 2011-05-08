@@ -26,7 +26,7 @@ Show whether to run a \"list\" commands entering debugger
 See also \"set autolist\".' 1
 
 _Dbg_do_show_autolist() {
-    [[ -n $1 ]] && label='autolist: '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " autolist)
     typeset onoff="on."
     [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
     _Dbg_msg \

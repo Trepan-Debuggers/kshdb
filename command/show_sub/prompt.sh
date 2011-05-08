@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show annotate" debugger command
+# "show directories" debugger command
 #
-#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,16 +18,16 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub show annotate \
-'show annotate
+_Dbg_help_add_sub show prompt \
+'show prompt
 
-Show annotation level.
+Show prompt string.' 1
+# FIXME add dir and then See also dir.
 
-See \"set annotate\" for level numbers.
-' 1
-
-_Dbg_do_show_annotate() {
-    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " annotate)
+_Dbg_do_show_prompt() {
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " prompt)
     _Dbg_msg \
-	"${label}Annotation_level is $_Dbg_set_annotate."
+	"${label}${_Dbg_debugger_name}'s prompt is:"
+    _Dbg_msg "      \"$_Dbg_prompt_str\"."
+    return 0
 }
