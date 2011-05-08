@@ -230,7 +230,7 @@ function _Dbg_unset_brkpt {
 	if (( linenos[_Dbg_i] == lineno )) ; then
 	    # Got a match, find breakpoint entry number
 	    typeset -i brkpt_num
-	    (( brkpt_num = brkpt_nos[i] ))
+	    (( brkpt_num = brkpt_nos[_Dbg_i] ))
 	    _Dbg_unset_brkpt_arrays $brkpt_num
 	    unset linenos[_Dbg_i]
 	    _Dbg_brkpt_file2linenos[$fullname]=${linenos[@]}
