@@ -24,7 +24,9 @@
 # be picked up in next debugger command loop.
 
 _Dbg_help_add source \
-'source FILE -- Run debugger commands in FILE.' 1
+'source FILE
+
+Run debugger commands in FILE.' 1
 
 _Dbg_do_source() {
     if (( $# == 0 )) ; then
