@@ -40,7 +40,7 @@ _Dbg_show_onoff() {
     typeset cmd="$1"
     typeset msg="$2"
     typeset label="$3"
-    [[ -n $label ]] && label="${cmd}: "
+    [[ -z $label ]] && label=$(printf "set %-12s-- " $cmd)
     typeset onoff='off.'
     typeset value
     eval "value=\$_Dbg_set_${cmd}"

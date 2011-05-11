@@ -22,7 +22,7 @@ _Dbg_help_add_sub show debug \
 "Show if we are set to debug the debugger." 1
 
 _Dbg_do_show_debug() {
-    [[ -n $label ]] && label='debug: '
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " debug)
     _Dbg_show_onoff 'debug' 'Allow debugging the debugger' "$label"
     return 0
 }

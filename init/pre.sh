@@ -3,21 +3,22 @@
 #
 #   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
-# Here we put definitions common to both the script debugger and
+# We put definitions common to both the script debugger and
 # dbg-trace.sh. In contrast to other routines, this code is sourced
 # early -- before most of the debugger script is run.
 
@@ -45,7 +46,7 @@ _Dbg_msg()
 _Dbg_do_show_version()
 {
     [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " version)
-    _Dbg_msg "$_Dbg_debugger_name, release $_Dbg_release"
+    _Dbg_msg "${label}$_Dbg_debugger_name, release $_Dbg_release"
 }
 
 # Expand filename given as $1.
@@ -75,7 +76,6 @@ function _Dbg_expand_filename {
   typeset long_path
 
   [[ $basename == '.' ]] && basename=''
-
   if long_path=$( (cd "$dirname" ; pwd) 2>/dev/null ) ; then
     if [[ "$long_path" == '/' ]] ; then
       echo "/$basename"
@@ -92,7 +92,7 @@ function _Dbg_expand_filename {
 # Create temporary file based on $1
 # file $1
 _Dbg_tempname() {
-  echo "$_Dbg_tmpdir/${_Dbg_debugger_name}$1$$"
+  echo "$_Dbg_tmpdir/${_Dbg_debugger_name}_$1_$$"
 }
 
 # Process command-line options

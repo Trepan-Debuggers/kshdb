@@ -32,12 +32,18 @@ typeset -A _Dbg_command_help_show
 # They are available if asked for explicitly, e.g. "show copying"
 typeset -A _Dbg_show_nolist
 
-_Dbg_help_add show '' 1 # Help routine is elsewhere
+# Help routine is elsewhere which is why we have '' below.
+_Dbg_help_add show '' 1 _Dbg_complete_show
 
 # Load in "show" subcommands
 for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do
     source $_Dbg_file
 done
+
+# Command completion for a condition command
+_Dbg_complete_show() {
+    _Dbg_complete_subcmd show
+}
 
 _Dbg_do_show() {
     typeset subcmd=$1
@@ -45,22 +51,21 @@ _Dbg_do_show() {
     typeset label=$1
     (($# >= 1)) && shift
 
-    # Warranty, copying, directories, and aliases are omitted below.
-    typeset subcmds='annotate args autoeval autolist basename debug different listsize prompt trace-commands width'
-
     if [[ -z $subcmd ]] ; then 
 	typeset thing
-	for thing in $subcmds ; do 
-	    _Dbg_do_show $thing 1
+	typeset list; list=("${!_Dbg_debugger_show_commands[@]}")
+	for thing in ${list[@]} ; do
+	    [[ -n ${_Dbg_show_nolist[$thing]} ]] || _Dbg_do_show $thing 1
 	done
 	return 0
     elif [[ -n ${_Dbg_debugger_show_commands[$subcmd]} ]] ; then
-	${_Dbg_debugger_show_commands[$subcmd]} $label "$@"
+	${_Dbg_debugger_show_commands[$subcmd]} "$label" "$@"
 	return 0
     fi
-    
+
     case $subcmd in 
 	lin | line | linet | linetr | linetra | linetrac | linetrace )
+	    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " 'line tracing')
 	    [[ -n $label ]] && label='line tracing: '
 	    typeset onoff="off."
 	    (( _Dbg_set_linetrace != 0 )) && onoff='on.'
@@ -68,32 +73,30 @@ _Dbg_do_show() {
 		"${label}Show line tracing is" $onoff
 	    _Dbg_msg \
 		"${label}Show line trace delay is ${_Dbg_linetrace_delay}."
-	    return 0
 	    ;;
-	
+
 	lo | log | logg | loggi | loggin | logging )
 	    shift
 	    _Dbg_do_show_logging $*
 	    ;;
 	sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
-	    [[ -n $label ]] && label='showcommand: '
+	    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " 'showcommmand')
 	    _Dbg_msg \
 		"${label}Show commands in debugger prompt is" \
-		"$_Dbg_show_command."
-	    return 0
+		"$_Dbg_set_show_command."
 	    ;;
 	t|tr|tra|trac|trace|trace-|tracec|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
 	    [[ -n $label ]] && label='trace-commands: '
 	    _Dbg_msg \
 		"${label}State of command tracing is" \
 		"$_Dbg_set_trace_commands."
-	    return 0
 	    ;;
 	*)
 	    _Dbg_errmsg "Unknown show subcommand: $subcmd"
+	    typeset -a subcmds; subcmds=("${!_Dbg_debugger_show_commands[@]}")
 	    _Dbg_errmsg "Show subcommands are:"
-	    typeset -a do_list=(${subcmds[@]})
-	    _Dbg_list_columns do_list '  ' errmsg
+	    _Dbg_list_columns subcmds
 	    return 1
     esac
+    return $?
 }
