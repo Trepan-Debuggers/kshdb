@@ -18,19 +18,26 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-# Does things to after on entry of after an eval to set some debugger
+# Does things debugger entry of after an eval to set some debugger
 # internal settings  
 _Dbg_set_debugger_internal() {
   IFS="$_Dbg_space_IFS";
   PS4='(${.sh.file}:${.sh.lineno}:[${.sh.subshell}]): ${.sh.fun}
 '
+  HISTFILE=$_Dbg_histfile
+  HISTSIZE=$_Dbg_history_length
 }
+
+typeset _Dbg_old_histfile
+typeset _Dbg_old_histsize
 
 function _Dbg_restore_user_vars {
   IFS="$_Dbg_space_IFS";
   set -$_Dbg_old_set_opts
   IFS="$_Dbg_old_IFS";
   PS4="$_Dbg_old_PS4"
+  HISTFILE=$_Dbg_old_histfile
+  HISTSIZE=$_Dbg_old_histsize
 }
 
 # Do things for debugger entry. Set some global debugger variables
@@ -44,6 +51,7 @@ _Dbg_set_debugger_entry() {
     _Dbg_return_rc=0
     _Dbg_old_IFS="$IFS"
     _Dbg_old_PS4="$PS4"
+    _Dbg_old_histfile=$HISTFILE
     _Dbg_set_debugger_internal
     _Dbg_source_journal
     if (( _Dbg_QUIT_LEVELS > 0 )) ; then
