@@ -18,9 +18,14 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-# Move default values down $1 or one in the stack.
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    src_dir=${.sh.file%/*}
+    top_dir=${src_dir}/..
+    for lib_file in help alias ; do source $top_dir/lib/${lib_file}.sh; done
+fi
 
-# Move default values up $1 or one in the stack.
+
+# Move default values down $1 or one in the stack.
 _Dbg_help_add down \
 'down [COUNT]
 
@@ -41,5 +46,13 @@ _Dbg_do_down() {
     return $rc
 }
 
-_Dbg_alias_add 'd' down
-
+# Demo it.
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    source $top_dir/lib/complete.sh
+    source $top_dir/command/help.sh 
+    _Dbg_libdir=$top_dir/lib
+    source $_Dbg_libdir/msg.sh
+    
+    _Dbg_args='down'
+    _Dbg_do_help down
+fi

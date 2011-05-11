@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add delete \
-"delete {BRKPT-NUM}... -- Delete the breakpoint entry or entries.
+"delete {BRKPT-NUM}...
+
+Delete the breakpoint entry or entries.
 With no BRKPT-NUM, delete all breakpoints." 1
 
 # Routine to a delete breakpoint/watchpoint by entry numbers.

@@ -31,7 +31,9 @@ _Dbg_do_alias() {
 }
 
 _Dbg_help_add unalias \
-'unalias NAME -- Remove debugger command alias NAME.
+'unalias NAME
+
+Remove debugger command alias NAME.
 
 Use "show aliases" to get a list the aliases in effect.'
 

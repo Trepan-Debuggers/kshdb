@@ -53,3 +53,14 @@ function _Dbg_do_examine {
 }
 
 _Dbg_alias_add 'x' 'examine'
+
+# Demo it.
+if [[ $0 == ${BASH_SOURCE[0]} ]] ; then 
+    for _Dbg_file in fns msg ; do 
+	source $top_dir/lib/${_Dbg_file}.sh
+    done
+    source $top_dir/command/help.sh
+    _Dbg_args='examine'
+    _Dbg_do_help x
+    _Dbg_do_examine top_dir
+fi    
