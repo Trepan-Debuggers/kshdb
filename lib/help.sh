@@ -36,7 +36,7 @@ function _Dbg_help_add {
     _Dbg_command_help[$1]="$2"
     (( add_command )) && _Dbg_debugger_commands[$1]="_Dbg_do_$1"
     # if (($# == 4)); then
-    # 	complete -F "$4" "$1"
+    #   complete -F "$4" "$1"
     # fi
     return 0
 }
@@ -47,7 +47,7 @@ function _Dbg_help_add_sub {
     (($# != 3)) && (($# != 4))  && return 1
     eval "_Dbg_command_help_$1[$2]=\"$3\""
     if (( add_command )) ; then
-    	eval "_Dbg_debugger_${1}_commands[$2]=\"_Dbg_do_${1}_${2}\""
+        eval "_Dbg_debugger_${1}_commands[$2]=\"_Dbg_do_${1}_${2}\""
     fi
     return 0
 }
@@ -58,22 +58,22 @@ _Dbg_help_set() {
     if (( $# == 0 )) ; then 
         typeset list
         list="${!_Dbg_command_help_set[@]}"
-	for subcmd in $list ; do 
-	    _Dbg_help_set $subcmd 1
-	done
-	return 0
+        for subcmd in $list ; do 
+            _Dbg_help_set $subcmd 1
+        done
+        return 0
     fi
 
     subcmd="$1"
     typeset label="$2"
 
     if [[ -n "${_Dbg_command_help_set[$subcmd]}" ]] ; then 
-	if [[ -z $label ]] ; then 
- 	    _Dbg_msg "${_Dbg_command_help_set[$subcmd]}"
-	    return 0
-	else
-	    label=$(printf "set %-12s-- " $subcmd)
-	fi
+        if [[ -z $label ]] ; then 
+            _Dbg_msg "${_Dbg_command_help_set[$subcmd]}"
+            return 0
+        else
+            label=$(printf "set %-12s-- " $subcmd)
+        fi
     fi
     
     case $subcmd in 
@@ -86,33 +86,33 @@ _Dbg_help_set() {
             if [[ -z $label ]] ; then 
                 typeset post_label='
 0 == normal;     1 == fullname (for use when running under emacs).'
-	    fi
-	    _Dbg_msg \
-		"${label}Set annotation level.$post_label"
-	    return 0
-	    ;;
-	autoe | autoev | autoeva | autoeval )
-	    _Dbg_help_set_onoff 'autoeval' 'autoeval' \
-		"Evaluate unrecognized commands"
-	    return 0
-	    ;;
-	autol | autoli | autolis | autolist )
-	    typeset -l onoff="on."
-	    [[ -z ${_Dbg_cmdloop_hooks['list']} ]] && onoff='off.'
-	    _Dbg_msg \
-		"${label}Run list command is ${onoff}"
-	    return 0
-	    ;;
-	b | ba | bas | base | basen | basena | basenam | basename )
-	    _Dbg_help_set_onoff 'basename' 'basename' \
-		"Set short filenames (the basename) in debug output"
-	    return 0
-	    ;;
-	deb|debu|debug )
-	    _Dbg_help_set_onoff 'debug' 'debug' \
-	      "Set debugging the debugger"
-	    return 0
-	    ;;
+            fi
+            _Dbg_msg \
+                "${label}Set annotation level.$post_label"
+            return 0
+            ;;
+        autoe | autoev | autoeva | autoeval )
+            _Dbg_help_set_onoff 'autoeval' 'autoeval' \
+                "Evaluate unrecognized commands"
+            return 0
+            ;;
+        autol | autoli | autolis | autolist )
+            typeset -l onoff="on."
+            [[ -z ${_Dbg_cmdloop_hooks['list']} ]] && onoff='off.'
+            _Dbg_msg \
+                "${label}Run list command is ${onoff}"
+            return 0
+            ;;
+        b | ba | bas | base | basen | basena | basenam | basename )
+            _Dbg_help_set_onoff 'basename' 'basename' \
+                "Set short filenames (the basename) in debug output"
+            return 0
+            ;;
+        deb|debu|debug )
+            _Dbg_help_set_onoff 'debug' 'debug' \
+              "Set debugging the debugger"
+            return 0
+            ;;
         di|dif|diff|diffe|differe|differen|different )
             typeset onoff=${1:-'on'}
             (( _Dbg_set_different )) && onoff='on.'
@@ -149,57 +149,58 @@ _Dbg_help_set() {
                 _Dbg_msg 'on.'
             fi
             ;;
-	inferior-tty )
-	    _Dbg_msg "${label} set tty for input and output"
-	    ;;
-	lin | line | linet | linetr | linetra | linetrac | linetrace )
-	    typeset onoff='off.'
-	    (( _Dbg_set_linetrace )) && onoff='on.'
-	    _Dbg_msg \
-		"${label}Set tracing execution of lines before executed is" $onoff
-	    if (( _Dbg_set_linetrace )) ; then
-		_Dbg_msg \
-		    "set linetrace delay -- delay before executing a line is" $_Dbg_linetrace_delay
-	    fi
-	    return 0
-	    ;;
-	lis | list | lists | listsi | listsiz | listsize )
-	    _Dbg_msg \
-		"${label}Set number of source lines $_Dbg_debugger_name will list by default."
-	    ;;
-	p | pr | pro | prom | promp | prompt )
-	    _Dbg_msg \
-		"${label}${_Dbg_debugger_name}'s prompt is: \"$_Dbg_prompt_str\"."
-	    return 0
-	    ;;
-	sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
-	    _Dbg_msg \
-		"${label}Set showing the command to execute is $_Dbg_show_command."
-	    return 0
-	    ;;
-	t|tr|tra|trac|trace|trace-|tracec|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
-	    _Dbg_msg \
-		"${label}Set showing debugger commands is $_Dbg_set_trace_commands."
-	    return 0
-	    ;;
-	w | wi | wid | widt | width )
-	    _Dbg_msg \
-		"${label}Set line length to use in output."
-	    ;;
-	* )
-	    _Dbg_msg \
-		"There is no \"set $subcmd\" command."
+        inferior-tty )
+            _Dbg_msg "${label} set tty for input and output"
+            ;;
+        lin | line | linet | linetr | linetra | linetrac | linetrace )
+            typeset onoff='off.'
+            (( _Dbg_set_linetrace )) && onoff='on.'
+            _Dbg_msg \
+                "${label}Set tracing execution of lines before executed is" $onoff
+            if (( _Dbg_set_linetrace )) ; then
+                _Dbg_msg \
+                    "set linetrace delay -- delay before executing a line is" $_Dbg_linetrace_delay
+            fi
+            return 0
+            ;;
+        lis | list | lists | listsi | listsiz | listsize )
+            _Dbg_msg \
+                "${label}Set number of source lines $_Dbg_debugger_name will list by default."
+            ;;
+        p | pr | pro | prom | promp | prompt )
+            _Dbg_msg \
+                "${label}${_Dbg_debugger_name}'s prompt is: \"$_Dbg_prompt_str\"."
+            return 0
+            ;;
+        sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
+            _Dbg_msg \
+                "${label}Set showing the command to execute is $_Dbg_show_command."
+            return 0
+            ;;
+        t|tr|tra|trac|trace|trace-|tracec|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
+            _Dbg_msg \
+                "${label}Set showing debugger commands is $_Dbg_set_trace_commands."
+            return 0
+            ;;
+        wi|wid|widt|width )
+            _Dbg_msg \
+                "${label}Set maximum width of lines is $_Dbg_set_linewidth."
+            return 0
+            ;;
+        * )
+            _Dbg_errmsg \
+                "There is no \"set $subcmd\" command."
     esac
 }
 
 _Dbg_help_show() {
-    typeset subcmd
     if (( $# == 0 )) ; then 
         typeset list
         list="${!_Dbg_command_help_set[@]}"
+        typeset subcmd
         for subcmd in $list; do
             _Dbg_help_show $subcmd 1
-	done
+        done
         return 0
     fi
     
@@ -207,119 +208,117 @@ _Dbg_help_show() {
     typeset label="$2"
 
     if [[ -n "${_Dbg_command_help_show[$subcmd]}" ]] ; then 
-	if [[ -z $label ]] ; then 
- 	    _Dbg_msg "${_Dbg_command_help_show[$subcmd]}"
-	    return 0
-	else
-	    label=$(printf "show %-12s-- " $subcmd)
-	fi
+        if [[ -z $label ]] ; then 
+            _Dbg_msg "${_Dbg_command_help_show[$subcmd]}"
+            return 0
+        else
+            label=$(printf "show %-12s-- " $subcmd)
+        fi
     fi
 
     case $subcmd in 
-	al | ali | alia | alias | aliase | aliases )
-	    _Dbg_msg \
-		"$label Show list of aliases currently in effect."
-	    return 0
-	    ;;
-	ar | arg | args )
-	    _Dbg_msg \
-		"$label Show argument list to give when program is restarted."
-	    return 0
-	    ;;
-	an | ann | anno | annot | annota | annotat | annotate )
-	    _Dbg_msg \
-		"$label Show annotation_level"
-	    return 0
-	    ;;
-	autoe | autoev | autoeva | autoeval )
-	    _Dbg_msg \
-		"$label Show if we evaluate unrecognized commands."
-	    return 0
-	    ;;
-	autol | autoli | autolis | autolist )
-	    _Dbg_msg \
-		"$label Run list before command loop?"
-	    return 0
-	    ;;
-	b | ba | bas | base | basen | basena | basenam | basename )
-	    _Dbg_msg \
-		"$label Show if we are are to show short or long filenames."
-	    return 0
-	    ;;
-	com | comm | comma | comman | command | commands )
-	    _Dbg_msg \
-		"$label Show the history of commands you typed."
-	    ;;
-	cop | copy| copyi | copyin | copying )
-	    _Dbg_msg \
-		"$label Conditions for redistributing copies of debugger."
-	    ;;
-	d|de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
-	    _Dbg_msg \
-		"$label Show if we are set to debug the debugger."
-	    return 0
-	    ;;
-	different | force)
-	    _Dbg_msg \
-		"$label Show if setting forces a different line."
-	    ;;
-	dir|dire|direc|direct|directo|director|directori|directorie|directories)
-	    _Dbg_msg \
-		"$label Show file directories searched for listing source."
-	    ;;
+        al | ali | alia | alias | aliase | aliases )
+            _Dbg_msg \
+                "${label}Show list of aliases currently in effect."
+            return 0
+            ;;
+        ar | arg | args )
+            _Dbg_msg \
+                "${label}Show argument list to give program on restart."
+            return 0
+            ;;
+        an | ann | anno | annot | annota | annotat | annotate )
+            _Dbg_msg \
+                "${label}Show annotation_level"
+            return 0
+            ;;
+        autoe | autoev | autoeva | autoeval )
+            _Dbg_msg \
+                "${label}Show if we evaluate unrecognized commands."
+            return 0
+            ;;
+        autol | autoli | autolis | autolist )
+            _Dbg_msg \
+                "${label}Run list before command loop?"
+            return 0
+            ;;
+        b | ba | bas | base | basen | basena | basenam | basename )
+            _Dbg_msg \
+                "${label}Show if we are are to show short or long filenames."
+            return 0
+            ;;
+        com | comm | comma | comman | command | commands )
+            _Dbg_msg \
+                "${label}Show the history of commands you typed."
+            ;;
+        cop | copy| copyi | copyin | copying )
+            _Dbg_msg \
+                "${label}Conditions for redistributing copies of debugger."
+            ;;
+        d|de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
+            _Dbg_msg \
+                "${label}Show if we are set to debug the debugger."
+            return 0
+            ;;
+        different | force)
+            _Dbg_msg \
+                "${label}Show if debugger stops at a different line."
+            return 0
+            ;;
+        dir|dire|direc|direct|directo|director|directori|directorie|directories)
+            _Dbg_msg \
+                "${label}Show file directories searched for listing source."
+            ;;
         editing )
             _Dbg_msg \
-                "$label Show editing of command lines and edit style."
+                "${label}Show editing of command lines and edit style."
             ;;
         highlight )
             _Dbg_msg \
-                "$label Show if we syntax highlight source listings."
+                "${label}Show if we syntax highlight source listings."
             return 0
             ;;
         history )
             _Dbg_msg \
-                "$label Show if we are recording command history."
+                "${label}Show if we are recording command history."
             return 0
             ;;
-	lin | line | linet | linetr | linetra | linetrac | linetrace )
-	    _Dbg_msg \
-		"$label Show whether to trace lines before execution."
-	    return 0
-	    ;;
-	lis | list | lists | listsi | listsiz | listsize )
-	    _Dbg_msg \
-		"$label Show number of source lines debugger will list by default."
-	    return 0
-	    ;;
-	p | pr | pro | prom | promp | prompt )
-	    _Dbg_msg \
-		"$label Show debugger prompt."
-	    return 0
-	    ;;
+        lin | line | linet | linetr | linetra | linetrac | linetrace )
+            _Dbg_msg \
+                "${label}Show whether to trace lines before execution."
+            ;;
+        lis | list | lists | listsi | listsiz | listsize )
+            _Dbg_msg \
+                "${label}Show number of source lines debugger will list by default."
+            ;;
+        p | pr | pro | prom | promp | prompt )
+            _Dbg_msg \
+                "${label}Show debugger prompt."
+            return 0
+            ;;
         sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
             [[ -n $label ]] && label='set showcommand -- '
             _Dbg_msg \
                 "${label}Set showing the command to execute is $_Dbg_set_show_command."
             return 0
             ;;
-	t|tr|tra|trac|trace|trace-|trace-c|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
-	    _Dbg_msg \
-		'show trace-commands -- Show if we are echoing debugger commands'
-	    return 0
-	    ;;
-	wa | war | warr | warra | warran | warrant | warranty )
-	    _Dbg_msg \
-		"$label Various kinds of warranty you do not have."
-	    return 0
-	    ;;
-        wi|wid|widt|width )
+        t|tr|tra|trac|trace|trace-|trace-c|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
             _Dbg_msg \
-                "${label}Set maximum width of lines is $_Dbg_set_linewidth."
+                'show trace-commands -- Show if we are echoing debugger commands'
             return 0
             ;;
-	* )
-	    _Dbg_msg \
-		"Undefined show command: \"$subcmd\".  Try \"help show\"."
+        wa | war | warr | warra | warran | warrant | warranty )
+            _Dbg_msg \
+                "${label}Various kinds of warranty you do not have."
+            return 0
+            ;;
+        width )
+            _Dbg_msg \
+                "${label}maximum width of a line."
+            return 0
+            ;;
+        * )
+            _Dbg_msg \
+                "Undefined show command: \"$subcmd\".  Try \"help show\"."
     esac
 }
-
