@@ -24,7 +24,13 @@
 typeset _Dbg_show_command="auto"
 
 typeset -A _Dbg_debugger_show_commands
+
 typeset -A _Dbg_command_help_show
+
+# subcommands whose current values are not shown in a "show" list . 
+# These are things like alias, warranty, or copying.
+# They are available if asked for explicitly, e.g. "show copying"
+typeset -A _Dbg_show_nolist
 
 _Dbg_help_add show '' 1 # Help routine is elsewhere
 
@@ -54,36 +60,6 @@ _Dbg_do_show() {
     fi
     
     case $subcmd in 
-	autoe | autoev | autoeva | autoeval )
-	    [[ -n $label ]] && label='autoeval: '
-	    _Dbg_msg \
-		"${label}Evaluate unrecognized commands is" $(_Dbg_onoff $_Dbg_set_autoeval)
-	    return 0
-	    ;;
-	autol | autoli | autolis | autolist )
-	    [[ -n $label ]] && label='autolist: '
-	    typeset -l onoff="on."
-	    [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
-	    _Dbg_msg \
-		"${label}Auto run of 'list' command is ${onoff}"
-	    return 0
-	    ;;
-	com | comm | comma | comman | command | commands )
-	    shift # shift off "commands"
-	    _Dbg_history_list $*
-	    return $?
-	    ;;
-	hi|his|hist|histo|histor|history)
-	    _Dbg_printf "%-12s-- " history
-	    _Dbg_msg \
-		"  filename: The filename in which to record the command history is:"
-	    _Dbg_msg "	$_Dbg_histfile"
-	    _Dbg_msg \
-		"  save: Saving of history save is" $(_Dbg_onoff $_Dbg_set_history)
-	    _Dbg_msg \
-		"  size: Debugger history size is $_Dbg_history_length"
-	    ;;
-	
 	lin | line | linet | linetr | linetra | linetrac | linetrace )
 	    [[ -n $label ]] && label='line tracing: '
 	    typeset onoff="off."
@@ -111,20 +87,6 @@ _Dbg_do_show() {
 	    _Dbg_msg \
 		"${label}State of command tracing is" \
 		"$_Dbg_set_trace_commands."
-	    return 0
-	    ;;
-	v | ve | ver | vers | versi | versio | version )
-	    _Dbg_do_show_version
-	    return 0
-	    ;;
-	w | wa | war | warr | warra | warran | warrant | warranty )
-	    _Dbg_do_info warranty
-	    return 0
-	    ;;
-	wi | wid | width )
-	    [[ -n $label ]] && label='width: '
-	    _Dbg_msg \
-		"${label}Line width is $_Dbg_linewidth."
 	    return 0
 	    ;;
 	*)

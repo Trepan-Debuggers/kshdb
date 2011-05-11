@@ -44,7 +44,8 @@ _Dbg_msg()
 # Used by "show version" as well as --version
 _Dbg_do_show_version()
 {
-  _Dbg_msg "$_Dbg_debugger_name, release $_Dbg_release"
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " version)
+    _Dbg_msg "$_Dbg_debugger_name, release $_Dbg_release"
 }
 
 # Expand filename given as $1.

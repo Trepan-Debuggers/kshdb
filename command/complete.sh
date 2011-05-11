@@ -18,10 +18,9 @@
 #   MA 02111 USA.
 
 if [[ $0 == ${.sh.file##*/} ]] ; then
-    # source ../init/require.sh 
-    # FIXME: require loses scope for typeset -A...
-    source ../lib/help.sh
-    source ../lib/alias.sh
+    src_dir=${.sh.file%/*}
+    top_dir=${src_dir}/..
+    for lib_file in help alias ; do source $top_dir/lib/${lib_file}.sh; done
 fi
 
 _Dbg_help_add complete \
@@ -51,11 +50,11 @@ _Dbg_do_complete() {
 
 # Demo it.
 if [[ $0 == ${.sh.file##*/} ]] ; then
-    source ../lib/complete.sh
-    source ./help.sh 
-    source ../lib/msg.sh 
-    _Dbg_libdir='..'
-    for _Dbg_file in ${_Dbg_libdir}/command/d*.sh ; do 
+    source $top_dir/lib/complete.sh
+    source $top_dir/command/help.sh 
+    _Dbg_libdir=$top_dir/lib
+    source $_Dbg_libdir/msg.sh
+    for _Dbg_file in $src_dir/d*.sh ; do 
 	source $_Dbg_file
     done
     

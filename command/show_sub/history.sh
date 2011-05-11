@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show editing" debugger command
+# "show history" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,20 +18,17 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub show editing \
-"Show editing of command lines as they are typed" 1
+_Dbg_help_add_sub show history \
+"Show information on command history saving" 1
 
-_Dbg_do_show_editing() {
+_Dbg_do_show_history() {
+    _Dbg_printf "%-12s-- " history
+    _Dbg_msg \
+	"  filename: The filename in which to record the command history is $_Dbg_histfile"
+    _Dbg_msg \
+	"  save: Saving of history save is" $(_Dbg_onoff $_Dbg_set_history)
+    _Dbg_msg \
+	"  size: Debugger history size is $_Dbg_history_length"
     typeset label="$1"
-    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " editing)
-    _Dbg_msg_nocr \
-        "${label}Editing of command lines as they are typed is "
-    if [[ -z $_Dbg_edit ]] ; then
-        _Dbg_msg 'off.'
-    else
-        _Dbg_msg 'on.'
-        _Dbg_msg \
-            "  Edit style is $_Dbg_edit_style."
-    fi
     return 0
 }

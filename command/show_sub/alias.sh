@@ -24,6 +24,8 @@ _Dbg_help_add_sub show alias \
 If aliases names are given, show their definition. If left blank, show
 all alias names' 1
 
+_Dbg_show_nolist[alias]=1
+
 _Dbg_do_show_alias() {
     typeset -a do_list
     do_list=()

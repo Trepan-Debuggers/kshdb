@@ -21,6 +21,8 @@
 _Dbg_help_add_sub show copying \
 'Conditions for redistributing copies of this debugger.' 1
 
+_Dbg_show_nolist[copying]=1
+
 _Dbg_do_show_copying() {
       _Dbg_msg \
 "

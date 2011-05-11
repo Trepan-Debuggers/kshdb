@@ -18,6 +18,12 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    src_dir=${.sh.file%/*}
+    top_dir=${src_dir}/..
+    for lib_file in help alias ; do source $top_dir/lib/${lib_file}.sh; done
+fi
+
 _Dbg_help_add help \
 'help	-- Print list of commands.' 1
 
@@ -68,3 +74,12 @@ _Dbg_do_help() {
 
 _Dbg_alias_add '?' help
 _Dbg_alias_add 'h' help
+
+ # Demo it.
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    for file in sort columnize list msg ; do source ../lib/${file}.sh; done
+    _Dbg_do_help
+    echo '---'
+    _Dbg_args='help'
+    _Dbg_do_help help
+ fi
