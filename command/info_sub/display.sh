@@ -18,6 +18,9 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
+_Dbg_help_add_sub info display \
+"info display" 1
+
 # List display command(s)
 _Dbg_do_info_display() {
   if [ ${#_Dbg_disp_exp[@]} != 0 ]; then

@@ -67,11 +67,6 @@ _Dbg_do_info() {
 #               _Dbg_do_info_args 3 
 # 	      return 0
 # 	      ;;
-	  d | di | dis| disp | displ | displa | display )
-	      _Dbg_do_info_display $@
-	      return 0
-	      ;;
-
 	  file | files )
 	      _Dbg_do_info_files
 	      return $?
