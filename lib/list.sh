@@ -89,7 +89,7 @@ _Dbg_list() {
 _Dbg_list_typeset_attr() {
     typeset -a columize_list=( $(_Dbg_get_typeset_attr $*) )
     typeset -i rc=$?
-    (( $rc != 0 )) && return $rc
+    (( rc != 0 )) && return $rc
     _Dbg_list_columns columnize_list
 }
 

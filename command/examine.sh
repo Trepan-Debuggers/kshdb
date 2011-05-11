@@ -19,6 +19,12 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
+if [[ $0 == ${.sh.file##*/} ]] ; then
+    src_dir=${.sh.file%/*}
+    top_dir=${src_dir}/..
+    for lib_file in help alias ; do source $top_dir/lib/${lib_file}.sh; done
+fi
+
 _Dbg_help_add 'examine' \
 "examine EXPR -- Print value of an expression via \'typeset', \`let' and failing these, eval.
 

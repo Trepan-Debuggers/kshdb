@@ -209,8 +209,8 @@ function _Dbg_readin_if_new {
     typeset fullname=${_Dbg_file2canonic["$filename"]}
     if [[ -z $fullname ]] ; then 
 	_Dbg_readin "$filename"
-	typeset rc=$?
-	(( $rc != 0 )) && return $rc
+	typeset -i rc=$?
+	(( rc != 0 )) && return $rc
 	fullname=_Dbg_file2canonic["$filename"]
 	[[ -z $fullname ]] && return 1
     fi

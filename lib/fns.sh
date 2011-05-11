@@ -170,7 +170,7 @@ function _Dbg_get_functions {
     return 0
     typeset -p +f | while read line ; do
 	fn=${line% #*}
-	[[ $fn == _* ]] && (( ! $include_system )) && continue
+	[[ $fn == _* ]] && (( ! include_system )) && continue
 	if [[ $fn == $pat ]] ; then 
 	     [[ $invert == 0 ]] && ret_fns[-1]=$fn
 	else

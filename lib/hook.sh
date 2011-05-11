@@ -80,7 +80,7 @@ function _Dbg_trap_handler {
     typeset -i _Dbg_skipping_fn
     ((_Dbg_skipping_fn =
 	    (_Dbg_return_level >= 0 && 
-	     ${.sh.level} > _Dbg_return_level) ))
+	     .sh.level > _Dbg_return_level) ))
     # echo "${#funcfiletrace[@]} vs $_Dbg_return_level ; $_Dbg_skipping_fn"
 
     # if in step mode, decrement counter
@@ -114,7 +114,7 @@ function _Dbg_trap_handler {
 	    fi
 	    (( _Dbg_brkpt[_Dbg_brkpt_num].hits++ ))
 	    _Dbg_msg "Breakpoint $_Dbg_brkpt_num hit."
-	    if (( ${_Dbg_brkpt[_Dbg_brkpt_num].onetime} == 1 )) ; then
+	    if (( _Dbg_brkpt[_Dbg_brkpt_num].onetime == 1 )) ; then
 		_Dbg_stop_reason='at a breakpoint that has since been deleted'
 		_Dbg_delete_brkpt_entry $_Dbg_brkpt_num
 	    else
