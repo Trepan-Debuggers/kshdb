@@ -19,18 +19,22 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-if [[ $0 == ${.sh.file##*/} ]] ; then
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
     src_dir=${.sh.file%/*}
     top_dir=${src_dir}/..
     for lib_file in help alias ; do source $top_dir/lib/${lib_file}.sh; done
 fi
 
 _Dbg_help_add 'examine' \
-"examine EXPR -- Print value of an expression via \'typeset', \`let' and failing these, eval.
+"examine EXPR 
+
+Print value of an expression via \"typeset\", \"let\", and failing these, 
+\"eval\".
 
 Single variables and arithmetic expressions do not need leading $ for
 their value is to be substituted. However if neither these, variables
-need $ to have their value substituted." 1 
+need $ to have their value substituted.
+See also \"eval\" and \"pr\"." 1 
 
 function _Dbg_do_examine {
   typeset _Dbg_expr; _Dbg_expr=${@:-"$_Dbg_last_x_args"}
@@ -61,7 +65,7 @@ function _Dbg_do_examine {
 _Dbg_alias_add 'x' 'examine'
 
 # Demo it.
-if [[ $0 == ${BASH_SOURCE[0]} ]] ; then 
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
     for _Dbg_file in fns msg ; do 
 	source $top_dir/lib/${_Dbg_file}.sh
     done
