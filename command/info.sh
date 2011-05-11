@@ -67,27 +67,11 @@ _Dbg_do_info() {
 #               _Dbg_do_info_args 3 
 # 	      return 0
 # 	      ;;
-	  file | files )
-	      _Dbg_do_info_files
-	      return $?
-	      ;;
-	  
 	  #       h | ha | han | hand | handl | handle | \
 	  #           si | sig | sign | signa | signal | signals )
 	  #         _Dbg_info_signals
 	  #         return
 	  # 	;;
-	  
-	  l | li | lin | line )
-	      _Dbg_do_info_line
-	      return 0
-	      ;;
-	  
-	  p | pr | pro | prog | progr | progra | program )
-	      _Dbg_do_info_program
-	      return 0
-	      ;;
-	  
 	  so | sou | sourc | source )
 	      _Dbg_do_info_source
 	      return 0
@@ -103,14 +87,6 @@ _Dbg_do_info() {
 	  # 	return;
 	  # 	;;
 	  
-	  v | va | var | vari | varia | variab | variabl | variable | variables )
-	      _Dbg_do_info_variables "$1"
-	      return 0
-              ;;
-	  w | wa | war | warr | warra | warran | warrant | warranty )
-	      _Dbg_do_info_warranty
-	      return 0
-	      ;;
 	  *)
 	      _Dbg_errmsg "Unknown info subcommand: $subcmd"
 	      return 1
@@ -118,7 +94,6 @@ _Dbg_do_info() {
   else
       msg=_Dbg_msg
   fi
-  typeset -p _Dbg_debugger_info_commands
   typeset -a subcmds; subcmds=("${!_Dbg_debugger_info_commands[@]}")
   $msg "Info subcommands are:"
   _Dbg_list_columns subcmds

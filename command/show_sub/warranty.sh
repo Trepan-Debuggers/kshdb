@@ -19,7 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub show warranty \
-'Lack of warranty of this debugger.' 1
+'info warranty
+
+Lack of warranty of this debugger.' 1
 
 _Dbg_show_nolist[warranty]=1
 
