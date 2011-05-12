@@ -21,7 +21,7 @@
 _Dbg_help_add_sub info files \
 'info files
 
-show a listsof files that have been read in and properties regarding them.
+show a list of files that have been read in and properties regarding them.
 ' 1
 
 _Dbg_do_info_files() {

@@ -119,6 +119,8 @@ AC_CONFIG_FILES([test/integration/test-restart],
                 [chmod +x test/integration/test-restart])
 AC_CONFIG_FILES([test/integration/test-setshow], 
                 [chmod +x test/integration/test-setshow])
+AC_CONFIG_FILES([test/integration/test-info-args],
+                [chmod +x test/integration/test-info-args])
 AC_CONFIG_FILES([test/integration/test-skip], 
                 [chmod +x test/integration/test-skip])
 AC_CONFIG_FILES([test/integration/test-step], 
