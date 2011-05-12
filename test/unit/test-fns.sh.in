@@ -46,6 +46,13 @@ test_esc_dq()
     fi
 }
 
+test_get_functions()
+{
+    typeset -a ret_fns
+    _Dbg_get_functions 0 ^test_get_functions
+    assertEquals 1 ${#ret_fns[@]}
+}
+
 test_is_function()
 {
     unset function_test

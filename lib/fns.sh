@@ -1,21 +1,22 @@
 # -*- shell-script -*-
 # fns.sh - Debugger Utility Functions
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein rocky@gnu.org
 #
-#   kshdb is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free
-#   Software Foundation; either version 2, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2, or
+#   (at your option) any later version.
 #
-#   kshdb is distributed in the hope that it will be useful, but WITHOUT ANY
-#   WARRANTY; without even the implied warranty of MERCHANTABILITY or
-#   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-#   for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along
-#   with kshdb; see the file COPYING.  If not, write to the Free Software
-#   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; see the file COPYING.  If not, write to
+#   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
+#   MA 02111 USA.
 
 typeset -a _Dbg_yn
 _Dbg_yn=("n" "y")         
@@ -151,33 +152,31 @@ function _Dbg_is_function {
     return $?
 }
 
-# _get_function echoes a list of all of the functions.
+# _get_function echoes returns list of all of functions in array 
+# variable ret_fns.
 # if $1 is nonzero, system functions, i.e. those whose name starts with
 # an underscore (_), are included in the search.
 # FIXME add parameter search pattern.
-function _Dbg_get_functions {
+_Dbg_get_functions() {
     typeset -i include_system=${1:-0}
-    typeset    pat=${2:-*}
-    typeset  line
-    typeset -a ret_fns=()
+    typeset    pat=${2:-.*}
     typeset -i invert=0;
+
     if [[ $pat == !* ]] ; then 
 	# Remove leading !
 	pat=#{$pat#!}
 	invert=1
     fi	
-    echo 'Not done yet'
-    return 0
-    typeset -p +f | while read line ; do
+
+    typeset +p +f | while read line ; do
 	fn=${line% #*}
 	[[ $fn == _* ]] && (( ! include_system )) && continue
-	if [[ $fn == $pat ]] ; then 
-	     [[ $invert == 0 ]] && ret_fns[-1]=$fn
+	if [[ $fn =~ $pat ]] ; then 
+	     [[ $invert == 0 ]] && ret_fns+=("$line")
 	else
-	     [[ $invert != 0 ]] && ret_fns[-1]=$fn
+	     [[ $invert != 0 ]] && ret_fns+=("$line")
 	fi
     done
-    echo ${ret_fns[@]}
 }
 
 # Common routine for setup of commands that take a single
@@ -244,3 +243,15 @@ function _Dbg_parse_linespec {
       ;;
    esac
 }
+
+# Demo it
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    typeset -a ret_fns
+    _Dbg_get_functions
+    typeset -p ret_fns
+    set -x
+    _Dbg_get_functions 1
+    set +x
+    typeset -p ret_fns
+fi
+
