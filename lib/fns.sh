@@ -214,34 +214,34 @@ _Dbg_linespec_setup() {
 # Return triple (line,  is-function?, filename,)
 # We return the filename last since that can have embedded blanks.
 function _Dbg_parse_linespec {
-  typeset linespec=$1
-  case "$linespec" in
-
-    # line number only - use filename from last adjust_frame
-    [0-9]* )	
-      echo "$linespec 0 \"${_Dbg_frame_last_filename}\""
-      ;;
+    typeset linespec=$1
+    case "$linespec" in
+	
+	# line number only - use filename from last adjust_frame
+	[0-9]* )	
+	    echo "$linespec 0 \"${_Dbg_frame_last_filename}\""
+	    ;;
     
-    # file:line
-    [^:][^:]*[:][0-9]* )
-      # Split the POSIX way
-      typeset line_word=${linespec##*:}
-      typeset file_word=${linespec%${line_word}}
-      file_word=${file_word%?}
-      echo "$line_word 0 $file_word"
-      ;;
-
-    # Function name or error
-    * )
-      if _Dbg_is_function $linespec ${_Dbg_set_debug} ; then 
-	typeset -a word==( $(typeset -p +f $linespec) )
-	typeset -r fn=${word[1]%\(\)}
-	echo "${word[3]} 1 ${word[4]}"
-      else
-	echo ''
-      fi
-      ;;
-   esac
+	# file:line
+	[^:][^:]*[:][0-9]* )
+	    # Split the POSIX way
+	    typeset line_word=${linespec##*:}
+	    typeset file_word=${linespec%${line_word}}
+	    file_word=${file_word%?}
+	    echo "$line_word 0 $file_word"
+	    ;;
+	
+	# Function name or error
+	* )
+	    if _Dbg_is_function $linespec ${_Dbg_set_debug} ; then 
+		typeset -a word==( $(typeset +p +f $linespec) )
+		typeset -r fn=${word[0]}
+		echo "${word[2]} 1 ${word[3]}"
+	    else
+		echo ''
+	    fi
+	    ;;
+    esac
 }
 
 # Demo it
@@ -249,9 +249,8 @@ if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
     typeset -a ret_fns
     _Dbg_get_functions
     typeset -p ret_fns
-    set -x
     _Dbg_get_functions 1
-    set +x
     typeset -p ret_fns
+    _Dbg_parse_linespec _Dbg_parse_linespec
 fi
 
