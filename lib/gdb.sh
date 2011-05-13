@@ -29,7 +29,7 @@ function _Dbg_print_location {
     typeset -n frame=_Dbg_frame_stack[pos]
     typeset filename=${frame.filename}
     _Dbg_readin "${filename}"
-    typeset fn=${frame.fn}
+    typeset fun=${frame.fun}
     ((_Dbg_set_basename)) && filename=${filename##*/}
     _Dbg_msg "(${filename}:${frame.lineno}):"
 }
@@ -59,5 +59,11 @@ _Dbg_print_frame() {
     _Dbg_frame_lineno $pos
     typeset -i ln=$?
     typeset _Dbg_frame_filename=''; _Dbg_frame_file $pos
-    _Dbg_msg "$prefix file \`${_Dbg_frame_filename}' at line ${ln}"
+    typeset loc=''
+    typeset fun; fun=${_Dbg_frame_stack[pos].fun}
+    # if [[ -n  $fun && \
+    # 	  $fun != _Dbg_frame_stack[pos].filename ]] ; then
+    # 	loc="${_Dbg_frame_stack[pos].fun} from "
+    # fi
+    _Dbg_msg "$prefix ${loc}file \`${_Dbg_frame_filename}' at line ${ln}"
 }

@@ -21,7 +21,7 @@
 # and absolute line positions, not function names and offset.
 
 _Dbg_help_add where \
-"where [N] -- Print a backtrace of calling functions and sourced files.
+"backtrace [N] -- Print a backtrace of calling functions and sourced files.
 
 The backtrace contains function names, arguments, line numbers, and
 files. If N is given, list only N calls."

@@ -26,7 +26,7 @@ typeset -T Frame_t=(
 	filename=''
 	# integer lineno=0
 	lineno=0
-	fn=''
+	fun=''
 	to_file_line()
 	{
 	    print -r "file \`${_.filename}' at line ${_.lineno}"
@@ -135,7 +135,7 @@ _Dbg_frame_save_frames() {
     # Frame_t -a ._Dbg_frame_stack gives SEGV
     while((--.level>=0)); do
 	((.sh.level = .level))
-	.fn+=("${.sh.fun}")
+	.fun+=("${.sh.fun}")
 	.files+=("${.sh.file}")
 	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
 	.fns+=($0)
@@ -146,7 +146,7 @@ _Dbg_frame_save_frames() {
     for ((_Dbg_i=0; _Dbg_i<.max-start; _Dbg_i++)) ; do 
 	_Dbg_frame_stack[_Dbg_i].filename=${.files[_Dbg_i]}
 	_Dbg_frame_stack[_Dbg_i].lineno=${.linenos[_Dbg_i]}
-	_Dbg_frame_stack[_Dbg_i].fn=${.fns[_Dbg_i]}
+	_Dbg_frame_stack[_Dbg_i].fun=${.fns[_Dbg_i]}
     done
     for ((_Dbg_i=${#_Dbg_frame_stack[@]}-1; _Dbg_i>=.max-start; _Dbg_i--)); do
 	unset _Dbg_frame_stack[$_Dbg_i]
