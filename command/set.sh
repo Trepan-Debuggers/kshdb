@@ -23,7 +23,7 @@
 # If yes, always show. If auto, show only if the same line is to be run
 # but the command is different.
 
-typeset -i _Dbg_linewidth; _Dbg_linewidth=${COLUMNS:-80} 
+typeset -i _Dbg_set_linewidth; _Dbg_set_linewidth=${COLUMNS:-80} 
 typeset -i _Dbg_linetrace_expand=0 # expand variables in linetrace output
 typeset -f _Dbg_linetrace_delay=0  # sleep after linetrace
 

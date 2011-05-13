@@ -105,7 +105,7 @@ _Dbg_list_columns() {
 	msg=_Dbg_msg
     fi
     (($# != 0)) && return 1
-    typeset -a columnized=(); columnize $to_do $_Dbg_linewidth "$colsep"
+    typeset -a columnized=(); columnize $to_do $_Dbg_set_linewidth "$colsep"
     typeset -i i
     for ((i=0; i<${#columnized[@]}; i++)) ; do 
 	$msg "  ${columnized[i]}"

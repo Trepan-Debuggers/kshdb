@@ -135,6 +135,7 @@ _Dbg_frame_save_frames() {
     # Frame_t -a ._Dbg_frame_stack gives SEGV
     while((--.level>=0)); do
 	((.sh.level = .level))
+	.fn+=("${.sh.fun}")
 	.files+=("${.sh.file}")
 	.linenos+=(${.sh.lineno})  # optimization bug unless done this way
 	.fns+=($0)

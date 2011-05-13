@@ -27,7 +27,7 @@ typeset -i _Dbg_set_linewidth; _Dbg_set_linewidth=${COLUMNS:-80}
 
 _Dbg_do_set_width() {
     if [[ $1 == [0-9]* ]] ; then 
-	_Dbg_write_journal_eval "_Dbg_linewidth=$1"
+	_Dbg_write_journal_eval "_Dbg_set_linewidth=$1"
     else
 	_Dbg_msg "Integer argument expected; got: $1"
 	return 1
