@@ -25,14 +25,9 @@
 typeset -T Fileinfo_t=(
     size=-1
     typeset -a text=()
+    typeset -a marked_text=()
     integer mtime=-1
 )
-
-Fileinfo_t -A _Dbg_filenames
-_Dbg_filecache_reset() {
-    _Dbg_filenames=()
-}
-_Dbg_filecache_reset
 
 # Maps a name into its canonic form which can then be looked up in filenames
 typeset -A _Dbg_file2canonic
@@ -47,6 +42,12 @@ function _Dbg_readfile # var file
    set +f
    IFS="$old_IFS"
 }
+
+Fileinfo_t -A _Dbg_filenames
+_Dbg_filecache_reset() {
+    _Dbg_filenames=()
+}
+_Dbg_filecache_reset
 
 # Check that line $2 is not greater than the number of lines in 
 # file $1
@@ -111,7 +112,11 @@ _Dbg_get_source_line() {
     fi
   _Dbg_readin_if_new "$filename"
   fullname=${_Dbg_file2canonic[$filename]}
-  nameref text=_Dbg_filenames[$fullname].text
+  if (( _Dbg_set_highlight )) ; then
+      nameref text=_Dbg_filenames[$fullname].marked_text
+  else
+      nameref text=_Dbg_filenames[$fullname].text
+  fi
   _Dbg_source_line=${text[$lineno-1]}
 }
 
@@ -193,17 +198,22 @@ function _Dbg_readin {
 
     nameref text=_Dbg_filenames[$fullname].text
     _Dbg_readfile text "$fullname"
+    if (( _Dbg_set_highlight )) ; then
+	highlight_cmd="${_Dbg_libdir}/lib/term-highlight.py $fullname"
+	tempfile=$($highlight_cmd 2>/dev/null)
+	nameref text=_Dbg_filenames[$fullname].marked_text
+	_Dbg_readfile text "$tempfile"
+    fi	
     _Dbg_file2canonic[$filename]="$fullname"
     _Dbg_file2canonic[$fullname]="$fullname"
     _Dbg_filenames[$fullname].size=${#text[@]}+1
     _Dbg_filenames[$fullname].text=text
-    set +x
     return 0
 }
 
 # Read in file $1 unless it has already been read in.
 # 0 is returned if everything went ok.
-function _Dbg_readin_if_new {
+_Dbg_readin_if_new() {
     (( $# != 1 )) && return 1
     typeset filename="$1"
     typeset fullname=${_Dbg_file2canonic["$filename"]}

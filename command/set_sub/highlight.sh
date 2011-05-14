@@ -34,17 +34,17 @@ _Dbg_do_set_highlight() {
     typeset onoff=${1:-'on'}
     case $onoff in 
 	on | 1 ) 
-	    _Dbg_errmsg "highlight not supported yet"
-	    ## _Dbg_set_highlight=1
+	    _Dbg_set_highlight=1
 	    ;;
 	off | 0 )
 	    _Dbg_set_highlight=0
 	    ;;
 	reset ) 
-	    _Dbg_errmsg "highlight not supported yet"
-	    # _Dbg_set_highlight=1
+	    _Dbg_set_highlight=1
 	    _Dbg_filecache_reset
+	    set -x
 	    _Dbg_readin $_Dbg_frame_last_filename
+	    set +x
 	    ;;
 	* )
 	    _Dbg_errmsg '"on", "off", or "reset" expected.'
