@@ -36,12 +36,13 @@ See also \"info variables\".' 1
 # list functions and break condition.
 # If $1 is given just list those associated for that line.
 _Dbg_do_info_functions() {
-  typeset pat=$1
-
-  typeset -a ret_fns
-  _Dbg_get_functions 0 "$pat"
-  typeset -i i
-  for (( i=0; (( i < ${#ret_fns[@]} )) ; i++ )) ; do
-    _Dbg_msg ${ret_fns[$i]}
-  done
+    typeset pat=$1
+    
+    typeset -a ret_fns
+    _Dbg_get_functions 0 "$pat"
+    typeset -i i
+    for (( i=0; i < ${#ret_fns[@]} ; i++ )) ; do
+	_Dbg_msg ${ret_fns[$i]}
+    done
+    return 0
 }
