@@ -35,12 +35,12 @@ _Dbg_file2canonic=()
 
 function _Dbg_readfile # var file
 {
-   nameref var=$1
-   typeset old_IFS="$IFS"
-   set -f
-   IFS=$'\n\n' var=( $(< $2))
-   set +f
-   IFS="$old_IFS"
+    nameref var=$1
+    typeset old_IFS="$IFS"
+    set -f
+    IFS=$'\n\n' var=( $(< $2))
+    set +f
+    IFS="$old_IFS"
 }
 
 Fileinfo_t -A _Dbg_filenames

@@ -11,7 +11,7 @@ set -xv
   annotate  autolist  copying   directories  history    version 
   args      basename  debug     editing      listsize   warranty
 +another-bad-command 
-Undefined command "another-bad-command". Try "help".
+** Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
 +# show warranty
 +show copying
@@ -302,7 +302,7 @@ Argument list to give script when debugged program starts is:
 Argument list to give script when debugged program starts is:
        "now is the time".
 +set misspelled 40
-Undefined set subcommand "misspelled". Try "help set".
+** Undefined set subcommand "misspelled". Try "help set".
 +set listsize 40
 +set listsize bad
 ** Integer argument expected; got: bad
@@ -341,6 +341,6 @@ $? is 0
 +set autoeval off
 Evaluate unrecognized commands is off.
 +xx=1 ; typeset -p xx
-Undefined command "xx=1". Try "help".
+** Undefined command "xx=1". Try "help".
 +quit 
 kshdb: That's all, folks...

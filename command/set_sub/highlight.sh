@@ -42,9 +42,7 @@ _Dbg_do_set_highlight() {
 	reset ) 
 	    _Dbg_set_highlight=1
 	    _Dbg_filecache_reset
-	    set -x
 	    _Dbg_readin $_Dbg_frame_last_filename
-	    set +x
 	    ;;
 	* )
 	    _Dbg_errmsg '"on", "off", or "reset" expected.'

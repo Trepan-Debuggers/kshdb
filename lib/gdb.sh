@@ -35,7 +35,13 @@ function _Dbg_print_location {
 }
 
 function _Dbg_print_command {
-   _Dbg_msg ${.sh.command}
+    typeset msg
+    if (( _Dbg_set_highlight )) ; then
+	msg=$(echo ${.sh.command} | python lib/term-highlight.py)
+    else
+	msg=${.sh.command}
+    fi
+   _Dbg_msg "$msg"
 }
 
 function _Dbg_print_location_and_command {
@@ -44,7 +50,7 @@ function _Dbg_print_location_and_command {
     # typeset -i new_level
     # ((new_level=${#_Dbg_frame_stack[@]} - 1 - $_Dbg_stack_pos))
     # (( .sh.level =  new_level ))
-   _Dbg_msg ${.sh.command}
+   _Dbg_print_command 
    # (( .sh.level = ${.old_level} ))
 }
 

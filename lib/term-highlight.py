@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # from pydbgr.api import debug
 # debug()
-from pygments import highlight
-from pygments.lexers import BashLexer
-from pygments.formatters import TerminalFormatter
-from pygments.token import Keyword, Name, Comment, String, Error, \
-     Number, Operator, Generic, Token, Whitespace
-from tempfile import mktemp
-import os, sys
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    from pygments import highlight
+    from pygments.lexers import BashLexer
+    from pygments.formatters import TerminalFormatter
+    from pygments.token import Keyword, Name, Comment, String, Error, \
+        Number, Operator, Generic, Token, Whitespace
+    from tempfile import mktemp
+    import os, sys
 
 #: Map token types to a tuple of color values for light and dark
 #: backgrounds.
