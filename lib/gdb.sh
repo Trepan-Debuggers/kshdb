@@ -37,7 +37,7 @@ function _Dbg_print_location {
 function _Dbg_print_command {
     typeset msg
     if (( _Dbg_set_highlight )) ; then
-	msg=$(echo ${.sh.command} | python lib/term-highlight.py)
+	msg=$(echo ${.sh.command} | python ${_Dbg_libdir}/lib/term-highlight.py)
     else
 	msg=${.sh.command}
     fi
