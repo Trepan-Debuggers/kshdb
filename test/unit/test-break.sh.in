@@ -109,7 +109,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}lib/fns.sh
 . ${abs_top_srcdir}lib/journal.sh
 . ${abs_top_srcdir}lib/break.sh
-set --
+set -- # reset $# so shunit2 doesn't get confused.
 
 srcdir=.
 srcdir=${srcdir%%/}/

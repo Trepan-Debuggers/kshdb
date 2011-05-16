@@ -1,8 +1,5 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
-'
-
 # Test command completion
 test_lib_complete()
 {
@@ -22,8 +19,11 @@ fi
 abs_top_srcdir=@abs_top_srcdir@
 # Make sure @abs_top_srcr@ has a trailing slash
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 . ${abs_top_srcdir}lib/complete.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi

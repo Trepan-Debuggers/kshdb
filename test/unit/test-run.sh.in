@@ -1,7 +1,7 @@
 #!@SH_PROG@
 # -*- shell-script -*-
 
-test_not_running()
+test_run_not_running()
 {
 #    typeset -a errs=()
     _Dbg_errmsg() { errs+=("$1"); }
@@ -18,12 +18,13 @@ test_not_running()
 
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 . ${abs_top_srcdir}/lib/run.sh
-
-# load shunit2
-SHUNIT_PARENT=$0
+set -- # reset $# so shunit2 doesn't get confused.
 
 srcdir=@srcdir@
 srcdir=${srcdir}/
-. ${srcdir}/shunit2
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 

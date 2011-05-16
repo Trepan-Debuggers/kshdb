@@ -44,6 +44,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
 
 . $abs_top_srcdir/lib/columnize.sh
+set --
 
 # load shunit2
 if [[ ${0##*/} == ${.sh.file##*/} ]] ; then

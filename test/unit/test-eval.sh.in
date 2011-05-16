@@ -51,7 +51,9 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 srcdir=@srcdir@
 srcdir=${srcdir%%/}/
 . $abs_top_srcdir/lib/fns.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi

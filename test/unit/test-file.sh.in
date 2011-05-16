@@ -57,6 +57,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . $abs_top_srcdir/init/pre.sh
 . $abs_top_srcdir/lib/filecache.sh
 . $abs_top_srcdir/lib/file.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 SHUNIT_PARENT=$0
 

@@ -9,7 +9,7 @@ do_test()
     assertEquals "$file1" "$file2"
 
 }
-test_expand_filename()
+test_pre_expand_filename()
 {
     do_test test-pre ./test-pre
     do_test "$PWD/" "${PWD}/."
@@ -18,7 +18,7 @@ test_expand_filename()
     do_test "$file1" ~
 }
 
-test_do_show_version()
+test_pre_do_show_version()
 {
     # Name we refer to ourselves by
     typeset _Dbg_debugger_name='@PACKAGE@'
@@ -29,13 +29,16 @@ test_do_show_version()
     assertEquals "@PACKAGE@, release @PACKAGE_VERSION@" "$version_string"
 }
 
-# load shunit2
-top_srcdir=@top_srcdir@
-_Dbg_libdir=@top_srcdir@
-. ${top_srcdir}/init/pre.sh
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
+. ${abs_top_srcdir}/init/pre.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
 srcdir=@srcdir@
 srcdir=${srcdir}/
-. ${srcdir}/shunit2
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${srcdir}/shunit2
+fi
 

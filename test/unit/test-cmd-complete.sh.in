@@ -24,6 +24,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}lib/msg.sh
 . ${abs_top_srcdir}lib/complete.sh
 . ${abs_top_srcdir}command/complete.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 for _Dbg_file in ${abs_top_srcdir}command/d*.sh ; do 
     source $_Dbg_file

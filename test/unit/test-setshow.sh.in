@@ -1,15 +1,13 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
-'
 
-typeset -a msgs
+typeset -a msgs; msgs=()
 _Dbg_msg() {
     typeset -i last=${#msgs[@]}
     msgs[$last]=$*
 }
 
-test_help_set_onoff()
+test_setshow_help_set_onoff()
 {
     typeset onoff
     onoff=('off.' 'on.')
@@ -27,11 +25,14 @@ if [ '@abs_top_srcdir@' = '' ] ; then
 fi
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
-
+. ${abs_top_srcdir}test/unit/helper.sh
 . ${abs_top_srcdir}lib/setshow.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
-# load shunit2
 srcdir=@srcdir@
 srcdir=${srcdir}/
-. ${srcdir}/shunit2
+# load shunit2
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 

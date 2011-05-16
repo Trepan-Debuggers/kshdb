@@ -1,6 +1,6 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-test_copies()
+test_fns_copies()
 {
     typeset result='bogus'
 

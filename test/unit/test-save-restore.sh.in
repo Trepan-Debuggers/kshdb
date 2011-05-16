@@ -22,14 +22,15 @@ test_save_restore_IFS_PS4()
 # Make sure ../.. has a trailing slash
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 
-_Dbg_libdir=$abs_top_srcdir
-set -- -q  # Don't need to show banner
 . $abs_top_srcdir/init/pre.sh
 . $abs_top_srcdir/lib/journal.sh
 . $abs_top_srcdir/lib/save-restore.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 

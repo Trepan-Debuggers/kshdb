@@ -1,9 +1,6 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
-'
-
-this_script=$0
+this_script=test-get-sourceline.sh
 
 abs_top_srcdir=@abs_top_srcdir@
 # Make sure @abs_top_srcdir@ has a trailing slash
@@ -38,16 +35,17 @@ if [ '@abs_top_srcdir@' = '' ] ; then
  exit 1
 fi
 
-_Dbg_libdir=$abs_top_srcdir
-set -- -q  # Don't need to show banner
+. ${abs_top_srcdir}test/unit/helper.sh
 . ${abs_top_srcdir}init/pre.sh
 . ${abs_top_srcdir}lib/filecache.sh
 . ${abs_top_srcdir}lib/file.sh
 . ${abs_top_srcdir}lib/fns.sh
 . ${abs_top_srcdir}lib/frame.sh
 . ${abs_top_srcdir}lib/msg.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 

@@ -64,6 +64,7 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}lib/alias.sh
 . ${abs_top_srcdir}lib/save-restore.sh
 . ${abs_top_srcdir}command/examine.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
 if [[ ${0##*/} == ${.sh.file##*/} ]] ; then

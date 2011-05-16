@@ -29,8 +29,8 @@ test_msg_undefined()
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
-
 . ${abs_top_srcdir}lib/msg.sh
+set -- # reset $# so shunit2 doesn't get confused.
 
 # load shunit2
 if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
