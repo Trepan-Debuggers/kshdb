@@ -95,13 +95,13 @@ test_breakpoint()
     assertEquals 0 $_Dbg_brkpt_count
 }
 
-# Make sure @top_builddir@ has a trailing slash
 if [ '@abs_top_srcdir@' = '' ] ; then
   echo "Something is wrong abs_top_srcdir is not set."
  exit 1
 fi
 
 abs_top_srcdir=@abs_top_srcdir@
+# Make sure $abs_top_srcdir has a trailing slash
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
 
@@ -111,11 +111,4 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}lib/break.sh
 set -- # reset $# so shunit2 doesn't get confused.
 
-srcdir=.
-srcdir=${srcdir%%/}/
-
-# load shunit2
-if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
-    . ${shunit_file}
-fi
-
+[[ @CMDLINE_INVOKED@ ]] && . ${shunit_file}

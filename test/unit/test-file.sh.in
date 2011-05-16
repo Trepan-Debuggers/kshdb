@@ -6,14 +6,15 @@ test_file_glob_filename()
     typeset filename
     filename=''
     _Dbg_glob_filename $shunit_file
-    assertEquals '0' $?
+    assertEquals "Should be able to glob $shunit_file" '0' $?
     filename=${filename##*/}  
     assertEquals 'shunit2' $filename
+
     _Dbg_glob_filename ./${srcdir}shunit?
     assertEquals '0' $?
     filename=${filename##*/}  
     assertEquals 'shunit2' $filename
-    _Dbg_glob_filename ${srcdir}abcdefg
+    _Dbg_glob_filename ${abs_top_srcdir}abcdefg
     assertEquals '1' $?
     filename=${filename##*/}  
     assertEquals 'abcdefg' $filename
@@ -51,21 +52,15 @@ test_file_resolve_expand_filename()
 }
 
 abs_top_srcdir=@abs_top_srcdir@
+# Make sure $abs_top_srcdir has a trailing slash
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
-
 . $abs_top_srcdir/init/pre.sh
 . $abs_top_srcdir/lib/filecache.sh
 . $abs_top_srcdir/lib/file.sh
 set -- # reset $# so shunit2 doesn't get confused.
 
-SHUNIT_PARENT=$0
-
 srcdir=@srcdir@
 srcdir=${srcdir%%/}/
 
-# load shunit2
-if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
-    . ${shunit_file}
-fi
-
+[[ @CMDLINE_INVOKED@ ]] && . ${shunit_file}

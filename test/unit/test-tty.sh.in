@@ -4,8 +4,8 @@ typeset -a _Dbg_fd=(1)
 
 test_tty()
 {
-    _Dbg_open_if_tty $0
-    assertEquals "1" "$?"
+    _Dbg_open_if_tty test-tty.sh
+    assertEquals "should be able to open test-tty.sh" "1" "$?"
     assertEquals "-1" "$_Dbg_new_fd"
     tty=$(tty)
     if (($? == 0)); then 
@@ -34,14 +34,10 @@ if [ '@abs_top_srcdir@' = '' ] ; then
 fi
 abs_top_srcdir=@abs_top_srcdir@
 
-# Make sure @abs_top_srcdir@ has a trailing slash
+# Make sure $abs_top_srcdir has a trailing slash
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
-
 . $abs_top_srcdir/lib/tty.sh
 set -- # reset $# so shunit2 doesn't get confused.
 
-# load shunit2
-if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
-    . ${shunit_file}
-fi
+[[ @CMDLINE_INVOKED@ ]] && . ${shunit_file}

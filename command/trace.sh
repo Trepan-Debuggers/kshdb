@@ -43,6 +43,7 @@ function _Dbg_do_trace {
 	return 3
     }
     cmd=$(typeset -f -- "$fn") || {
+	_Dbg_errmsg "trace: Can't get function definition for \"$fn\"."
 	return 4
     }
     if [[ $cmd =~ '^function ' ]] ; then

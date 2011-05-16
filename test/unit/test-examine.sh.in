@@ -55,9 +55,9 @@ test_examine()
 }
 
 abs_top_srcdir=@abs_top_srcdir@
+# Make sure $abs_top_srcdir has a trailing slash
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
-
 . ${abs_top_srcdir}lib/fns.sh
 . ${abs_top_srcdir}lib/msg.sh
 . ${abs_top_srcdir}lib/help.sh
@@ -66,8 +66,4 @@ abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}command/examine.sh
 set -- # reset $# so shunit2 doesn't get confused.
 
-# load shunit2
-if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
-    . ${shunit_file}
-fi
-
+[[ @CMDLINE_INVOKED@ ]] && . ${shunit_file}

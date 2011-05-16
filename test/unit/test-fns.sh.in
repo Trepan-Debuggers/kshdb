@@ -117,15 +117,10 @@ test_fns_split()
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
 . ${abs_top_srcdir}test/unit/helper.sh
-
 . $abs_top_srcdir/init/pre.sh
 . $abs_top_srcdir/lib/msg.sh
 . $abs_top_srcdir/lib/fns.sh
 . $abs_top_srcdir/lib/frame.sh
 . $abs_top_srcdir/lib/journal.sh
 set -- # reset $# so shunit2 doesn't get confused.
-
-# load shunit2
-if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
-    . ${shunit_file}
-fi
+[[ @CMDLINE_INVOKED@ ]] && . ${shunit_file}

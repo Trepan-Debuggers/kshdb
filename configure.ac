@@ -16,6 +16,9 @@ fi
 AC_SUBST(DIFF)
 AC_SUBST(DIFF_OPTS)
 
+CMDLINE_INVOKED='${0##*/} == ${.sh.file##*/}'
+AC_SUBST(CMDLINE_INVOKED)
+
 ## --with-ksh can be used to tell the kshdb script and the regression
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
