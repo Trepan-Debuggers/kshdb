@@ -1,8 +1,5 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
-'
-
 test_examine()
 {
     typeset -i _Dbg_logging=0
@@ -59,8 +56,8 @@ test_examine()
 
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 
-_Dbg_libdir=$abs_top_srcdir
 . ${abs_top_srcdir}lib/fns.sh
 . ${abs_top_srcdir}lib/msg.sh
 . ${abs_top_srcdir}lib/help.sh
@@ -69,6 +66,7 @@ _Dbg_libdir=$abs_top_srcdir
 . ${abs_top_srcdir}command/examine.sh
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 

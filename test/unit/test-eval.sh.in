@@ -46,12 +46,10 @@ test_eval_subst()
 
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 
 srcdir=@srcdir@
 srcdir=${srcdir%%/}/
-
-_Dbg_libdir=$abs_top_srcdir
-set -- -q  # Don't need to show banner
 . $abs_top_srcdir/lib/fns.sh
 
 # load shunit2

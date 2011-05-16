@@ -1,7 +1,5 @@
 #!@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
-'
 
 # Test Dbg_msg, Dbg_printf, Dbg_printf_nocr, ...
 test_msg()
@@ -19,7 +17,7 @@ test_msg()
     assertEquals 'fo ' "$msg"
 }
 
-test_undefined()
+test_msg_undefined()
 {
     typeset msg
     msg=$(_Dbg_undefined_cmd foo bar)
@@ -30,10 +28,12 @@ test_undefined()
 
 abs_top_srcdir=@abs_top_srcdir@
 abs_top_srcdir=${abs_top_srcdir%%/}/
+. ${abs_top_srcdir}test/unit/helper.sh
 
 . ${abs_top_srcdir}lib/msg.sh
 
 # load shunit2
-shunit_file=${abs_top_srcdir}test/unit/shunit2
-. ${shunit_file}
+if [[ ${0##*/} == ${.sh.file##*/} ]] ; then
+    . ${shunit_file}
+fi
 
