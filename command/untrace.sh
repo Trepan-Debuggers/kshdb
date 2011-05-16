@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -38,9 +38,18 @@ function _Dbg_do_untrace {
 	_Dbg_errmsg "untrace: old function old_$fn not seen - nothing done."
 	return 4
     }
-    cmd=$(typeset -f -- "old_$fn") || return 5
-    cmd=${cmd#old_}
-    ((_Dbg_debug_debugger)) && echo $cmd 
-    eval "$cmd" || return 6
-    return 0
+    if cmd=$(typeset -f -- "old_$fn") ; then 
+	if [[ $cmd =~ '^function old_' ]] ; then
+	    cmd="function ${cmd:13}"
+	else
+	    cmd=${cmd#old_}
+	fi
+	((_Dbg_debug_debugger)) && echo $cmd 
+	eval "$cmd" || return 6
+	_Dbg_msg "\"$fn\" restored from \"old_${fn}\"."
+	return 0
+    else
+	_Dbg_msg "Can't find function definition for \"$fn\"."
+	return 5
+    fi
 }
