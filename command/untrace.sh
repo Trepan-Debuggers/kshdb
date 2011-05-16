@@ -49,7 +49,7 @@ function _Dbg_do_untrace {
 	_Dbg_msg "\"$fn\" restored from \"old_${fn}\"."
 	return 0
     else
-	_Dbg_msg "Can't find function definition for \"$fn\"."
+	_Dbg_errmsg "Can't find function definition for \"$fn\"."
 	return 5
     fi
 }
