@@ -36,7 +36,7 @@ function _Dbg_do_trace {
 	_Dbg_errmsg "trace: missing function name."
 	return 2
     fi
-    typeset fn=$1
+    typeset -r fn=$1
     typeset -i clear_debug_trap=${2:-1}
     _Dbg_is_function "$fn" 1 || {
 	_Dbg_errmsg "trace: function \"$fn\" is not a function."
@@ -57,7 +57,10 @@ function _Dbg_do_trace {
 	save_clear_trap_cmd='typeset old_handler=$(trap -p DEBUG); trap - DEBUG'
 	restore_trap_cmd='eval $old_handler'
     fi
-    eval "$cmd" || return 5
+    eval "$cmd" || {
+	_Dbg_errmsg "Error in renaming function \"$fn\" to \"old_${fn}\"."
+	return 5
+    }
     cmd="${fn}() { 
     $save_clear_trap_cmd;
     typeset -i old_set_x=is_traced;
