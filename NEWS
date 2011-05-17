@@ -1,3 +1,15 @@
+Version 0.06
+2011-3-18 
+- Add Syntax coloring if pygmentize is installed
+- Add gdb-like commands:
+  *  "info args"
+  *  "info functions"
+  *  "condition"
+  *  "complete"
+- Remove hard-wiring of info, set, and show commands.
+- Expand help text for various commands
+- Fix bugs in 'trace' and 'shell' commands
+
 Version 0.05
 2011-3-15 Ron Frankel release
 
