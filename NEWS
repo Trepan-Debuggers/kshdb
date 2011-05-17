@@ -6,9 +6,12 @@ Version 0.06
   *  "info functions"
   *  "condition"
   *  "complete"
-- Remove hard-wiring of info, set, and show commands.
+- Remove hard-wiring of "info", "set", and "show" commands.
 - Expand help text for various commands
-- Fix bugs in 'trace' and 'shell' commands
+- Debugger commands can be the smallest unique prefix
+- Fix bugs in 'trace', 'untrace' and 'shell' commands
+- "set debugging" is not "set debug" to match gdb
+- Unit tests are faster and have less white space but more useful information
 
 Version 0.05
 2011-3-15 Ron Frankel release

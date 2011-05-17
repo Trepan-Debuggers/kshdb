@@ -25,7 +25,18 @@ if [[ $0 == ${.sh.file##*/} ]] ; then
 fi
 
 _Dbg_help_add help \
-'help	-- Print list of commands.' 1
+'help [COMMAND [SUBCOMMAND ..]]
+
+If no arguments are given, print a list of command names.
+With a command name give help for that command. For many commands
+you can get further detailed help by listing the subcommand name.
+
+Examples:
+
+help  
+help up
+help set
+help set args' 1 _Dbg_complete_help
 
 _Dbg_do_help() {
   if ((0==$#)) ; then
@@ -36,44 +47,60 @@ _Dbg_do_help() {
       _Dbg_msg 'Readline command line editing (emacs/vi mode) is available.'
       _Dbg_msg 'Type "help" followed by command name for full documentation.'
       return 0
-   else
-      typeset dbg_cmd="$1"
-      if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
- 	  _Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
-      else
-	  _Dbg_alias_expand $dbg_cmd
-	  typeset dbg_cmd="$expanded_alias"
-	  if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
- 	      _Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
-	  else
-	      case $dbg_cmd in 
-	      i | in | inf | info )
-		_Dbg_info_help $2
-                ;;
-	      sh | sho | show )
-		_Dbg_help_show $2
-                ;;
-	      se | set )
-	        _Dbg_help_set $2
-                ;;
-	     * )
-  	        _Dbg_errmsg "Undefined command: \"$dbg_cmd\".  Try \"help\"."
-  	         return 1 ;;
-	     esac
-	  fi
-      fi
-      aliases_found=''
-      _Dbg_alias_find_aliased "$dbg_cmd"
-      if [[ -n $aliases_found ]] ; then
-	  _Dbg_msg ''
-	  _Dbg_msg "Aliases for $dbg_cmd: $aliases_found"
-      fi
-      return 0
-  fi
+    else
+	typeset dbg_cmd="$1"
+	if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
+ 	    _Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
+	else
+	    _Dbg_alias_expand $dbg_cmd
+	    dbg_cmd="$expanded_alias"
+	    if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
+ 		_Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
+	    else
+		case $dbg_cmd in 
+		    i | in | inf | info )
+			_Dbg_info_help $2
+			;;
+		    sh | sho | show )
+			_Dbg_help_show $2
+			;;
+		    se | set )
+			_Dbg_help_set $2
+			;;
+		    * )
+			# Look for a unique abbreviation
+			typeset -i count=0
+			typeset found_cmd
+			typeset list; list="${!_Dbg_command_help[@]}"
+			for try in $list ; do 
+			    if [[ $try =~ ^$dbg_cmd ]] ; then
+				found_cmd=$try
+				((count++))
+			    fi
+			done
+			((found=(count==1)))
+			if ((found)); then
+ 			    _Dbg_msg "${_Dbg_command_help[$found_cmd]}"
+			else
+  			    _Dbg_errmsg "Undefined command: \"$dbg_cmd\".  Try \"help\"."
+  			    return 1
+			fi
+			;;
+		esac
+	    fi
+	fi
+	aliases_found=''
+	_Dbg_alias_find_aliased "$dbg_cmd"
+	if [[ -n $aliases_found ]] ; then
+	    _Dbg_msg ''
+	    _Dbg_msg "Aliases for $dbg_cmd: $aliases_found"
+	fi
+	return 2
+    fi
 }
 
-_Dbg_alias_add '?' help
 _Dbg_alias_add 'h' help
+_Dbg_alias_add '?' help
 
  # Demo it.
 if [[ $0 == ${.sh.file##*/} ]] ; then

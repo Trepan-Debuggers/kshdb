@@ -30,7 +30,7 @@ function _Dbg_do_untrace {
 	_Dbg_errmsg "untrace: missing or invalid function name."
 	return 2
     fi
-    _Dbg_is_function "$fn" || {
+    _Dbg_is_function "$fn" $_Dbg_set_debug || {
 	_Dbg_errmsg "untrace: function \"$fn\" is not a function."
 	return 3
     }
