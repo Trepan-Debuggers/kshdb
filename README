@@ -32,14 +32,12 @@ get a list of commands and some help for each.
 
 3. WHAT'S NOT HERE YET IN DETAIL
 
-3.a) Showing frame arguments
-
 This can done with or without support from ksh, albeit faster with
 help from ksh.
 
-3.b) Setting $0
+3.a) Setting $0
 
-3.c) lots of other stuff including...
+3.b) lots of other stuff including...
 
   display expressions, signal handling, 
   debugger commands:
@@ -47,7 +45,6 @@ help from ksh.
      file
      handle
      history
-     pwd
      signal
      tty
      watch
