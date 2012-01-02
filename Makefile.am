@@ -40,6 +40,7 @@ check-unit: test-unit
 test-unit:
 	cd test/unit && make check
 
+# Integration testing
 test-integration:
 	cd test/integration && make check
 
