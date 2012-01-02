@@ -31,7 +31,10 @@ MOSTLYCLEANFILES = *.orig *.rej
 
 EXTRA_DIST = $(pkgdata_DATA) THANKS
 
-# Unit testing
+#: Same as "check" - integration tests. 
+test: check
+
+#: Unit testing
 check-unit: test-unit
 
 test-unit:
