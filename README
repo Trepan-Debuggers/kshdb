@@ -15,7 +15,7 @@ See https://github.com/rocky/kshdb/wiki/How-to-install for how to install this c
 
 2. WHAT'S HERE, WHAT'S NOT and WHY NOT
 
-What's missing falls into a two categories:
+What's missing falls into two categories:
 
   * Stuff that can be ported in a straightforward way from bashdb
   * Stuff that needs additional ksh support
@@ -32,7 +32,7 @@ get a list of commands and some help for each.
 
 3. WHAT'S NOT HERE YET IN DETAIL
 
-This can done with or without support from ksh, albeit faster with
+This can be done with or without support from ksh, albeit faster with
 help from ksh.
 
 3.a) Setting $0
