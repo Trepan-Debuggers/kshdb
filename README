@@ -4,7 +4,7 @@ This is a port and cleanup of my bash debugger bashdb
 
 The command syntax generally follows that of the GNU debugger gdb.
 
-However this debugger depends on a number bug fixes and of debugging
+However this debugger depends on a number of bug fixes and of debugging
 support features that are neither part of the POSIX 1003.1 standard
 and only in ksh93t+ releases. In particular, there are fixes to a
 number of the .sh variables like .sh.level and .sh.file.
