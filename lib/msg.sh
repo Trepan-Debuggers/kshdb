@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008, 2009 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2012 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -84,7 +84,7 @@ function _Dbg_msg {
 
 # print message to output device without a carriage return at the end
 function _Dbg_msg_nocr {
-    echo -n "$@"
+    printf "%s" "$@"
 }
 
 # print message to output device
