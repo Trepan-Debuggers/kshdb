@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # fns.sh - Debugger Utility Functions
 #
-#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2011, 2012 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -47,7 +47,7 @@ function _Dbg_defined {
 # Add escapes to a string $1 so that when it is read back using
 # eval echo "$1" it is the same as echo $1.
 function _Dbg_esc_dq {
-  echo $1 | sed -e 's/[`$\"]/\\\0/g' 
+  echo $1 | sed -e 's/[`$\"]/\\&/g' 
 }
 
 # _Dbg_get_typeset_attr echoes a list of all of the functions matching
