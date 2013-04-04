@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Things related to file handling.
 #
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008-2010, 2013 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -12,7 +12,7 @@
 #   WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 #   for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
@@ -27,13 +27,13 @@ _Dbg_dir=('\$cdir' '\$cwd' )
 [[ -z ${_Dbg_cdir} ]] && typeset _Dbg_cdir=$(pwd)
 
 # $1 contains the name you want to glob. return 0 if exists and is
-# readible or 1 if not. 
-# The result will be in variable $filename which is assumed to be 
+# readible or 1 if not.
+# The result will be in variable $filename which is assumed to be
 # local'd by the caller
 _Dbg_glob_filename() {
   typeset cmd="filename=$(expr $1)"
   eval $cmd
-  [[ -r $filename ]]
+  [[ -r "$filename" ]]
 }
 
 # Either fill out or strip filename as determined by "_Dbg_set_basename"
@@ -73,7 +73,7 @@ _Dbg_resolve_expand_filename() {
     return 0
   fi
 
-  if [[ ${find_file:0:1} == '/' ]] ; then 
+  if [[ ${find_file:0:1} == '/' ]] ; then
     # Absolute file name
     full_find_file=$(_Dbg_expand_filename "$find_file")
     print -- "$full_find_file"
