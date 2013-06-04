@@ -10,7 +10,7 @@
 #   WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 #   for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
@@ -41,7 +41,7 @@ typeset -i _Dbg_stack_pos=0
 typeset _Dbg_frame_last_filename=''
 typeset -i _Dbg_frame_last_lineno=0
 
-# Note: this code is a bit more convoluted than it need be because of 
+# Note: this code is a bit more convoluted than it need be because of
 # bugs as recent as ksh93t 2008-07-24. These will no doubt be fixed and
 # then this code should be redone.
 
@@ -68,21 +68,21 @@ _Dbg_frame_adjust() {
     ((pos=_Dbg_stack_pos+(count*signum)))
   fi
 
-  if (( pos < 0 )) ; then 
+  if (( pos < 0 )) ; then
     _Dbg_errmsg 'Would be beyond bottom-most (most recent) entry.'
     return 1
-  elif (( pos >= ${#_Dbg_frame_stack[@]} )) ; then 
+  elif (( pos >= ${#_Dbg_frame_stack[@]} )) ; then
     _Dbg_errmsg 'Would be beyond top-most (least recent) entry.'
     return 1
   fi
 
   _Dbg_frame_last_filename="${_Dbg_frame_stack[$pos].filename}"
   _Dbg_frame_last_lineno=${_Dbg_frame_stack[$pos].lineno}
-  ((_Dbg_stack_pos = pos))
-
+  (( _Dbg_stack_pos = pos ))
+  return 0
 }
 
-# Return the frame file for stack $1 or _Dbg_stack_pos if $1 
+# Return the frame file for stack $1 or _Dbg_stack_pos if $1
 # is omitted. If $2 is given, it indicates if we want the basename
 # only. Otherwise the $_Dbg_set_basename setting is used.
 # 0 is returned if no error, nonzero means some sort of error.
@@ -105,7 +105,7 @@ _Dbg_frame_int_setup() {
     return 1
   else
 #     setopt EXTENDED_GLOB
-#     if [[ $1 != '' && $1 != ([-+]|)([0-9])## ]] ; then 
+#     if [[ $1 != '' && $1 != ([-+]|)([0-9])## ]] ; then
 #       _Dbg_msg "Bad integer parameter: $1"
 #       # Reset EXTENDED_GLOB
 #       return 1
@@ -124,7 +124,7 @@ _Dbg_frame_lineno() {
     return ${frame.lineno}
 }
 
-# Save stack frames in array _Dbg_frame_stack ignoring the 
+# Save stack frames in array _Dbg_frame_stack ignoring the
 # first (most recent) $1 of these.
 _Dbg_frame_save_frames() {
     integer start=${1:-0}
@@ -143,7 +143,7 @@ _Dbg_frame_save_frames() {
     ((.sh.level=.max))
     # Reorganize into an array of frame structures
     integer _Dbg_i
-    for ((_Dbg_i=0; _Dbg_i<.max-start; _Dbg_i++)) ; do 
+    for ((_Dbg_i=0; _Dbg_i<.max-start; _Dbg_i++)) ; do
 	_Dbg_frame_stack[_Dbg_i].filename=${.files[_Dbg_i]}
 	_Dbg_frame_stack[_Dbg_i].lineno=${.linenos[_Dbg_i]}
 	_Dbg_frame_stack[_Dbg_i].fun=${.fns[_Dbg_i]}

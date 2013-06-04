@@ -1,18 +1,19 @@
 (restart.sh:4):
 x=1
 +# Test Restart command
-+list 
++list
   1:    text
   2:    # For testing restart.
-  3:    
+  3:
   4: => x=1
   5:    cd /
   6:    y=2
   7:    z=0
-+step 
+  8:
++step
 (restart.sh:5):
 cd /
-+step 
++step
 (restart.sh:6):
 y=2
 +break 5
@@ -22,17 +23,18 @@ Restarting with ... restart.sh
 (restart.sh:4):
 x=1
 +# 2nd part of Restart test
-+list 
++list
   1:    text
   2:    # For testing restart.
-  3:    
+  3:
   4: => x=1
   5:    cd /
   6:    y=2
   7:    z=0
+  8:
 +info break
 No breakpoints have been set.
-+continue 
++continue
 Program terminated.Type 's' to restart.
-+quit 
++quit
 kshdb: That's all, folks...
