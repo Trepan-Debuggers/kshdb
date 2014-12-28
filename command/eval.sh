@@ -45,24 +45,24 @@ See also "print" and "set autoeval".' 1
 typeset -i _Dbg_show_eval_rc; _Dbg_show_eval_rc=1
 
 _Dbg_do_eval() {
-    
+
     typeset -i old_level=.sh.level
     typeset -i new_level
     ((new_level=${#_Dbg_frame_stack[@]} - 1 - _Dbg_stack_pos))
-    
-    # FIXME: is this needed. Is it effective? 
-    # Should it be moved after setting .sh? 
+
+    # FIXME: is this needed. Is it effective?
+    # Should it be moved after setting .sh?
     print ". ${_Dbg_libdir}/lib/set-d-vars.sh" > $_Dbg_evalfile
-    
+
     print "(( .sh.level = $new_level ))" >> $_Dbg_evalfile
     print "typeset -i _Dbg_rc" >> $_Dbg_evalfile
     if (( $# == 0 )) ; then
-	# FIXME: add parameter to get unhighlighted line, or 
+	# FIXME: add parameter to get unhighlighted line, or
 	# always save a copy of that in _Dbg_sget_source_line
 	typeset source_line
-	source_line=${.sh.command}	
+	source_line=${.sh.command}
 
-	# Were we called via ? as the suffix? 
+	# Were we called via ? as the suffix?
 	typeset suffix
 	suffix=${_Dbg_orig_cmd:${#_Dbg_orig_cmd}-1:1}
 	if [[ '?' == "$suffix" ]] ; then
@@ -70,7 +70,7 @@ _Dbg_do_eval() {
 	    _Dbg_eval_extract_condition "$source_line"
 	    source_line="$extracted"
 	fi
-	
+
 	print "$source_line" >> $_Dbg_evalfile
 	_Dbg_msg "eval: ${source_line}"
     else
@@ -78,13 +78,13 @@ _Dbg_do_eval() {
     fi
     print '_Dbg_rc=$?' >> $_Dbg_evalfile
     print "(( .sh.level = $old_level ))" >> $_Dbg_evalfile
-    
+
     if [[ -n $_Dbg_tty  ]] ; then
 	_Dbg_set_dol_q $_Dbg_debugged_exit_code
 	. $_Dbg_evalfile >>$_Dbg_tty
     else
 	_Dbg_set_dol_q $_Dbg_debugged_exit_code
-	. $_Dbg_evalfile
+	# . $_Dbg_evalfile
     fi
     (( _Dbg_show_eval_rc )) && _Dbg_msg "\$? is $_Dbg_rc"
     # We've reset some variables like IFS and PS4 to make eval look

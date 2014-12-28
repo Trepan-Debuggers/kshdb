@@ -8,9 +8,9 @@ set -xv
 ** Unknown show subcommand: badcommand
 ** Show subcommands are:
   alias     autoeval  commands  different    highlight  prompt    width
-  annotate  autolist  copying   directories  history    version 
+  annotate  autolist  copying   directories  history    version
   args      basename  debug     editing      listsize   warranty
-+another-bad-command 
++another-bad-command
 ** Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
 +# show warranty
@@ -273,7 +273,7 @@ make exceptions for this.  Our decision will be guided by the two goals
 of preserving the free status of all derivatives of our free software and
 of promoting the sharing and reuse of software generally.
 
-+show 
++show
 annotate    : Annotation_level is 0.
 args        :     Argument list to give script when debugged program starts is:
  testarg1 testarg2".
@@ -284,10 +284,10 @@ debug       : Allow debugging the debugger is off.
 different   : Show stepping forces a new line is off.
 editing     : Editing of command lines as they are typed is off.
 highlight   : Syntax highlight in source listings is off.
-history     -- 
-  filename: The filename in which to record the command history is 
+history     --
+  filename: The filename in which to record the command history is
   save: Saving of history save is on.
-  size: Debugger history size is 256
+  size: Debugger history size is 999
 listsize    : Number of source lines kshdb will list by default is 10.
 prompt      : kshdb's prompt is:
       "$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> ".
@@ -325,13 +325,13 @@ Annotation_level is 1.
 +# show history
 +# set history save on
 +# show history
-+######################### 
++#########################
 +#### Test 'show commands'...
 +# show commands
 +# show commands +
 +# show commands -5
 +# show commands 12
-+######################### 
++#########################
 +#### Test 'autoeval'...
 +set autoeval on
 Evaluate unrecognized commands is on.
@@ -342,5 +342,5 @@ $? is 0
 Evaluate unrecognized commands is off.
 +xx=1 ; typeset -p xx
 ** Undefined command "xx=1". Try "help".
-+quit 
++quit
 kshdb: That's all, folks...

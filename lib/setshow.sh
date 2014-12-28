@@ -1,6 +1,6 @@
 # setshow.sh - Helper routines for help/set/show
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -11,7 +11,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -21,8 +21,8 @@
 _Dbg_set_onoff() {
     typeset -l onoff=${1:-'off'}
     typeset cmdname=$2
-    case $onoff in 
-	on | 1 ) 
+    case $onoff in
+	on | 1 )
 	    _Dbg_write_journal_eval "_Dbg_set_${cmdname}=1"
 	    ;;
 	off | 0 )
@@ -71,9 +71,9 @@ if [[ $0 == ${.sh.file##*/} ]] ; then
     _Dbg_msg() {
 	print $*
     }
-    
+
     typeset -i _Dbg_foo
-    for i in 0 1 ; do 
+    for i in 0 1 ; do
 	_Dbg_set_foo=$i
 	_Dbg_help_set_onoff "foo" "foo" "Set short xx"
 	typeset -p _Dbg_set_foo

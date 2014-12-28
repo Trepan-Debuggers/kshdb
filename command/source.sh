@@ -33,7 +33,7 @@ _Dbg_do_source() {
 	_Dbg_errmsg 'Need to give a filename for the "source" command.'
 	return 1
     fi
-    
+
     typeset filename
     _Dbg_glob_filename "$1"
     if [[ -r $filename ]] || [[ "$filename" == '/dev/stdin' ]] ; then

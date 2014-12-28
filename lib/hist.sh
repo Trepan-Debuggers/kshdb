@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # hist.sh - Bourne Again Shell Debugger history routines
 #
-#   Copyright (C) 2002, 2003, 2006, 2007, 2008, 2011 Rocky Bernstein
+#   Copyright (C) 2002-003, 2006-2008, 2011, 2014 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -25,25 +25,25 @@ typeset -a _Dbg_history=()
 
 typeset -i _Dbg_set_history=1
 typeset -i _Dbg_history_length=${HISTSIZE:-256}  # gdb's default value
-typeset _Dbg_histfile=${HOME:-.}/.bashdb_hist
+typeset _Dbg_histfile=${HOME:-.}/.kshdb_hist
 
 # Set to rerun history item, or print history if command is of the form
-#  !n:p. If command is "history" then $1 is number of history item. 
-# the history command index to run is returned or $_Dbg_hi if 
+#  !n:p. If command is "history" then $1 is number of history item.
+# the history command index to run is returned or $_Dbg_hi if
 # there's nothing to run.
 # Return value in $history_num
 _Dbg_history_parse() {
 
   history_num=$1
   ((history_num < 0)) && ((history_num=${#_Dbg_history[@]}-1+$1))
-  
+
   _Dbg_hi=${#_Dbg_history[@]}
   [[ -z $history_num ]] && let history_num=$_Dbg_hi-1
 
   eval "$_seteglob"
   if [[ $_Dbg_cmd == h* ]] ; then
-    if [[ $history_num != $int_pat ]] ; then 
-      if [[ $history_num == -$int_pat ]] ; then 
+    if [[ $history_num != $int_pat ]] ; then
+      if [[ $history_num == -$int_pat ]] ; then
 	history_num=$_Dbg_hi+$history_num
       else
 	_Dbg_msg "Invalid history number skipped: $history_num"
@@ -52,7 +52,7 @@ _Dbg_history_parse() {
     fi
   else
     # Handle ! form. May need to parse number out number and modifier
-    case $_Dbg_cmd in 
+    case $_Dbg_cmd in
       \!\-${int_pat}:p )
 	local -a word1
 	word1=($(_Dbg_split '!' $_Dbg_cmd))
@@ -70,19 +70,19 @@ _Dbg_history_parse() {
 	_Dbg_do_history_list ${word2[0]} ${word2[0]}
 	history_num=-1
 	;;
-      \!\-$int_pat ) 
+      \!\-$int_pat )
 	local -a word
 	word=($(_Dbg_split '!' $_Dbg_cmd))
 	history_num=$_Dbg_hi+${word[0]}
 	;;
-      \!$int_pat ) 
+      \!$int_pat )
 	local -a word
 	word=($(_Dbg_split '!' $_Dbg_cmd))
 	history_num=${word[0]}
 	;;
-      '!' ) 
-        if [[ $history_num != $int_pat ]] ; then 
-	  if [[ $history_num == -$int_pat ]] ; then 
+      '!' )
+        if [[ $history_num != $int_pat ]] ; then
+	  if [[ $history_num == -$int_pat ]] ; then
   	    history_num=$_Dbg_hi+$history_num
 	  else
 	    _Dbg_msg "Invalid history number skipped: $history_num"
@@ -99,7 +99,7 @@ _Dbg_history_parse() {
 }
 
 _Dbg_history_read() {
-  if [[ -r $_Dbg_histfile ]] ; then 
+  if [[ -r $_Dbg_histfile ]] ; then
     history -r $_Dbg_histfile
     typeset -a last_history=($(history 1))
     typeset -i max_history=${last_history[0]}
