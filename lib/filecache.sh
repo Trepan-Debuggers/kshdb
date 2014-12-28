@@ -31,7 +31,6 @@ typeset -T Fileinfo_t=(
 
 # Maps a name into its canonic form which can then be looked up in filenames
 typeset -A _Dbg_file2canonic
-_Dbg_file2canonic=()
 
 function _Dbg_readfile # var file
 {

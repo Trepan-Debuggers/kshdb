@@ -11,7 +11,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with This program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -21,7 +21,7 @@
 # So happens this is how it's stored in global _Dbg_frame_stack which
 # is where we get the information from
 function _Dbg_print_location {
-    if (($# > 1)); then 
+    if (($# > 1)); then
       _Dbg_errmsg "got $# parameters, but need 0 or 1."
       return 2
     fi
@@ -50,7 +50,7 @@ function _Dbg_print_location_and_command {
     # typeset -i new_level
     # ((new_level=${#_Dbg_frame_stack[@]} - 1 - $_Dbg_stack_pos))
     # (( .sh.level =  new_level ))
-   _Dbg_print_command 
+   _Dbg_print_command
    # (( .sh.level = ${.old_level} ))
 }
 

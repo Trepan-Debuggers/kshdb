@@ -45,7 +45,7 @@ typeset -i _Dbg_inside_skip=0
 # - A return code 2 is special and means return from a function or
 #   "source" command immediately
 #
-# - A nonzero return indicate the next statement should not be run. 
+# - A nonzero return indicate the next statement should not be run.
 #   Typically we use 1 for that value.
 # - A set return code 0 continues execution.
 typeset -i _Dbg_continue_rc=-1
@@ -63,7 +63,7 @@ typeset -i _Dbg_program_exit_code=0
 function _Dbg_trap_handler {
 
     # Save old set options before destroying them
-    _Dbg_old_set_opts=$-  
+    _Dbg_old_set_opts=$-
 
     # Turn off line and variable trace listing.
     ((!_Dbg_set_debug)) && set +x
@@ -79,12 +79,12 @@ function _Dbg_trap_handler {
 
     typeset -i _Dbg_skipping_fn
     ((_Dbg_skipping_fn =
-	    (_Dbg_return_level >= 0 && 
+	    (_Dbg_return_level >= 0 &&
 	     .sh.level > _Dbg_return_level) ))
     # echo "${#funcfiletrace[@]} vs $_Dbg_return_level ; $_Dbg_skipping_fn"
 
     # if in step mode, decrement counter
-    if ((_Dbg_step_ignore > 0)) ; then 
+    if ((_Dbg_step_ignore > 0)) ; then
 	if ((! _Dbg_skipping_fn )) ; then
 	    ((_Dbg_step_ignore--))
 	    _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
@@ -101,13 +101,13 @@ function _Dbg_trap_handler {
 	    return 2 # 2 indicates skip statement.
 	fi
     fi
-    
-    # Determine if we stop or not. 
+
+    # Determine if we stop or not.
 
     # Check breakpoints.
-    if ((_Dbg_brkpt_count > 0)) ; then 
+    if ((_Dbg_brkpt_count > 0)) ; then
 	_Dbg_frame_save_frames 1
-	if _Dbg_hook_breakpoint_hit ; then 
+	if _Dbg_hook_breakpoint_hit ; then
 	    if ((_Dbg_step_force)) ; then
 		typeset _Dbg_frame_previous_file="$_Dbg_frame_last_filename"
 		typeset -i _Dbg_frame_previous_lineno="$_Dbg_frame_last_lineno"
@@ -145,7 +145,7 @@ function _Dbg_trap_handler {
 	return $?
 
     fi
-    if ((_Dbg_set_linetrace)) ; then 
+    if ((_Dbg_set_linetrace)) ; then
 	if ((_Dbg_linetrace_delay)) ; then
 	    sleep $_Dbg_linetrace_delay
 	fi
@@ -168,9 +168,9 @@ function _Dbg_hook_breakpoint_hit {
     typeset -a brkpt_nos
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
     typeset -i _Dbg_i
-    for ((_Dbg_i=0; _Dbg_i < ${#linenos[@]}; _Dbg_i++)); do 
+    for ((_Dbg_i=0; _Dbg_i < ${#linenos[@]}; _Dbg_i++)); do
 	if (( linenos[_Dbg_i] == lineno )) ; then
- 	    # Got a match, but is the breakpoint enabled? 
+ 	    # Got a match, but is the breakpoint enabled?
  	    (( _Dbg_brkpt_num = brkpt_nos[_Dbg_i] ))
  	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
  		return 0

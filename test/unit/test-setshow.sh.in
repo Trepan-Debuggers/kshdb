@@ -2,9 +2,10 @@
 # -*- shell-script -*-
 
 typeset -a msgs; msgs=()
+typeset -i last; last=0
 _Dbg_msg() {
-    typeset -i last=${#msgs[@]}
-    msgs[$last]=$*
+    msgs[$last]=$@
+    ((last++))
 }
 
 test_setshow_help_set_onoff()
@@ -12,7 +13,7 @@ test_setshow_help_set_onoff()
     typeset onoff
     onoff=('off.' 'on.')
     typeset -i _Dbg_set_foo
-    for i in 0 1 ; do 
+    for i in 0 1 ; do
 	_Dbg_set_foo=$i
 	_Dbg_help_set_onoff "foo" "foo" "Set short xx"
 	assertEquals  "set foo         -- Set short xx is ${onoff[$i]}" "${msgs[$i]}"

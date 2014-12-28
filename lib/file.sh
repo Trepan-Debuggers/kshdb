@@ -62,7 +62,8 @@ _Dbg_resolve_expand_filename() {
     echo ''
     return 1
   fi
-  typeset find_file="$1"
+  typeset find_file
+  find_file=$1
 
   # Is this one of the files we've that has been specified in a debugger
   # "FILE" command?

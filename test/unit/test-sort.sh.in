@@ -4,33 +4,35 @@ test_sort()
 {
     do_one() {
 	sort_list 0 ${#list[@]}-1
-	assertEquals "0" "$?"
+	assertEquals "sort_list return code no error" "0" "$?"
 	typeset -i i
 	for ((i=0 ; i<${#list[@]}; i++)) ; do
-	    assertEquals "${check[$i]}" "${list[$i]}"
+	    assertEquals "do_one check item $i" "${check[$i]}" "${list[$i]}"
 	done
     }
     typeset -a list
 
     # Some boundary cases first
     list=()
-    sort_list 0 0 
-    assertEquals "2" "$?"
-    assertEquals "0" "${#list[@]}"
-    sort_list 1 1 
+    sort_list -1 0
+    assertEquals "Bad left value -1, exit should be 2" "2" "$?"
+    sort_list -1
+    assertEquals "No right value, exit should be 1" "1" "$?"
+    assertEquals "1" "${#list[@]}"
+    sort_list 1 1
     assertNotEquals "0" "$?"
 
     typeset -a check
     list=('one'); check=('one')
     do_one
-    list=('one' 'two' 'three') 
+    list=('one' 'two' 'three')
     check=('one' 'three' 'two')
     do_one
     list=(4 3 2 1)
     check=(1 2 3 4)
     do_one
 
-    sort_list 0 10 
+    sort_list 0 10
     assertNotEquals "0" "$?"
 }
 

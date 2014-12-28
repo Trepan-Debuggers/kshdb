@@ -13,7 +13,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -43,7 +43,7 @@ typeset -i _Dbg_fdi ; exec {_Dbg_fdi}<&0
 # Save descriptor number
 typeset -i _Dbg_fd_last=0
 
-# keep a list of source'd command files. If the entry is "" then we are 
+# keep a list of source'd command files. If the entry is "" then we are
 # interactive.
 typeset -a _Dbg_cmdfile; _Dbg_cmdfile=('')
 
@@ -51,12 +51,14 @@ typeset -a _Dbg_cmdfile; _Dbg_cmdfile=('')
 typeset -a _Dbg_fd=()
 
 # Duplicate standard input
-{_Dbg_fd[0]}<&0
+typeset -i _Dbg_fd_num
+{_Dbg_fd_num}<&0
+((_Dbg_fd[0]=$_Dbg_fd_num-1))
 
 # ===================== FUNCTIONS =======================================
 
 # The main debugger command reading loop.
-# 
+#
 # Note: We have to be careful here in naming "local" variables. In contrast
 # to other places in the debugger, because of the read/eval loop, they are
 # in fact seen by those using the debugger. So in contrast to other "local"s
@@ -85,7 +87,7 @@ function _Dbg_process_commands {
     typeset _Dbg_greater=''
     typeset _Dbg_less=''
     typeset result  # Used by copies to return a value.
-    
+
     if _Dbg_copies '>' $_Dbg_DEBUGGER_LEVEL ; then
 	_Dbg_greater=$result
 	_Dbg_copies '<' $_Dbg_DEBUGGER_LEVEL
@@ -101,7 +103,7 @@ function _Dbg_process_commands {
 
     typeset _Dbg_prompt="${_Dbg_debugger_name}${_Dbg_less}1${_Dbg_greater} "
     _Dbg_preloop
-    typeset _Dbg_cmd 
+    typeset _Dbg_cmd
     typeset args
     while read "_Dbg_cmd?$_Dbg_prompt" args <&${_Dbg_fd[_Dbg_fd_last]}
     do
@@ -130,7 +132,7 @@ _Dbg_annotation() {
 
 # Run a single command
 # Parameters: _Dbg_cmd and args
-# 
+#
 _Dbg_onecmd() {
     typeset full_cmd; full_cmd=$@
     typeset _Dbg_orig_cmd="$1"
@@ -147,19 +149,19 @@ _Dbg_onecmd() {
 	_Dbg_args=$_Dbg_last_next_step_args
 	full_cmd="$_Dbg_cmd $_Dbg_args"
      fi
-     
+
      # If "set trace-commands" is "on", echo the the command
      if [[  $_Dbg_set_trace_commands == 'on' ]]  ; then
 	 _Dbg_msg "+$_Dbg_cmd $args"
      fi
-     
+
      typeset -i _Dbg_redo=1
      while (( _Dbg_redo )) ; do
-	 
+
 	 _Dbg_redo=0
 
 	 [[ -z $_Dbg_cmd ]] && _Dbg_cmd=$_Dbg_last_cmd
-	 if [[ -n $_Dbg_cmd ]] ; then 
+	 if [[ -n $_Dbg_cmd ]] ; then
 	     typeset -i found=0
 	     if [[ -n ${_Dbg_debugger_commands[$_Dbg_cmd]} ]] ; then
 		 found=1
@@ -167,7 +169,7 @@ _Dbg_onecmd() {
 		 # Look for a unique abbreviation
 		 typeset -i count=0
 		 typeset list; list="${!_Dbg_debugger_commands[@]}"
-		 for try in $list ; do 
+		 for try in $list ; do
 		     if [[ $try =~ ^$_Dbg_cmd ]] ; then
 			 _Dbg_cmd=$try
 			 ((count++))
@@ -186,21 +188,21 @@ _Dbg_onecmd() {
 
 	 case $_Dbg_cmd in
 	     # Comment line
-	     [#]* ) 
+	     [#]* )
 		 # _Dbg_remove_history_item
 		 _Dbg_last_cmd="#"
 		 ;;
-	     
+
 	     alias )
 		 _Dbg_do_alias $@
 		 ;;
-	     
+
 	     # Set breakpoint on a line
 	     break )
-		 _Dbg_do_break $args 
+		 _Dbg_do_break $args
 		 _Dbg_last_cmd="break"
 		 ;;
-	     
+
 # 	# Delete all breakpoints by line number.
 # 	clear )
 # 	  _Dbg_do_clear_brkpt $args
@@ -209,7 +211,7 @@ _Dbg_onecmd() {
 
 	     # Continue
 	     continue )
-		 
+
 		 _Dbg_last_cmd='continue'
 		 if _Dbg_do_continue $@ ; then
 		     # _Dbg_write_journal_eval \
@@ -217,55 +219,55 @@ _Dbg_onecmd() {
 		     return 1
 		 fi
 		 ;;
-	     
+
 	     # single-step ignoring functions
 	     'next+' | 'next-' | 'next' )
 		 _Dbg_do_next "$_Dbg_cmd" $@
 		 return $?
 		 ;;
-	     
+
 	     # skip N times (default 1)
 	     sk | ski | skip )
 		 _Dbg_last_cmd='skip'
 		 _Dbg_do_skip $@ && return 2
 		 ;;
-	     
+
 	     # Command to show debugger settings
 	     show )
 		 _Dbg_do_show $args
 		 _Dbg_last_cmd='show'
 		 ;;
-	     
-	     
-	     # single-step 
+
+
+	     # single-step
 	     'step+' | 'step-' | 'step' )
 		 _Dbg_do_step "$_Dbg_cmd" $@
 		 return $?
 		 ;;
-	     
+
 	     # Trace a function
 	     trace )
-		 _Dbg_do_trace_fn $args 
+		 _Dbg_do_trace_fn $args
 		 ;;
-	     
+
 	     # 	# Remove a function trace
 	     # 	unt | untr | untra | untrac | untrace )
-	     # 	  _Dbg_do_untrace_fn $args 
+	     # 	  _Dbg_do_untrace_fn $args
 	     # 	  ;;
-	     
+
 	     where )
 		 _Dbg_do_backtrace $@
 		 ;;
-	     
+
 	     '' )
 		 # Redo last_cmd
-		 if [[ -n $_Dbg_last_cmd ]] ; then 
-		     _Dbg_cmd=$_Dbg_last_cmd 
+		 if [[ -n $_Dbg_last_cmd ]] ; then
+		     _Dbg_cmd=$_Dbg_last_cmd
 		     _Dbg_redo=1
 		 fi
 		 ;;
-	     
-	     * ) 
+
+	     * )
 		 if (( _Dbg_set_autoeval )) ; then
 		     ! _Dbg_do_eval $_Dbg_cmd $args && return 255
 		 else
@@ -278,25 +280,25 @@ _Dbg_onecmd() {
 	     ;;
 	 esac
      done # while (( $_Dbg_redo ))
-     
+
      return 0
 }
 
 _Dbg_preloop() {
     if ((_Dbg_set_annotate)) ; then
 	_Dbg_annotation 'breakpoints' _Dbg_do_info breakpoints
-	# _Dbg_annotation 'locals'      _Dbg_do_backtrace 3 
-	_Dbg_annotation 'stack'       _Dbg_do_backtrace 3 
+	# _Dbg_annotation 'locals'      _Dbg_do_backtrace 3
+	_Dbg_annotation 'stack'       _Dbg_do_backtrace 3
     fi
 }
 
 _Dbg_postcmd() {
     if ((_Dbg_set_annotate)) ; then
 	case $_Dbg_last_cmd in
-            break | tbreak | disable | enable | condition | clear | delete ) 
+            break | tbreak | disable | enable | condition | clear | delete )
 		_Dbg_annotation 'breakpoints' _Dbg_do_info breakpoints
 		;;
-	    up | down | frame ) 
+	    up | down | frame )
 		_Dbg_annotation 'stack' _Dbg_do_backtrace 3
 		;;
 	    * )
