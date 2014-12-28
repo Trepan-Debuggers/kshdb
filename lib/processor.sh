@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # dbg-processor.sh - Top-level debugger commands
 #
-#   Copyright (C) 2008, 2009, 2010, 2011
+#   Copyright (C) 2008-2011, 2014
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -51,9 +51,9 @@ typeset -a _Dbg_cmdfile; _Dbg_cmdfile=('')
 typeset -a _Dbg_fd=()
 
 # Duplicate standard input
-typeset -i _Dbg_fd_num
-{_Dbg_fd_num}<&0
-((_Dbg_fd[0]=$_Dbg_fd_num-1))
+# typeset -i _Dbg_fd_num
+# {_Dbg_fd_num}<&0
+((_Dbg_fd[0]=$_Dbg_fdi))
 
 # ===================== FUNCTIONS =======================================
 
@@ -112,13 +112,13 @@ function _Dbg_process_commands {
         # _Dbg_postcmd
         (( rc > 0 && rc != 255 )) && return $rc
     done
-
     unset _Dbg_fd[_Dbg_fd_last--]
   done  # Loop over all open pending file descriptors
 
   # EOF hit. Same as quit without arguments
   _Dbg_msg "That's all folks..." # Cause <cr> since EOF may not have put in.
   _Dbg_do_quit
+
 }
 
 # Run a debugger command "annotating" the output

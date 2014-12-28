@@ -1,9 +1,9 @@
 #@SH_PROG@
 # -*- shell-script -*-
-PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}]
 '
 
-if [ -z "$SH" ] ; then 
+if [ -z "$SH" ] ; then
   SH=@SH_PROG@
 fi
 
@@ -12,23 +12,23 @@ export top_srcdir=@abs_top_srcdir@
 export srcdir=@abs_srcdir@
 
 check_output() {
-  typeset testfile="$1"
-  typeset rightfile="$2"
-  # Bourne sh
-  # set -o noglob
+    typeset testfile="$1"
+    typeset rightfile="$2"
+    # Bourne sh
+    # set -o noglob
 
-  @DIFF@ @DIFF_OPTS@ $testfile $rightfile && rm -f $testfile
-  return $?
+    @DIFF@ @DIFF_OPTS@ $testfile $rightfile && rm -f $testfile
+    return $?
 }
 
 # Run the debugger on test program $1 with (optional) debugger options $2
 # using commandfile $3. We assume $TOP_BUILDDIR, $TOP_SRCDIR and
 # $TEST_NAME have been set previously
 run_debugger() {
-  typeset debugged_script=$1
-  typeset dbg_opts=${2:-"-L ${top_srcdir} -n -B -q"}
-  typeset cmdfile=${3:-"${top_srcdir}/test/data/${TEST_NAME}.cmd"}
-  $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x "$cmdfile" "$debugged_script" $ARGS
+    typeset debugged_script=$1
+    typeset dbg_opts=${2:-"-L ${top_srcdir} -n -B -q"}
+    typeset cmdfile=${3:-"${top_srcdir}/test/data/${TEST_NAME}.cmd"}
+    $SH -- ${top_builddir}/@PACKAGE@ $dbg_opts -x "$cmdfile" "$debugged_script" $ARGS
 }
 
 TEST_FILE="${top_builddir}/test/integration/${TEST_NAME}.check"

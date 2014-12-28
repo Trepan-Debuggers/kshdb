@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2010 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010, 2014 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -11,7 +11,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -23,29 +23,29 @@
 typeset -i _Dbg_action_count=0
 
 # 1/0 if enabled or not
-typeset -a  _Dbg_action_enable; _Dbg_action_enable=()
+typeset -a  _Dbg_action_enable;
 
 # filename of action $i
-typeset -a  _Dbg_action_file; _Dbg_action_file=()
+typeset -a  _Dbg_action_file;
 
 # Line number of action $i
-typeset -a _Dbg_action_line; _Dbg_action_line=()
+typeset -a _Dbg_action_line
 
 # statement to run when line is hit
-typeset -a  _Dbg_action_stmt; _Dbg_action_stmt=()
+typeset -a  _Dbg_action_stmt
 
 # Needed because we can't figure out what the max index is and arrays
 # can be sparse.
 typeset -i  _Dbg_action_max=0
 
 # Maps a resolved filename to a list of action entries.
-typeset -A _Dbg_action_file2action; _Dbg_action_file2action=()
- 
+typeset -A _Dbg_action_file2action
+
 # Maps a resolved filename to a list of action line numbers in that file
-typeset -A _Dbg_action_file2linenos; _Dbg_action_file2linenos=()
+typeset -A _Dbg_action_file2linenos
 
 # Note: we loop over possibly sparse arrays with _Dbg_brkpt_max by adding one
-# and testing for an entry. Could add yet another array to list only 
+# and testing for an entry. Could add yet another array to list only
 # used indices. Zsh is kind of primitive.
 
 #========================= FUNCTIONS   ============================#
@@ -82,7 +82,7 @@ function _Dbg_list_action {
   fi
 }
 
-# Internal routine to a set action unconditonally. 
+# Internal routine to a set action unconditonally.
 
 _Dbg_set_action() {
     (( $# != 3 )) && return 1
@@ -101,7 +101,7 @@ _Dbg_set_action() {
     _Dbg_action_file[$_Dbg_action_max]="$source_file"
     _Dbg_action_stmt[$_Dbg_action_max]="$stmt"
     _Dbg_action_enable[$_Dbg_action_max]=1
-    
+
     typeset dq_source_file
     typeset dq_source_file=$(_Dbg_esc_dq "$source_file")
     typeset dq_stmt=$(_Dbg_esc_dq "$stmt")
@@ -140,7 +140,7 @@ function _Dbg_unset_action {
     eval "action_nos=(${_Dbg_action_file2action[$fullname]})"
 
     typeset -i _Dbg_i
-    for ((_Dbg_i=0; _Dbg_i < ${#linenosf[@]}; _Dbg_i++)); do 
+    for ((_Dbg_i=0; _Dbg_i < ${#linenosf[@]}; _Dbg_i++)); do
 	if (( linenos[_Dbg_i] == lineno )) ; then
 	    # Got a match, find action entry number
 	    typeset -i action_num

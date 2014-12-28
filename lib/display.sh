@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # display.sh -  Debugger display routines
 #
-#   Copyright (C) 2010-2011, 2013 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2013-2014 Rocky Bernstein <rocky@gnu.org>
 #   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -22,8 +22,8 @@
 #================ VARIABLE INITIALIZATIONS ====================#
 
 # Display data structures
-typeset -a  _Dbg_disp_exp; _Dbg_display_exp=() # Watchpoint expressions
-typeset -ia _Dbg_disp_enable; _Dbg_disp_enable=() # 1/0 if enabled or not
+typeset -a  _Dbg_disp_exp       # Watchpoint expressions
+typeset -ia _Dbg_disp_enable    # 1/0 if enabled or not
 typeset -i  _Dbg_disp_max=0     # Needed because we can't figure out what
                                 # the max index is and arrays can be sparse
 

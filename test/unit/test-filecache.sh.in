@@ -21,15 +21,15 @@ test_filecache_readin_maxline()
 
 # Test check_line
 # test should appear after tests which read in source.
-test_filecache_check_line() 
+test_filecache_check_line()
 {
     _Dbg_errmsg() {
 	errmsg+=("$1")
     }
-    typeset -a errmsg; errmsg=()
+    typeset -a errmsg
     _Dbg_check_line
     assertNotEquals "check_line with wrong number of args" '0' $?
-    _Dbg_check_line a 
+    _Dbg_check_line a
     assertNotEquals "check_line with wrong number of args" '0' $?
     _Dbg_check_line a b c
     assertNotEquals "check_line with wrong number of args" '0' $?

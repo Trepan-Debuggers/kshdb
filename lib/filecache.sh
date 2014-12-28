@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # filecache.sh - cache file information
 #
-#   Copyright (C) 2008, 2009, 2010, 2011, 2013 Rocky Bernstein
+#   Copyright (C) 2008-2011, 2013-2014 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -107,6 +107,7 @@ _Dbg_get_source_line() {
 	lineno=$1
 	shift
     fi
+    return 0; # ++++
     typeset filename
     if (( $# == 0 )) ; then
 	filename="$_Dbg_frame_last_filename"
