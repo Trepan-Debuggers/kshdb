@@ -1,6 +1,6 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008-2009, 2011, 2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2011, 2014, 2016 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -259,7 +259,7 @@ function _Dbg_delete_brkpt_entry {
     done
     if (( found == 0 )) ; then
 	_Dbg_errmsg "No breakpoint number $del."
-	return 0
+	return 1
     fi
     found=0
     typeset    source_file=${_Dbg_brkpt[$del].filename}
@@ -274,7 +274,7 @@ function _Dbg_delete_brkpt_entry {
 	if (( brkpt_nos[i] == del )) ; then
 	    if (( try != lineno )) ; then
 		_Dbg_errmsg 'internal brkpt structure inconsistency'
-		return 0
+		return 1
 	    fi
 	    _Dbg_unset_brkpt_arrays $del
 	    ((found++))
@@ -291,9 +291,10 @@ function _Dbg_delete_brkpt_entry {
 	    _Dbg_write_journal_eval "_Dbg_brkpt_file2linenos[$source_file]=${new_lineno_val}"
 	    _Dbg_write_journal_eval "_Dbg_brkpt_file2brkpt[$source_file]=${new_brkpt_nos}"
 	fi
+	unset _Dbg_brkpt[$del]
+	return 0
     fi
-    unset _Dbg_brkpt[$del]
-    return $found
+    return 1
 }
 
 # Enable/disable breakpoint(s) by entry numbers.

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # delete.sh - gdb-like "delete" debugger command
 #
-#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2011, 2016 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -29,17 +29,18 @@ _Dbg_do_delete() {
   typeset to_go; to_go=$@
   typeset -i  i
   typeset -i  tot_found=0
-  
-  for del in $to_go ; do 
+
+  for del in $to_go ; do
     case $del in
 #       $_watch_pat )
 #         _Dbg_delete_watch_entry ${del:0:${#del}-1}
 #         ;;
-      [0-9]* )	
-	    _Dbg_delete_brkpt_entry $del
-	    typeset -i found=$?
-	    (( found > 0 )) && ((tot_found+=found))
-	;;
+      [0-9]* )
+          if _Dbg_delete_brkpt_entry $del ; then
+	      _Dbg_msg "Deleted breakpoint ${del}"
+	      ((tot_found++))
+	  fi
+	  ;;
       * )
 	_Dbg_errmsg "Invalid entry number skipped: $del"
     esac
@@ -47,4 +48,3 @@ _Dbg_do_delete() {
   (( tot_found != 0 )) && _Dbg_msg "Removed $tot_found breakpoint(s)."
   return $tot_found
 }
-
