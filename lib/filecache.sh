@@ -107,7 +107,6 @@ _Dbg_get_source_line() {
 	lineno=$1
 	shift
     fi
-    return 0; # ++++
     typeset filename
     if (( $# == 0 )) ; then
 	filename="$_Dbg_frame_last_filename"
