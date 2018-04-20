@@ -1,4 +1,6 @@
 /*~
+/*.log
+/*.trs
 /Makefile
 /Makefile.in
 /test-alias.sh
@@ -11,6 +13,7 @@
 /test-file.sh
 /test-filecache.sh
 /test-fns.sh
+/test-fns.sh.log
 /test-frame.sh
 /test-get-sourceline.sh
 /test-io.sh

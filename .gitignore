@@ -16,4 +16,5 @@
 /kshdb-*.tar.gz
 /kshdb-trace
 /missing
+/test-driver
 /tmp

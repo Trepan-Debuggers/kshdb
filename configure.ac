@@ -35,9 +35,9 @@ if test "$SH_PROG" = no; then
 fi
 
 AC_MSG_CHECKING([Checking whether $SH_PROG is compatible with DEBUGGER])
-if ! $SH_PROG -e '((.sh.version >= 20120801))' ; then
+if ! $SH_PROG -e '((.sh.version >= 20141224))' ; then
   ksh_version=$($SH_PROG -e 'print ${.sh.version}')
-  AC_MSG_RESULT([Need version later than 2012-08-01 and you have $ksh_version])
+  AC_MSG_RESULT([Need version later than 2014-12-24 and you have $ksh_version])
   AC_MSG_ERROR([You might want to retry with another POSIXSHELL using the --with-POSIXSHELL option.])
 else
   AC_MSG_RESULT(yes!)
