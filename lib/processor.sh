@@ -83,6 +83,7 @@ function _Dbg_process_commands {
   # Loop over all pending open input file descriptors
   while (( _Dbg_fd_last >= 0 )) ; do
 
+    typeset -p _Dbg_arg
     # Set up prompt to show shell and subshell levels.
     typeset _Dbg_greater=''
     typeset _Dbg_less=''
