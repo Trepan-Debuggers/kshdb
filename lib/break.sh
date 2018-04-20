@@ -261,7 +261,6 @@ function _Dbg_delete_brkpt_entry {
 	_Dbg_errmsg "No breakpoint number $del."
 	return 0
     fi
-    found=0
     typeset    source_file=${_Dbg_brkpt[$del].filename}
     typeset -i lineno=${_Dbg_brkpt[$del].lineno}
     typeset -i try
@@ -277,7 +276,6 @@ function _Dbg_delete_brkpt_entry {
 		return 0
 	    fi
 	    _Dbg_unset_brkpt_arrays $del
-	    ((found++))
 	else
 	    new_lineno_val+=$try
 	    new_brkpt_nos+=${brkpt_nos[$i]}
@@ -293,7 +291,7 @@ function _Dbg_delete_brkpt_entry {
 	fi
     fi
     unset _Dbg_brkpt[$del]
-    return $found
+    return 1
 }
 
 # Enable/disable breakpoint(s) by entry numbers.
