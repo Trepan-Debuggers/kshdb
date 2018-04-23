@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # help.sh - gdb-like "help" debugger command
 #
-#   Copyright (C) 2008, 2010 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2010, 2018 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -25,39 +25,42 @@ if [[ $0 == ${.sh.file##*/} ]] ; then
 fi
 
 _Dbg_help_add help \
-'help [COMMAND [SUBCOMMAND ..]]
+'**help** [*command* [*subcommand* ..]]
 
 If no arguments are given, print a list of command names.
 With a command name give help for that command. For many commands
 you can get further detailed help by listing the subcommand name.
 
 Examples:
+---------
 
-help  
-help up
-help set
-help set args' 1 _Dbg_complete_help
+  help
+  help up
+  help set
+  help set args' 1 _Dbg_complete_help
 
 _Dbg_do_help() {
-  if ((0==$#)) ; then
-      _Dbg_msg 'Available commands:'
-      typeset -a commands=("${!_Dbg_command_help[@]}")
-      _Dbg_list_columns commands 
-      _Dbg_msg ''
-      _Dbg_msg 'Readline command line editing (emacs/vi mode) is available.'
-      _Dbg_msg 'Type "help" followed by command name for full documentation.'
-      return 0
+    # Treat "help *" the same as help
+    ((1 == $#)) && [[ "$1" == '*' ]] && shift
+    if ((0==$#)) ; then
+	_Dbg_msg 'Available commands:'
+	typeset -a commands=("${!_Dbg_command_help[@]}")
+	_Dbg_list_columns commands
+	_Dbg_msg ''
+	_Dbg_msg 'Readline command line editing (emacs/vi mode) is available.'
+	_Dbg_msg 'Type "help" followed by command name for full documentation.'
+	return 0
     else
 	typeset dbg_cmd="$1"
 	if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
- 	    _Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
+ 	    _Dbg_msg_rst "${_Dbg_command_help[$dbg_cmd]}"
 	else
 	    _Dbg_alias_expand $dbg_cmd
 	    dbg_cmd="$expanded_alias"
 	    if [[ -n ${_Dbg_command_help[$dbg_cmd]} ]] ; then
- 		_Dbg_msg "${_Dbg_command_help[$dbg_cmd]}"
+ 		_Dbg_msg_rst "${_Dbg_command_help[$dbg_cmd]}"
 	    else
-		case $dbg_cmd in 
+		case $dbg_cmd in
 		    i | in | inf | info )
 			_Dbg_info_help $2
 			;;
@@ -72,7 +75,7 @@ _Dbg_do_help() {
 			typeset -i count=0
 			typeset found_cmd
 			typeset list; list="${!_Dbg_command_help[@]}"
-			for try in $list ; do 
+			for try in $list ; do
 			    if [[ $try =~ ^$dbg_cmd ]] ; then
 				found_cmd=$try
 				((count++))
@@ -99,8 +102,8 @@ _Dbg_do_help() {
     fi
 }
 
-_Dbg_alias_add 'h' help
 _Dbg_alias_add '?' help
+_Dbg_alias_add 'h' help
 
  # Demo it.
 if [[ $0 == ${.sh.file##*/} ]] ; then

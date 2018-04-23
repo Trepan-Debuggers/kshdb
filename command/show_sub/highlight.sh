@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "show highlight" debugger command
 #
-#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -26,10 +26,10 @@ _Dbg_do_show_highlight() {
     [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " highlight) || label=''
     _Dbg_msg_nocr \
         "${label}Syntax highlight in source listings is "
-    if (( $_Dbg_set_highlight == 0)) ; then
-        _Dbg_msg 'off.'
+    if [[ -n $_Dbg_set_highlight ]] ; then
+        _Dbg_msg "${_Dbg_set_highlight}."
     else
-        _Dbg_msg 'on.'
+        _Dbg_msg 'off.'
     fi
     return 0
 }

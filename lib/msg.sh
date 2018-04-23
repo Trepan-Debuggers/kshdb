@@ -64,7 +64,7 @@ _Dbg_confirm() {
 # Print an error message
 function _Dbg_errmsg {
     typeset -r prefix='**'
-    if (( _Dbg_set_highlight )) ; then
+    if [[ -n $_Dbg_set_highlight ]] ; then
         _Dbg_msg "$prefix ${_Dbg_ansi_term_underline}$@${_Dbg_ansi_term_normal}"
     else
         _Dbg_msg "$prefix $@"
@@ -118,6 +118,24 @@ function _Dbg_printf_nocr {
       printf "$format" "$@"
     fi
   fi
+}
+
+function _Dbg_msg_rst {
+    local -r msg="$@"
+    set -xv
+    if [[ -n $_Dbg_set_highlight ]] && (( _Dbg_working_term_highlight )) ; then
+	set +xv
+	typeset opts="--rst --width=$_Dbg_set_linewidth"
+	typeset highlight_cmd="${_Dbg_libdir}/lib/term-highlight.py"
+	typeset formatted_msg
+	formatted_msg=$(echo "$msg" | $highlight_cmd $opts)
+	if (( $? == 0 )) && [[ -n $formatted_msg ]] ; then
+	    _Dbg_msg "$formatted_msg"
+	    return
+	fi
+    fi
+    set +xv
+    _Dbg_msg "$msg"
 }
 
 # Common funnel for "Undefined command" message

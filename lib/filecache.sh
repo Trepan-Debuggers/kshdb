@@ -115,7 +115,7 @@ _Dbg_get_source_line() {
     fi
   _Dbg_readin_if_new "$filename"
   fullname=${_Dbg_file2canonic[$filename]}
-  if (( _Dbg_set_highlight )) ; then
+  if [[ -n $_Dbg_set_highlight ]] ; then
       nameref text=_Dbg_filenames[$fullname].marked_text
   else
       nameref text=_Dbg_filenames[$fullname].text
@@ -201,7 +201,7 @@ function _Dbg_readin {
 
     nameref text=_Dbg_filenames[$fullname].text
     _Dbg_readfile text "$fullname"
-    if (( _Dbg_set_highlight )) ; then
+    if [[ -n $_Dbg_set_highlight ]] ; then
 	highlight_cmd="${_Dbg_libdir}/lib/term-highlight.py $fullname"
 	tempfile=$($highlight_cmd 2>/dev/null)
 	nameref text=_Dbg_filenames[$fullname].marked_text

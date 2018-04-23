@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # list.sh - Some listing commands
 #
-#   Copyright (C) 2008, 2009, 2010, 2011
+#   Copyright (C) 2008-2011, 2018
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -20,18 +20,46 @@
 #   MA 02111 USA.
 
 _Dbg_help_add list \
-'list[>] [LOC|.|-] [COUNT] -- List COUNT lines of a script centered around LOC
+'**list**[**>**] [*location*|**.**|**-**] [*num*]
 
-LOC is the starting location or dot (.) for current file and
-line. Subsequent list commands continue from the last line
-listed. Frame switching however resets the line to dot.
+List source code.
 
-If COUNT is omitted, use the setting LISTSIZE. Use "set listsize" to
-change this setting.
+Without arguments, print lines centered around the current line. If
+*location* is given, that number of lines is shown.
 
-By default aliases "l>" and "list>" are set to list. In this case and
+If this is the first list command issued since the debugger command
+loop was entered, then the current line is the current frame. If a
+subsequent list command was issued with no intervening frame changing,
+then that is start the line after we last one previously shown.
+
+A *location* is either:
+
+* a number, e.g. 5,
+* a filename, colon, and a number, e.g. `/etc/profile:5`,
+* a "." for the current line number
+* a "-" for the lines before the current linenumber
+
+By default aliases **l>** and **list>** are set to list. In this case and
 more generally when the alias ends in ">", rather than center lines
-around LOC that will be used as the starting point.
+around *location* that will be used as the starting point.
+
+Examples:
+---------
+
+    list 5                  # List starting from line 5
+    list 4+1                # Same as above.
+    list /etc/profile:5     # List starting from line 5 of /etc/profile
+    list /etc/profile 5     # Same as above.
+    list /etc/profile 5 6   # list lines 5 and 6 of /etc/profile
+    list /etc/profile 5 2   # Same as above, since 2 < 5.
+    list profile:5 2        # List two lines starting from line 5 of profile
+    list .                  # List lines centered from where we currently are stopped
+    list -                  # List lines previous to those just shown
+
+See also:
+---------
+
+**set listsize** or **show listsize** to see or set the value.
 ' 1
 
 # l [start|.|-] [cnt] List cnt lines from line start.
