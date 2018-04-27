@@ -122,7 +122,6 @@ function _Dbg_printf_nocr {
 
 function _Dbg_msg_rst {
     local -r msg="$@"
-    set -xv
     if [[ -n $_Dbg_set_highlight ]] && (( _Dbg_working_term_highlight )) ; then
 	set +xv
 	typeset opts="--rst --width=$_Dbg_set_linewidth"
@@ -134,7 +133,6 @@ function _Dbg_msg_rst {
 	    return
 	fi
     fi
-    set +xv
     _Dbg_msg "$msg"
 }
 
