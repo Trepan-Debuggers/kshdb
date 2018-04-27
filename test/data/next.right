@@ -12,20 +12,20 @@ Show stepping forces a new line is off.
 ===
 (nexting.sh:6):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 6
 +next 
 0
 ===
 (nexting.sh:6):
 x=6
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 6
 +# Test that next+ skips multiple statements
 +next+ 
 (nexting.sh:7):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 7
 +# Same thing - but should stop at 2nd statement in line
 +next 
@@ -33,12 +33,12 @@ p
 ===
 (nexting.sh:7):
 x=7
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 7
 +next 
 (nexting.sh:8):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 8
 +# Now check with set different on
 +set different on
@@ -50,7 +50,7 @@ Show stepping forces a new line is on.
 ===
 (nexting.sh:9):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 9
 +# Override different
 +next- 
@@ -58,12 +58,12 @@ p
 ===
 (nexting.sh:9):
 x=9
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 9
 +next- 
 (nexting.sh:10):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 10
 +# A null command should use the last next
 +next- 
@@ -71,7 +71,7 @@ p
 ===
 (nexting.sh:10):
 x=10
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 10
 +next- 
 (nexting.sh:11):
@@ -81,7 +81,7 @@ p
 ===
 (nexting.sh:12):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 12
 +# Try a null command the other way
 +next+ 
@@ -89,14 +89,14 @@ p
 ===
 (nexting.sh:13):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 13
 +next+ 
 0
 ===
 (nexting.sh:14):
 x=14
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 14
 +quit 
 kshdb: That's all, folks...

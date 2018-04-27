@@ -37,7 +37,7 @@ Breakpoint 2 hit.
 (stepping.sh:5):
 (( i=0 ))
 +# Should stop at line 5 not 4
-+where 1
++backtrace 1
 ->0 in file `stepping.sh' at line 5
 +info break
 Num Type       Disp Enb What
@@ -68,7 +68,7 @@ Breakpoint 4 hit.
 (stepping.sh:7):
 (( i=0 ))
 +# Should be at breakpoint but not one that's been deleted
-+where 1
++backtrace 1
 ->0 in file `stepping.sh' at line 7
 +quit 
 kshdb: That's all, folks...
