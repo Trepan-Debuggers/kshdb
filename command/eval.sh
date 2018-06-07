@@ -84,7 +84,8 @@ _Dbg_do_eval() {
 	. $_Dbg_evalfile >>$_Dbg_tty
     else
 	_Dbg_set_dol_q $_Dbg_debugged_exit_code
-	# . $_Dbg_evalfile
+	# Warning: in ksh93u+ (and others before?) the following line will SEGV
+	. $_Dbg_evalfile
     fi
     (( _Dbg_show_eval_rc )) && _Dbg_msg "\$? is $_Dbg_rc"
     # We've reset some variables like IFS and PS4 to make eval look
@@ -108,7 +109,9 @@ _Dbg_help_add print \
 EXPRESSION is a string like you would put in a print statement.
 See also eval.' 1
 
-function _Dbg_do_print {
+# NOTE: because this funciton uses _Dbg_arg. it CANNOT be declared as a fucntion,
+# i.e. function _Dbg_doprint()
+_Dbg_do_print() {
     typeset _Dbg_expr=${@:-"$_Dbg_last_print_args"}
     typeset dq_expr; dq_expr=$(_Dbg_esc_dq "$_Dbg_expr")
     typeset -i _Dbg_show_eval_rc=0

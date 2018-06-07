@@ -23,10 +23,14 @@
 # input-file descriptor by one and redirect input which will
 # be picked up in next debugger command loop.
 
-_Dbg_help_add source \
-'source FILE
+# Disabled until we fix the _Dbg_fd problem. The first source will work, but
+# the 2nd one will report:
+# ./kshdb[130]: ./kshdb[1]: source[4]: _Dbg_trap_handler[187]: _Dbg_process_commands[108]: -67096015: bad file unit number
 
-Run debugger commands in FILE.' 1
+# _Dbg_help_add source \
+# 'source FILE
+
+# Run debugger commands in FILE.' 1
 
 _Dbg_do_source() {
     if (( $# == 0 )) ; then

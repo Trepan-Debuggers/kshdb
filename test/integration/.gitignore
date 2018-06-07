@@ -1,5 +1,7 @@
 /*.check
 /*~
+/*.log
+/*.trs
 /Makefile
 /Makefile.in
 /check-common.sh

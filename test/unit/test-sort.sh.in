@@ -18,7 +18,7 @@ test_sort()
     assertEquals "Bad left value -1, exit should be 2" "2" "$?"
     sort_list -1
     assertEquals "No right value, exit should be 1" "1" "$?"
-    assertEquals "1" "${#list[@]}"
+    assertEquals "0" "${#list[@]}"
     sort_list 1 1
     assertNotEquals "0" "$?"
 

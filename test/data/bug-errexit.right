@@ -2,7 +2,10 @@
 set -o errexit
 +# We once had a bug when some options were set (errexit and -u)
 +# Make sure this doesn't happen again.
-+step- 
++step-
 (bug-errexit.sh:7):
 print one
-+step- 
++# Add when set -u is reinstated
++# step-
++quit
+kshdb: That's all, folks...

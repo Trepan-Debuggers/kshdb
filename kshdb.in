@@ -2,7 +2,7 @@
 # -*- shell-script -*-
 # top-level debugger program.
 #
-#   Copyright (C) 2008, 2009, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2009, 2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -13,14 +13,14 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with This program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
 # This routine gets called via the -c or --command option and its sole
-# purpose is to capture the command string such as via "x $*" or 
+# purpose is to capture the command string such as via "x $*" or
 # in a traceback ("where").
 function _Dbg_eval {
   eval $*  # Type: "x $*" to see what's being run.
@@ -32,7 +32,7 @@ typeset -a _Dbg_script_args=("$@")
 typeset _Dbg_orig_0=$0
 
 # Equivalent to basename $0; the short program name
-typeset _Dbg_pname=${0##*/}  
+typeset _Dbg_pname=${0##*/}
 
 ## Stuff set by autoconf/configure ###
 typeset prefix=@prefix@
@@ -53,7 +53,7 @@ typeset _Dbg_shell_name=${_Dbg_shell##*/}  # Equivalent to basename(_Dbg_shell)
 
 # Parse just the libdir option
 typeset -i _Dbg_i
-for ((_Dbg_i=0; $_Dbg_i<${#_Dbg_script_args[@]}-1; _Dbg_i++)) ; do 
+for ((_Dbg_i=0; $_Dbg_i<${#_Dbg_script_args[@]}-1; _Dbg_i++)) ; do
     typeset arg=${_Dbg_script_args[$_Dbg_i]}
     if [[ $arg == '-L' || $arg == '--libdir' ]] ; then
         ((_Dbg_i++))
@@ -62,7 +62,7 @@ for ((_Dbg_i=0; $_Dbg_i<${#_Dbg_script_args[@]}-1; _Dbg_i++)) ; do
     fi
 done
 
-if [[ ! -d $_Dbg_libdir ]] && [[ ! -d $_Dbg_libdir ]] ; then 
+if [[ ! -d $_Dbg_libdir ]] && [[ ! -d $_Dbg_libdir ]] ; then
   echo "${_Dbg_pname}: Can't read debugger library directory '${_Dbg_libdir}'."
   echo "${_Dbg_pname}: Perhaps @PACKAGE@ is installed wrong (if its installed)." >&2
   echo "${_Dbg_pname}: Try running @PACKAGE@ using -L (with a different directory)." >&2
@@ -77,7 +77,7 @@ fi
 
 # Pull in the rest of the debugger code.
 typeset _Dbg_main="$_Dbg_libdir/dbg-main.sh"
-if [[ ! -r $_Dbg_main ]] ; then 
+if [[ ! -r $_Dbg_main ]] ; then
   print "${_Dbg_pname}: Can't read debugger library file '${_Dbg_main}'."
   print "${_Dbg_pname}: Perhaps @PACKAGE@ is installed wrong (if its installed)." >&2
   print "${_Dbg_pname}: Try running @PACKAGE@ using -L (with a different directory)." >&2
@@ -100,7 +100,7 @@ fi
 if (( ${#_Dbg_script_args[@]} > 0 )) ; then
     _Dbg_script_file="${_Dbg_script_args[0]}"
     case ${_Dbg_script_file:0:1} in
-        '.' | '/' ) 
+        '.' | '/' )
             # Leave alone
             ;;
     * )
@@ -108,7 +108,7 @@ if (( ${#_Dbg_script_args[@]} > 0 )) ; then
             _Dbg_script_file="./${_Dbg_script_file}"
             _Dbg_script_args[0]="$_Dbg_script_file"
     esac
-    # FIXME: 
+    # FIXME:
     # shift _Dbg_script_args
 elif [[ -z $_Dbg_EXECUTION_STRING ]] ; then
     echo >&2 "${_Dbg_pname}: need to give a script to debug or use the -c option."
@@ -127,7 +127,7 @@ while : ; do
     # two lines are the only way I know how to do this. Perhaps
     # there's a simpler way?
     source_cmd=$(printf '%q ' "${_Dbg_script_args[@]}")
-    eval " trap '_Dbg_trap_handler $? \"$@\"' DEBUG; source $source_cmd"
+    eval "trap '_Dbg_trap_handler $? \$@' DEBUG; source $source_cmd"
     trap '' DEBUG
     _Dbg_msg_nocr 'Program terminated.'
     if (( !o_no_quit )); then

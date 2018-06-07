@@ -4,13 +4,13 @@ p
 +skip 
 (nexting.sh:6):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 6
 +# Test "skip" with a count
 +skip 2
 (nexting.sh:7):
 p
-+where 1
++backtrace 1
 ->0 in file `nexting.sh' at line 7
 +quit 
 kshdb: That's all, folks...

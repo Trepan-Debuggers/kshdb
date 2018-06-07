@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "info breakpoints" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -39,7 +39,7 @@ See also \"break\", \"enable\", and \"disable\"." 1
 # list breakpoints and break condition.
 # If $1 is given just list those associated for that line.
 _Dbg_do_info_breakpoints() {
-  if (( $# != 0  )) ; then 
+  if (( $# != 0  )) ; then
       typeset brkpt_num="$1"
       if [[ $brkpt_num != [0-9]* ]] ; then
 	  _Dbg_errmsg "Bad breakpoint number $brkpt_num."
@@ -64,11 +64,11 @@ _Dbg_do_info_breakpoints() {
 
   if (( _Dbg_brkpt_count > 0 )); then
       typeset -i i
-      
+
       _Dbg_msg "Num Type       Disp Enb What"
       for (( i=1; i <= _Dbg_brkpt_max; i++ )) ; do
 	  typeset source_file=${_Dbg_brkpt[$i].filename}
-	  if [[ -n ${_Dbg_brkpt[$i].lineno} ]] ; then
+	  if (( _Dbg_brkpt[$i].lineno > 0 )) ; then
 	      source_file=$(_Dbg_adjust_filename "$source_file")
 	      _Dbg_printf "%-3d breakpoint %-4s %-3s %s:%s" $i \
 		  ${_Dbg_keep[${_Dbg_brkpt_onetime[$i]}]} \

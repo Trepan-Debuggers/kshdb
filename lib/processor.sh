@@ -255,7 +255,7 @@ _Dbg_onecmd() {
 	     # 	  _Dbg_do_untrace_fn $args
 	     # 	  ;;
 
-	     where )
+	     backtrace )
 		 _Dbg_do_backtrace $@
 		 ;;
 

@@ -12,7 +12,9 @@
 /elisp-comp
 /install-sh
 /kshdb
-/kshdb-*.tar.gz
 /kshdb-*.tar.bz2
+/kshdb-*.tar.gz
 /kshdb-trace
 /missing
+/test-driver
+/tmp

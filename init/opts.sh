@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # debugger command options processing. The bane of programming.
 #
-#   Copyright (C) 2008-2009, 2011, 2014 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2011, 2014, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -73,10 +73,30 @@ typeset -i _Dbg_set_annotate=0
 # Simulate set -x?
 typeset -i _Dbg_set_linetrace=0
 typeset -i _Dbg_set_basename=0
-typeset -i _Dbg_set_highlight=0
+typeset -x _Dbg_set_highlight=''
 typeset -i _Dbg_o_nx=0
 typeset -i _Dbg_o_linetrace=0
 typeset    _Dbg_tty=''
+
+typeset -x _Dbg_set_style=''
+
+
+typeset -ix _Dbg_working_term_highlight
+
+if ${_Dbg_libdir}/lib/term-highlight.py -V 2>/dev/null  1>/dev/null ; then
+    _Dbg_working_term_highlight=1
+else
+    _Dbg_working_term_highlight=0
+fi
+
+typeset -x _Dbg_set_style=''
+
+# If we can do highlighting, do it.
+if ((  _Dbg_working_term_highlight )) ; then
+    _Dbg_set_highlight="light"
+else
+    _Dbg_set_highlight=''
+fi
 
 # $_Dbg_tmpdir could have been set by the top-level debugger script.
 [[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
@@ -95,7 +115,7 @@ _Dbg_parse_options() {
 	eval-command required_argument       \
 	cmdfile      required_argument       \
     	help         no_argument             \
-    	highlight    no_argument             \
+    	highlight    required_argument       \
     	no-highlight no_argument             \
 	library      required_argument       \
 	no-init      no_argument             \
@@ -116,9 +136,22 @@ _Dbg_parse_options() {
 	    h | help )
 		_Dbg_usage		;;
 	    highlight )
-		_Dbg_set_highlight=1  	;;
+		case "$OPTLARG" in
+		    light | dark )
+			_Dbg_set_highlight=$OPTLARG
+		    ;;
+		* )
+		    print "Expecting 'dark' or 'light', got \"${OPTLARG}\"" >&2
+		    exit 2
+		esac
+
+		if (( ! _Dbg_working_term_highlight )) ; then
+		    echo "Can't run term-highlight.py; '--highlight' forced off" >&2
+		    _Dbg_set_highlight=''
+		fi
+		;;
 	    no-highlight )
-		_Dbg_set_highlight=0  	;;
+		_Dbg_set_highlight=''  	;;
 	    L | library ) 		;;
 	    V | version )
 		_Dbg_o_version=1	;;
@@ -151,7 +184,7 @@ _Dbg_parse_options() {
 	[[ -n $_Dbg_release ]] ; then
 	echo "$_Dbg_shell_name debugger, $_Dbg_debugger_name, release $_Dbg_release"
 	printf '
-Copyright 2008, 2009, 2010, 2011 Rocky Bernstein
+Copyright 2008-2011, 2018 Rocky Bernstein
 This is free software, covered by the GNU General Public License, and you are
 welcome to change it and/or distribute copies of it under certain conditions.
 

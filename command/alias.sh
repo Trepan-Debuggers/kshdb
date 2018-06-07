@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # alias.sh - gdb-like "alias" debugger command
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2016 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -12,16 +12,28 @@
 #   WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 #   for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
 
 _Dbg_help_add alias \
-'alias NAME DEBUGGER-COMMAND -- Make NAME be an alias for DEBUGGER-COMMAND.
+'**alias** *alias-name* *debugger-command*
 
-Use "unalias" to remove an alias and "show aliases" to get a list the
-aliases in effect.'
+Make *alias-name* be an alias for *debugger-command*.
+
+Examples:
+---------
+
+    alias cat list   # "cat prog.py" is the same as "list prog.py"
+    alias s   step   # "s" is now an alias for "step".
+                     # The above example is done by default.
+
+See also:
+---------
+
+**unalias** and **show alias**.
+'
 
 _Dbg_do_alias() {
   if (($# != 2)) ; then
