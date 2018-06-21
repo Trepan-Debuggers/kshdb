@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # frame.sh - gdb-like "up", "down" and "frame" debugger commands
 #
-#   Copyright (C) 2008 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2018 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,14 +18,21 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-# Move default values down $1 or one in the stack. 
+# Move default values down $1 or one in the stack.
 
 _Dbg_help_add frame \
-'frame [FRAME-NUM] -- Move the current frame to the FRAME-NUM.
+'**frame** [*frame-number*].
 
-If FRAME-NUM is negative, count back from the least-recent frame; -1
-is the oldest frame. FRAME-NUM can be any arithmetic expression. If
-FRAME is omitted, 0 or the most-recent frame moved to.' 1
+Change the current frame to frame *frame-number* if specified, or the
+most-recent frame, 0, if no frame number specified.
+
+A negative number indicates the position from the other or
+least-recently-entered end.  So **frame -1** moves to the oldest frame.
+
+See also:
+---------
+
+**up**, **down**' 1
 
 _Dbg_do_frame() {
     _Dbg_not_running && return 1

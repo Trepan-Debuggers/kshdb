@@ -3,3 +3,7 @@ needed to get this off the ground and make debugging possible.
 
 Thanks to Kate Ward, Stéphane Chazelas and Nikolaj Schumacher for
 programs used in conjunction with kshdb.
+
+The Siteshwar Vashisht and Kurtis Rader of the github AST team made fixes to
+ksh that made it again possible for this to work on again, after 4
+years or so of brokenness.

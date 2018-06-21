@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # gdb-like "source" command.
 #
-#   Copyright (C) 2002, 2003, 2004, 2006, 2008, 2010
+#   Copyright (C) 2002-2004, 2006, 2008, 2010, 2018
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -27,8 +27,8 @@
 # the 2nd one will report:
 # ./kshdb[130]: ./kshdb[1]: source[4]: _Dbg_trap_handler[187]: _Dbg_process_commands[108]: -67096015: bad file unit number
 
-# _Dbg_help_add source \
-# 'source FILE
+_Dbg_help_add source \
+'source FILE
 
 # Run debugger commands in FILE.' 1
 
@@ -42,7 +42,12 @@ _Dbg_do_source() {
     _Dbg_glob_filename "$1"
     if [[ -r $filename ]] || [[ "$filename" == '/dev/stdin' ]] ; then
 	# Open new input file descriptor and save number in _Dbg_fd.
-	exec {_Dbg_fd[++_Dbg_fd_last]}<"$filename"
+	typeset -i _Dbg_old_fd
+	((_Dbg_old_fd=_Dbg_fd[_Dbg_fd_last]))
+	((_Dbg_fd_last++))
+	exec {_Dbg_fd[_Dbg_fd_last]}<${filename}
+	# For reasons I don't understand _Dbg_fd[] gets smashed
+	((_Dbg_fd[_Dbg_fd_last-1]=_Dbg_old_fd))
 	# We'll store the filename for good measure too.
 	_Dbg_cmdfile+=("$filename")
     else

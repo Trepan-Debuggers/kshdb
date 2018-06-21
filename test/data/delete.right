@@ -17,6 +17,7 @@ Num Type       Disp Enb What
 +############################### 
 +# Should work
 +delete 1
+Deleted breakpoint 1
 Removed 1 breakpoint(s).
 +info break
 No breakpoints have been set.
@@ -48,6 +49,8 @@ Breakpoint 3 set in file stepping.sh, line 6.
 +############################### 
 +# try deleting multiple breakpoints
 +delete 2 3
+Deleted breakpoint 2
+Deleted breakpoint 3
 Removed 2 breakpoint(s).
 +info break
 No breakpoints have been set.

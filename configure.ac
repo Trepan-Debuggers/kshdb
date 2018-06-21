@@ -1,9 +1,9 @@
 dnl Configure script for Shell debugger
 define(DEBUGGER, kshdb)
 define(POSIXSHELL, ksh)
-AC_INIT([kshdb],[0.07dev],[rocky@gnu.org])
+AC_INIT([kshdb],[0.07],[rocky@gnu.org])
 AM_MAINTAINER_MODE
-AM_INIT_AUTOMAKE([no-define])
+AM_INIT_AUTOMAKE([foreign])
 
 AC_CONFIG_SRCDIR(DEBUGGER.in)
 if test x$srcdir = x ; then

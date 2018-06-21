@@ -24,12 +24,12 @@ TESTS = \
 	test-setshow.sh \
 	test-sort.sh
 
-TEST_SOURCES = $(*.sh.in)
+TEST = $(*.sh.in)
 
 abs_srcdir=@abs_srcdir@
 abs_builddir=@abs_builddir@
 
-EXTRA_DIST = helper.sh $(COMBINED_TESTS) $(TESTS) shunit2 $(TEST_SOURCES)
+EXTRA_DIST = helper.sh $(COMBINED_TESTS) $(TESTS) shunit2 $(TEST)
 
 check: combined-tests check-am
 test: check

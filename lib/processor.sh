@@ -48,12 +48,7 @@ typeset -i _Dbg_fd_last=0
 typeset -a _Dbg_cmdfile; _Dbg_cmdfile=('')
 
 # A list of debugger command input-file descriptors.
-typeset -a _Dbg_fd=()
-
-# Duplicate standard input
-# typeset -i _Dbg_fd_num
-# {_Dbg_fd_num}<&0
-((_Dbg_fd[0]=$_Dbg_fdi))
+typeset -a _Dbg_fd=( $_Dbg_fdi )
 
 # ===================== FUNCTIONS =======================================
 
@@ -112,7 +107,8 @@ function _Dbg_process_commands {
         # _Dbg_postcmd
         (( rc > 0 && rc != 255 )) && return $rc
     done
-    unset _Dbg_fd[_Dbg_fd_last--]
+    unset _Dbg_fd[_Dbg_fd_last]
+    ((_Dbg_fd_last--))
   done  # Loop over all open pending file descriptors
 
   # EOF hit. Same as quit without arguments

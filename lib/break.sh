@@ -292,10 +292,6 @@ function _Dbg_delete_brkpt_entry {
 	unset _Dbg_brkpt[$del]
 	return 0
     fi
-<<<<<<< HEAD
-=======
-    unset _Dbg_brkpt[$del]
->>>>>>> bdbd272afdbc530e72105b791c93985a005947ea
     return 1
 }
 
