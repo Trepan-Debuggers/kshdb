@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # gdb-like "restart" debugger command
 #
-#   Copyright (C) 2002, 2003, 2004, 2006, 2008, 2009, 2010 Rocky Bernstein 
+#   Copyright (C) 2002-2004, 2006, 2008-2010, 2018 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -23,18 +23,25 @@
 # ones as we were given before).
 
 _Dbg_help_add run \
-'run [args] -- Attempt to restart the program.' 1
+'**run** [*args*]
+
+Attempt to restart the program.
+
+See also:
+---------
+
+**set args**, **kill** and **quit**' 1
 
 _Dbg_do_run() {
 
     typeset script_args
     typeset exec_cmd_prefix
-    if (( $# == 0 )) ; then 
+    if (( $# == 0 )) ; then
 	script_args=$(printf "%q " "${_Dbg_script_args[@]}")
     else
 	script_args=$(printf "%q " "$@")
     fi
-    
+
     typeset exec_cmd_prefix="$_Dbg_orig_0"
     if (( !_Dbg_script )); then
 #     if [[ $_cur_source_file == $_Dbg_bogus_file ]] ; then
@@ -46,7 +53,7 @@ _Dbg_do_run() {
 	:
     fi
 
-    if (( _Dbg_set_basename )) ; then 
+    if (( _Dbg_set_basename )) ; then
 	_Dbg_msg "Restarting with: $script_args"
     else
 	_Dbg_msg "Restarting with: $exec_cmd_prefix $script_args"
@@ -56,7 +63,7 @@ _Dbg_do_run() {
 #   # first before we restart. The strategy is to write into persistent
 #   # storage the restart command, and issue a "quit." The quit should
 #   # discover the restart at the last minute and issue the restart.
-#   if (( SH_SUBSHELL > 0 )) ; then 
+#   if (( SH_SUBSHELL > 0 )) ; then
 #     _Dbg_msg "Note you are in a subshell. We will need to leave that first."
 #     _Dbg_write_journal "BASHDB_RESTART_COMMAND=\"$exec_cmd\""
 #     _Dbg_do_quit 0
@@ -64,7 +71,7 @@ _Dbg_do_run() {
 #   _Dbg_save_state
 
     cd $_Dbg_init_cwd
-    
+
     _Dbg_cleanup
     eval "exec $exec_cmd_prefix $script_args"
 }

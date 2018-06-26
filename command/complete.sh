@@ -1,6 +1,6 @@
 # complete.sh - gdb-like 'complete' command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -24,9 +24,9 @@ if [[ $0 == ${.sh.file##*/} ]] ; then
 fi
 
 _Dbg_help_add complete \
-'complete PREFIX-STR...
+'**complete** *prefix-str*...
 
-Show command completion strings for PREFIX-STR
+Show command completion strings for *prefix-str*
 ' 1
 
 _Dbg_do_complete() {
@@ -34,16 +34,16 @@ _Dbg_do_complete() {
     _Dbg_matches=()
     if (( ${#args[@]} == 2 )) ; then
       _Dbg_subcmd_complete ${args[0]} ${args[1]}
-    elif (( ${#args[@]} == 1 )) ; then 
+    elif (( ${#args[@]} == 1 )) ; then
 	# FIXME: add in aliases
 	typeset -a COMPREPLY
 	typeset list
 	list="${!_Dbg_debugger_commands[@]}"
 	compgen_opt_words "$list" "${args[0]}"
 	_Dbg_matches=( ${COMPREPLY[@]} )
-    fi  
+    fi
     typeset -i i
-    for (( i=0;  i < ${#_Dbg_matches[@]}  ; i++ )) ; do 
+    for (( i=0;  i < ${#_Dbg_matches[@]}  ; i++ )) ; do
       _Dbg_msg ${_Dbg_matches[$i]}
     done
 }
@@ -51,13 +51,13 @@ _Dbg_do_complete() {
 # Demo it.
 if [[ $0 == ${.sh.file##*/} ]] ; then
     source $top_dir/lib/complete.sh
-    source $top_dir/command/help.sh 
+    source $top_dir/command/help.sh
     _Dbg_libdir=$top_dir/lib
     source $_Dbg_libdir/msg.sh
-    for _Dbg_file in $src_dir/d*.sh ; do 
+    for _Dbg_file in $src_dir/d*.sh ; do
 	source $_Dbg_file
     done
-    
+
     _Dbg_args='complete'
     _Dbg_do_help complete
     _Dbg_do_complete d
