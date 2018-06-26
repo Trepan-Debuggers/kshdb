@@ -33,14 +33,8 @@ test_fns_esc_dq()
 {
     assertEquals 'abc' $(_Dbg_esc_dq abc)
     got=$(_Dbg_esc_dq '\"abc\"')
-    if [[ $got == '\\\"abc\\\"' ]] ; then
-	assertEquals $got '\\\"abc\\\"'
-	assertEquals '\\\"a\\bc\\\"' $(_Dbg_esc_dq '\"a\bc\"')
-    else
-        # FIXME? OSX seems to give this. Dunno why.
-	assertEquals '\0\0abc\0\0' "$got"
-	assertEquals '\0\0a\0bc\0\0' $(_Dbg_esc_dq '\"a\bc\"')
-    fi
+    assertEquals $got  $'\'\\"abc\\"\'' # '
+    assertEquals "'\\\"a\bc\\\"'" $(_Dbg_esc_dq '\"a\bc\"')
 }
 
 test_fns_get_functions()

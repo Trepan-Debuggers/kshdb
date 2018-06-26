@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -22,23 +22,23 @@
 # If yes, always show. If auto, show only if the same line is to be run
 # but the command is different.
 
-# 1 if we are logging output. 
+# 1 if we are logging output.
 typeset -i _Dbg_logging=0
 
 # Location of logging file *when* we are set logging is on.
 typeset _Dbg_logging_file="bashdb.txt"
 
-# If 1 overwrite existing logging file? 
+# If 1 overwrite existing logging file?
 typeset _Dbg_logging_overwrite=0
 
-# If 1, log file is sufficient, don't also print to stdout. 
+# If 1, log file is sufficient, don't also print to stdout.
 typeset _Dbg_logging_redirect=0
 
 _Dbg_do_set_logging()
 {
     typeset -a args=($@)
     if (( ${#args[@]} > 0 )) ; then
-	case ${args[0]} in 
+	case ${args[0]} in
 	    off )
 		if (( _Dbg_logging != 0 )) ; then
 		    # Lose logfile
@@ -54,9 +54,9 @@ _Dbg_do_set_logging()
 		fi
 		;;
 	    overwrite )
-		local onoff=${2:-'on'}
-		case $onoff in 
-		    on | 1 ) 
+		typeset -l onoff=${2:-'on'}
+		case $onoff in
+		    on | 1 )
 			_Dbg_write_journal_eval "_Dbg_logging_overwrite=1"
 			;;
 		    off | 0 )
@@ -67,9 +67,9 @@ _Dbg_do_set_logging()
 		esac
 		;;
 	    redirect )
-		local onoff=${2:-'on'}
-		case $onoff in 
-		    on | 1 ) 
+		typeset -l onoff=${2:-'on'}
+		case $onoff in
+		    on | 1 )
 			_Dbg_write_journal_eval "_Dbg_logging_redirect=1"
 			;;
 		    off | 0 )
@@ -82,7 +82,7 @@ _Dbg_do_set_logging()
 	    file )
 		if (( ${#args[@]} == 2 )) ; then
 		    _Dbg_write_journal_eval "_Dbg_logging_file=${args[1]}"
-		else 
+		else
 		    _Dbg_msg "Expecting a single file argument in 'set logging file'."
 		fi
 		;;
@@ -114,15 +114,15 @@ _Dbg_do_show_logging()
 	    fi
 	fi
     else
-	case ${args[0]} in 
+	case ${args[0]} in
 	    overwrite )
-		local onoff="off."
+		typeset -l onoff="off."
 		(( _Dbg_logging_overwrite != 0 )) && onoff='on.'
 		_Dbg_msg \
 		    "Whether logging overwrites or appends to the log file is ${onoff}"
 		;;
 	    redirect )
-		local onoff="off."
+		typeset -l onoff="off."
 		(( _Dbg_logging_redirect != 0 )) && onoff='on.'
 		_Dbg_msg "The logging output mode is ${onoff}."
 		;;

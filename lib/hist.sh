@@ -54,29 +54,29 @@ _Dbg_history_parse() {
     # Handle ! form. May need to parse number out number and modifier
     case $_Dbg_cmd in
       \!\-${int_pat}:p )
-	local -a word1
+	typeset -l -a word1
 	word1=($(_Dbg_split '!' $_Dbg_cmd))
-	local -a word2
+	typeset -l -a word2
 	word2=($(_Dbg_split ':' ${word1[0]}))
-	local -i num=_Dbg_hi+${word2[0]}
+	typeset -l -i num=_Dbg_hi+${word2[0]}
 	_Dbg_do_history_list $num $num
 	history_num=-1
 	;;
       [!]${int_pat}:p )
-	local -a word1
+	typeset -l -a word1
 	word1=($(_Dbg_split '!' $_Dbg_cmd))
-	local -a word2
+	typeset -l -a word2
 	word2=($(_Dbg_split ':' ${word1[0]}))
 	_Dbg_do_history_list ${word2[0]} ${word2[0]}
 	history_num=-1
 	;;
       \!\-$int_pat )
-	local -a word
+	typeset -l -a word
 	word=($(_Dbg_split '!' $_Dbg_cmd))
 	history_num=$_Dbg_hi+${word[0]}
 	;;
       \!$int_pat )
-	local -a word
+	typeset -l -a word
 	word=($(_Dbg_split '!' $_Dbg_cmd))
 	history_num=${word[0]}
 	;;

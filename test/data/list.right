@@ -5,41 +5,41 @@ x=22
 +help l
 **list**[**>**] [*location*|**.**|**-**] [*num*]
 
-List source code.
+list source code.
 
-Without arguments, print lines centered around the current line. If
+without arguments, print lines centered around the current line. if
 *location* is given, that number of lines is shown.
 
-If this is the first list command issued since the debugger command
-loop was entered, then the current line is the current frame. If a
+if this is the first list command issued since the debugger command
+loop was entered, then the current line is the current frame. if a
 subsequent list command was issued with no intervening frame changing,
 then that is start the line after we last one previously shown.
 
-A *location* is either:
+a *location* is either:
 
 * a number, e.g. 5,
 * a filename, colon, and a number, e.g. `/etc/profile:5`,
 * a "." for the current line number
 * a "-" for the lines before the current linenumber
 
-By default aliases **l>** and **list>** are set to list. In this case and
+by default aliases **l>** and **list>** are set to list. in this case and
 more generally when the alias ends in ">", rather than center lines
 around *location* that will be used as the starting point.
 
-Examples:
+examples:
 ---------
 
-    list 5                  # List starting from line 5
-    list 4+1                # Same as above.
-    list /etc/profile:5     # List starting from line 5 of /etc/profile
-    list /etc/profile 5     # Same as above.
+    list 5                  # list starting from line 5
+    list 4+1                # same as above.
+    list /etc/profile:5     # list starting from line 5 of /etc/profile
+    list /etc/profile 5     # same as above.
     list /etc/profile 5 6   # list lines 5 and 6 of /etc/profile
-    list /etc/profile 5 2   # Same as above, since 2 < 5.
-    list profile:5 2        # List two lines starting from line 5 of profile
-    list .                  # List lines centered from where we currently are stopped
-    list -                  # List lines previous to those just shown
+    list /etc/profile 5 2   # same as above, since 2 < 5.
+    list profile:5 2        # list two lines starting from line 5 of profile
+    list .                  # list lines centered from where we currently are stopped
+    list -                  # list lines previous to those just shown
 
-See also:
+see also:
 ---------
 
 **set listsize** or **show listsize** to see or set the value.
