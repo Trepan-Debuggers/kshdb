@@ -1,0 +1,24 @@
+# Taken from ksh's app-compat-travis.yml
+sudo: required
+
+services:
+    - docker
+
+matrix:
+    include:
+        - env:
+            - PROJECT_NAME=kshdb
+              GIT_URL="https://github.com/rocky/kshdb.git"
+              COMMANDS="git checkout; ksh ./autogen.sh; make test"
+
+script:
+    - docker pull fedora
+
+      # Test builds from https://copr.fedorainfracloud.org/coprs/g/ksh/latest/
+    - docker run fedora bash -c "
+      dnf install -y 'dnf-command(copr)';
+      dnf copr enable -y @ksh/latest;
+      dnf install -y ksh git autoconf automake make findutils;
+      git clone $GIT_URL;
+      cd $PROJECT_NAME;
+      $COMMANDS"
