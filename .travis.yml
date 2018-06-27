@@ -9,7 +9,7 @@ matrix:
         - env:
             - PROJECT_NAME=kshdb
               GIT_URL="https://github.com/rocky/kshdb.git"
-              COMMANDS="git checkout; ksh ./autogen.sh; make test"
+              COMMANDS="ksh ./autogen.sh; make test"
 
 script:
     - docker pull fedora
