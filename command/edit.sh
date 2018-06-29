@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Debugger Edit command
 
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -21,16 +21,16 @@
 #================ VARIABLE INITIALIZATIONS ====================#
 
 _Dbg_help_add edit \
-"edit [LOCATION]
+"**edit** [*line-number*]
 
-Edit specified file at LOCATION.
+Edit specified file at *line-number*.
 
-If LOCATION is not given, use the current location. 
-Uses EDITOR environment variable contents as editor (or ex as default).
-Assumes the editor positions at a file using options +linenumber filename." 1
+If *line-number* is not given, use the current line number.
+Uses \"EDITOR\" environment variable contents as editor (or ex as default).
+Assumes the editor positions at a file using options \"+linenumber filename\"." 1
 
 _Dbg_do_edit() {
-  if (($# > 2)) ; then 
+  if (($# > 2)) ; then
       _Dbg_errmsg "got $# parameters, but need 0 or 1."
       return 2
   fi

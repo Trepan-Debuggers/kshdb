@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # show.sh - Show debugger settings
 #
-#   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -24,10 +24,9 @@
 typeset _Dbg_show_command="auto"
 
 typeset -A _Dbg_debugger_show_commands
-
 typeset -A _Dbg_command_help_show
 
-# subcommands whose current values are not shown in a "show" list . 
+# subcommands whose current values are not shown in a "show" list .
 # These are things like alias, warranty, or copying.
 # They are available if asked for explicitly, e.g. "show copying"
 typeset -A _Dbg_show_nolist
@@ -51,7 +50,7 @@ _Dbg_do_show() {
     typeset label=$1
     (($# >= 1)) && shift
 
-    if [[ -z $subcmd ]] ; then 
+    if [[ -z $subcmd ]] ; then
 	typeset thing
 	typeset list; list=("${!_Dbg_debugger_show_commands[@]}")
 	for thing in ${list[@]} ; do
@@ -63,7 +62,7 @@ _Dbg_do_show() {
 	return 0
     fi
 
-    case $subcmd in 
+    case $subcmd in
 	lin | line | linet | linetr | linetra | linetrac | linetrace )
 	    [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " 'line tracing')
 	    [[ -n $label ]] && label='line tracing: '
