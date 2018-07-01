@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # condition.sh - gdb-like "condition" debugger command
 #
-#   Copyright (C) 2009 Rocky Bernstein  rocky@gnu.org
+#   Copyright (C) 2009, 2018 Rocky Bernstein  rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -12,19 +12,33 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
 _Dbg_help_add condition \
-"condition N COND
+"**condition** *bp_number* *condition*
 
-Break only if COND is true in breakpoint number N.
+Break only if *condition* is true in breakpoint number *bp_number*.
 
-N is an integer and COND is an expression to be evaluated whenever 
-breakpoint N is reached." 1
+*bp_number* is a breakpoint number. *condition* is a zsh expression
+which must evaluate to *True* before the breakpoint is honored.  If
+*condition* is absent, any existing condition is removed; i.e., the
+breakpoint is made unconditional.
+
+Examples:
+---------
+
+   condition 5 x > 10  # Breakpoint 5 now has condition x > 10
+   condition 5         # Remove above condition
+
+See also:
+---------
+
+*break*, *tbreak*.
+" 1
 
 # Set a condition for a given breakpoint $1 is a breakpoint number
 # $2 is a condition. If not given, set "unconditional" or 1.

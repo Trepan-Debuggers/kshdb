@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # gdb-like "down" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010, 2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -27,14 +27,17 @@ fi
 
 # Move default values down $1 or one in the stack.
 _Dbg_help_add down \
-'down [COUNT]
+'**down** [*count*]
 
 Move the current frame down in the stack trace (to an newer frame). 0 is
 the most recent frame.
 
-If COUNT is omitted, use 1. COUNT can be any arithmetic expression.
+If *count* is omitted, use 1.
 
-See also "up" and "frame".' 1
+See also:
+---------
+
+**down** and **frame**.' 1
 
 _Dbg_do_down() {
     _Dbg_not_running && return 1
@@ -49,10 +52,10 @@ _Dbg_do_down() {
 # Demo it.
 if [[ $0 == ${.sh.file##*/} ]] ; then
     source $top_dir/lib/complete.sh
-    source $top_dir/command/help.sh 
+    source $top_dir/command/help.sh
     _Dbg_libdir=$top_dir/lib
     source $_Dbg_libdir/msg.sh
-    
+
     _Dbg_args='down'
     _Dbg_do_help down
 fi
