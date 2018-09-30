@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Eval and Print commands.
 #
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2011, 2018 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -52,10 +52,10 @@ _Dbg_do_eval() {
 
     # FIXME: is this needed. Is it effective?
     # Should it be moved after setting .sh?
-    print ". ${_Dbg_libdir}/lib/set-d-vars.sh" > $_Dbg_evalfile
+    print ". ${_Dbg_libdir}/lib/set-d-vars.sh" > "$_Dbg_evalfile"
 
-    print "(( .sh.level = $new_level ))" >> $_Dbg_evalfile
-    print "typeset -i _Dbg_rc" >> $_Dbg_evalfile
+    print "(( .sh.level = $new_level ))" >> "$_Dbg_evalfile"
+    print "typeset -i _Dbg_rc" >> "$_Dbg_evalfile"
     if (( $# == 0 )) ; then
 	# FIXME: add parameter to get unhighlighted line, or
 	# always save a copy of that in _Dbg_sget_source_line
@@ -71,21 +71,21 @@ _Dbg_do_eval() {
 	    source_line="$extracted"
 	fi
 
-	print "$source_line" >> $_Dbg_evalfile
+	print "$source_line" >> "$_Dbg_evalfile"
 	_Dbg_msg "eval: ${source_line}"
     else
 	print "$@" >> $_Dbg_evalfile
     fi
-    print '_Dbg_rc=$?' >> $_Dbg_evalfile
-    print "(( .sh.level = $old_level ))" >> $_Dbg_evalfile
+    print '_Dbg_rc=$?' >> "$_Dbg_evalfile"
+    print "(( .sh.level = $old_level ))" >> "$_Dbg_evalfile"
 
     if [[ -n $_Dbg_tty  ]] ; then
 	_Dbg_set_dol_q $_Dbg_debugged_exit_code
-	. $_Dbg_evalfile >>$_Dbg_tty
+	. "$_Dbg_evalfile" >>$_Dbg_tty
     else
 	_Dbg_set_dol_q $_Dbg_debugged_exit_code
 	# Warning: in ksh93u+ (and others before?) the following line will SEGV
-	. $_Dbg_evalfile
+	. "$_Dbg_evalfile"
     fi
     (( _Dbg_show_eval_rc )) && _Dbg_msg "\$? is $_Dbg_rc"
     # We've reset some variables like IFS and PS4 to make eval look

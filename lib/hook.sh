@@ -2,7 +2,7 @@
 # hook.sh - Debugger trap hook
 #
 #
-#   Copyright (C) 2002, 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011
+#   Copyright (C) 2002-2004, 2006-2011, 2018
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -164,13 +164,14 @@ function _Dbg_hook_breakpoint_hit {
     typeset lineno=${_Dbg_frame_last_lineno}
     # FIXME: combine with _Dbg_unset_brkpt
     typeset -a linenos
+    [[ -z "$full_filename" ]] && return 1
     linenos=(${_Dbg_brkpt_file2linenos[$full_filename]})
     typeset -a brkpt_nos
     brkpt_nos=(${_Dbg_brkpt_file2brkpt[$full_filename]})
     typeset -i _Dbg_i
     for ((_Dbg_i=0; _Dbg_i < ${#linenos[@]}; _Dbg_i++)); do
 	if (( linenos[_Dbg_i] == lineno )) ; then
- 	    # Got a match, but is the breakpoint enabled?
+	    # Got a match, but is the breakpoint enabled and condition met?
  	    (( _Dbg_brkpt_num = brkpt_nos[_Dbg_i] ))
  	    if ((_Dbg_brkpt[_Dbg_brkpt_num].enable )) ; then
  		return 0
@@ -199,7 +200,7 @@ _Dbg_cleanup() {
 # Somehow we can't put this in _Dbg_cleanup and have it work.
 # I am not sure why.
 _Dbg_cleanup2() {
-    [[ -f $_Dbg_evalfile ]] && rm -f $_Dbg_evalfile 2>/dev/null
+    [[ -f "$_Dbg_evalfile" ]] && rm -f "$_Dbg_evalfile" 2>/dev/null
     _Dbg_erase_journals
     trap - EXIT
 }

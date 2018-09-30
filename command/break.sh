@@ -1,5 +1,7 @@
 # -*- shell-script -*-
-#   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#
+#   Copyright (C) 2008-2011, 2016, 2018 Rocky Bernstein
+#   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -68,7 +70,7 @@ _Dbg_do_break_common() {
     condition=1
   elif [[ $condition == 'if' ]] ; then
     shift
-    condition="$*"
+    condition="$@"
   fi
   [[ -z $condition ]] && condition=1
 
@@ -104,16 +106,16 @@ _Dbg_do_clear_brkpt() {
 
   _Dbg_linespec_setup $n
 
-  if [[ -n $full_filename ]] ; then 
-    if (( line_number ==  0 )) ; then 
+  if [[ -n $full_filename ]] ; then
+    if (( line_number ==  0 )) ; then
       _Dbg_msg "There is no line 0 to clear."
       return 0
-    else 
+    else
       _Dbg_check_line $line_number "$full_filename"
       if (( $? == 0 )) ; then
 	_Dbg_unset_brkpt "$full_filename" "$line_number"
 	typeset -r found=$?
-	if [[ $found != 0 ]] ; then 
+	if [[ $found != 0 ]] ; then
 	  _Dbg_msg "Removed $found breakpoint(s)."
 	  return $found
 	fi

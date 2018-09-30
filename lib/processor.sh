@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # dbg-processor.sh - Top-level debugger commands
 #
-#   Copyright (C) 2008-2011, 2014
+#   Copyright (C) 2008-2011, 2014, 2018
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -59,6 +59,14 @@ typeset -a _Dbg_fd=( $_Dbg_fdi )
 # in fact seen by those using the debugger. So in contrast to other "local"s
 # in the debugger, we prefer to preface these with _Dbg_.
 function _Dbg_process_commands {
+
+  # initial debugger input source from kshdb arguments
+  if [[ ! -z "$_Dbg_tty_in" ]] && [[  -r "$_Dbg_tty_in" ]]
+  then
+    exec {_Dbg_fdi}<$_Dbg_tty_in
+    _Dbg_fd[++_Dbg_fd_last]=$_Dbg_fdi
+    _Dbg_cmdfile+=("$_Dbg_tty_in")
+  fi
 
   _Dbg_inside_skip=0
   _Dbg_continue_rc=-1  # Don't continue execution unless told to do so.

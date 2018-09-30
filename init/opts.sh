@@ -38,6 +38,7 @@ options:
     -c | --command STRING   Run STRING instead of a script file
     -n | --nx | --no-init   Don't run initialization files.
     -t | --tty DEV          Run using device for your programs standard input and output
+    --tty_in | --terminal_in DEV   Set to ...
     -T | --tempdir DIRECTORY
                             Use DIRECTORY to store temporary files in
     -V | --version          Print the debugger version number.
@@ -101,6 +102,24 @@ fi
 # $_Dbg_tmpdir could have been set by the top-level debugger script.
 [[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
 
+_Dbg_check_tty() {
+    (( $# < 1 )) && return 1
+    typeset tty=$1
+    if [[ $tty != '&1' ]] ; then
+        if ! $(touch "$tty" >/dev/null 2>/dev/null); then
+            _Dbg_errmsg "Can't access $tty for writing."
+            return 1
+        fi
+        if [[ ! -w "$tty" ]] ; then
+            _Dbg_errmsg "tty $tty needs to be writable"
+            return 1
+        fi
+        _Dbg_tty="$tty"
+        _Dbg_prompt_output="$_Dbg_tty"
+    fi
+    return 0
+}
+
 _Dbg_parse_options() {
 
     . ${_Dbg_libdir}/getopts_long.sh
@@ -123,6 +142,8 @@ _Dbg_parse_options() {
 	quiet        no_argument             \
         tempdir      required_argument       \
         tty          required_argument       \
+        terminal     required_argument       \
+        tty_in       required_argument       \
 	version      no_argument             \
 	'' "$@"
     do
@@ -159,10 +180,15 @@ _Dbg_parse_options() {
 		_Dbg_o_nx=1		;;
 	    q | quiet )
 		_Dbg_o_quiet=1		;;
-	    t | tty)
-		_Dbg_tty=$OPTLARG	;;
 	    tempdir)
 		_Dbg_tmpdir=$OPTLARG	;;
+            terminal | tty )
+                if _Dbg_check_tty "$OPTLARG" ; then
+                    _Dbg_tty="$OPTLARG"
+                else
+                    _Dbg_errmsg '--tty option ignored'
+                fi
+                ;;
 	    x | eval-command )
 		DBG_INPUT=$OPTLARG	;;
 	    X | trace )
