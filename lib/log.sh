@@ -26,7 +26,7 @@
 typeset -i _Dbg_logging=0
 
 # Location of logging file *when* we are set logging is on.
-typeset _Dbg_logging_file="bashdb.txt"
+typeset _Dbg_logging_file="kshdb.txt"
 
 # If 1 overwrite existing logging file?
 typeset _Dbg_logging_overwrite=0
