@@ -55,7 +55,7 @@ typeset _Dbg_shell_name=${_Dbg_shell##*/}  # Equivalent to basename(_Dbg_shell)
 typeset -i _Dbg_i
 for ((_Dbg_i=0; $_Dbg_i<${#_Dbg_script_args[@]}-1; _Dbg_i++)) ; do
     typeset arg=${_Dbg_script_args[$_Dbg_i]}
-    if [[ $arg == '-L' || $arg == '--libdir' ]] ; then
+    if [[ $arg == '-L' || $arg == '--library' ]] ; then
         ((_Dbg_i++))
         _Dbg_libdir="${_Dbg_script_args[$_Dbg_i]}"
         break

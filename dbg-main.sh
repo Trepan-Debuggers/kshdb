@@ -19,13 +19,13 @@
 # Code that specifically has to come first.
 # Note: "init" comes first and "cmds" has to come after "io".
 for _Dbg_file in pre io ; do
-    source ${_Dbg_libdir}/init/${_Dbg_file}.sh
+    source "${_Dbg_libdir}/init/${_Dbg_file}.sh"
 done
 
 # All debugger lib code has to come before debugger command code.
 typeset _Dbg_file
-for _Dbg_file in ${_Dbg_libdir}/lib/*.sh ${_Dbg_libdir}/command/*.sh ; do
-    source $_Dbg_file
+for _Dbg_file in "${_Dbg_libdir}/lib/"*.sh "${_Dbg_libdir}/command/"*.sh ; do
+    source "$_Dbg_file"
 done
 
 # Have we already specified where to read debugger input from?
