@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -27,7 +27,7 @@
 # file: either in lib or (less good) command.
 
 # Are we using a debugger-enabled shell? If not let's stop right here.
-if ((.sh.version < 20100309 )) ; then 
+if ((.sh.version < 20100309 )) ; then
   print "Sorry, your $_Dbg_shell_name just isn't modern enough." 2>&1
   print "We something newer than March, 2010." 2>&1
   exit 30
@@ -52,9 +52,9 @@ _Dbg_do_show_version()
 # Expand filename given as $1.
 # we echo the expanded name or return $1 unchanged if a bad filename.
 # Return is 0 if good or 1 if bad.
-# File globbing is handled. 
-# Note we don't check that the file exists, just that the format is 
-# valid; we do check that we can "search" the directory implied in the 
+# File globbing is handled.
+# Note we don't check that the file exists, just that the format is
+# valid; we do check that we can "search" the directory implied in the
 # filename.
 
 function _Dbg_expand_filename {
@@ -111,15 +111,14 @@ typeset -x _Dbg_init_cwd=$PWD
 
 typeset -i _Dbg_running=1      # True we are not finished running the program
 
-typeset -i _Dbg_brkpt_num=0    # If nonzero, the breakpoint number that we 
+typeset -i _Dbg_brkpt_num=0    # If nonzero, the breakpoint number that we
                                # are currently stopped at.
 
 # Sets whether or not to display command before executing it.
 typeset _Dbg_set_trace_commands='off'
 
 # Known normal IFS consisting of a space, tab and newline
-typeset -x _Dbg_space_IFS=' 	
-'
+typeset -x _Dbg_space_IFS=$' \t\r\n'
 
 # Number of statements to run before entering the debugger.  Is used
 # intially to get out of sourced dbg-main.inc script and in top-level
