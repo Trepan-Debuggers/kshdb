@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ksh
 # Note: no CVS Id line since it would mess up regression testing.
 # This code is used for various debugger testing.
 
@@ -6,18 +6,18 @@ fn1() {
     echo "fn1 here"
     x=5
     fn3
-}    
+}
 
 fn2() {
     name="fn2"
     echo "$name here"
     x=6
-}    
+}
 
 fn3() {
     name="fn3"
     x=$1
-}    
+}
 
 x=22
 y=23

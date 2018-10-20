@@ -1,6 +1,7 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008-2009, 2011, 2014, 2016 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2011, 2014, 2016, 2018 Rocky Bernstein
+#   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -65,6 +66,22 @@ typeset -A _Dbg_brkpt_file2brkpt
 
 
 #========================= FUNCTIONS   ============================#
+
+# Sets global _Dbg_ok_breakpoint_lines the
+# lines in $1 that we can set a breakpoint on.
+
+typeset -A _Dbg_ok_breakpoint_lines
+
+function _Dbg_breakpoint_lines {
+    typeset -r ksh_file=$1
+    typeset -r tempfile=/tmp/ksh-R-$$
+    ${_Dbg_shell} -R $tempfile $ksh_file 2>/dev/null
+    typeset -r linenos=$(grep '^p' $tempfile | cut -d ';' -f 5 | sort -n | uniq)
+    _Dbg_ok_breakpoint_lines=()
+    for lineno in $linenos ; do
+	_Dbg_ok_breakpoint_lines[$lineno]=1
+    done
+}
 
 function _Dbg_save_breakpoints {
   typeset -p _Dbg_brkpt              >> $_Dbg_statefile
@@ -157,6 +174,12 @@ _Dbg_set_brkpt() {
     typeset -i lineno=$2
     typeset -i is_temp=$3
     typeset    condition=${4:-1}
+
+    # _Dbg_breakpoint_lines "$source_file"
+    # if [[ ${_Dbg_ok_breakpoint_lines[$lineno]} != 1 ]]; then
+    # 	_Dbg_errmsg "Line $lineno of \"$source_file\" is not a stopable code line."
+    # 	return 1
+    # fi
 
     # Increment brkpt_max here because we are 1-origin
     ((_Dbg_brkpt_max++))
