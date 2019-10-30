@@ -30,7 +30,7 @@ To try on a real program such as perhaps `/etc/default/profile`:
 
 .. code:: console
 
-      $ ./kshdb -L /etc/default/profile # substitute .../profile with your favorite zsh script
+      $ ./kshdb -L /etc/default/profile # substitute .../profile with your favorite ksh script
 
 To modify source code to call the debugger inside the program:
 

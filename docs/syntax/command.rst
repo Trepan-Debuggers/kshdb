@@ -25,7 +25,7 @@ commands. If an exact match is found, the command name and arguments
 are dispatched to that command.
 
 3. If after all of the above, we still don't find a command, the line
-may be evaluated as a zsh statement in the current context of the
+may be evaluated as a ksh statement in the current context of the
 program at the point it is stoppped. However this is done only if
 "auto evaluation" is on.  It is on by default.
 
@@ -33,8 +33,8 @@ If :ref:`auto eval <set_autoeval>` is not set on, or if running the
 Python statement produces an error, we display an error message that
 the entered string is "undefined".
 
-If you want zsh shell command-processing, it's possible to go into an
-python shell with the corresponding the command `zsh` or `shell`. It
+If you want ksh shell command-processing, it's possible to go into an
+python shell with the corresponding the command `ksh` or `shell`. It
 is also possible to arrange going into an python shell every time you
 enter the debugger.
 

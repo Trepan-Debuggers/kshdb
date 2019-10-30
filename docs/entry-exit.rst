@@ -1,4 +1,4 @@
-Entering the Zsh Debugger
+Entering the Ksh Debugger
 ****************************
 
 .. toctree::
@@ -44,7 +44,7 @@ For help on `kshdb` or options, use the ``--help`` option.
 	Usage:
            kshdb [OPTIONS] <script_file>
 
-        Runs zsh <script_file> under a debugger.
+        Runs ksh <script_file> under a debugger.
 
         options:
         ...
@@ -72,7 +72,7 @@ Here is an Example:
 
     source path-to-kshdb/kshdb/dbg-trace.sh
     # work, work, work.
-    # ... some zsh code
+    # ... some ksh code
 
     _Dbg_debugger
     # start debugging here

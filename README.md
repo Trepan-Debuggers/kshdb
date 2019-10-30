@@ -20,6 +20,10 @@ Setup
 See the [wiki](https://github.com/rocky/kshdb/wiki/How-to-install) for
 how to install this code.
 
+See the [wiki](https://github.com/rocky/kshdb/wiki) and [documentation](http://kshdb.readthedocs.io/en/latest/)
+for more information on this debugger.
+
+
 What's here, what's not and why not
 ===================================
 
@@ -27,11 +31,6 @@ What's missing falls into two categories:
 
   * Stuff that might be ported in a straightforward way from `bashdb` or `zshdb`
   * Stuff that needs additional `ksh` support
-
-Writing documentation is important, but an extensive guide will have
-to wait. For now one can consult the reference guide that comes with
-bashdb: http://bashdb.sf.net/bashdb.html There is some minimal help to
-get a list of commands and some help for each.
 
 What's not here yet in detail
 -----------------------------
