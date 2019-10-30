@@ -1,12 +1,12 @@
 .. index:: load
 .. _load:
 
-Load (source zsh file)
+Load (source ksh file)
 -------------------------
 
-**load** *zsh-script*
+**load** *ksh-script*
 
-Read in lines of a *zsh-script*.
+Read in lines of a *ksh-script*.
 
 .. seealso::
 

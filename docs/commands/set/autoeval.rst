@@ -9,9 +9,9 @@ Set Auto Eval (auto evaluation of unrecognized debugger commands)
 Evaluate unrecognized debugger commands.
 
 Often inside the debugger, one would like to be able to run arbitrary
-zsh commands without having to preface expressions with
+ksh commands without having to preface expressions with
 ``print`` or ``eval``. Setting *autoeval* on will cause unrecognized
-debugger commands to be *eval*'d as a zsh expression.
+debugger commands to be *eval*'d as a ksh expression.
 
 Note that if this is set, on error the message shown on type a bad
 debugger command changes from:
@@ -20,7 +20,7 @@ debugger command changes from:
 
       Undefined command: "fdafds". Try "help".
 
-to something more zsh-eval-specific such as:
+to something more ksh-eval-specific such as:
 
 ::
 

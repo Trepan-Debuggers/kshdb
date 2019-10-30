@@ -10,19 +10,19 @@ Synopsis
 --------
 
 
-**kshdb** [ *debugger-options* ] [ \-- ] [ *zsh-script* [ *script-options* ...]]
+**kshdb** [ *debugger-options* ] [ \-- ] [ *ksh-script* [ *script-options* ...]]
 
 **kshdb** [ *options*] -c *execution-string*
 
 Description
 -----------
 
-*kshdb* is a *zsh* script to which arranges for another *zsh* script
+*kshdb* is a *ksh* script to which arranges for another *ksh* script
 to be debugged.
 
 The debugger has a similar command interface as gdb_.
 
-If your zsh script needs to be passed options, add ``--`` before the
+If your ksh script needs to be passed options, add ``--`` before the
 script name. That will tell *kshdb* not to try to process any further
 options.
 
@@ -136,8 +136,8 @@ stored in ``$0`` will not be the name of the script to be debugged. The
 debugged script will appear in a call stack not as the top item but as
 the item below `kshdb`.
 
-The `kshdb` script option assumes a version of zsh with debugging
-support, zsh 4.3.6-dev-2 or later.
+The `kshdb` script option assumes a version of ksh with debugging
+support, ksh 4.3.6-dev-2 or later.
 
 The debugger slows things down a little because the debugger has to
 intercept every statement and check to see if some action is to be taken.

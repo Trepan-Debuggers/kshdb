@@ -3,17 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-kshdb - a gdb-like debugger for zsh
+kshdb - a gdb-like debugger for ksh
 ========================================
 
-kshdb is a gdb-like debugger for zsh_.
+kshdb is a gdb-like debugger for ksh_.
 
 Since this debugger is similar to other_ trepanning_ debuggers_ and *gdb*
 in general, knowledge gained by learning this is transferable to those
 debuggers and vice versa.
 
 An Emacs interface is available via realgud_. Visual Studio integration is available from rogalmic via
-ZshDebug_.
+KshDebug_.
 
 
 
@@ -37,9 +37,9 @@ Indices and tables
 * :ref:`search`
 .. * :ref:`modindex`
 
-.. _zsh: http://www.zsh.org/
+.. _ksh: http://www.ksh.org/
 .. _other: https://www.npmjs.com/package/trepan-ni
 .. _trepanning: https://pypi.python.org/pypi/trepan3k
 .. _debuggers: https://metacpan.org/pod/Devel::Trepan
 .. _realgud: https://github.com/realgud/realgud
-.. _ZshDebug: https://marketplace.visualstudio.com/items?itemName=rogalmic.zsh-debug
+.. _KshDebug: https://marketplace.visualstudio.com/items?itemName=rogalmic.ksh-debug

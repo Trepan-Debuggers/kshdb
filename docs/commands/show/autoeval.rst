@@ -6,7 +6,7 @@ Show Autoeval (auto evaluation of unrecognized debugger commands)
 
 **show autoeval**
 
-Show whether zsh evaluate of unrecognized debugger commands.
+Show whether ksh evaluate of unrecognized debugger commands.
 
 .. seealso::
 

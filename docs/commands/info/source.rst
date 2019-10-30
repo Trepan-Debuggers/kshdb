@@ -6,7 +6,7 @@ Info Source
 
 **info source**
 
-Information about the current zsh script file.
+Information about the current ksh script file.
 
 Example:
 ++++++++
