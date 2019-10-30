@@ -53,4 +53,5 @@ if ((Dbg_history_save)) ; then
     history -ap "$_Dbg_histfile"
 fi
 
-[[ -n "$_Dbg_tty" ]] && _Dbg_do_set inferior-tty $_Dbg_tty
+# FIXME: is this needed? Output works fine, input is now Dbg_tty_in
+#[[ -n "$_Dbg_tty" ]] && _Dbg_do_set inferior-tty $_Dbg_tty

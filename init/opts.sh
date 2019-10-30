@@ -182,8 +182,15 @@ _Dbg_parse_options() {
 		_Dbg_o_quiet=1		;;
 	    tempdir)
 		_Dbg_tmpdir=$OPTLARG	;;
-            terminal | tty )
-                if _Dbg_check_tty "$OPTLARG" ; then
+        terminal_in | tty_in )
+                if [[ -r "$OPTLARG" ]] ; then
+                    _Dbg_tty_in="$OPTLARG"
+                else
+                    _Dbg_errmsg '--tty_in option ignored'
+                fi
+                ;;
+        terminal | tty )
+                if [[ -w "$OPTLARG" ]] ; then
                     _Dbg_tty="$OPTLARG"
                 else
                     _Dbg_errmsg '--tty option ignored'

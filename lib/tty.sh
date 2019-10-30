@@ -12,7 +12,7 @@
 #   WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 #   for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License along
 #   with kshdb; see the file COPYING.  If not, write to the Free Software
 #   Foundation, 59 Temple Place, Suite 330, Boston, MA 02111 USA.
@@ -29,18 +29,18 @@
 #
 function _Dbg_open_if_tty {
     (( $# != 1 )) && return 1
-    [[ ! -r $1 ]] || [[ ! -w $1 ]] && return 1
+    [[ ! -w $1 ]] && return 1
     # Code modelled off of code from David Korn:
     typeset -i r=1
-    { 
-	if command exec {_Dbg_new_fd}<>$1 ; then
-	    if [[ -t $_Dbg_new_fd  ]] ; then 
+    {
+	if command exec ${_Dbg_new_fd}>$1 ; then
+	    if [[ -t $_Dbg_new_fd  ]] ; then
 		r=0
 	    else
 		# Can't specify <> below like we did on the open
 		# above, but since there's one input/output file
 		# descriptor, in zsh both input and output are closed.
-		command exec {_Dbg_new_fd}<&- 
+		command exec {_Dbg_new_fd}<&-
 		_Dbg_new_fd=-1
 	    fi
 	fi;
@@ -49,7 +49,7 @@ function _Dbg_open_if_tty {
     return $r
 }
 
-# Redirect input and output to tty. 
+# Redirect input and output to tty.
 function _Dbg_set_tty {
   if (( $# != 1 )) ; then
     _Dbg_errmsg "Need a single tty parameter; got $# args instead."

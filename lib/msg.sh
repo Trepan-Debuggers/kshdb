@@ -35,7 +35,7 @@ _Dbg_confirm() {
     typeset _Dbg_confirm_prompt;  _Dbg_confirm_prompt=$1
     typeset _Dbg_confirm_default; _Dbg_confirm_default=${2:-'no'}
     typeset _Dbg_response
-    while read "_Dbg_response?$_Dbg_confirm_prompt" args <&${_Dbg_fd[_Dbg_fd_last]}
+    while read "_Dbg_response?$_Dbg_confirm_prompt" args <&${_Dbg_fd[_Dbg_fd_last]} >>"$_Dbg_tty"
     do
         case "$_Dbg_response" in
             'y' | 'yes' | 'yeah' | 'ya' | 'ja' | 'si' | 'oui' | 'ok' | 'okay' )
@@ -79,12 +79,12 @@ function _Dbg_errmsg_no_cr {
 
 # print message to output device
 function _Dbg_msg {
-    print -r -- "$@"
+    print -r -- "$@" >>"$_Dbg_tty"
 }
 
 # print message to output device without a carriage return at the end
 function _Dbg_msg_nocr {
-    printf "%s" "$@"
+    printf "%s" "$@" >>"$_Dbg_tty"
 }
 
 # print message to output device
