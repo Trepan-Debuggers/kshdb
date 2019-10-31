@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "set style" debugger command
 #
-#   Copyright (C) 2016-2018 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2016-2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -32,14 +32,11 @@ if (( _Dbg_working_term_highlight )) ; then
    _Dbg_pygments_styles=$(${_Dbg_libdir}/lib/term-highlight.py -L)
 fi
 
-typeset -A _Dbg_complete_level_2_data
-_Dbg_complete_level_2_data[set_style]="$_Dbg_pygments_styles off"
-
 _Dbg_help_add_sub set style \
 '
 **set** **style** [*pygments-style* | **off**]
 
-Set the pygments style use in souce-code listings to *pygments-style* or
+Set the pygments style use in source-code listings to *pygments-style* or
 remove any pygments formatting if *pygments-style* is **off**.
 
 See also:
@@ -50,9 +47,10 @@ See also: **set highlight**, **show style**, and **show highlight**.
 
 
 _Dbg_list_styles() {
-    typeset -a list=( $_Dbg_pygments_styles )
+    typeset -a style_list=( $_Dbg_pygments_styles )
     _Dbg_msg "Valid styles are:"
-    _Dbg_list_columns '  ' _Dbg_msg
+    typeset -p style_list
+    _Dbg_list_columns style_list
 }
 
 

@@ -1,7 +1,8 @@
 # -*- shell-script -*-
 # debugger command options processing. The bane of programming.
 #
-#   Copyright (C) 2008-2009, 2011, 2014, 2018 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2009, 2011, 2014, 2018-2019
+#    Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -25,11 +26,16 @@ _Dbg_usage() {
 Runs $_Dbg_shell_name <script_file> under a debugger.
 
 options:
-    -h | --help             Print this help.
-    -q | --quiet            Do not print introductory and quiet messages.
-    -A | --annotate  LEVEL  Set the annotation level.
-    -B | --basename         Show basename only on source file listings.
-                            (Needed in regression tests)
+    -h | --help              Print this help.
+    -q | --quiet             Do not print introductory and quiet messages.
+    -A | --annotate  LEVEL   Set the annotation level.
+    -B | --basename          Show basename only on source file listings.
+                             (Needed in regression tests)
+    --highlight {dark|light} Use dark or light background ANSI terminal sequence
+                             syntax highlighting
+       | --no-highlight
+                             Don't use ANSI terminal sequences for syntax
+                             highlight
     --highlight | --no-highlight
                             Use or don't use ANSI terminal sequences for syntax
                             highlight
@@ -74,7 +80,7 @@ typeset -i _Dbg_set_annotate=0
 # Simulate set -x?
 typeset -i _Dbg_set_linetrace=0
 typeset -i _Dbg_set_basename=0
-typeset -x _Dbg_set_highlight=''
+typeset -x _Dbg_set_highlight # Set complicatedly below
 typeset -i _Dbg_o_nx=0
 typeset -i _Dbg_o_linetrace=0
 typeset    _Dbg_tty=''

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # filecache.sh - cache file information
 #
-#   Copyright (C) 2008-2011, 2013-2014 Rocky Bernstein
+#   Copyright (C) 2008-2011, 2013-2014, 2019 Rocky Bernstein
 #   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -202,7 +202,11 @@ function _Dbg_readin {
     nameref text=_Dbg_filenames[$fullname].text
     _Dbg_readfile text "$fullname"
     if [[ -n $_Dbg_set_highlight ]] ; then
-	highlight_cmd="${_Dbg_libdir}/lib/term-highlight.py $fullname"
+	opts="--bg=${_Dbg_set_highlight}"
+	if [[ -n $_Dbg_set_style ]] ; then
+	    opts="$opts --style=${_Dbg_set_style}"
+	fi
+	highlight_cmd="${_Dbg_libdir}/lib/term-highlight.py $opts $fullname"
 	tempfile=$($highlight_cmd 2>/dev/null)
 	nameref text=_Dbg_filenames[$fullname].marked_text
 	_Dbg_readfile text "$tempfile"

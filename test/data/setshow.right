@@ -7,9 +7,9 @@ set -xv
 +show badcommand
 ** Unknown show subcommand: badcommand
 ** Show subcommands are:
-  alias     autoeval  commands  different    highlight  prompt    width
-  annotate  autolist  copying   directories  history    version
-  args      basename  debug     editing      listsize   warranty
+  alias     autoeval  commands  different    highlight  prompt   warranty
+  annotate  autolist  copying   directories  history    style    width
+  args      basename  debug     editing      listsize   version
 +another-bad-command
 ** Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
@@ -291,6 +291,7 @@ history     --
 listsize    : Number of source lines kshdb will list by default is 10.
 prompt      : kshdb's prompt is:
       "$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> ".
+style: Pygments terminal formatting style is off.
 version     : kshdb, release 1.0
 width       : Line width is 80.
 +#### and show...
