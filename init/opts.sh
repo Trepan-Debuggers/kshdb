@@ -82,31 +82,27 @@ typeset -i _Dbg_set_linetrace=0
 typeset -i _Dbg_set_basename=0
 typeset -x _Dbg_set_highlight # Set complicatedly below
 typeset -i _Dbg_o_nx=0
+typeset -i _Dbg_have_working_pygmentize=0
 typeset -i _Dbg_o_linetrace=0
 typeset    _Dbg_tty=''
 
 typeset -x _Dbg_set_style=''
 
+if ( pygmentize --version || pygmentize -V ) 2>/dev/null 1>/dev/null ; then
+   _Dbg_have_working_pygmentize=1
+fi
 
 typeset -ix _Dbg_working_term_highlight
 
-if ${_Dbg_libdir}/lib/term-highlight.py -V 2>/dev/null  1>/dev/null ; then
+if "${_Dbg_libdir}/lib/term-highlight.py" -V 2>/dev/null  1>/dev/null ; then
     _Dbg_working_term_highlight=1
 else
     _Dbg_working_term_highlight=0
 fi
 
 typeset -x _Dbg_set_style=''
-
-# If we can do highlighting, do it.
-if ((  _Dbg_working_term_highlight )) ; then
-    _Dbg_set_highlight="light"
-else
-    _Dbg_set_highlight=''
-fi
-
 # $_Dbg_tmpdir could have been set by the top-level debugger script.
-[[ -z $_Dbg_tmpdir ]] && typeset _Dbg_tmpdir=/tmp
+[[ -z "$_Dbg_tmpdir" ]] && typeset _Dbg_tmpdir=/tmp
 
 _Dbg_check_tty() {
     (( $# < 1 )) && return 1
@@ -128,7 +124,7 @@ _Dbg_check_tty() {
 
 _Dbg_parse_options() {
 
-    . ${_Dbg_libdir}/getopts_long.sh
+    . "${_Dbg_libdir}/getopts_long.sh"
 
     typeset -i _Dbg_o_quiet=0
     typeset -i _Dbg_o_version=0
@@ -172,8 +168,8 @@ _Dbg_parse_options() {
 		    exit 2
 		esac
 
-		if (( ! _Dbg_working_term_highlight )) ; then
-		    echo "Can't run term-highlight.py; '--highlight' forced off" >&2
+		if (( ! _Dbg_have_working_pygmentize )) ; then
+                    printf "Can't run pygmentize. --highlight forced off" >&2
 		    _Dbg_set_highlight=''
 		fi
 		;;
@@ -210,13 +206,13 @@ _Dbg_parse_options() {
     shift "$(($OPTLIND - 1))"
 
     if (( _Dbg_o_version )) ; then
-	_Dbg_do_show_version
-	exit 0
+        _Dbg_do_show_version
+        exit 0
     elif (( ! _Dbg_o_quiet )) && [[ -n $_Dbg_shell_name ]] && \
 	[[ -n $_Dbg_release ]] ; then
 	echo "$_Dbg_shell_name debugger, $_Dbg_debugger_name, release $_Dbg_release"
 	printf '
-Copyright 2008-2011, 2018 Rocky Bernstein
+Copyright 2008-2011, 2018-2019 Rocky Bernstein
 This is free software, covered by the GNU General Public License, and you are
 welcome to change it and/or distribute copies of it under certain conditions.
 
