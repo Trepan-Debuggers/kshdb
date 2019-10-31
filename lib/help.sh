@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # help.sh - Debugger Help Routines
 #
-#   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010, 2011
+#   Copyright (C) 2002-2008, 2010-2011, 2019
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -13,7 +13,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -23,7 +23,7 @@
 typeset -A _Dbg_command_help
 export _Dbg_command_help
 
-# List of debugger commands. 
+# List of debugger commands.
 # FIXME: for now we are attaching this to _Dbg_help_add which
 # is whe this is here. After moving somewhere more appropriate, relocate
 # the definition.
@@ -55,10 +55,10 @@ function _Dbg_help_add_sub {
 _Dbg_help_set() {
 
     typeset subcmd
-    if (( $# == 0 )) ; then 
+    if (( $# == 0 )) ; then
         typeset list
         list="${!_Dbg_command_help_set[@]}"
-        for subcmd in $list ; do 
+        for subcmd in $list ; do
             _Dbg_help_set $subcmd 1
         done
         return 0
@@ -67,23 +67,23 @@ _Dbg_help_set() {
     subcmd="$1"
     typeset label="$2"
 
-    if [[ -n "${_Dbg_command_help_set[$subcmd]}" ]] ; then 
-        if [[ -z $label ]] ; then 
-            _Dbg_msg "${_Dbg_command_help_set[$subcmd]}"
+    if [[ -n "${_Dbg_command_help_set[$subcmd]}" ]] ; then
+        if [[ -z $label ]] ; then
+            _Dbg_msg_rst "${_Dbg_command_help_set[$subcmd]}"
             return 0
         else
             label=$(printf "set %-12s-- " $subcmd)
         fi
     fi
-    
-    case $subcmd in 
+
+    case $subcmd in
         ar | arg | args )
             _Dbg_msg \
                 "${label}Set argument list to give program when restarted."
             return 0
             ;;
         an | ann | anno | annot | annota | annotat | annotate )
-            if [[ -z $label ]] ; then 
+            if [[ -z $label ]] ; then
                 typeset post_label='
 0 == normal;     1 == fullname (for use when running under emacs).'
             fi
@@ -123,7 +123,7 @@ _Dbg_help_set() {
         e | ed | edi | edit | editi | editin | editing )
             _Dbg_msg_nocr \
                 "${label}Set editing of command lines as they are typed is "
-            if [[ -z $_Dbg_edit ]] ; then 
+            if [[ -z $_Dbg_edit ]] ; then
                 _Dbg_msg 'off.'
             else
                 _Dbg_msg 'on.'
@@ -133,7 +133,7 @@ _Dbg_help_set() {
         high | highl | highlight )
             _Dbg_msg_nocr \
                 "${label}Set syntax highlighting of source listings is "
-            if [[ -z $_Dbg_edit ]] ; then 
+            if [[ -z $_Dbg_edit ]] ; then
                 _Dbg_msg 'off.'
             else
                 _Dbg_msg 'on.'
@@ -143,7 +143,7 @@ _Dbg_help_set() {
         his | hist | history )
             _Dbg_msg_nocr \
                 "${label}Set record command history is "
-            if [[ -z $_Dbg_set_edit ]] ; then 
+            if [[ -z $_Dbg_set_edit ]] ; then
                 _Dbg_msg 'off.'
             else
                 _Dbg_msg 'on.'
@@ -194,7 +194,7 @@ _Dbg_help_set() {
 }
 
 _Dbg_help_show() {
-    if (( $# == 0 )) ; then 
+    if (( $# == 0 )) ; then
         typeset list
         list="${!_Dbg_command_help_set[@]}"
         typeset subcmd
@@ -203,20 +203,20 @@ _Dbg_help_show() {
         done
         return 0
     fi
-    
+
     typeset subcmd=$1
     typeset label="$2"
 
-    if [[ -n "${_Dbg_command_help_show[$subcmd]}" ]] ; then 
-        if [[ -z $label ]] ; then 
-            _Dbg_msg "${_Dbg_command_help_show[$subcmd]}"
+    if [[ -n "${_Dbg_command_help_show[$subcmd]}" ]] ; then
+        if [[ -z $label ]] ; then
+            _Dbg_msg_rst "${_Dbg_command_help_show[$subcmd]}"
             return 0
         else
             label=$(printf "show %-12s-- " $subcmd)
         fi
     fi
 
-    case $subcmd in 
+    case $subcmd in
         al | ali | alia | alias | aliase | aliases )
             _Dbg_msg \
                 "${label}Show list of aliases currently in effect."
