@@ -237,6 +237,24 @@ welcome to change it and/or distribute copies of it under certain conditions.
     _Dbg_script_args=("$@")
 }
 
+if (( _Dbg_have_working_pygmentize )) && [[ -z "$_Dbg_set_highlight" ]] ; then
+    # FIXME:
+    # # Honor DARK_BG if already set. If not set, set it.
+    # if [[ -z "$DARK_BG" ]] ; then
+    # 	. "${_Dbg_libdir}/init/term-background.sh" >/dev/null
+    # fi
+
+    # DARK_BG is now either 0 or 1.
+    # Set _Dbg_set_highlight based on DARK_BG
+    # Note however that options processing has one more chance to
+    # change _Dbg_set_highlight
+    if (( $DARK_BG )); then
+	_Dbg_set_highlight="dark"
+    else
+	_Dbg_set_highlight="light"
+    fi
+fi
+
 
 # Stand-alone Testing.
 if [[ -n "$_Dbg_dbg_opts_test" ]] ; then
@@ -244,6 +262,7 @@ if [[ -n "$_Dbg_dbg_opts_test" ]] ; then
     _Dbg_libdir='.'
     [[ -n $_Dbg_input ]] && typeset -p _Dbg_input
     _Dbg_parse_options "$@"
+    typeset -p _Dbg_set_highlight
     typeset -p _Dbg_set_annotate
     typeset -p _Dbg_set_linetrace
     typeset -p _Dbg_set_basename
