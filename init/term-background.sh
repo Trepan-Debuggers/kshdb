@@ -85,10 +85,12 @@ is_dark_colorfgbg() {
 }
 
 is_sourced() {
-    if [[ 0 == ${#funcfiletrace[@]} ]]; then
-	return 1
-    else
+    typeset -i max=${1:-1}
+    typeset -i rc
+    if (( .sh.level > max )); then
 	return 0
+    else
+	return 1
     fi
 }
 
@@ -180,19 +182,13 @@ elif [[ -n $COLORFGBG ]] ; then
     # COLORFGBG was set prior invoking a terminal
     is_dark_colorfgbg
     case $is_dark_bg in
-	0 )
-	    echo "Light background from COLORFGBG"
-	    ;;
-	1 )
-	    echo "Dark background from COLORFGBG"
+	0 | 1 )
 	    ;;
 	-1 | * )
-	    echo "Can't decide from COLORFGBG"
 	    exit_if_not_sourced 1
 	    ;;
     esac
 else
-    echo "Can't decide"
     exit_if_not_sourced 1
 fi
 

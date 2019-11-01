@@ -238,11 +238,11 @@ welcome to change it and/or distribute copies of it under certain conditions.
 }
 
 if (( _Dbg_have_working_pygmentize )) && [[ -z "$_Dbg_set_highlight" ]] ; then
-    # FIXME:
-    # # Honor DARK_BG if already set. If not set, set it.
-    # if [[ -z "$DARK_BG" ]] ; then
-    # 	. "${_Dbg_libdir}/init/term-background.sh" >/dev/null
-    # fi
+    FIXME:
+    # Honor DARK_BG if already set. If not set, set it.
+    if [[ -z "$DARK_BG" ]] ; then
+      . "${_Dbg_libdir}/init/term-background.sh" # >/dev/null
+    fi
 
     # DARK_BG is now either 0 or 1.
     # Set _Dbg_set_highlight based on DARK_BG
