@@ -1,5 +1,3 @@
-[![Travis Build Status](https://travis-ci.org/rocky/kshdb.svg?branch=master)](https://travis-ci.org/rocky/kshdb)
-
 Introduction
 ============
 
@@ -10,9 +8,15 @@ The command syntax generally follows that of the GNU debugger `gdb`.
 
 However this debugger depends on a number of bug fixes and of debugging
 support features that are neither part of the POSIX 1003.1 standard
-and only in ksh93v- releases. In particular, there are fixes to a
+and only in later ksh93v- releases. In particular, there are fixes to a
 number of the `.sh` variables like `.sh.level` and `.sh.file`, and
 [fixes to for handling IO redirection](https://github.com/att/ast/issues/582).
+
+
+To see if there is recent-enough version for your favorite distirbution, see the repology.org [list](https://repology.org/project/ksh/versions).
+
+Source code to later ksh release can be found in the [github att/ast](https://github.com/att/ast) repository.
+
 
 Setup
 =====
@@ -20,7 +24,12 @@ Setup
 See the [wiki](https://github.com/rocky/kshdb/wiki/How-to-install) for
 how to install this code.
 
-See the [wiki](https://github.com/rocky/kshdb/wiki) and [documentation](http://kshdb.readthedocs.io/en/latest/)
+Debugger documentation
+======================
+
+There is extensive command documentation inside the debugger itself.
+
+However see the [wiki](https://github.com/rocky/kshdb/wiki) and [documentation](http://kshdb.readthedocs.io/en/latest/)
 for more information on this debugger.
 
 
@@ -35,12 +44,13 @@ What's missing falls into two categories:
 What's not here yet in detail
 -----------------------------
 
-This can be done with or without support from ksh, albeit faster with
-help from ksh.
+This can be done with or without support from `ksh`, albeit faster with
+help from `ksh`.
 
 * Setting `$0`
 * lots of other stuff including...
   * display expressions, signal handling,
+  * command completion
   * debugger commands:
      * debug - recursive debugging
      * file  - sets file name for the current source
@@ -50,7 +60,7 @@ help from ksh.
      * tty - set output device for debugger output
      * watch - Set or clear a watch expression.
 
-None of this is rocket science. Should be pretty straight-forward to add.
+None of this is rocket science; most of it should be pretty straight-forward to add.
 
 _I use a project's ratings to help be determine the priority I should give to it.
 You'll see that this project's rating is far behind [zshdb's](http://github.com/rocky/zshdb)_
@@ -59,4 +69,5 @@ You'll see that this project's rating is far behind [zshdb's](http://github.com/
 What may need more work and support from ksh
 --------------------------------------------
 
-stopping points that are valid for a `breakpoint` command
+* command completion
+* stopping points that are valid for a `breakpoint` command
