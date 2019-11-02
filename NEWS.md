@@ -1,5 +1,5 @@
-2019-11-09 Version 1.0.0
-------------------------
+2019-11-09 Version 1.0.0 - Day of the Dead
+------------------------------------------
 
 First 1.0.0 release (semantic versioning now possibile)
 
