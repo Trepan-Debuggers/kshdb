@@ -1,7 +1,21 @@
+2019-11-09 Version 1.0.0
+------------------------
+
+First 1.0.0 release (semantic versioning now possibile)
+
+- automated light/dark background detection from term-background.sh
+- ReStructuredText formatting of set/show subcommands
+- add "set/show style"
+- Go over docs
+- Add readthedocs docs https://readthedocs.org/projects/kshdb/
+- Tolerance for spaces in path names
+- Issue #5 fix
+
 2018-06-21 Version 0.07
+----------------------
 
 - Need ksh93v- for file I/O fixes
-- Start Rst formatting on help documentation
+- Start RsT formatting on help documentation
 - Use more modern autoconf
 - Fix bugs around pr command
 - Add --no-highlight option.
@@ -11,6 +25,8 @@
 
 
 2011-5-18 Version 0.06
+----------------------
+
 - Add Syntax coloring if pygmentize is installed
 - Add gdb-like commands:
   *  "info args"
@@ -24,8 +40,8 @@
 - "set debugging" is not "set debug" to match gdb
 - Unit tests are faster and have less white space but more useful information
 
-Version 0.05
-2011-3-15 Ron Frankel release
+2011-3-15 Version 0.05 - Ron Frankel
+------------------------------------
 
 - Add an easy way to evaluate the current source line or expression inside
   the source line (debugger commands "eval" and "eval?")
@@ -38,8 +54,8 @@ Version 0.05
 - Many cleanups and some small bugfixes
 - Remove emacs code. Use emacs-dbgr from github instead.
 
-Version 0.04
-2009-10-27 Halala ngosuku lokuzalwa
+2009-10-27 Version 0.04 - Halala ngosuku lokuzalwa
+---------------------------------------------------
 
 - Better tolerance for files with embedded blanks. Make sure to quote
   parameters in argument passing.
@@ -52,23 +68,22 @@ Version 0.04
 
 - Remove Emacs compile warnings
 
-Version 0.03
-2009-07-14
+2009-07-14 Version 0.03
+-----------------------
 
 - Add "condition" command
 - Add "kill" command
 - More OSX friendly
 - Add manual page and "--help" usage corrections
 
-Version 0.02
-2009-06-12
+2009-06-12 Version 0.02
+-----------------------
 
 - Add "enable", "disable", and "examine" debugger commands.
 - Add "set inferior-tty" and --tty option.
-
 - Bug fix to find scripts in . that don't start with . or / to run.
 
-Version 0.01
-2008-11-17
+2008-11-17 Version 0.01
+------------------------
 
 First public release.

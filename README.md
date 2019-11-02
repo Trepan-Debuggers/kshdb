@@ -1,8 +1,8 @@
 Introduction
 ============
 
-This is a port and my `bash` debugger [bashdb](http://bashdb.sf.net) and
-`zsh` debugger [zshdb](http://github.com/rocky/zshdb).
+This is a port and my `bash` debugger, [bashdb](http://bashdb.sf.net), and
+`zsh` debugger, [zshdb](http://github.com/rocky/zshdb).
 
 The command syntax generally follows that of the GNU debugger `gdb`.
 
@@ -15,11 +15,11 @@ number of the `.sh` variables like `.sh.level` and `.sh.file`, and
 
 To see if there is recent-enough version for your favorite distirbution, see the repology.org [list](https://repology.org/project/ksh/versions).
 
-Source code to later ksh release can be found in the [github att/ast](https://github.com/att/ast) repository.
+Source code to later ksh releases can be found in the [github att/ast](https://github.com/att/ast) repository.
 
 
-Setup
-=====
+Installation
+============
 
 See the [wiki](https://github.com/rocky/kshdb/wiki/How-to-install) for
 how to install this code.

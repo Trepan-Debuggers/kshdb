@@ -29,7 +29,7 @@ bin_SCRIPTS = kshdb
 
 MOSTLYCLEANFILES = *.orig *.rej
 
-EXTRA_DIST = $(pkgdata_DATA) THANKS README.md
+EXTRA_DIST = $(pkgdata_DATA) THANKS README.md NEWS.md
 
 #: Same as "check" - integration tests.
 test: check

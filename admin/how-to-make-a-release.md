@@ -15,7 +15,7 @@
 then:
 
 ```console
-   $ export KSHDB_VERSION='1.1.0'
+   $ export KSHDB_VERSION='1.0.0'
    $ ./autogen.sh && make && make check
 ```
 
