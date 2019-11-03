@@ -8,7 +8,7 @@ git
 +++
 
 
-Many package managers have back-level versions of this debugger. THe most recent versions is from the github_.
+Many package managers have back-level versions of this debugger. The most recent versions is from the github_.
 
 To install from git:
 
@@ -43,7 +43,7 @@ To modify source code to call the debugger inside the program:
     # start debugging here
 
 
-Above, the directory *path-to_kshdb* should be replaced with the
+Above, the directory *path-to-kshdb* should be replaced with the
 directory that `dbg-trace.sh` is located in. This can also be from the
 source code directory *kshdb* or from the directory `dbg-trace.sh` gets
 installed directory. The "source" command needs to be done only once

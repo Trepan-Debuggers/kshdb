@@ -7,7 +7,7 @@ First 1.0.0 release (semantic versioning now possibile)
 - ReStructuredText formatting of set/show subcommands
 - add "set/show style"
 - Go over docs
-- Add readthedocs docs https://readthedocs.org/projects/kshdb/
+- Add readthedocs docs https://kshdb.readthedocs.io/en/latest/
 - Tolerance for spaces in path names
 - Issue #5 fix
 

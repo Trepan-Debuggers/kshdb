@@ -125,7 +125,7 @@ control where the debugger output goes, use this option.
 Show version number and no-warranty and exit with return code 1.
 
 Bugs
-----
+<----
 
 The way this script arranges debugging to occur is by including (or
 actually "source"-ing) some debug-support code and then sourcing the
@@ -136,8 +136,8 @@ stored in ``$0`` will not be the name of the script to be debugged. The
 debugged script will appear in a call stack not as the top item but as
 the item below `kshdb`.
 
-The `kshdb` script option assumes a version of ksh with debugging
-support, ksh 4.3.6-dev-2 or later.
+The `kshdb` script option assumes a version of _ksh_ with debugging
+support, vesion 2014-12-24 or later.
 
 The debugger slows things down a little because the debugger has to
 intercept every statement and check to see if some action is to be taken.
@@ -145,8 +145,9 @@ intercept every statement and check to see if some action is to be taken.
 See also
 ---------
 
-* `bashdb manual <http://bashdb.sourceforge.net/bashdb.html>`_ - Until a full manual is written, this manual for a similar bash debugger may give some guidance. The two debuggers have similar command interfaces (and code).
 * `kshdb github <https://github.com/rocky/kshdb>`_ - the github project page
+* `zshdb <https://github.com/rocky/zshdb>`_ - a similar POSIX shell debugger for zsh
+* `bashdb <http://bashdb.sourceforge.net>`_ - a similar POSIX shell debugger for bash
 
 Author
 ------

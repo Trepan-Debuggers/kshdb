@@ -17,14 +17,6 @@ text in debugger output and help text. Of course, you can also turn
 this off.
 
 
-Command Completion
-------------------
-
-Terminal command completion is available. Command completion is not
-just a simple static list, but varies depending on the context. For
-example, for frame-changing commands which take optional numbers, on
-the list of *valid numbers* is considered.
-
 Terminal Handling
 -----------------
 
