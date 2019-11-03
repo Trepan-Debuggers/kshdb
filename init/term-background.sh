@@ -57,9 +57,9 @@ get_default_bg() {
 # Pass as parameters R G B values in hex
 # On return, variable is_dark_bg is set
 is_dark_rgb() {
-    typeset r g b
+    typeset -i r g b
     r=$1; g=$2; b=$3
-    if (( (16#$r + 16#$g + 16#$b) < $TERMINAL_COLOR_MIDPOINT )) ; then
+    if (( (16#r + 16#g + 16#b) < TERMINAL_COLOR_MIDPOINT )) ; then
 	is_dark_bg=1
     else
 	is_dark_bg=0
@@ -172,11 +172,7 @@ if (( !success )) && [[ -n $TERM ]] ; then
 fi
 
 if (( success )) ; then
-    if (( is_dark_bg == 1 )) ; then
-	echo "Dark background from ${method}"
-    else
-	echo "Light background from ${method}"
-    fi
+    :
 elif [[ -n $COLORFGBG ]] ; then
     # Note that this can be wrong if
     # COLORFGBG was set prior invoking a terminal
@@ -196,7 +192,7 @@ fi
 # some environment variables
 if is_sourced  ; then
     if (( exitrc == 0 )) ; then
-	if (( $is_dark_bg == 1 ))  ; then
+	if (( is_dark_bg == 1 ))  ; then
 	    export DARK_BG=1
 	    [[ -z $COLORFGBG ]] && export COLORFGBG='0;15'
 	else
