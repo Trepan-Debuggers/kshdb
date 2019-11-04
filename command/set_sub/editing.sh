@@ -19,9 +19,9 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set editing \
-'**set editing** [ **on** | **off** | **emacs** | **vi** ]
+'**set editing** [ **on** | **off** | **emacs** | **gmacs** | **vi** ]
 
-Readline editing of command lines
+Readline editing of command lines.
 
 See also:
 ---------
@@ -36,6 +36,10 @@ _Dbg_do_set_editing() {
 	    _Dbg_edit='-e'
 	    _Dbg_edit_style='emacs'
 	    ;;
+	g | gm | gma | gmac | gmacs )
+	    _Dbg_edit='-e'
+	    _Dbg_edit_style='gmacs'
+	    ;;
 	on | 1 )
 	    _Dbg_edit='-e'
 	    _Dbg_edit_style='emacs'
@@ -49,7 +53,7 @@ _Dbg_do_set_editing() {
 	    _Dbg_edit_style='vi'
 	    ;;
 	* )
-	    _Dbg_errmsg '"on", "off", "vi", or "emacs" expected.'
+	    _Dbg_errmsg '"on", "off", "vi", "gmacs", or "emacs" expected.'
 	    return 1
     esac
     set -o $_Dbg_edit_style

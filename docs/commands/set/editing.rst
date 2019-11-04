@@ -4,7 +4,7 @@
 Set Editing (readline editing of commands)
 ------------------------------------------
 
-**set editing** [ **on** | **off** | **emacs** | **vi** ]
+**set editing** [ **on** | **off** | **emacs** | **gmacs** | **vi** ]
 
 Readline editing of command lines.
 
