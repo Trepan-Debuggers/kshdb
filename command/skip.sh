@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# stepping.cmd - gdb-like "skip" debugger commands
+# skip.sh - gdb-like "skip" debugger command
 #
-#   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,13 +19,32 @@
 #   MA 02111 USA.
 
 _Dbg_help_add skip \
-"skip [COUNT]
+"**skip** [*count*]
 
-Skip (don't run) the next COUNT command(s).
+Skip (don't run) the next *count* command(s).
 
-If COUNT is given, stepping occurs that many times before
-stopping. Otherwise COUNT is one. COUNT an be an arithmetic
-expression. See also \"next\" and \"step\"."
+If *count* is given, stepping occurs that many times before
+stopping. Otherwise *count* is one. *count* can be an arithmetic
+expression.
+
+Note that skipping doesn't change the value of \$?. This has
+consequences in some compound statements that test on \$?. For example
+in:
+
+   if grep foo bar.txt ; then
+      echo not skipped
+   fi
+
+Skipping the *if* statement will, in effect, skip running the *grep*
+command. Since the return code is 0 when skipped, the *if* body is
+entered. Similarly the same thing can  happen in a *while* statement
+test.
+
+See also:
+---------
+
+**continue**, **next**, and **step**.
+"
 
 # Return 0 if we should skip. Nonzero if there was an error.
 # $1 is an optional additional count.
@@ -46,38 +65,9 @@ _Dbg_do_skip() {
   # We're cool. Do the skip.
   _Dbg_write_journal "_Dbg_skip_ignore=$_Dbg_skip_ignore"
 
-  # Set to do a stepping stop after skipping
+  # Set to do a stepping stop after skipping. Note: skip != step.
   _Dbg_step_ignore=0
   _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
+
   return 0
 }
-
-_Dbg_help_add 'step' \
-"step [COUNT]
-
-Single step a statement COUNT times.
-
-If COUNT is given, stepping occurs that many times before
-stopping. Otherwise COUNT is one. COUNT an be an arithmetic
-expression.
-
-In contrast to \"next\", functions and source\'d files are stepped
-into.
-
-See also \"next\", \"skip\", \"step-\" \"step+\", and \"set force\"."
-
-_Dbg_help_add 'step+' \
-"step+ -- Single step a statement ensuring a different line after the step.
-
-In contrast to \"step\", we ensure that the file and line position is
-different from the last one just stopped at.
-
-See also \"step-\" and \"set force\"."
-
-_Dbg_help_add 'step-' \
-"step- -- Single step a statement without the \`step force' setting.
-
-Set step force may have been set on. step- ensures we turn that off for
-this command.
-
-See also \"step\" and \"set force\"."

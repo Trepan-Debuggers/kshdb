@@ -113,7 +113,7 @@ function _Dbg_process_commands {
             _Dbg_onecmd "$_Dbg_cmd" "$args"
             rc=$?
             # _Dbg_postcmd
-            (( rc > 0 && rc != 255 )) && return $rc
+            (( rc > 0 && rc != 254 )) && return $rc
         done
         unset _Dbg_fd[_Dbg_fd_last]
         ((_Dbg_fd_last--))
@@ -185,7 +185,9 @@ _Dbg_onecmd() {
                 ${_Dbg_debugger_commands[$_Dbg_cmd]} $_Dbg_args
                 IFS=$_Dbg_space_IFS;
                 # eval "_Dbg_prompt=$_Dbg_prompt_str"
-                ((_Dbg_continue_rc >= 0)) && return $_Dbg_continue_rc
+                if ((_Dbg_continue_rc >= 0)); then
+		    return $_Dbg_continue_rc
+		fi
                 continue
             fi
         fi
@@ -273,13 +275,13 @@ _Dbg_onecmd() {
 
             * )
                 if (( _Dbg_set_autoeval )) ; then
-                    ! _Dbg_do_eval $_Dbg_cmd $args && return 255
+                    ! _Dbg_do_eval $_Dbg_cmd $args && return 254
                 else
                     _Dbg_undefined_cmd $_Dbg_cmd
                     # _Dbg_remove_history_item
                     # typeset -a last_history=(`history 1`)
                     # history -d ${last_history[0]}
-                    return 255
+                    return 254
                 fi
                 ;;
         esac

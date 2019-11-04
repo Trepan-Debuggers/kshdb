@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "set different" debugger command
 #
-#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,9 +19,14 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub set different \
-'set different [on|off]
+'**set different** [**off**|**on**]
 
-When set, stop at a different line from the last one stopped.' 1
+Set to stop at a different line
+
+See also:
+---------
+
+**show different**' 1
 
 _Dbg_do_set_different() {
     _Dbg_set_onoff "$1" 'different'

@@ -1,10 +1,10 @@
 (stepping.sh:3):
 (( i=0 ))
 +# Make sure autostep is on for next test
-+set force on
++set different on
 Show stepping forces a new line is on.
-+############################### 
-+break 
++###############################
++break
 Breakpoint 1 set in file stepping.sh, line 3.
-+quit 
++quit
 kshdb: That's all, folks...

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# stepping.cmd - gdb-like "step" and "skip" debugger commands
+# step.sh - gdb-like "step" and "skip" debugger commands
 #
-#   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -21,48 +21,57 @@
 # Number of statements to skip before entering the debugger if greater than 0
 typeset -i _Dbg_skip_ignore=0
 
-# 1 if we need to ensure we stop on a different line? 
-typeset -i _Dbg_step_force=0  
+# 1 if we need to ensure we stop on a different line?
+typeset -i _Dbg_step_force=0
 
 # if positive, the frame level we want to stop at next
 typeset -i _Dbg_return_level=-1
 
-# The default behavior of "set different". 
-typeset -i _Dbg_set_different=0  
+# The default behavior of "set different".
+typeset -i _Dbg_set_different=0
 
 _Dbg_help_add 'step' \
-"step [COUNT]
+"**step** [*count*]
 
-Single step a statement COUNT times.
+Single step a statement *count* times.
 
-If COUNT is given, stepping occurs that many times before
-stopping. Otherwise COUNT is one. COUNT an be an arithmetic
+If *count* is given, stepping occurs that many times before
+stopping. Otherwise *count* is one. *count* an be an arithmetic
 expression.
 
 In contrast to \"next\", functions and source\'d files are stepped
 into.
 
-See also \"next\", \"skip\", \"step-\" \"step+\", and \"set different\"."
+See also:
+---------
+
+**next**, **skip**, **step-** **step+**, and **set different**."
 
 _Dbg_help_add 'step+' \
-"step+ [COUNT]
+"**step+**
 
 Single step a statement ensuring a different line after the step.
 
-In contrast to \"step\", we ensure that the file and line position is
+In contrast to **step**, we ensure that the file and line position is
 different from the last one just stopped at.
 
-See also \"step-\" and \"set different\"."
+See also:
+---------
+
+**step-** and **set different**."
 
 _Dbg_help_add 'step-' \
-"step- [COUNT]
+"**step-**
 
-Single step a statement without the \`step different' setting.
+Single step a statement without the \`step force' setting.
 
-Set step different may have been set on. step- ensures we turn that off for
+Set step force may have been set on. step- ensures we turn that off for
 this command.
 
-See also \"step\" and \"set different\"."
+See also:
+---------
+
+**step** and **set different**." 0
 
 # Step command
 # $1 is command step+, step-, or step

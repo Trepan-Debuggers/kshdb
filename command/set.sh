@@ -58,9 +58,6 @@ _Dbg_do_set() {
     fi
 
     case $subcmd in
-	force  )
-	    _Dbg_set_onoff "$1" 'different'
-	    ;;
 	inferior-tty )
 	    _Dbg_set_tty $@
 	    ;;

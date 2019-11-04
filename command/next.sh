@@ -1,5 +1,5 @@
 # -*- shell-script -*-
-# stepping.cmd - gdb-like "next" debugger command
+# next.sh - gdb-like "next" debugger command
 #
 #   Copyright (C) 2008, 2009, 2010, 2011 Rocky Bernstein <rocky@gnu.org>
 #
@@ -19,34 +19,47 @@
 #   MA 02111 USA.
 
 _Dbg_help_add next \
-"next [COUNT]
+"**next** [*count*]
 
-Single step a statement COUNT times ignoring functions.
+Step over a statement *count* times ignoring functions.
 
-If COUNT is given, stepping occurs that many times before
-stopping. Otherwise COUNT is one. COUNT an be an arithmetic
+If *count* is given, stepping occurs that many times before
+stopping. Otherwise *count* is one. *count* can be an arithmetic
 expression.
 
-In contrast to \"step\", functions and source\'d files are not stepped
+In contrast to **step**, functions and source\'d files are not stepped
 into.
 
-See also \"step\" \"skip\", \"next-\" \"next+\", and \"set force\"."
+See also:
+---------
+
+**step**, **skip**, **next-** **next+**, and **set different**."
 
 _Dbg_help_add 'next+' \
-"next+ -- Next stepping ensuring a different line after the step.
+"**next+**
 
-In contrast to \"next\", we ensure that the file and line position is
+Step over stepping ensuring a different line after the step.
+
+In contrast to **next**, we ensure that the file and line position is
 different from the last one just stopped at.
 
-See also \"next-\", \"next\" and \"set force\"."
+See also:
+---------
+
+**next-**, **next** and **set different**." 0
 
 _Dbg_help_add 'next-' \
-"next- -- Next stepping a statement without the \`set force' setting.
+"**next-**
+
+Step over stepping a statement without the **set different** setting.
 
 Set step force may have been set on. step- ensures we turn that off for
 this command.
 
-See also \"next+\", \"next\" and \"set force\"."
+See also:
+---------
+
+**next+**, **next**, and **set different**." 0
 
 # Next command
 # $1 is command next+, next-, or next

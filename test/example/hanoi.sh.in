@@ -1,5 +1,4 @@
 #!@SH_PROG@
-# $Id: hanoi.sh.in,v 1.2 2008/08/22 18:54:08 rockyb Exp $
 # Towers of Hanoi
 # We've added calls to set line tracing if the 1st argument is "trace"
 
@@ -10,7 +9,7 @@ init() {
   fi
 }
 
-function hanoi { 
+function hanoi {
   typeset -i n=$1
   # _Dbg_set_trace
   typeset -r a=$2
@@ -42,5 +41,4 @@ init
 hanoi $max 'a' 'b' 'c'
 if (( $tracing )) ; then
   _Dbg_set_linetrace=0
-  # BASHDB_QUIT_ON_QUIT=1
 fi

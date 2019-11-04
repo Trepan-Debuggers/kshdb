@@ -142,7 +142,12 @@ function _Dbg_trap_handler {
 	fi
 
 	_Dbg_hook_enter_debugger 'after being stepped'
-	return $?
+	typeset -i rc=$?
+	if ((_Dbg_return_from_fn > 0)) ; then
+	    _Dbg_return_from_fn=0
+	    return 255 # 255 indicates return statement.
+	fi
+	return $rc
 
     fi
     if ((_Dbg_set_linetrace)) ; then
@@ -154,6 +159,10 @@ function _Dbg_trap_handler {
 	_Dbg_print_location_and_command
     fi
     _Dbg_set_to_return_from_debugger
+    if ((_Dbg_return_from_fn > 0)) ; then
+	_Dbg_return_from_fn=0
+	return 255 # 255 indicates return statement.
+    fi
     return 0
 }
 

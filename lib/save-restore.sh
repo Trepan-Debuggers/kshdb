@@ -74,7 +74,7 @@ function _Dbg_set_to_return_from_debugger {
 #     _Dbg_last_ksh_command="**unsaved _kshdb command**"
 #   fi
 
-  _Dbg_restore_user_vars
+    _Dbg_restore_user_vars
 }
 
 _Dbg_save_state() {

@@ -1,6 +1,6 @@
 set trace-commands on
 # Make sure autostep is off for next text
-set force on
+set different on
 ###############################
 # Invalid delete commands
 delete 0
@@ -32,7 +32,3 @@ continue
 # Should be at breakpoint but not one that's been deleted
 where 1
 quit
-
-
-
-
