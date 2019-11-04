@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # dbg-pre.sh - Code common to kshdb and kshdb-trace that has to run first
 #
-#   Copyright (C) 2008, 2009, 2010 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008, 2009, 2010, 2019 Rocky Bernstein rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -27,9 +27,9 @@
 # file: either in lib or (less good) command.
 
 # Are we using a debugger-enabled shell? If not let's stop right here.
-if ((.sh.version < 20100309 )) ; then
+if ((.sh.version < 20141224 )) ; then
   print "Sorry, your $_Dbg_shell_name just isn't modern enough." 2>&1
-  print "We something newer than March, 2010." 2>&1
+  print "We need something later than 2014-12-24 and you have ${ksh_version}." 2>&1
   exit 30
 fi
 

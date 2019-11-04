@@ -8,6 +8,7 @@
 /config.log
 /config.status
 /configure
+/dist
 /dbg-trace.sh
 /elisp-comp
 /install-sh
