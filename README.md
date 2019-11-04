@@ -52,7 +52,6 @@ help from `ksh`.
   * display expressions, signal handling,
   * command completion
   * debugger commands:
-     * debug - recursive debugging
      * file  - sets file name for the current source
      * handle - specify debugger signal handling
      * history - rerun a debugger command from its history
