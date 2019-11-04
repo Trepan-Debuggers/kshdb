@@ -1,4 +1,14 @@
-2019-11-09 Version 1.0.0 - Day of the Dead
+2019-11-04 Version 1.1.0
+------------------------
+
+- Add "debug" command
+- Make "step" honor "set different" setting, Go over "set different" RsT doc
+- Was errondeoulsy lower-casing RsT
+- Remove obsolete "set force"
+- add "set editing gmacs"; it's a ksh'ism
+- Remove COLORFGBG message from	term-background.sh
+
+2019-11-01 Version 1.0.0 - Day of the Dead
 ------------------------------------------
 
 First 1.0.0 release (semantic versioning now possibile)

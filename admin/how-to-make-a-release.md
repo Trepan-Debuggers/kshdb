@@ -8,14 +8,14 @@
 
 - Edit from `configure.ac`'s release name. If we have this in `configure.ac`:
 ```
-   AC_INIT([kshdb],[1.0.0],[rocky@gnu.org])
+   AC_INIT([kshdb],[1.1.0],[rocky@gnu.org])
                     ^^^^^
 ```
 
 then:
 
 ```console
-   $ export KSHDB_VERSION='1.0.0'
+   $ export KSHDB_VERSION='1.1.0'
    $ ./autogen.sh && make && make check
 ```
 
@@ -23,7 +23,7 @@ then:
 
 ```console
   $ git commit -m"Get ready for release $KSHDB_VERSION" .
-  $ make Changelog
+  $ rm ChangeLog; make ChangeLog
 ```
 
 - Go over `ChangeLog` and add to `NEWS.md`. Update date of release.
