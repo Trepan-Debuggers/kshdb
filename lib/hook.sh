@@ -83,16 +83,6 @@ function _Dbg_trap_handler {
 	     .sh.level > _Dbg_return_level) ))
     # echo "${#funcfiletrace[@]} vs $_Dbg_return_level ; $_Dbg_skipping_fn"
 
-    # if in step mode, decrement counter
-    if ((_Dbg_step_ignore > 0)) ; then
-	if ((! _Dbg_skipping_fn )) ; then
-	    ((_Dbg_step_ignore--))
-	    _Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
-	    # Can't return here because we may want to stop for another
-	    # reason.
-	fi
-    fi
-
     if ((_Dbg_skip_ignore > 0)) ; then
 	if ((! _Dbg_skipping_fn )) ; then
 	    ((_Dbg_skip_ignore--))
@@ -126,7 +116,7 @@ function _Dbg_trap_handler {
     fi
 
     # Check if step mode and number of steps to ignore.
-    if ((_Dbg_step_ignore == 0 && ! _Dbg_skipping_fn )); then
+    if ((_Dbg_step_ignore >= 0 && ! _Dbg_skipping_fn )); then
 
 	if ((_Dbg_step_force)) ; then
 	    typeset _Dbg_frame_previous_file="$_Dbg_frame_last_file"
@@ -137,6 +127,11 @@ function _Dbg_trap_handler {
 		_Dbg_set_to_return_from_debugger 1
 		return $_Dbg_rc
 	    fi
+	fi
+	((_Dbg_step_ignore--))
+	_Dbg_write_journal "_Dbg_step_ignore=$_Dbg_step_ignore"
+	if ((_Dbg_step_ignore > 0 )); then
+	    return $_Dbg_rc
 	else
 	    _Dbg_frame_save_frames 1
 	fi
