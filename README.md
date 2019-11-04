@@ -1,3 +1,5 @@
+[![Packaging status](https://repology.org/badge/vertical-allrepos/kshdb.svg)](https://repology.org/project/kshdb/versions)
+
 Introduction
 ============
 
