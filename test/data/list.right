@@ -5,41 +5,41 @@ x=22
 +help l
 **list**[**>**] [*location*|**.**|**-**] [*num*]
 
-list source code.
+List source code.
 
-without arguments, print lines centered around the current line. if
+Without arguments, print lines centered around the current line. If
 *location* is given, that number of lines is shown.
 
-if this is the first list command issued since the debugger command
-loop was entered, then the current line is the current frame. if a
+If this is the first list command issued since the debugger command
+loop was entered, then the current line is the current frame. If a
 subsequent list command was issued with no intervening frame changing,
 then that is start the line after we last one previously shown.
 
-a *location* is either:
+A *location* is either:
 
 * a number, e.g. 5,
 * a filename, colon, and a number, e.g. `/etc/profile:5`,
 * a "." for the current line number
 * a "-" for the lines before the current linenumber
 
-by default aliases **l>** and **list>** are set to list. in this case and
+By default aliases **l>** and **list>** are set to list. In this case and
 more generally when the alias ends in ">", rather than center lines
 around *location* that will be used as the starting point.
 
-examples:
+Examples:
 ---------
 
-    list 5                  # list starting from line 5
-    list 4+1                # same as above.
-    list /etc/profile:5     # list starting from line 5 of /etc/profile
-    list /etc/profile 5     # same as above.
+    list 5                  # List starting from line 5
+    list 4+1                # Same as above.
+    list /etc/profile:5     # List starting from line 5 of /etc/profile
+    list /etc/profile 5     # Same as above.
     list /etc/profile 5 6   # list lines 5 and 6 of /etc/profile
-    list /etc/profile 5 2   # same as above, since 2 < 5.
-    list profile:5 2        # list two lines starting from line 5 of profile
-    list .                  # list lines centered from where we currently are stopped
-    list -                  # list lines previous to those just shown
+    list /etc/profile 5 2   # Same as above, since 2 < 5.
+    list profile:5 2        # List two lines starting from line 5 of profile
+    list .                  # List lines centered from where we currently are stopped
+    list -                  # List lines previous to those just shown
 
-see also:
+See also:
 ---------
 
 **set listsize** or **show listsize** to see or set the value.
@@ -51,7 +51,7 @@ Aliases for list: l, l>, list>
  17:    fn3() {
  18:        name="fn3"
  19:        x=$1
- 20:    }    
+ 20:    }
  21:    
  22: => x=22
  23:    y=23
@@ -79,7 +79,7 @@ Aliases for list: l, l>, list>
  17:    fn3() {
  18:        name="fn3"
  19:        x=$1
- 20:    }    
+ 20:    }
  21:    
  22: => x=22
  23:    y=23
@@ -94,7 +94,7 @@ Aliases for list: l, l>, list>
   6:        echo "fn1 here"
   7:        x=5
   8:        fn3
-  9:    }    
+  9:    }
  10:    
  11:    fn2() {
 +# 
@@ -113,15 +113,15 @@ Aliases for list: l, l>, list>
   6:        echo "fn1 here"
   7:        x=5
   8:        fn3
-  9:    }    
+  9:    }
  10:    
 +list ../example/dbg-test1.sh:20
- 15:    }    
+ 15:    }
  16:    
  17:    fn3() {
  18:        name="fn3"
  19:        x=$1
- 20:    }    
+ 20:    }
  21:    
  22: => x=22
  23:    y=23
@@ -160,7 +160,7 @@ Number of source lines kshdb will list by default is 10.
 +### Setting listsize to 3...
 +set listsize 3
 +list 10
-  9:    }    
+  9:    }
  10:    
  11:    fn2() {
 +### Window command...
@@ -173,7 +173,7 @@ Number of source lines kshdb will list by default is 10.
 Number of source lines kshdb will list by default is 4.
 +list 10
   8:        fn3
-  9:    }    
+  9:    }
  10:    
  11:    fn2() {
 +### Window command...

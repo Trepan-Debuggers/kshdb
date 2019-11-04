@@ -1,6 +1,7 @@
 # -*- shell-script -*-
 #
-#   Copyright (C) 2008-2009, 2012, 2014 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008-2009, 2012, 2014, 2019 Rocky Bernstein
+#   rocky@gnu.org
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -121,7 +122,7 @@ function _Dbg_printf_nocr {
 }
 
 function _Dbg_msg_rst {
-    typeset -l -r msg="$@"
+    typeset -r msg="$@"
     if [[ -n $_Dbg_set_highlight ]] && (( _Dbg_working_term_highlight )) ; then
 	set +xv
 	typeset opts="--rst --width=$_Dbg_set_linewidth"
