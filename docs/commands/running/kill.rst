@@ -5,6 +5,7 @@ Kill (send kill signal)
 -----------------------
 
 **kill** [ *signal-number* ]
+**kill!** [*signal-number*]
 
 Send this process a POSIX signal ('9' for 'SIGKILL' or ``kill -SIGKILL``)
 
@@ -16,6 +17,8 @@ handle them can be sent.
 
 Giving a negative number is the same as using its positive value.
 
+When the ! suffix appears, no confirmation is neeeded.
+
 Examples:
 +++++++++
 
@@ -25,6 +28,7 @@ Examples:
     kill 9              # same as above
     kill -9             # same as above
     kill 15             # nicer, maskable TERM signal
+    kill! 15            # same as above, but no confirmation
     kill -INT           # same as above
     kill -SIGINT        # same as above
     kill -WINCH         # send "window change" signal

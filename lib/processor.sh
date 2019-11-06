@@ -137,9 +137,11 @@ _Dbg_annotation() {
 # Run a single command
 # Parameters: _Dbg_cmd and args
 #
+typeset _Dbg_orig_cmd
+
 _Dbg_onecmd() {
     typeset full_cmd; full_cmd=$@
-    typeset _Dbg_orig_cmd="$1"
+    _Dbg_orig_cmd="$1"
     typeset expanded_alias; _Dbg_alias_expand "$_Dbg_orig_cmd"
     typeset _Dbg_cmd="$expanded_alias"
     typeset _Dbg_args=$args

@@ -43,7 +43,7 @@ _Dbg_confirm() {
                 _Dbg_response='y'
                 return 0
                 ;;
-            'n' | 'no' | 'nope' | 'nyet' | 'nein' | 'non' )
+            'N' | 'n' | 'no' | 'nope' | 'nyet' | 'nein' | 'non' )
                 _Dbg_response='n'
                 return 0
                 ;;
