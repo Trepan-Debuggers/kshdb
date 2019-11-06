@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # continue.sh - gdb-like "continue" debugger command
 #
-#   Copyright (C) 2008, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,15 +19,27 @@
 #   MA 02111 USA.
 
 _Dbg_help_add continue \
-'continue [LOC | - ]
+'**continue** [*loc* | **-** ]
 
 Continue script execution.
 
-If not LOC or - is given, continue until the next breakpoint or the end
-of program is reached.  If - is given, then debugging will be turned off
-after continuing causing your program to run at full speed.
+If *loc* or *-* is not given, continue until the next breakpoint or
+the end of program is reached.  If **-** is given, then debugging will
+be turned off after continuing causing your program to run at full
+speed.
 
-If LOC is given, a temporary breakpoint is set at the location.'
+If **loc* is given, a temporary breakpoint is set at the location.
+
+Examples:
+---------
+
+    continue          # Continue execution
+    continue 5        # Continue with a one-time breakpoint at line 5
+
+See Also:
+---------
+
+**next**, **skip**, and **step** provide other ways to progress execution.'
 
 function _Dbg_do_continue {
 
@@ -45,10 +57,10 @@ function _Dbg_do_continue {
 
   _Dbg_linespec_setup "$1"
 
-  if [[ -n "$full_filename" ]] ; then 
-      if (( line_number ==  0 )) ; then 
+  if [[ -n "$full_filename" ]] ; then
+      if (( line_number ==  0 )) ; then
 	  _Dbg_errmsg 'There is no line 0 to continue at.'
-      else 
+      else
 	  _Dbg_check_line $line_number "$full_filename"
 	  (( $? == 0 )) && \
  	      _Dbg_set_brkpt "$full_filename" "$line_number" 1 1

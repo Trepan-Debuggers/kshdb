@@ -19,14 +19,18 @@
 #   MA 02111 USA.
 
 _Dbg_help_add debug \
-"debug [*script*]
+"debug [*ksh-script* [*args*...]  ]
 
 Set up *script* for debugging.
 
 If *script* is not given, take the script name from the command that
 is about to be executed. Note that when the nested debug finished, you
 are still where you were prior to entering the debugger.
-" 1
+
+See Also:
+---------
+
+**skip** and **run**" 1
 
 # TODO: would work better if instead of using $source_line below
 # which might have several statements, we could just pick up the next
