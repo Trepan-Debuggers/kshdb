@@ -5,7 +5,7 @@ Debug (recursive debugging)
 ---------------------------
 **debug** [*ksh-script* [*args*...]]
 
-Set up *ksh-script* for debugging.
+Recursively debug into *ksh-script*.
 
 If *script* is not given, take the script name from the command that
 is about to be executed. Note that when the nested debug finished, you
