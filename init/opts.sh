@@ -80,6 +80,7 @@ typeset -i _Dbg_set_annotate=0
 # Simulate set -x?
 typeset -i _Dbg_set_linetrace=0
 typeset -i _Dbg_set_basename=0
+typeset -i _Dbg_set_confirm=1
 typeset -x _Dbg_set_highlight # Set complicatedly below
 typeset -i _Dbg_o_nx=0
 typeset -i _Dbg_have_working_pygmentize=0

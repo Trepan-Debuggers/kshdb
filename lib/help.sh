@@ -76,12 +76,8 @@ _Dbg_help_set() {
         fi
     fi
 
+    # FIXME: DRY this
     case $subcmd in
-        ar | arg | args )
-            _Dbg_msg \
-                "${label}Set argument list to give program when restarted."
-            return 0
-            ;;
         an | ann | anno | annot | annota | annotat | annotate )
             if [[ -z $label ]] ; then
                 typeset post_label='
@@ -89,6 +85,11 @@ _Dbg_help_set() {
             fi
             _Dbg_msg \
                 "${label}Set annotation level.$post_label"
+            return 0
+            ;;
+        ar | arg | args )
+            _Dbg_msg \
+                "${label}Set argument list to give program when restarted."
             return 0
             ;;
         autoe | autoev | autoeva | autoeval )
@@ -108,10 +109,13 @@ _Dbg_help_set() {
                 "Set short filenames (the basename) in debug output"
             return 0
             ;;
-        deb|debu|debug )
-            _Dbg_help_set_onoff 'debug' 'debug' \
-              "Set debugging the debugger"
-            return 0
+        c | co | con | conf | confi | confir | confirm )
+            _Dbg_msg \
+                "${label}confirm dangerous operations" $(_Dbg_onoff $_Dbg_set_confirm)
+            ;;
+        de|deb|debu|debug )
+            _Dbg_msg \
+                "${label}debug the debugger is" $(_Dbg_onoff $_Dbg_set_debug)
             ;;
         di|dif|diff|diffe|differe|differen|different )
             typeset onoff=${1:-'on'}
@@ -177,16 +181,21 @@ _Dbg_help_set() {
                 "${label}Set showing the command to execute is $_Dbg_show_command."
             return 0
             ;;
-        t|tr|tra|trac|trace|trace-|tracec|trace-co|trace-com|trace-comm|trace-comma|trace-comman|trace-command|trace-commands )
-            _Dbg_msg \
-                "${label}Set showing debugger commands is $_Dbg_set_trace_commands."
-            return 0
+        sty | style )
+            _Dbg_msg_nocr \
+                "${label}Set pygments highlighting style is "
+            if [[ -z $_Dbg_set_style ]] ; then
+                _Dbg_msg 'off.'
+            else
+		_Dbg_msg "${_Dbg_set_style}"
+            fi
             ;;
         wi|wid|widt|width )
             _Dbg_msg \
                 "${label}Set maximum width of lines is $_Dbg_set_linewidth."
             return 0
             ;;
+
         * )
             _Dbg_errmsg \
                 "There is no \"set $subcmd\" command."
@@ -196,7 +205,7 @@ _Dbg_help_set() {
 _Dbg_help_show() {
     if (( $# == 0 )) ; then
         typeset list
-        list="${!_Dbg_command_help_set[@]}"
+        list="${!_Dbg_command_help_show[@]}"
         typeset subcmd
         for subcmd in $list; do
             _Dbg_help_show $subcmd 1
@@ -246,6 +255,10 @@ _Dbg_help_show() {
             _Dbg_msg \
                 "${label}Show if we are are to show short or long filenames."
             return 0
+            ;;
+        c | co | con | conf | confi | confir | confirm )
+            _Dbg_msg \
+                "${label}confirm dangerous operations" $(_Dbg_onoff $_Dbg_set_confirm)
             ;;
         com | comm | comma | comman | command | commands )
             _Dbg_msg \
@@ -317,6 +330,10 @@ _Dbg_help_show() {
                 "${label}maximum width of a line."
             return 0
             ;;
+	"style" | "version" )
+	    # Not done yet
+	    ;;
+
         * )
             _Dbg_msg \
                 "Undefined show command: \"$subcmd\".  Try \"help show\"."

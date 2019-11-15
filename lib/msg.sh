@@ -29,6 +29,12 @@ _Dbg_ansi_term_normal="[0m"
 # to 0.  _Dbg_response is set to 'error' and $? set to 1 on an error.
 #
 _Dbg_confirm() {
+
+    if (( ! _Dbg_set_confirm )); then
+       _Dbg_response='y'
+       return 0
+    fi
+
     if (( $# < 1 || $# > 2 )) ; then
         _Dbg_response='error'
         return 0

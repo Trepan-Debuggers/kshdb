@@ -7,9 +7,9 @@ set -xv
 +show badcommand
 ** Unknown show subcommand: badcommand
 ** Show subcommands are:
-  alias     autoeval  commands  different    highlight  prompt   warranty
-  annotate  autolist  copying   directories  history    style    width
-  args      basename  debug     editing      listsize   version
+  alias     autoeval  commands  debug        editing    listsize  version
+  annotate  autolist  confirm   different    highlight  prompt    warranty
+  args      basename  copying   directories  history    style     width
 +another-bad-command
 ** Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
@@ -280,6 +280,7 @@ args        :     Argument list to give script when debugged program starts is:
 autoeval    : Evaluate unrecognized commands is off.
 autolist    : Auto run of 'list' command is off.
 basename    : Show short filenames (the basename) in debug output is on.
+confirm:  Show confirmation of dangerous operations is on.
 debug       : Allow debugging the debugger is off.
 different   : Show stepping forces a new line is off.
 editing     : Editing of command lines as they are typed is off.

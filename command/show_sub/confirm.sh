@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show highlight" debugger command
+# "show confirm" debugger command
 #
-#   Copyright (C) 2011, 2018, 2019 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,20 +18,20 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub show highlight \
-"**show highlight**
+_Dbg_help_add_sub show confirm \
+"**show confirm**
 
-Show syntax highlight of listings" 1
+Show whether dangerous-operation confirmation is in effect." 1
 
-_Dbg_do_show_highlight() {
-    typeset label
-    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " highlight) || label=''
+_Dbg_do_show_confirm() {
+    typeset label="$1"
+    [[ -n $label ]] && label='confirm:  '
     _Dbg_msg_nocr \
-        "${label}Syntax highlight in source listings is "
-    if [[ -n $_Dbg_set_highlight ]] ; then
-        _Dbg_msg "${_Dbg_set_highlight}."
-    else
+        "${label}Show confirmation of dangerous operations is "
+    if (( _Dbg_set_confirm == 0 )); then
         _Dbg_msg 'off.'
+    else
+        _Dbg_msg 'on.'
     fi
     return 0
 }
