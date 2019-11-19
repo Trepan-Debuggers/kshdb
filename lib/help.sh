@@ -89,25 +89,21 @@ _Dbg_help_set() {
             ;;
         ar | arg | args )
             _Dbg_msg \
-                "${label}Set argument list to give program when restarted."
-            return 0
+                "${label}Set argument list to give program when it is restarted."
             ;;
         autoe | autoev | autoeva | autoeval )
-            _Dbg_help_set_onoff 'autoeval' 'autoeval' \
-                "Evaluate unrecognized commands"
-            return 0
+            _Dbg_msg \
+                "${label}auto evaluation of unrecognized commands is" $(_Dbg_onoff $_Dbg_set_autoeval)
             ;;
         autol | autoli | autolis | autolist )
-            typeset -l onoff="on."
-            [[ -z ${_Dbg_cmdloop_hooks['list']} ]] && onoff='off.'
+	    typeset onoff="on."
+	    [[ -z ${_Dbg_cmdloop_hooks["list"]} ]] && onoff='off.'
             _Dbg_msg \
-                "${label}Run list command is ${onoff}"
-            return 0
+                "${label}auto listing on debugger stop is ${onoff}"
             ;;
         b | ba | bas | base | basen | basena | basenam | basename )
-            _Dbg_help_set_onoff 'basename' 'basename' \
-                "Set short filenames (the basename) in debug output"
-            return 0
+            _Dbg_msg \
+                "${label}short filenames (the basename) is" $(_Dbg_onoff $_Dbg_set_basename)
             ;;
         c | co | con | conf | confi | confir | confirm )
             _Dbg_msg \
@@ -121,8 +117,7 @@ _Dbg_help_set() {
             typeset onoff=${1:-'on'}
             (( _Dbg_set_different )) && onoff='on.'
             _Dbg_msg \
-                "${label}Set to stop at a different line is" $onoff
-            return 0
+                "${label}stop on different lines is" $(_Dbg_onoff $_Dbg_set_different)
             ;;
         e | ed | edi | edit | editi | editin | editing )
             _Dbg_msg_nocr \
@@ -140,9 +135,8 @@ _Dbg_help_set() {
             if [[ -z $_Dbg_edit ]] ; then
                 _Dbg_msg 'off.'
             else
-                _Dbg_msg 'on.'
+		_Dbg_msg "${_Dbg_set_highlight}"
             fi
-            return 0
             ;;
         his | hist | history )
             _Dbg_msg_nocr \
@@ -168,13 +162,10 @@ _Dbg_help_set() {
             return 0
             ;;
         lis | list | lists | listsi | listsiz | listsize )
-            _Dbg_msg \
-                "${label}Set number of source lines $_Dbg_debugger_name will list by default."
-            ;;
+            _Dbg_msg "${label}Set number of lines in listings is ${_Dbg_set_listsize}"
+	    ;;
         p | pr | pro | prom | promp | prompt )
-            _Dbg_msg \
-                "${label}${_Dbg_debugger_name}'s prompt is: \"$_Dbg_prompt_str\"."
-            return 0
+            _Dbg_msg "${label}prompt string ${_Dbg_set_prompt}"
             ;;
         sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
             _Dbg_msg \
@@ -338,4 +329,32 @@ _Dbg_help_show() {
             _Dbg_msg \
                 "Undefined show command: \"$subcmd\".  Try \"help show\"."
     esac
+}
+
+_Dbg_help_info() {
+
+    typeset subcmd
+    if (( $# == 0 )) ; then
+        typeset -a list
+        list=(${(ki)_Dbg_command_help_info[@]})
+        sort_list 0 ${#list[@]}-1
+        for subcmd in ${list[@]}; do
+            _Dbg_help_info $subcmd 1
+        done
+        return 0
+    fi
+
+    subcmd="$1"
+    typeset label="$2"
+
+    if [[ -n "${_Dbg_command_help_info[$subcmd]}" ]] ; then
+        if [[ -z $label ]] ; then
+            _Dbg_msg_rst "${_Dbg_command_help_info[$subcmd]}"
+            return 0
+        else
+            label=$(builtin printf "info %-12s-- " $subcmd)
+        fi
+    fi
+
+    _Dbg_info_help $subcmd $label
 }

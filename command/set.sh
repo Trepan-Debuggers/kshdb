@@ -31,6 +31,7 @@ typeset -A _Dbg_debugger_set_commands
 typeset -A _Dbg_command_help_set
 
 typeset -i _Dbg_set_autoeval=0     # Evaluate unrecognized commands?
+typeset -i _Dbg_set_autolist=0     # SHow listing when stopped
 typeset -i _Dbg_set_listsize=10    # How many lines in a listing?
 
 # Sets whether or not to display command before executing it.

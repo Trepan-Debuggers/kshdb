@@ -2,7 +2,7 @@
 (( i=0 ))
 +# Make sure autostep is on for next test
 +set different on
-Show stepping forces a new line is on.
+Stepping forces stopping at a new line is on.
 +###############################
 +break
 Breakpoint 1 set in file stepping.sh, line 3.

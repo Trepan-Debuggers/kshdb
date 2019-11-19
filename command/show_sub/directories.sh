@@ -19,14 +19,14 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub show directories \
-'show directories
+'**show directories**
 
 Show list of drectories used to search for not fully qualified file names.' 1
 # FIXME add dir and then See also dir.
 
 _Dbg_do_show_directories() {
     # Don't do anything if called as part of "show" (all)
-    [[ -n $1 ]] && return  
+    [[ -n $1 ]] && return
 
     typeset list=${_Dbg_dir[0]}
     typeset -i n=${#_Dbg_dir[@]}
@@ -34,7 +34,7 @@ _Dbg_do_show_directories() {
     for (( i=1 ; i < n; i++ )) ; do
 	list="${list}:${_Dbg_dir[i]}"
     done
-    
+
     _Dbg_msg "Source directories searched: $list"
     return 0
 }

@@ -4,17 +4,17 @@ p
 Show short filenames (the basename) in debug output is on.
 +# Make sure autostep is off for next text
 +set different off
-Show stepping forces a new line is off.
+Stepping forces stopping at a new line is off.
 +show different
-Show stepping forces a new line is off.
-+next 
+Stepping forces stopping at a new line is off.
++next
 0
 ===
 (nexting.sh:6):
 p
 +backtrace 1
 ->0 in file `nexting.sh' at line 6
-+next 
++next
 0
 ===
 (nexting.sh:6):
@@ -22,30 +22,30 @@ x=6
 +backtrace 1
 ->0 in file `nexting.sh' at line 6
 +# Test that next+ skips multiple statements
-+next+ 
++next+
 (nexting.sh:7):
 p
 +backtrace 1
 ->0 in file `nexting.sh' at line 7
 +# Same thing - but should stop at 2nd statement in line
-+next 
++next
 0
 ===
 (nexting.sh:7):
 x=7
 +backtrace 1
 ->0 in file `nexting.sh' at line 7
-+next 
++next
 (nexting.sh:8):
 p
 +backtrace 1
 ->0 in file `nexting.sh' at line 8
 +# Now check with set different on
 +set different on
-Show stepping forces a new line is on.
+Stepping forces stopping at a new line is on.
 +show different
-Show stepping forces a new line is on.
-+next 
+Stepping forces stopping at a new line is on.
++next
 0
 ===
 (nexting.sh:9):
@@ -53,30 +53,30 @@ p
 +backtrace 1
 ->0 in file `nexting.sh' at line 9
 +# Override different
-+next- 
++next-
 0
 ===
 (nexting.sh:9):
 x=9
 +backtrace 1
 ->0 in file `nexting.sh' at line 9
-+next- 
++next-
 (nexting.sh:10):
 p
 +backtrace 1
 ->0 in file `nexting.sh' at line 10
 +# A null command should use the last next
-+next- 
++next-
 0
 ===
 (nexting.sh:10):
 x=10
 +backtrace 1
 ->0 in file `nexting.sh' at line 10
-+next- 
++next-
 (nexting.sh:11):
 p
-+next 
++next
 0
 ===
 (nexting.sh:12):
@@ -84,19 +84,19 @@ p
 +backtrace 1
 ->0 in file `nexting.sh' at line 12
 +# Try a null command the other way
-+next+ 
++next+
 0
 ===
 (nexting.sh:13):
 p
 +backtrace 1
 ->0 in file `nexting.sh' at line 13
-+next+ 
++next+
 0
 ===
 (nexting.sh:14):
 x=14
 +backtrace 1
 ->0 in file `nexting.sh' at line 14
-+quit 
++quit
 kshdb: That's all, folks...

@@ -2,7 +2,7 @@
 (( i=0 ))
 +# Make sure autostep is off for next text
 +set different on
-Show stepping forces a new line is on.
+Stepping forces stopping at a new line is on.
 +###############################
 +# Invalid delete commands
 +delete 0

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "show listsize" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,11 +19,14 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub show listsize \
-'show listsize
+'**show listsize**
 
-Show maximum number of lines in a \"list\" display
+Show maximum number of lines in a \"list\" display.
 
-See also \"set listsize\".' 1
+See also:
+---------
+
+**set listsize**.' 1
 
 _Dbg_do_show_listsize() {
     [[ -n $label ]] && label=$(_Dbg_printf_nocr "%-12s: " listsize)

@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show directories" debugger command
+# "show prompt" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,7 +19,7 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub show prompt \
-'show prompt
+'**show prompt**
 
 Show prompt string.' 1
 # FIXME add dir and then See also dir.

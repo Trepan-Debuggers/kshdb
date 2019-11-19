@@ -1,7 +1,7 @@
 # -*- shell-script -*-
-# "show autolist" debugger command
+# "show linetrace" debugger command
 #
-#   Copyright (C) 2010-2011, 2019 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -18,20 +18,20 @@
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
 #   MA 02111 USA.
 
-_Dbg_help_add_sub show autolist \
-'**show autolist**
+_Dbg_help_add_sub show linetrace \
+'**show linetrace**
 
-Show whether to run a \"list\" on commands entering debugger.
+Traces each sourceline before running it.
+
 
 See also:
 ---------
 
-**set autolist**.' 1
+ **set linetrace**' 1
 
-
-_Dbg_do_show_autolist() {
-    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " autolist)
+_Dbg_do_show_linetrace() {
+    [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " linetrace)
     _Dbg_msg \
-	"${label}Auto run of 'list' command is ${onoff}"
+	"${label}Show if stepping forces stopping at a new line is" $(_Dbg_onoff $_Dbg_set_linetrace)
     return 0
 }

@@ -5,11 +5,7 @@ set -xv
 +set width 80
 +#### Invalid commands...
 +show badcommand
-** Unknown show subcommand: badcommand
-** Show subcommands are:
-  alias     autoeval  commands  debug        editing    listsize  version
-  annotate  autolist  confirm   different    highlight  prompt    warranty
-  args      basename  copying   directories  history    style     width
+Undefined show command: "badcommand".  Try "help show".
 +another-bad-command
 ** Undefined command "another-bad-command". Try "help".
 +#### *** GNU things...
@@ -274,27 +270,26 @@ of preserving the free status of all derivatives of our free software and
 of promoting the sharing and reuse of software generally.
 
 +show
-annotate    : Annotation_level is 0.
-args        :     Argument list to give script when debugged program starts is:
- testarg1 testarg2".
-autoeval    : Evaluate unrecognized commands is off.
-autolist    : Auto run of 'list' command is off.
-basename    : Show short filenames (the basename) in debug output is on.
-confirm:  Show confirmation of dangerous operations is on.
-debug       : Allow debugging the debugger is off.
-different   : Show stepping forces a new line is off.
-editing     : Editing of command lines as they are typed is off.
-highlight   : Syntax highlight in source listings is off.
-history     --
-  filename: The filename in which to record the command history is
-  save: Saving of history save is on.
-  size: Debugger history size is 999
-listsize    : Number of source lines kshdb will list by default is 10.
-prompt      : kshdb's prompt is:
-      "$_Dbg_debugger_name<${_Dbg_less}1${_Dbg_greater}> ".
-style: Pygments terminal formatting style is off.
-version     : kshdb, release 1.0
-width       : Line width is 80.
+show alias       -- Show list of aliases currently in effect.
+show annotate    -- Show annotation_level
+show autoeval    -- Evaluate unrecognized commands is off.
+show autolist    -- Auto run a 'list' command is off.
+show basename    -- Show if we are are to show short or long filenames.
+show commands    -- Show the history of commands you typed.
+show confirm     -- confirm dangerous operations on.
+show copying     -- Conditions for redistributing copies of debugger.
+show debug       -- Show if we are set to debug the debugger.
+show different   -- Show stepping forces a new line is off.
+Source directories searched: \$cdir:\$cwd
+show editing     -- Show editing of command lines and edit style.
+show highlight   -- Show if we syntax highlight source listings.
+show history     -- Show if we are recording command history.
+show linetrace   -- Show whether to trace lines before execution.
+show listsize    -- Number of source lines kshdb will list by default is 10.
+show style       -- Set pygments highlighting style is off.
+show version     -- kshdb, release 1.1.0
+show warranty    -- Various kinds of warranty you do not have.
+show width       -- Line width is 80.
 +#### and show...
 +show args
 Argument list to give script when debugged program starts is:

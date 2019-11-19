@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # "show different" debugger command
 #
-#   Copyright (C) 2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2010-2011, 2019 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -19,15 +19,18 @@
 #   MA 02111 USA.
 
 _Dbg_help_add_sub show different \
-'show different
+'**show different**
 
-Show whether stepping forces a new line.
+Show whether stepping forces stopping at a new line..
 
-See also \"set different\".' 1
+See also:
+---------
+
+ **set different**' 1
 
 _Dbg_do_show_different() {
     [[ -n $1 ]] && label=$(_Dbg_printf_nocr "%-12s: " different)
     _Dbg_msg \
-	"${label}Show stepping forces a new line is" $(_Dbg_onoff $_Dbg_set_different)
+	"${label}Stepping forces stopping at a new line is" $(_Dbg_onoff $_Dbg_set_different)
     return 0
 }
