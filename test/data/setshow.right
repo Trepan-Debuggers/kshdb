@@ -280,12 +280,13 @@ show confirm     -- confirm dangerous operations on.
 show copying     -- Conditions for redistributing copies of debugger.
 show debug       -- Show if we are set to debug the debugger.
 show different   -- Show stepping forces a new line is off.
-Source directories searched: \$cdir:\$cwd
+show directories -- Show the search path for finding source files.
 show editing     -- Show editing of command lines and edit style.
 show highlight   -- Show if we syntax highlight source listings.
 show history     -- Show if we are recording command history.
 show linetrace   -- Show whether to trace lines before execution.
 show listsize    -- Number of source lines kshdb will list by default is 10.
+show prompt      -- Show kshdb's command prompt.
 show style       -- Set pygments highlighting style is off.
 show version     -- kshdb, release 1.1.0
 show warranty    -- Various kinds of warranty you do not have.

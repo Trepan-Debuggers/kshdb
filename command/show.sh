@@ -111,14 +111,18 @@ _Dbg_help_show() {
                 "${label}Conditions for redistributing copies of debugger."
             ;;
         dir|dire|direc|direct|directo|director|directori|directorie|directories)
-            typeset list=${_Dbg_dir[0]}
-            typeset -i n=${#_Dbg_dir[@]}
-            typeset -i i
-            for (( i=1 ; i < n; i++ )) ; do
-                list="${list}:${_Dbg_dir[i]}"
-            done
-
-            _Dbg_msg "Source directories searched: $list"
+	    if [[ -n $label ]]; then
+		_Dbg_msg \
+                    "${label}Show the search path for finding source files."
+	    else
+		typeset list=${_Dbg_dir[0]}
+		typeset -i n=${#_Dbg_dir[@]}
+		typeset -i i
+		for (( i=1 ; i < n; i++ )) ; do
+                    list="${list}:${_Dbg_dir[i]}"
+		done
+		_Dbg_msg "Source directories searched: $list"
+	    fi
             ;;
         d|de|deb|debu|debug|debugg|debugger|debuggi|debuggin|debugging )
             _Dbg_msg \
@@ -155,12 +159,11 @@ _Dbg_help_show() {
             shift
             _Dbg_do_show_logging $*
             ;;
-        # p | pr | pro | prom | promp | prompt )
-        #     [[ -n $label ]] && label='prompt:   '
-        #     _Dbg_msg \
-        #         "${label}${_Dbg_debugger_name}'s prompt is:\n" \
-        #         "      \"$_Dbg_prompt_str\"."
-        #     ;;
+        p | pr | pro | prom | promp | prompt )
+	    # Note this is different fom "help show prompt" output
+            _Dbg_msg \
+                "${label}Show ${_Dbg_debugger_name}'s command prompt."
+            ;;
         sho|show|showc|showco|showcom|showcomm|showcomma|showcomman|showcommand )
             [[ -n $label ]] && label='showcommand: '
             _Dbg_msg \
