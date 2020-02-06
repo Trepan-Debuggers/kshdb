@@ -31,6 +31,5 @@ environment settings with the :ref:`show <show>` command.
    set/editing
    set/highlight
    set/listsize
-   set/skip
    set/style
    set/width

@@ -4,8 +4,24 @@ How to install
 .. toctree::
 
 
+From a Package
+--------------
+
+Repology_ maintains a list of various bundled `kshdb` packages. Below are some specific distributions that contain `kshdb`.
+
+At the time this documentation was built, here is status that they provide:
+
+|packagestatus|
+
+Check the link above for more up-to-date information.
+
+
+.. |packagestatus| image:: https://repology.org/badge/vertical-allrepos/kshdb.svg
+		 :target: https://repology.org/project/kshdb/versions
+
+
 git
-+++
+---
 
 
 Many package managers have back-level versions of this debugger. The most recent versions is from the github_.
@@ -63,4 +79,5 @@ and uninstall with:
     $ sudo make uninstall # ;-)
 
 
+.. _Repology: https://repology.org/project/kshdb/versions
 .. _github: https://github.com/rocky/kshdb
