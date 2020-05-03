@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # Things related to file handling.
 #
-#   Copyright (C) 2008-2010, 2013 Rocky Bernstein rocky@gnu.org
+#   Copyright (C) 2008-2010, 2013, 2020 Rocky Bernstein rocky@gnu.org
 #
 #   kshdb is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free
@@ -27,12 +27,11 @@ _Dbg_dir=('\$cdir' '\$cwd' )
 [[ -z ${_Dbg_cdir} ]] && typeset _Dbg_cdir=$(pwd)
 
 # $1 contains the name you want to glob. return 0 if exists and is
-# readible or 1 if not.
+# readable or 1 if not.
 # The result will be in variable $filename which is assumed to be
 # local'd by the caller
-_Dbg_glob_filename() {
-  typeset cmd="filename=$(expr $1)"
-  eval $cmd
+_Dbg_tilde_expand_filename() {
+  filename="${1/#\~/$HOME}"
   [[ -r "$filename" ]]
 }
 

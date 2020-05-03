@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # gdb-like "source" command.
 #
-#   Copyright (C) 2002-2004, 2006, 2008, 2010, 2018
+#   Copyright (C) 2002-2004, 2006, 2008, 2010, 2018, 2020
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -39,8 +39,8 @@ _Dbg_do_source() {
     fi
 
     typeset filename
-    _Dbg_glob_filename "$1"
-    if [[ -r $filename ]] || [[ "$filename" == '/dev/stdin' ]] ; then
+    _Dbg_tilde_expand_filename "$1"
+    if [[ -r "$filename" ]] || [[ "$filename" == '/dev/stdin' ]] ; then
 	# Open new input file descriptor and save number in _Dbg_fd.
 	typeset -i _Dbg_old_fd
 	((_Dbg_old_fd=_Dbg_fd[_Dbg_fd_last]))
