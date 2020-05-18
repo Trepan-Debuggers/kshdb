@@ -2,7 +2,7 @@
 # info.sh - gdb-like "info" debugger commands
 #
 #   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2008, 2009,
-#   2010, 2011 Rocky Bernstein <rocky@gnu.org>
+#   2010, 2011, 2020 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -21,14 +21,14 @@
 
 typeset -A _Dbg_debugger_info_commands
 
-_Dbg_help_add info '' 1 
+_Dbg_help_add info '' 1
 
 typeset -a _Dbg_info_subcmds
 _Dbg_info_subcmds=( breakpoints display files line program source stack variables )
 
 # Load in "info" subcommands
-for _Dbg_file in ${_Dbg_libdir}/command/info_sub/*.sh ; do 
-    source $_Dbg_file
+for _Dbg_file in ${_Dbg_libdir}/command/info_sub/*.sh ; do
+    source "$_Dbg_file"
 done
 
 # Command completion
@@ -37,11 +37,11 @@ _Dbg_complete_info() {
 }
 
 _Dbg_do_info() {
-      
+
   if (($# > 0)) ; then
       typeset subcmd=$1
       shift
-      
+
       if [[ -n ${_Dbg_debugger_info_commands[$subcmd]} ]] ; then
 	  ${_Dbg_debugger_info_commands[$subcmd]} $label "$@"
 	  return $?
@@ -49,7 +49,7 @@ _Dbg_do_info() {
 	  # Look for a unique abbreviation
 	  typeset -i count=0
 	  typeset list; list="${!_Dbg_debugger_info_commands[@]}"
-	  for try in $list ; do 
+	  for try in $list ; do
 	      if [[ $try =~ ^$subcmd ]] ; then
 		  subcmd=$try
 		  ((count++))
@@ -61,10 +61,10 @@ _Dbg_do_info() {
 	  ${_Dbg_debugger_info_commands[$subcmd]} $label "$@"
 	  return $?
       fi
-  
-      case $subcmd in 
+
+      case $subcmd in
 # 	  a | ar | arg | args )
-#               _Dbg_do_info_args 3 
+#               _Dbg_do_info_args 3
 # 	      return 0
 # 	      ;;
 	  #       h | ha | han | hand | handl | handle | \
@@ -76,17 +76,17 @@ _Dbg_do_info() {
 	      _Dbg_do_info_source
 	      return 0
 	      ;;
-	  
+
 	  st | sta | stac | stack )
 	      _Dbg_do_backtrace 1 $@
 	      return 0
 	      ;;
-	  
+
 	  #       te | ter | term | termi | termin | termina | terminal | tt | tty )
 	  # 	_Dbg_msg "tty: $_Dbg_tty"
 	  # 	return;
 	  # 	;;
-	  
+
 	  *)
 	      _Dbg_errmsg "Unknown info subcommand: $subcmd"
 	      return 1

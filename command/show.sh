@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # show.sh - Show debugger settings
 #
-#   Copyright (C) 2008-2011, 2018-2019 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008-2011, 2018-2020 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -35,7 +35,7 @@ _Dbg_help_add show ''  # Help routine is elsewhere
 
 # Load in "show" subcommands
 for _Dbg_file in ${_Dbg_libdir}/command/show_sub/*.sh ; do
-    source $_Dbg_file
+    source "$_Dbg_file"
 done
 
 # Command completion for a condition command
