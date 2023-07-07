@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 #   processor.sh - Top-level debugger commands
 #
-#   Copyright (C) 2008-2011, 2014, 2018
+#   Copyright (C) 2008-2011, 2014, 2018, 2023
 #   Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
@@ -145,7 +145,7 @@ _Dbg_onecmd() {
     typeset expanded_alias; _Dbg_alias_expand "$_Dbg_orig_cmd"
     typeset _Dbg_cmd="$expanded_alias"
     typeset _Dbg_args=$args
-    eval "set -- \"$2\""
+    eval set -- "$2"
 
     # Set default next, step or skip command
     if [[ -z $_Dbg_cmd ]]; then
