@@ -1,7 +1,8 @@
 # -*- shell-script -*-
 # gdb-like "kill" debugger command
 #
-#   Copyright (C) 2009, 2011, 2018-2019 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2009, 2011, 2018-2019, 2023 Rocky Bernstein
+#   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -33,7 +34,7 @@ sent.
 
 Giving a negative number is the same as using its positive value.
 
-When the ! suffix appears, no confirmation is neeeded.
+When the ! suffix appears, no confirmation is needed.
 
 Examples:
 ---------

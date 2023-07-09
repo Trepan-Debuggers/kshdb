@@ -72,7 +72,7 @@ _Dbg_list() {
     typeset source_line
     typeset frame_fullfile
     frame_fullfile=${_Dbg_file2canonic[$_Dbg_frame_last_filename]}
-    
+
     for ((  ; _Dbg_listline <= n && _Dbg_listline <= max_line \
             ; _Dbg_listline++ )) ; do
      typeset prefix='    '
@@ -98,7 +98,7 @@ _Dbg_list_columns() {
     (($# == 0)) && return 1
     typeset to_do="$1"; shift
     (($# > 0 )) && { colsep="$1"; shift; }
-    if (($# > 0 )) ; then 
+    if (($# > 0 )) ; then
 	msg=_Dbg_errmsg
 	shift
     else
@@ -107,7 +107,7 @@ _Dbg_list_columns() {
     (($# != 0)) && return 1
     typeset -a columnized=(); columnize $to_do $_Dbg_set_linewidth "$colsep"
     typeset -i i
-    for ((i=0; i<${#columnized[@]}; i++)) ; do 
+    for ((i=0; i<${#columnized[@]}; i++)) ; do
 	$msg "  ${columnized[i]}"
     done
 

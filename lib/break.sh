@@ -143,7 +143,7 @@ function _Dbg_enable_disable {
   return 0
 }
 
-# Print a message regarding how many times we've encounterd
+# Print a message regarding how many times we've encountered
 # breakpoint number $1 if the number of times is greater than 0.
 # Uses global array _Dbg_brkpt_counts.
 function _Dbg_print_brkpt_count {
@@ -166,7 +166,7 @@ function _Dbg_clear_all_brkpt {
   _Dbg_write_journal_eval "_Dbg_brkpt_count=0"
 }
 
-# Internal routine to a set breakpoint unconditonally.
+# Internal routine to a set breakpoint unconditionally.
 
 _Dbg_set_brkpt() {
     (( $# < 3 || $# > 4 )) && return 1

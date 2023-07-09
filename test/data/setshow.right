@@ -288,7 +288,7 @@ show linetrace   -- Show whether to trace lines before execution.
 show listsize    -- Number of source lines kshdb will list by default is 10.
 show prompt      -- Show kshdb's command prompt.
 show style       -- Set pygments highlighting style is off.
-show version     -- kshdb, release 1.1.0
+show version     -- kshdb, release 1.1.1
 show warranty    -- Various kinds of warranty you do not have.
 show width       -- Line width is 80.
 +#### and show...

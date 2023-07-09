@@ -1,4 +1,5 @@
 /*~
+/.python-version
 /ChangeLog
 /Makefile
 /Makefile.in
@@ -8,8 +9,8 @@
 /config.log
 /config.status
 /configure
-/dist
 /dbg-trace.sh
+/dist
 /elisp-comp
 /install-sh
 /kshdb

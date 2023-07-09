@@ -25,7 +25,7 @@ export _Dbg_command_help
 
 # List of debugger commands.
 # FIXME: for now we are attaching this to _Dbg_help_add which
-# is whe this is here. After moving somewhere more appropriate, relocate
+# is when this is here. After moving somewhere more appropriate, relocate
 # the definition.
 typeset -A _Dbg_debugger_commands
 

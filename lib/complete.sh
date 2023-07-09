@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # complete.sh - gdb-like command completion handling
 #
-#   Copyright (C) 2006, 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2006, 2011, 2023 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -27,15 +27,15 @@ compgen_opt_words() {
     typeset find
     find=$2
     typeset try
-    for try in ${words[@]} ; do 
-	if [[ $try =~ "^$find" ]] ; then 
+    for try in ${words[@]} ; do
+	if [[ $try =~ "^$find" ]] ; then
 	    result+=( $try )
 	fi
     done
     COMPREPLY=( "${result[@]}" )
 }
 
-# Print a list of completions in global variable _Dbg_matches 
+# Print a list of completions in global variable _Dbg_matches
 # for 'subcmd' that start with 'text'.
 # We get the list of completions from _Dbg._*subcmd*_cmds.
 # If no completion, we return the empty list.
@@ -44,10 +44,10 @@ _Dbg_subcmd_complete() {
     text=$2
     _Dbg_matches=()
     typeset list=''
-    if [[ $subcmd == 'set' ]] ; then 
+    if [[ $subcmd == 'set' ]] ; then
 	# Newer style
 	list=${!_Dbg_command_help_set[@]}
-    elif [[ $subcmd == 'show' ]] ; then 
+    elif [[ $subcmd == 'show' ]] ; then
 	# Newer style
 	list=${!_Dbg_command_help_show[@]}
     else
@@ -58,8 +58,8 @@ _Dbg_subcmd_complete() {
     typeset -i last=0
     for word in $list ; do
         # See if $word contains $text at the beginning. We use the string
-        # strip operatior '#' and check that some part of $word was stripped 
-        if [[ ${word#$text} != $word ]] ; then 
+        # strip operator '#' and check that some part of $word was stripped
+        if [[ ${word#$text} != $word ]] ; then
             _Dbg_matches[$last]="$subcmd $word"
             ((last++))
         fi
@@ -93,7 +93,7 @@ function _Dbg_complete_num_range {
 
 _Dbg_complete_level0() {
     # echo "level 0 called with comp_line: $COMP_LINE , comp_point: $COMP_POINT"
-    if (( COMP_POINT >  0)) ; then 
+    if (( COMP_POINT >  0)) ; then
 	typeset commands="${!_Dbg_command_help[@]}"
 	compgen_opt_words "$commands" "$COMP_LINE"
 	COMPREPLY=( $() )
@@ -111,7 +111,7 @@ if [[ $0 == ${.sh.file##*/} ]] ; then
     typeset -a COMPREPLY
     compgen_opt_words "aa aab ac b a" "aa"
     typeset -p COMPREPLY
-    PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}] 
+    PS4='(${.sh.file}:${LINENO}): ${.sh.fun} - [${.sh.subshell}]
 '
 
     compgen_opt_words "d dd e f" "d"

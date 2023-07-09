@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # shell.sh - helper routines for 'shell' debugger command
 #
-#   Copyright (C) 2011 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2011, 2023 Rocky Bernstein <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -12,7 +12,7 @@
 #   but WITHOUT ANY WARRANTY; without even the implied warranty of
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #   General Public License for more details.
-#   
+#
 #   You should have received a copy of the GNU General Public License
 #   along with this program; see the file COPYING.  If not, write to
 #   the Free Software Foundation, 59 Temple Place, Suite 330, Boston,
@@ -21,10 +21,10 @@
 _Dbg_shell_temp_profile=$(_Dbg_tempname profile)
 
 _Dbg_shell_append_typesets() {
-    typeset -a _Dbg_words 
+    typeset -a _Dbg_words
     typeset -a _Dbg_excluded
     _Dbg_excluded=([_]=1 [namespace]=1 ['']=1 ['{']=1 ['}']=1)
-    typeset +p | while read -A _Dbg_words ; do 
+    typeset +p | while read -A _Dbg_words ; do
 	if [[ typeset != ${_Dbg_words[0]} ]] ; then
 	    [[ -n ${_Dbg_excluded[${_Dbg_words[0]}]} ]] && continue
 	    if [[ ${_Dbg_words[0]} =~ ^[A-Za-z_][A-Za-z_0-9]* ]] ; then
@@ -40,9 +40,9 @@ _Dbg_shell_append_typesets() {
 	    ((0 == _Dbg_set_debug)) && \
 		[[ $_Dbg_var_name =~ ^_Dbg_ ]] && continue
 	    _Dbg_flags=${_Dbg_words[_Dbg_i]}
-	    case ${_Dbg_flags:0:2} in 
+	    case ${_Dbg_flags:0:2} in
 		'-x' )
-		    # Skip exported varables
+		    # Skip exported variables
 		    break
 		    ;;
 		'-n' )
@@ -59,21 +59,21 @@ _Dbg_shell_append_typesets() {
 		    if [[ ${_Dbg_var_name} =~ ^[A-Za-z_][A-Za-z_0-9]+ ]] ; then
 			# echo handling ${_Dbg_var_name} >&2
 			[[ -n ${_Dbg_excluded[${_Dbg_var_name}]} ]] && break
-			echo $(typeset -p ${_Dbg_var_name} 2>/dev/null) 
+			echo $(typeset -p ${_Dbg_var_name} 2>/dev/null)
 		    fi
 		    ;;
 	    esac
 	done
-    done >>$_Dbg_shell_temp_profile 
+    done >>$_Dbg_shell_temp_profile
 }
 
 _Dbg_shell_append_fn_typesets() {
-    typeset -a words 
-    typeset +pf | while read -A words ; do 
+    typeset -a words
+    typeset +pf | while read -A words ; do
 	fn_name=${words[0]%%'('*}
-	((0 == _Dbg_set_debug)) && [[ $fn_name =~ ^_Dbg_ ]] && continue	
+	((0 == _Dbg_set_debug)) && [[ $fn_name =~ ^_Dbg_ ]] && continue
 	typeset -pf ${fn_name}  >>$_Dbg_shell_temp_profile
-    done 
+    done
 }
 
 _Dbg_shell_new_shell_profile() {

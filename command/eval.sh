@@ -1,7 +1,8 @@
 # -*- shell-script -*-
 # Eval and Print commands.
 #
-#   Copyright (C) 2008, 2011, 2018 Rocky Bernstein <rocky@gnu.org>
+#   Copyright (C) 2008, 2011, 2018, 2023 Rocky Bernstein
+#   <rocky@gnu.org>
 #
 #   This program is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License as
@@ -35,7 +36,7 @@ Often when one is stopped at the line of the first part of an "if",
 "elif", "case", "return", "while" compound statement or an assignment
 statement, one wants to eval is just the expression portion.  For
 this, use eval?. Actually, any alias that ends in ? which is aliased
-to eval will do thie same thing.
+to eval will do the same thing.
 
 In any form .sh.level is set beforehand based on the current stack
 position to get the scope set properly.
@@ -109,7 +110,7 @@ _Dbg_help_add print \
 EXPRESSION is a string like you would put in a print statement.
 See also eval.' 1
 
-# NOTE: because this funciton uses _Dbg_arg. it CANNOT be declared as a fucntion,
+# NOTE: because this function uses _Dbg_arg. it CANNOT be declared as a function,
 # i.e. function _Dbg_doprint()
 _Dbg_do_print() {
     typeset _Dbg_expr=${@:-"$_Dbg_last_print_args"}

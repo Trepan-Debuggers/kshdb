@@ -243,7 +243,7 @@ elif [[ -n $COLORFGBG ]]; then
     ;;
   esac
 else
-  echo "Can't decide"
+  # echo "Can't decide"
   exit_if_not_sourced 1
 fi
 

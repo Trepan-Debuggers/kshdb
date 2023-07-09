@@ -1,7 +1,7 @@
 dnl Configure script for Shell debugger
 define(DEBUGGER, kshdb)
 define(POSIXSHELL, ksh)
-AC_INIT([kshdb],[1.1.0],[rocky@gnu.org])
+AC_INIT([kshdb],[1.1.1],[rocky@gnu.org])
 AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([foreign])
 
@@ -21,8 +21,7 @@ AC_SUBST(CMDLINE_INVOKED)
 ## --with-ksh can be used to tell the kshdb script and the regression
 ## test which ksh to run. It can be omitted too in which case we'll
 ## look for a ksh binary.
-AC_ARG_WITH(POSIXSHELL, AC_HELP_STRING([--with-POSIXSHELL],
-                  [location of POSIXSHELL program]), SH_PROG=$withval)
+AC_ARG_WITH(POSIXSHELL, AS_HELP_STRING([--with-POSIXSHELL],[location of POSIXSHELL program]), SH_PROG=$withval)
 
 if test "$SH_PROG" = "yes" || test "$SH_PROG" = "no" || test -z "$SH_PROG"
 then
